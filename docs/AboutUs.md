@@ -35,7 +35,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 <img src="images/zac.png" width="200px">
 
-[[github](https://github.com/zacwong2151)] [[portfolio](team/zac.md)]
+[[github](https://github.com/zacwong2151)] [[portfolio](team/zacwong2151.md)]
 
 * Role: Keyboard typer
 * Responsibilities: Typeracer
