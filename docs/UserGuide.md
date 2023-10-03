@@ -15,7 +15,7 @@ iVolunteer is your dedicated application for volunteer coordination, designed wi
 
 ## Quick start
 
-1. Ensure you have Java `11` or above installed in your Computer.
+1. Ensure you have [Java 11](https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html) or above installed in your Computer.
 
 1. Download the latest `iVolunteer.jar` from [here](https://github.com/AY2324S1-CS2103T-T14-4/tp/releases).
 
@@ -29,13 +29,15 @@ iVolunteer is your dedicated application for volunteer coordination, designed wi
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
-   * `list` : Lists all volunteers.
+   * `volunteer list` : Lists all volunteers.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a volunteer named `John Doe` to the list.
+   * `volunteer add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a volunteer named `John Doe` to the list of volunteers.
 
-   * `delete 3` : Deletes the 3rd volunteer shown in the current list.
+   * `volunteer delete 3` : Deletes the 3rd volunteer shown in the current volunteer list.
 
-   * `clear` : Deletes all volunteers.
+   * `volunteer clear` : Deletes all volunteers.
+   
+   * `event list` : Lists all events.
 
    * `exit` : Exits the app.
 
