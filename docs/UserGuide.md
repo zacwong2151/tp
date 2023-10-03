@@ -151,7 +151,7 @@ Clears all entries from the address book.
 
 Format: `clear`
 
-### Create an event
+### Create an event [coming soon]
 
 Volunteer Coordinators can create new events by specifying the following parameters.
 * Roles needed
