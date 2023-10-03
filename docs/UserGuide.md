@@ -151,9 +151,9 @@ Clears all entries from the address book.
 
 Format: `clear`
 
-### Create an event [coming soon]
+### Add an event [coming soon]
 
-Volunteer Coordinators can create new events by specifying the following parameters.
+Volunteer Coordinators can add new events by specifying the following parameters.
 * Roles needed
 * Date and Time
 * Location
@@ -161,15 +161,15 @@ Volunteer Coordinators can create new events by specifying the following paramet
 * Logistics and material needed(optional)
 * Budget(optional)
 
-Format: `create n/EVENT_NAME r/ROLES_NEEDED… d/DATE_AND_TIME l/LOCATION dsc/DESCRIPTION [m/MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET]`
-* Command must be exactly `create`.
+Format: `event add n/EVENT_NAME r/ROLES_NEEDED… d/DATE_AND_TIME l/LOCATION dsc/DESCRIPTION [m/MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET]`
+* Note that shorthands `e add` and `ea` can also be used instead of `event add`
 * All parameters must be separated by a single space.
 * Date and Time - The format must be exactly `DD-MM-YYYY TTTT`
 * Budget - Argument must start with a `$`, followed by a floating point number with at most 2 decimal places.
 
 
 Examples:
-* `create n/food donation r/chef r/packer d/23-9-2023 1500 dsc/help food distribution m/50 potatoes b/$50` creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
+* `event add n/food donation r/chef r/packer d/23-9-2023 1500 dsc/help food distribution m/50 potatoes b/$50` creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
 
 ### Exiting the program : `exit`
 
