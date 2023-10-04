@@ -75,26 +75,43 @@ Shows a message explaning how to access the help page.
 Format: `help`
 
 
-### Adding a person: `add`
+### Adding a volunteer: `add` [COMING SOON]
 
-Adds a person to the address book.
+Adds a volunteer to an event.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+Format: `add vn/NAME hp/PHONE_NUMBER e/EMAIL /to en/EVENT`
 
-<box type="tip" seamless>
-
-**Tip:** A person can have any number of tags (including 0)
-</box>
+Parameters:
+* vn/ - Volunteer name
+* hp/ - Volunteer phone number
+* e/ - Volunteer email
+* en/ - Event to be added in
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com /to en/fundraising`
+* `add n/Betsy Crowe hp/12345678 e/betsycrowe@example.com /to en/fundraising`
 
-### Listing all persons : `list`
+Restrictions:
+* The maximum number of characters of the event is 50.
+* The event and volunteer name entered must exist.
+* The maximum number of characters of a volunteer name is 30.
+* The phone number and email must be in a valid form.
 
-Shows a list of all persons in the address book.
+### Listing all volunteers : `list` [COMING SOON]
 
-Format: `list`
+Shows a list of all volunteers in an event.
+
+Format: `check en/EVENT`
+
+Parameters:
+* en/ - Event 
+
+Examples:
+* `check en/fundraising`
+
+Restrictions:
+* The maximum number of characters of the event is 50.
+* The event entered must exist.
 
 ### Editing a person : `edit`
 
@@ -131,19 +148,26 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
-### Deleting a person : `delete`
+### Deleting a volunteer : `delete`
 
-Deletes the specified person from the address book.
+Deletes the specified volunteer from an event.
 
-Format: `delete INDEX`
+Format: `delete vn/NAME /from en/EVENT` or `delete id/ID /from en/EVENT`
 
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
+Parameters:
+* vn/ - Volunteer name
+* id/ - Volunteer id
+* en/ - Event to be deleted from
 
-Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
-* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+Examples: 
+* `delete vn/John /from en/fundraising` 
+* `delete id/1 /from en/fundraising`
+
+Restrictions:
+* The maximum number of characters of the event is 50.
+* The event and volunteer name entered must exist.
+* The maximum number of characters of a volunteer name is 30.
+* The id must not exceed the number of volunteers in the event and greater or equal to 0.
 
 ### Clearing all entries : `clear`
 
