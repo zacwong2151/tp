@@ -114,6 +114,7 @@ Examples:
 Restrictions:
 * The maximum number of characters of the event is 50.
 * The event entered must exist.
+* The id must be greater than or equal to 0 and lesser than the number of events existed.
 
 ### Editing a person : `edit`
 
