@@ -75,46 +75,46 @@ Shows a message explaning how to access the help page.
 Format: `help`
 
 
-### Adding a volunteer: `add` [COMING SOON]
+### Adding a volunteer: `volunteer add` [COMING SOON]
 
 Adds a volunteer to an event.
 
-Format: `add vn/NAME hp/PHONE_NUMBER e/EMAIL /to en/EVENT`
+Format: `volunteer add vid/VOLUNTEER_ID /to eid/EVENT_ID` or `volunteer add vn/VOLUNTEER_NAME /to en/EVENT_NAME`
 
 Parameters:
 * vn/ - Volunteer name
-* hp/ - Volunteer phone number
-* e/ - Volunteer email
-* en/ - Event to be added in
+* vid/ - Volunteer id
+* eid/ - Event id
+* en/ - Event name
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com /to en/fundraising`
-* `add n/Betsy Crowe hp/12345678 e/betsycrowe@example.com /to en/fundraising`
+* `volunteer add vid/1 /to eid/1`
+* `volunteer add n/Betsy Crowe /to en/fundraising`
 
 Restrictions:
-* The maximum number of characters of the event is 50.
+* The maximum number of characters of the event and volunteer is 50.
 * The event and volunteer name entered must exist.
-* The maximum number of characters of a volunteer name is 30.
-* The phone number and email must be in a valid form.
+* The event id must be greater than or equal to 0 and lesser than the number of events existed.
+* The volunteer id must be greater than or equal to 0 and lesser than the number of volunteers existed.
 
-### Listing all volunteers : `list` [COMING SOON]
+### Listing all volunteers : `volunteer list` [COMING SOON]
 
 Shows a list of all volunteers in an event.
 
-Format: `check id/EVENT_ID` or `check en/EVENT`
+Format: `volunteer list eid/EVENT_ID` or `volunteer list en/EVENT`
 
 Parameters:
-* id/ - Event id 
-* en/ - Event 
+* eid/ - Event id 
+* en/ - Event name
 
 Examples:
-* `check id/1`
-* `check en/fundraising`
+* `volunteer list eid/1`
+* `volunteer list en/fundraising`
 
 Restrictions:
 * The maximum number of characters of the event is 50.
-* The event entered must exist.
-* The id must be greater than or equal to 0 and lesser than the number of events existed.
+* The event name entered must exist.
+* The event id must be greater than or equal to 0 and lesser than the number of events existed.
 
 ### Editing a person : `edit`
 
@@ -151,20 +151,21 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
-### Deleting a volunteer : `delete`
+### Deleting a volunteer : `volunteer delete`
 
 Deletes the specified volunteer from an event.
 
-Format: `delete id/ID /from en/EVENT` or `delete vn/NAME /from en/EVENT`
+Format: `volunteer delete vid/VOLUNTEER_ID /from eid/EVENT_ID` or `volunteer delete vn/VOLUNTEER_NAME /from en/EVENT_NAME`
 
 Parameters:
 * vn/ - Volunteer name
-* id/ - Volunteer id
-* en/ - Event to be deleted from
+* vid/ - Volunteer id
+* en/ - Event name
+* eid/ - Event id
 
 Examples:
-* `delete id/1 /from en/fundraising`
-* `delete vn/John /from en/fundraising`
+* `volunteer delete vid/1 /from eid/1`
+* `volunteer delete vn/John /from en/fundraising`
 
 Restrictions:
 * The maximum number of characters of the event is 50.
