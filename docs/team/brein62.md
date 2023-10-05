@@ -1,5 +1,5 @@
 ---
-  layout: brein62.md
+  layout: default.md
   title: "Brendan Koh's Project Portfolio Page"
 ---
 
