@@ -101,12 +101,14 @@ Restrictions:
 
 Shows a list of all volunteers in an event.
 
-Format: `check en/EVENT`
+Format: `check id/EVENT_ID` or `check en/EVENT`
 
 Parameters:
+* id/ - Event id 
 * en/ - Event 
 
 Examples:
+* `check id/1`
 * `check en/fundraising`
 
 Restrictions:
@@ -152,16 +154,16 @@ Examples:
 
 Deletes the specified volunteer from an event.
 
-Format: `delete vn/NAME /from en/EVENT` or `delete id/ID /from en/EVENT`
+Format: `delete id/ID /from en/EVENT` or `delete vn/NAME /from en/EVENT`
 
 Parameters:
 * vn/ - Volunteer name
 * id/ - Volunteer id
 * en/ - Event to be deleted from
 
-Examples: 
-* `delete vn/John /from en/fundraising` 
+Examples:
 * `delete id/1 /from en/fundraising`
+* `delete vn/John /from en/fundraising`
 
 Restrictions:
 * The maximum number of characters of the event is 50.
