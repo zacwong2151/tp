@@ -52,7 +52,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ### Tiong Meng Sheng
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/tiongMax.png" width="200px">
 
 [[github](http://github.com/tiongMax)]
 [[portfolio](team/tiongMax.md)]
