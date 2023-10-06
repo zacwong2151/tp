@@ -97,7 +97,7 @@ Examples:
 * `vadd vid/1 /to eid/1`
 * `vadd n/Betsy Crowe /to en/fundraising`
 
-### Listing all volunteers : `vcheck` [COMING SOON]
+### Checking all volunteers : `vcheck` [COMING SOON]
 
 Shows a list of all volunteers in an event.
 
