@@ -13,14 +13,14 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.VolunteerAddCommand;
 import seedu.address.logic.commands.VolunteerClearCommand;
 import seedu.address.logic.commands.VolunteerDeleteCommand;
 import seedu.address.logic.commands.VolunteerEditCommand;
 import seedu.address.logic.commands.VolunteerEditCommand.EditPersonDescriptor;
-import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.VolunteerFindCommand;
-import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.VolunteerListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
@@ -57,8 +57,9 @@ public class AddressBookParserTest {
     public void parseCommand_edit() throws Exception {
         Person person = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
-        VolunteerEditCommand command = (VolunteerEditCommand) parser.parseCommand(VolunteerEditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
+        VolunteerEditCommand command = (VolunteerEditCommand) parser.parseCommand(
+                                    VolunteerEditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
+                                            + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
         assertEquals(new VolunteerEditCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
 
@@ -72,7 +73,8 @@ public class AddressBookParserTest {
     public void parseCommand_find() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         VolunteerFindCommand command = (VolunteerFindCommand) parser.parseCommand(
-                VolunteerFindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+                VolunteerFindCommand.COMMAND_WORD + " " + keywords.stream()
+                        .collect(Collectors.joining(" ")));
         assertEquals(new VolunteerFindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
 
@@ -85,7 +87,8 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_list() throws Exception {
         assertTrue(parser.parseCommand(VolunteerListCommand.COMMAND_WORD) instanceof VolunteerListCommand);
-        assertTrue(parser.parseCommand(VolunteerListCommand.COMMAND_WORD + " 3") instanceof VolunteerListCommand);
+        assertTrue(parser.parseCommand(
+                VolunteerListCommand.COMMAND_WORD + " 3") instanceof VolunteerListCommand);
     }
 
     @Test
@@ -96,6 +99,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_unknownCommand_throwsParseException() {
-        assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () -> parser.parseCommand("unknownCommand"));
+        assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, ()
+                                    -> parser.parseCommand("unknownCommand"));
     }
 }
