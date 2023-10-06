@@ -11,51 +11,51 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
-### John Doe
+### Brendan Koh
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/brein62.png" width="200px">
 
-[[homepage](http://www.comp.nus.edu.sg/~damithch)]
-[[github](https://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[homepage](https://brein62.github.io)]
+[[github](https://github.com/brein62)]
+[[portfolio](team/brein62.md)]
 
-* Role: Project Advisor
+* Role: Tech/GitHub Lead
 
-### Jane Doe
+### Jordan Kang
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/jordankanghm.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](http://github.com/jordankanghm)]
+[[portfolio](team/jordankanghm.md)]
 
-* Role: Team Lead
+* Role: Team Member
 * Responsibilities: UI
 
-### Johnny Doe
+### Zacharias Wong
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/zac.png" width="200px">
 
-[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
+[[github](https://github.com/zacwong2151)] [[portfolio](team/zacwong2151.md)]
+
+* Role: Keyboard typer
+* Responsibilities: Typeracer
+
+### Lee Ruo Xuan
+
+<img src="images/ruoxuan.png" width="200px">
+
+[[github](http://github.com/ruo-x)]
+[[portfolio](team/ruo-x.md)]
 
 * Role: Developer
-* Responsibilities: Data
+* Responsibilities: Developing
 
-### Jean Doe
+### Tiong Meng Sheng
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/tiongMax.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
-
-* Role: Developer
-* Responsibilities: Dev Ops + Threading
-
-### James Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](http://github.com/tiongMax)]
+[[portfolio](team/tiongMax.md)]
 
 * Role: Developer
 * Responsibilities: UI
