@@ -13,7 +13,7 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 
 public class VolunteerFindCommandParserTest {
 
-    private FindCommandParser parser = new FindCommandParser();
+    private VolunteerFindCommandParser parser = new VolunteerFindCommandParser();
 
     @Test
     public void parse_emptyArg_throwsParseException() {

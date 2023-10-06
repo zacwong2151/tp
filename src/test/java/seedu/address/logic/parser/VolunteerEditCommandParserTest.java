@@ -52,7 +52,7 @@ public class VolunteerEditCommandParserTest {
     private static final String MESSAGE_INVALID_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, VolunteerEditCommand.MESSAGE_USAGE);
 
-    private EditCommandParser parser = new EditCommandParser();
+    private VolunteerEditCommandParser parser = new VolunteerEditCommandParser();
 
     @Test
     public void parse_missingParts_failure() {

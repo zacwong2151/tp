@@ -11,8 +11,8 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.VolunteerCreateCommand;
 import seedu.address.logic.commands.VolunteerClearCommand;
+import seedu.address.logic.commands.VolunteerCreateCommand;
 import seedu.address.logic.commands.VolunteerDeleteCommand;
 import seedu.address.logic.commands.VolunteerEditCommand;
 import seedu.address.logic.commands.VolunteerFindCommand;
@@ -54,19 +54,19 @@ public class AddressBookParser {
         switch (commandWord) {
 
         case VolunteerCreateCommand.COMMAND_WORD:
-            return new AddCommandParser().parse(arguments);
+            return new VolunteerAddCommandParser().parse(arguments);
 
         case VolunteerEditCommand.COMMAND_WORD:
-            return new EditCommandParser().parse(arguments);
+            return new VolunteerEditCommandParser().parse(arguments);
 
         case VolunteerDeleteCommand.COMMAND_WORD:
-            return new DeleteCommandParser().parse(arguments);
+            return new VolunteerDeleteCommandParser().parse(arguments);
 
         case VolunteerClearCommand.COMMAND_WORD:
             return new VolunteerClearCommand();
 
         case VolunteerFindCommand.COMMAND_WORD:
-            return new FindCommandParser().parse(arguments);
+            return new VolunteerFindCommandParser().parse(arguments);
 
         case VolunteerListCommand.COMMAND_WORD:
             return new VolunteerListCommand();
