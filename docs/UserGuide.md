@@ -29,19 +29,19 @@ iVolunteer is your dedicated application for volunteer coordination, designed wi
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
-   * `event list` : Lists all events
+   * `elist` : Lists all events
    
-   * `event add n/food donation r/chef r/packer d/23-9-2023 1500 dsc/help food distribution m/50 potatoes b/50` : Creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
+   * `eadd n/food donation r/chef r/packer d/23-9-2023 1500 dsc/help food distribution m/50 potatoes b/50` : Creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
 
-   * `event delete 3` : Deletes the 3rd event in the current event list
+   * `edelete 3` : Deletes the 3rd event in the current event list
    
-   * `volunteer list` : Lists all volunteers.
+   * `vlist` : Lists all volunteers.
 
-   * `volunteer add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a volunteer named `John Doe` to the list of volunteers.
+   * `vadd n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a volunteer named `John Doe` to the list of volunteers.
 
-   * `volunteer delete 3` : Deletes the 3rd volunteer in the current volunteer list.
+   * `vdelete 3` : Deletes the 3rd volunteer in the current volunteer list.
 
-   * `volunteer clear` : Deletes all volunteers.
+   * `vclear` : Deletes all volunteers.
 
    * `exit` : Exits the app.
 
