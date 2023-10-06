@@ -1,7 +1,7 @@
 {
   "baseUrl": "",
-  "titlePrefix": "iVolunteer",
-  "titleSuffix": "AddressBook Level-3",
+  "titlePrefix": "",
+  "titleSuffix": "iVolunteer",
   "faviconPath": "images/SeEduLogo.png",
   "style": {
     "codeTheme": "light"
