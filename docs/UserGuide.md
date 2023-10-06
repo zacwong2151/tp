@@ -66,7 +66,7 @@ iVolunteers is a **desktop app for managing volunteers, optimized for use via a 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
 
-### Viewing help : `help` [coming soon]
+### Viewing help : `help`
 
 Shows a message explaining how to access the help page.
 
@@ -92,7 +92,7 @@ Examples:
 
 ### Listing all persons : `list`
 
-Shows a list of all events in the address book.
+Shows a list of all persons in the address book.
 
 Format: `list`
 
@@ -131,7 +131,7 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
-### Deleting an event : `delete`
+### Deleting a person : `delete`
 
 Deletes the event from the event list.
 
@@ -143,7 +143,7 @@ Format: `delete INDEX`
 
 Examples:
 * `list` followed by `delete 2` deletes the 2nd event in the event list.
-* `find Food Collection` followed by `delete 1` deletes the 1st event in the results of the `find` command.
+* `find Beach cleaning` followed by `delete 1` deletes the 1st event in the results of the `find` command.
 
 ### Clearing all entries : `clear`
 
