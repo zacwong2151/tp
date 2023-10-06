@@ -135,7 +135,7 @@ Examples:
 
 Deletes the event from the event list.
 
-Format: `event delete INDEX`
+Format: `edelete INDEX`
 
 * Deletes the event at the specified `INDEX`.
 * The index refers to the index number shown in the displayed event list.
