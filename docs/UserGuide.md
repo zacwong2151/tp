@@ -153,18 +153,23 @@ Format: `clear`
 
 ### Creating an event [coming soon]
 
-Volunteer Coordinators can create new events by specifying the following parameters.
-* Roles needed
-* Date and Time
-* Location
-* Brief Description
-* Logistics and material needed(optional)
-* Budget(optional)
+Volunteer Coordinators can create new events.
 
 Format: `ecreate add n/EVENT_NAME r/ROLES_NEEDED… d/DATE_AND_TIME l/LOCATION dsc/DESCRIPTION [m/MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET]`
+
+Parameters:
+ * n/ - Event name
+ * r/ - Roles needed for the event
+ * d/ - Date and time of the event
+ * l/ - Location of the event
+ * dsc/ - Description of the event
+ * m/ - Materials needed for the event
+ * b/ - Budget for the event
+
+Restrictions:
 * All parameters must be separated by a single space.
-* Date and Time - The format must be exactly `DD-MM-YYYY TTTT`
-* Budget - Argument must start with a `$`, followed by a floating point number with at most 2 decimal places.
+* The date and time format must be exactly `DD-MM-YYYY TTTT`
+* The budget argument must be a floating point number with 2 decimal places.
 
 
 Examples:
