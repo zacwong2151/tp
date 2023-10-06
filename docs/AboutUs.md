@@ -33,7 +33,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ### Zacharias Wong
 
-<img src="images/zac.png" width="200px">
+<img src="images/zacwong2151.png" width="200px">
 
 [[github](https://github.com/zacwong2151)] [[portfolio](team/zacwong2151.md)]
 
