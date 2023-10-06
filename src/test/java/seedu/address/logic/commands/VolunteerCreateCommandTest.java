@@ -25,11 +25,11 @@ import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
 
-public class VolunteerAddCommandTest {
+public class VolunteerCreateCommandTest {
 
     @Test
     public void constructor_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new VolunteerAddCommand(null));
+        assertThrows(NullPointerException.class, () -> new VolunteerCreateCommand(null));
     }
 
     @Test
@@ -37,9 +37,9 @@ public class VolunteerAddCommandTest {
         ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
         Person validPerson = new PersonBuilder().build();
 
-        CommandResult commandResult = new VolunteerAddCommand(validPerson).execute(modelStub);
+        CommandResult commandResult = new VolunteerCreateCommand(validPerson).execute(modelStub);
 
-        assertEquals(String.format(VolunteerAddCommand.MESSAGE_SUCCESS, Messages.format(validPerson)),
+        assertEquals(String.format(VolunteerCreateCommand.MESSAGE_SUCCESS, Messages.format(validPerson)),
                 commandResult.getFeedbackToUser());
         assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
     }
@@ -47,25 +47,25 @@ public class VolunteerAddCommandTest {
     @Test
     public void execute_duplicatePerson_throwsCommandException() {
         Person validPerson = new PersonBuilder().build();
-        VolunteerAddCommand volunteerAddCommand = new VolunteerAddCommand(validPerson);
+        VolunteerCreateCommand volunteerCreateCommand = new VolunteerCreateCommand(validPerson);
         ModelStub modelStub = new ModelStubWithPerson(validPerson);
 
-        assertThrows(CommandException.class, VolunteerAddCommand.MESSAGE_DUPLICATE_PERSON, ()
-                                                    -> volunteerAddCommand.execute(modelStub));
+        assertThrows(CommandException.class, VolunteerCreateCommand.MESSAGE_DUPLICATE_PERSON, ()
+                                                    -> volunteerCreateCommand.execute(modelStub));
     }
 
     @Test
     public void equals() {
         Person alice = new PersonBuilder().withName("Alice").build();
         Person bob = new PersonBuilder().withName("Bob").build();
-        VolunteerAddCommand addAliceCommand = new VolunteerAddCommand(alice);
-        VolunteerAddCommand addBobCommand = new VolunteerAddCommand(bob);
+        VolunteerCreateCommand addAliceCommand = new VolunteerCreateCommand(alice);
+        VolunteerCreateCommand addBobCommand = new VolunteerCreateCommand(bob);
 
         // same object -> returns true
         assertTrue(addAliceCommand.equals(addAliceCommand));
 
         // same values -> returns true
-        VolunteerAddCommand addAliceCommandCopy = new VolunteerAddCommand(alice);
+        VolunteerCreateCommand addAliceCommandCopy = new VolunteerCreateCommand(alice);
         assertTrue(addAliceCommand.equals(addAliceCommandCopy));
 
         // different types -> returns false
@@ -80,9 +80,9 @@ public class VolunteerAddCommandTest {
 
     @Test
     public void toStringMethod() {
-        VolunteerAddCommand volunteerAddCommand = new VolunteerAddCommand(ALICE);
-        String expected = VolunteerAddCommand.class.getCanonicalName() + "{toAdd=" + ALICE + "}";
-        assertEquals(expected, volunteerAddCommand.toString());
+        VolunteerCreateCommand volunteerCreateCommand = new VolunteerCreateCommand(ALICE);
+        String expected = VolunteerCreateCommand.class.getCanonicalName() + "{toAdd=" + ALICE + "}";
+        assertEquals(expected, volunteerCreateCommand.toString());
     }
 
     /**
