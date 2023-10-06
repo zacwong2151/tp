@@ -142,15 +142,15 @@ Examples:
 
 Deletes the event from the event list.
 
-Format: `edelete INDEX`
+Format: `edelete eid/EVENT_ID`
 
-* Deletes the event at the specified `INDEX`.
-* The index refers to the index number shown in the displayed event list.
-* The index **must be a positive integer** 1, 2, 3, …​
+* Deletes the event at the specified `id`.
+* The id refers to the index number shown in the displayed event list.
+* The id **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `event list` followed by `event delete 2` deletes the 2nd event in the event list.
-* `find Beach cleaning` followed by `event delete 1` deletes the 1st event in the results of the `find` command (tentative feature)
+* `event list` followed by `edelete 2` deletes the 2nd event in the event list.
+* `find Beach cleaning` followed by `edelete 1` deletes the 1st event in the results of the `find` command (tentative feature)
 
 
 ### Clearing all entries : `clear`
