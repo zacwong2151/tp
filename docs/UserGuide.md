@@ -158,25 +158,28 @@ Clears all entries from the address book.
 
 Format: `clear`
 
-### Create an event [coming soon]
+### Creating an event [coming soon]
 
-Volunteer Coordinators can create new events by specifying the following parameters.
-* Roles needed
-* Date and Time
-* Location
-* Brief Description
-* Logistics and material needed(optional)
-* Budget(optional)
+Volunteer Coordinators can create new events.
 
-Format: `event create n/EVENT_NAME r/ROLES_NEEDED… d/DATE_AND_TIME l/LOCATION dsc/DESCRIPTION [m/MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET]`
-* Note that shorthands `e create` and `ec` can also be used instead of `event create`
+Format: `ecreate add n/EVENT_NAME r/ROLES_NEEDED… d/DATE_AND_TIME l/LOCATION dsc/DESCRIPTION [m/MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET]`
+
+Parameters:
+ * n/ - Event name
+ * r/ - Roles needed for the event
+ * d/ - Date and time of the event
+ * l/ - Location of the event
+ * dsc/ - Description of the event
+ * m/ - Materials needed for the event
+ * b/ - Budget for the event
+
+Restrictions:
 * All parameters must be separated by a single space.
-* Date and Time - The format must be exactly `DD-MM-YYYY TTTT`
-* Budget - Argument must be a floating point number with at most 2 decimal places.
-
+* The date and time format must be exactly `DD-MM-YYYY TTTT`
+* The budget argument must be a floating point number with 2 decimal places.
 
 Examples:
-* `event create n/food donation r/chef r/packer d/23-9-2023 1500 dsc/help food distribution m/50 potatoes b/50` creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
+* `ecreate n/food donation r/chef r/packer d/23-9-2023 1500 dsc/help food distribution m/50 potatoes b/50` creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
 
 ### Exiting the program : `exit`
 
