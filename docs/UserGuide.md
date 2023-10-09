@@ -191,6 +191,12 @@ Volunteer Coordinators and read more details about an individual volunteer to kn
 
 Format: `vshow VOLUNTEER_ID`
 
+### Listing all volunteers : `vlist`
+
+Shows a list of all volunteers in the volunteer list.
+
+Format: `vlist`
+
 Restrictions:
 * The volunteer ID must be an integer that represents a valid volunteer number in the volunteer list. If there are 30 volunteers in the volunteer list, the acceptable values will be from 1-30.
 
