@@ -158,6 +158,50 @@ Clears all entries from the address book.
 
 Format: `clear`
 
+
+### Creating a new volunteer's profile : `vcreate` [coming soon]
+
+Volunteer Coordinators can create new volunteer profiles, and add the volunteer into the volunteer list.
+
+Format: `vcreate vn/VOLUNTEER_NAME hp/PHONE_NUMBER e/EMAIL`
+
+Parameters:
+ * vn/ - Volunteer name
+ * hp/ - Phone number of the volunteer
+ * e/ - Email address of the volunteer
+
+Restrictions:
+* The maximum number of characters of a volunteer name is 30.
+* The email must be in a valid format.
+* The phone number must be a valid 8-digit Singapore phone number.
+
+Examples:
+* `vcreate vn/John hp/91234567 e/john123@gmail.com` creates a volunteer named `John` with a phone number of `91234567` and an email address of `john123@gmail.com`. The volunteer profile will be appended to the bottom of the volunteer list.
+
+### Read an individual volunteer's details: `vshow` [coming soon]
+
+Volunteer Coordinators and read more details about an individual volunteer to know more and potentially utilise their skills effectively.
+
+Format: `vshow VOLUNTEER_ID`
+
+Restrictions:
+* The volunteer ID must be an integer that represents a valid volunteer number in the volunteer list. If there are 30 volunteers in the volunteer list, the acceptable values will be from 1-30.
+
+Examples:
+* `vshow 6` will show a pop-up showing a detailed description of the 6th volunteer in the volunteer list, consisting of the volunteer ID, the volunteer's name, phone number, and email.
+
+### Removing a volunteer from the volunteer list: `vremove` [coming soon]
+
+Volunteer coordinators can remove volunteers from the volunteer list if they no longer wish to volunteer anymore.
+
+Format: `vremove VOLUNTEER_ID`
+
+Restrictions:
+* The volunteer ID must be an integer that represents a valid volunteer number in the volunteer list. If there are 30 volunteers in the volunteer list, the acceptable values will be from 1-30.
+
+Examples:
+* `vremove 6` will remove the 6th volunteer displayed in the volunteer list.
+
 ### Creating an event [coming soon]
 
 Volunteer Coordinators can create new events.
