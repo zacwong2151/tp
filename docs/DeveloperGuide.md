@@ -320,6 +320,75 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 
+**Use case: Create a volunteer**
+
+**MSS**
+
+1.  User requests to create a volunteer
+2.  iVolunteer shows the volunteer created and appends the volunteer to the end of the volunteer list
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. Invalid Command Word.
+    * 1a1. iVolunteer prompts Volunteer Coordinator to provide a valid command. 
+
+    Use case resumes from step 1.
+* 1b. Missing arguments for mandatory fields.
+    * 1b1. System prompts Volunteer Coordinator to provide arguments for all mandatory fields.
+
+    Use case resumes from step 1.
+* 1c. Parameters are not separated by a single space.
+    * 1c1. System prompts Volunteer Coordinator to separate parameters with a single space.
+
+    Use case resumes from step 1.
+* 1d. Invalid email.
+    * 1d1. System prompts Volunteer Coordinator to use the correct email format.
+
+    Use case resumes from step 1.
+* 1e. Invalid phone number.
+    * 1e1. System prompts Volunteer Coordinator to use a valid 8-digit phone number.
+
+    Use case resumes from step 1.
+* 1f. Name exceeds 30 characters, or name is empty.
+    * 1f1. System prompts Volunteer Coordinator to use a volunteer name between 1-30 characters.
+
+    Use case resumes from step 1.
+
+**Use case: List all volunteers**
+
+**MSS**
+
+1.  User requests to list all volunteers
+2.  iVolunteer shows a list of all volunteers
+
+    Use case ends.
+
+**Use case: Delete all volunteers**
+
+**MSS**
+
+1.  User requests to list all volunteers
+2.  iVolunteer shows a list of all volunteers
+3.  User requests to delete a specific volunteer in the volunteer list
+4.  iVolunteer removes the volunteer from all events he/she is in
+5.  iVolunteer deletes the volunteer
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 3a. The given index is invalid.
+
+    * 3a1. iVolunteer shows an error message.
+
+      Use case resumes at step 2.
+
 *{More to be added}*
 
 ### Non-Functional Requirements
