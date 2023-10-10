@@ -185,23 +185,11 @@ Examples:
 * `vcreate vn/John hp/91234567 e/john123@gmail.com` creates a volunteer named `John` with a phone number of `91234567` and an email address of `john123@gmail.com`, with no specific skills. The volunteer profile will be appended to the bottom of the volunteer list.
 * `vcreate vn/Mary hp/92345678 e/mary123@gmail.com s/Cooking s/Carrying heavy goods` creates a volunteer named `Mary` with a phone number of `92345678` and an email address of `mary123@gmail.com`, with two skills: `Cooking` and `Carrying heavy goods`. The volunteer profile will be appended to the bottom of the volunteer list.
 
-### Read an individual volunteer's details: `vshow` [coming soon]
-
-Volunteer Coordinators and read more details about an individual volunteer to know more and potentially utilise their skills effectively.
-
-Format: `vshow VOLUNTEER_ID`
-
-### Listing all volunteers : `vlist`
+### Listing all volunteers : `vlist` [coming soon]
 
 Shows a list of all volunteers in the volunteer list.
 
 Format: `vlist`
-
-Restrictions:
-* The volunteer ID must be an integer that represents a valid volunteer number in the volunteer list. If there are 30 volunteers in the volunteer list, the acceptable values will be from 1-30.
-
-Examples:
-* `vshow 6` will show a pop-up showing a detailed description of the 6th volunteer in the volunteer list, consisting of the volunteer ID, the volunteer's name, phone number, email, and any skills they have.
 
 ### Deleting a volunteer from the volunteer list: `vdelete` [coming soon]
 
