@@ -187,8 +187,17 @@ Volunteer coordinators can see all the events they are organising. For each even
 Format: `elist` (case-insensitive)
 
 ### Read an individual event [coming soon]
+Volunteer coordinators can read up more about an individual event, to familiarize themselves with its requirements while planning for it.
 
-Format: 
+Format: `eshow EVENT_ID`
+
+Restrictions:
+* First part must be `eshow`
+* Second part must be an integer that represents a valid `EVENT_ID`: If the list of events is 10 events long, the acceptable values will be from 1-10.
+* First and second parts must be separated by a single space.
+
+Examples:
+* `eshow 7` will result in a pop-up window appearing, listing all details of the event at id `7`. This includes its name, date and time, location, roles needed, logistics needed (if any), budget (if any), and a description.
 
 ### Exiting the program : `exit`
 
