@@ -201,7 +201,7 @@ Restrictions:
 * The volunteer ID must be an integer that represents a valid volunteer number in the volunteer list. If there are 30 volunteers in the volunteer list, the acceptable values will be from 1-30.
 
 Examples:
-* `vdelete 6` will remove the 6th volunteer displayed in the volunteer list.
+* `vlist`, followed by `vdelete 6` will remove the 6th volunteer displayed in the volunteer list.
 
 ### Creating an event [coming soon]
 
