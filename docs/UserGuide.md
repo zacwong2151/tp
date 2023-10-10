@@ -181,6 +181,15 @@ Restrictions:
 Examples:
 * `ecreate n/food donation r/chef r/packer d/23-9-2023 1500 dsc/help food distribution m/50 potatoes b/50` creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
 
+### List all events [coming soon]
+Volunteer coordinators can see all the events they are organising. For each event, only the most important information will be shown: name, date and time, location.
+
+Format: `elist` (case-insensitive)
+
+### Read an individual event [coming soon]
+
+Format: 
+
 ### Exiting the program : `exit`
 
 Exits the program.
