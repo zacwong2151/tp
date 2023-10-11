@@ -320,12 +320,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 
-**Use case: Create a volunteer**
+**Use case UCV01: Create a volunteer**
 
 **MSS**
 
-1.  User requests to create a volunteer
-2.  iVolunteer shows the volunteer created and appends the volunteer to the end of the volunteer list
+1.  User requests to create a volunteer.
+2.  iVolunteer shows the volunteer created and appends the volunteer to the end of the volunteer list.
 
     Use case ends.
 
@@ -356,38 +356,37 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case resumes from step 1.
 
-**Use case: List all volunteers**
+**<a name="UCV02"></a>Use case UCV02: List all volunteers**
 
 **MSS**
 
-1.  User requests to list all volunteers
-2.  iVolunteer shows a list of all volunteers
+1.  User requests to list all volunteers.
+2.  iVolunteer shows a list of all volunteers.
 
     Use case ends.
 
-**Use case: Delete all volunteers**
+**Use case UCV03: Delete all volunteers**
 
 **MSS**
 
-1.  User requests to list all volunteers
-2.  iVolunteer shows a list of all volunteers
-3.  User requests to delete a specific volunteer in the volunteer list
-4.  iVolunteer removes the volunteer from all events he/she is in
-5.  iVolunteer deletes the volunteer
+1.  User <u>lists all volunteers (UCV02)</u>.
+2.  User requests to delete a specific volunteer in the volunteer list.
+3.  iVolunteer removes the volunteer from all events he/she is in.
+4.  iVolunteer deletes the volunteer.
 
     Use case ends.
 
 **Extensions**
 
-* 2a. The list is empty.
+* 1a. The list is empty.
 
   Use case ends.
 
-* 3a. The given index is invalid.
+* 2a. The given index is invalid.
 
-    * 3a1. iVolunteer shows an error message.
+    * 2a1. iVolunteer shows an error message that there is no such volunteer in the given index.
 
-      Use case resumes at step 2.
+      Use case resumes from step 2.
 
 *{More to be added}*
 
