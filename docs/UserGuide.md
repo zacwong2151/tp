@@ -75,11 +75,11 @@ Shows a message explaning how to access the help page.
 Format: `help`
 
 
-### Adding a volunteer: `vadd` [COMING SOON]
+### Adding a volunteer into an event: `eaddv` [COMING SOON]
 
-Adds a volunteer to an event.
+Adds a volunteer to an event by id or name.
 
-Format: `vadd vid/VOLUNTEER_ID /to eid/EVENT_ID` or `vadd vn/VOLUNTEER_NAME /to en/EVENT_NAME`
+Format: `eaddv vid/VOLUNTEER_ID eid/EVENT_ID` or `eaddv vn/VOLUNTEER_NAME en/EVENT_NAME`
 
 Parameters:
 * vn/ - Volunteer name
@@ -94,14 +94,14 @@ Restrictions:
 * The volunteer id must be greater than or equal to 0 and lesser than the number of volunteers existed.
 
 Examples:
-* `vadd vid/1 /to eid/1`
-* `vadd n/Betsy Crowe /to en/fundraising`
+* `eaddv vid/1 eid/1`
+* `eaddv vn/Betsy Crowe en/fundraising`
 
-### Checking all volunteers : `vcheck` [COMING SOON]
+### Listing all volunteers in an event: `elistv` [COMING SOON]
 
 Shows a list of all volunteers in an event.
 
-Format: `vcheck eid/EVENT_ID` or `vcheck en/EVENT`
+Format: `elistv eid/EVENT_ID` or `elistv en/EVENT`
 
 Parameters:
 * eid/ - Event id 
@@ -113,8 +113,8 @@ Restrictions:
 * The event id must be greater than or equal to 0 and lesser than the number of events existed.
 
 Examples:
-* `vcheck eid/1`
-* `vcheck en/fundraising`
+* `elistv eid/1`
+* `elistv en/fundraising`
 
 ### Editing a person : `edit`
 
@@ -151,11 +151,11 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
-### Deleting a volunteer : `vdelete` [COMING SOON]
+### Removing a volunteer in an event: `eremovev` [COMING SOON]
 
-Deletes the specified volunteer from an event.
+Removes the specified volunteer from an event by name or id.
 
-Format: `vdelete vid/VOLUNTEER_ID /from eid/EVENT_ID` or `vdelete vn/VOLUNTEER_NAME /from en/EVENT_NAME`
+Format: `eremovev vid/VOLUNTEER_ID eid/EVENT_ID` or `eremovev vn/VOLUNTEER_NAME en/EVENT_NAME`
 
 Parameters:
 * vn/ - Volunteer name
@@ -170,8 +170,8 @@ Restrictions:
 * The id must not exceed the number of volunteers in the event and greater or equal to 0.
 
 Examples:
-* `vdelete vid/1 /from eid/1`
-* `vdelete vn/John /from en/fundraising`
+* `eremovev vid/1 eid/1`
+* `eremovev vn/John en/fundraising`
 
 ### Clearing all entries : `clear`
 
