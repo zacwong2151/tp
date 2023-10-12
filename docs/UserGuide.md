@@ -101,7 +101,7 @@ Examples:
 
 Shows a list of all volunteers in an event.
 
-Format: `elistv eid/EVENT_ID` or `elistv en/EVENT`
+Format: `elistv eid/EVENT_ID` or `elistv en/EVENT_NAME`
 
 Parameters:
 * eid/ - Event id 
