@@ -290,7 +290,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | volunteer coordinator  | change the date and time of an event                                                  | update an event with the correct date and time                  |
 | `* * *`  | volunteer coordinator  | check the list of events through the app                                              | view all upcoming events                                        |
 | `* * *`  | volunteer coordinator  | check the date and time of an event                                                   | know when and what time an event will occur                     |
-| `* * *`  | volunteer coordinator  | delete volunteer opportunities                                                        | remove them when they are no longer needed                      |
+| `* * *`  | volunteer coordinator  | delete events                                                                         | remove them when they are no longer needed                      |
 | `* *`    | volunteer coordinator  | create new events by specifying the roles needed                                      | check what roles are needed for an event in the future          |
 | `* *`    | volunteer coordinator  | create new events by setting the location and approximate area of the event           | check where an event will be held  in the future                |
 | `* *`    | volunteer coordinator  | create new events by specifying the logistics and other materials needed for an event | check what other logistics I require for an event in the future |
