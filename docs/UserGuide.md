@@ -184,7 +184,7 @@ Examples:
 ### List all events : `elist` [coming soon]
 Volunteer coordinators can see all the events they are organising. For each event, only the most important information will be shown: name, date and time, location.
 
-Format: `elist` (case-insensitive)
+Format: `elist`
 
 ### Read an individual event : `eshow` [coming soon]
 Volunteer coordinators can read up more about an individual event, to familiarize themselves with its requirements while planning for it.
