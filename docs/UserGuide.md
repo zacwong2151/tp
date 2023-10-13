@@ -203,6 +203,12 @@ Restrictions:
 Examples:
 * `vlist`, followed by `vdelete 6` will remove the 6th volunteer displayed in the volunteer list.
 
+### Clearing all entries : `vclear` [coming soon]
+
+Clears all volunteers from the volunteer list.
+
+Format: `vclear`
+
 ### Creating an event [coming soon]
 
 Volunteer Coordinators can create new events.
