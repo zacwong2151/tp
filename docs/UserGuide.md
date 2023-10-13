@@ -30,14 +30,14 @@ iVolunteer is your dedicated application for volunteer coordination, designed wi
    Some example commands you can try:
 
    * `elist` : Lists all events
-   
-   * `ecreate n/food donation r/chef r/packer d/23-9-2023 1500 dsc/help food distribution m/50 potatoes b/50` : Creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
+
+   * `ecreate n/food donation r/chef r/packer d/23/9/2023 1500 dsc/help food distribution m/50 potatoes b/50` : Creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
 
    * `edelete 3` : Deletes the 3rd event in the current event list
    
    * `vlist` : Lists all volunteers.
 
-   * `vadd n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a volunteer named `John Doe` to the list of volunteers.
+   * `vcreate n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a volunteer named `John Doe` to the list of volunteers.
 
    * `vdelete 3` : Deletes the 3rd volunteer in the current volunteer list.
 
@@ -81,14 +81,11 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
-
-### Creating a volunteer: `ecreate`
+### Creating a volunteer: `vcreate`
 
 Creates a volunteer in the volunteer list.
 
 Format: `vcreate n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
-
-<box type="tip" seamless>
 
 **Tip:** A volunteer can have any number of tags (including 0)
 </box>
@@ -97,11 +94,53 @@ Examples:
 * `ecreate n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `ecreate n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
+
+### Adding a volunteer into an event: `eaddv` [COMING SOON]
+
+Adds a volunteer to an event by id or name.
+
+Format: `eaddv vid/VOLUNTEER_ID eid/EVENT_ID` or `eaddv vn/VOLUNTEER_NAME en/EVENT_NAME`
+
+Parameters:
+* vn/ - Volunteer name
+* vid/ - Volunteer id
+* eid/ - Event id
+* en/ - Event name
+
+Restrictions:
+* The maximum number of characters of the event and volunteer is 50.
+* The event and volunteer name entered must exist.
+* The event id must be greater than or equal to 0 and lesser than the number of events existed.
+* The volunteer id must be greater than or equal to 0 and lesser than the number of volunteers existed.
+
+Examples:
+* `eaddv vid/1 eid/1`
+* `eaddv vn/Betsy Crowe en/fundraising`
+
 ### Listing all volunteers : `vlist`
 
 Shows a list of all volunteers in the volunteer list.
 
 Format: `vlist`
+
+### Listing all volunteers in an event: `elistv` [COMING SOON]
+
+Shows a list of all volunteers in an event.
+
+Format: `elistv eid/EVENT_ID` or `elistv en/EVENT_NAME`
+
+Parameters:
+* eid/ - Event id 
+* en/ - Event name
+
+Restrictions:
+* The maximum number of characters of the event is 50.
+* The event name entered must exist.
+* The event id must be greater than or equal to 0 and lesser than the number of events existed.
+
+Examples:
+* `elistv eid/1`
+* `elistv en/fundraising`
 
 ### Editing a volunteer : `vedit`
 
@@ -152,6 +191,28 @@ Examples:
 * `vlist` followed by `vdelete 2` deletes the 2nd volunteer in the volunteer list.
 * `vfind Betsy` followed by `vdelete 1` deletes the 1st volunteer in the results of the `vfind` command.
 
+### Removing a volunteer in an event: `eremovev` [COMING SOON]
+
+Removes the specified volunteer from an event by name or id.
+
+Format: `eremovev vid/VOLUNTEER_ID eid/EVENT_ID` or `eremovev vn/VOLUNTEER_NAME en/EVENT_NAME`
+
+Parameters:
+* vn/ - Volunteer name
+* vid/ - Volunteer id
+* en/ - Event name
+* eid/ - Event id
+
+Restrictions:
+* The maximum number of characters of the event is 50.
+* The event and volunteer name entered must exist.
+* The maximum number of characters of a volunteer name is 30.
+* The id must not exceed the number of volunteers in the event and greater or equal to 0.
+
+Examples:
+* `eremovev vid/1 eid/1`
+* `eremovev vn/John en/fundraising`
+
 ### Clearing all volunteers : `vclear`
 
 Clears all volunteers from the volunteer list.
@@ -160,23 +221,26 @@ Format: `vclear`
 
 ### Creating an event [coming soon]
 
-Volunteer Coordinators can create new events by specifying the following parameters.
-* Roles needed
-* Date and Time
-* Location
-* Brief Description
-* Logistics and material needed(optional)
-* Budget(optional)
+Volunteer Coordinators can create new events.
 
-Format: `ecreate n/EVENT_NAME r/ROLES_NEEDED… d/DATE_AND_TIME l/LOCATION dsc/DESCRIPTION [m/MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET]`
-* Note that shorthands `e add` and `ea` can also be used instead of `event add`
+Format: `ecreate add n/EVENT_NAME r/ROLES_NEEDED… d/DATE_AND_TIME l/LOCATION dsc/DESCRIPTION [m/MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET]`
+
+Parameters:
+ * n/ - Event name
+ * r/ - Roles needed for the event
+ * d/ - Date and time of the event
+ * l/ - Location of the event
+ * dsc/ - Description of the event
+ * m/ - Materials needed for the event
+ * b/ - Budget for the event
+
+Restrictions:
 * All parameters must be separated by a single space.
-* Date and Time - The format must be exactly `DD-MM-YYYY TTTT`
-* Budget - Argument must be a floating point number with at most 2 decimal places.
-
+* The date and time format must be exactly `DD/MM/YYYY TTTT`
+* The budget argument must be a floating point number with 2 decimal places.
 
 Examples:
-* `ecreate n/food donation r/chef r/packer d/23-9-2023 1500 dsc/help food distribution m/50 potatoes b/50` creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
+* `ecreate n/food donation r/chef r/packer d/23/9/2023 1500 dsc/help food distribution m/50 potatoes b/50` creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
 
 ### Exiting the program : `exit`
 
