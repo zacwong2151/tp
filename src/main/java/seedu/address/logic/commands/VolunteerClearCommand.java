@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import seedu.address.model.AddressBook;
+import seedu.address.model.VolunteerStorage;
 import seedu.address.model.Model;
 
 /**
@@ -17,7 +17,7 @@ public class VolunteerClearCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        model.setAddressBook(new AddressBook());
+        model.setVolunteerStorage(new VolunteerStorage());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

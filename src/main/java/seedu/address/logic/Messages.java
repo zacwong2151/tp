@@ -5,7 +5,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.address.logic.parser.Prefix;
-import seedu.address.model.person.Person;
+import seedu.address.model.event.*;
+import seedu.address.model.person.Volunteer;
 
 /**
  * Container for user visible messages.
@@ -32,19 +33,45 @@ public class Messages {
     }
 
     /**
+     * Formats the {@code event} for display to the user.
+     */
+    public static String format(Event event) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(event.getEventName())
+                .append("; Roles: ");
+
+        event.getRoles().forEach(builder::append);
+
+        builder.append("; Date and Time: ")
+                .append(event.getDateAndTime())
+                .append("; Location: ")
+                .append(event.getLocation())
+                .append("; Description: ")
+                .append(event.getDescription())
+                .append("; Materials and Logistics needed: ");
+
+        event.getMaterials().forEach(builder::append);
+
+        builder.append("; Budget: ")
+                .append(event.getBudget());
+
+        return builder.toString();
+    }
+
+    /**
      * Formats the {@code person} for display to the user.
      */
-    public static String format(Person person) {
+    public static String format(Volunteer volunteer) {
         final StringBuilder builder = new StringBuilder();
-        builder.append(person.getName())
+        builder.append(volunteer.getName())
                 .append("; Phone: ")
-                .append(person.getPhone())
+                .append(volunteer.getPhone())
                 .append("; Email: ")
-                .append(person.getEmail())
+                .append(volunteer.getEmail())
                 .append("; Address: ")
-                .append(person.getAddress())
+                .append(volunteer.getAddress())
                 .append("; Tags: ");
-        person.getTags().forEach(builder::append);
+        volunteer.getTags().forEach(builder::append);
         return builder.toString();
     }
 

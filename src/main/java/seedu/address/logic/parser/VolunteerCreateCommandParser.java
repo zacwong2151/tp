@@ -15,14 +15,14 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
+import seedu.address.model.person.Volunteer;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
 /**
  * Parses input arguments and creates a new AddCommand object
  */
-public class VolunteerAddCommandParser implements Parser<VolunteerCreateCommand> {
+public class VolunteerCreateCommandParser implements Parser<VolunteerCreateCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
@@ -46,9 +46,9 @@ public class VolunteerAddCommandParser implements Parser<VolunteerCreateCommand>
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        Person person = new Person(name, phone, email, address, tagList);
+        Volunteer volunteer = new Volunteer(name, phone, email, address, tagList);
 
-        return new VolunteerCreateCommand(person);
+        return new VolunteerCreateCommand(volunteer);
     }
 
     /**

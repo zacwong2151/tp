@@ -14,8 +14,10 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.Person;
+import seedu.address.model.ReadOnlyEventStorage;
+import seedu.address.model.ReadOnlyVolunteerStorage;
+import seedu.address.model.event.Event;
+import seedu.address.model.person.Volunteer;
 import seedu.address.storage.Storage;
 
 /**
@@ -51,7 +53,8 @@ public class LogicManager implements Logic {
         commandResult = command.execute(model);
 
         try {
-            storage.saveAddressBook(model.getAddressBook());
+            storage.saveVolunteerStorage(model.getVolunteerStorage());
+            storage.saveEventStorage(model.getEventStorage());
         } catch (AccessDeniedException e) {
             throw new CommandException(String.format(FILE_OPS_PERMISSION_ERROR_FORMAT, e.getMessage()), e);
         } catch (IOException ioe) {
@@ -62,18 +65,33 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public ReadOnlyAddressBook getAddressBook() {
-        return model.getAddressBook();
+    public ReadOnlyEventStorage getEventStorage() {
+        return model.getEventStorage();
     }
 
     @Override
-    public ObservableList<Person> getFilteredPersonList() {
-        return model.getFilteredPersonList();
+    public ObservableList<Event> getFilteredEventList() {
+        return model.getFilteredEventList();
     }
 
     @Override
-    public Path getAddressBookFilePath() {
-        return model.getAddressBookFilePath();
+    public Path getEventStorageFilePath() {
+        return model.getEventStorageFilePath();
+    }
+
+    @Override
+    public ReadOnlyVolunteerStorage getVolunteerStorage() {
+        return model.getVolunteerStorage();
+    }
+
+    @Override
+    public ObservableList<Volunteer> getFilteredVolunteerList() {
+        return model.getFilteredVolunteerList();
+    }
+
+    @Override
+    public Path getVolunteerStorageFilePath() {
+        return model.getVolunteerStorageFilePath();
     }
 
     @Override

@@ -11,7 +11,8 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.model.person.Person;
+import seedu.address.model.event.Event;
+import seedu.address.model.person.Volunteer;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -19,25 +20,31 @@ import seedu.address.model.person.Person;
 public class ModelManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private final AddressBook addressBook;
+    private final VolunteerStorage volunteerStorage;
+    private final EventStorage eventStorage;
     private final UserPrefs userPrefs;
-    private final FilteredList<Person> filteredPersons;
+    private final FilteredList<Volunteer> filteredVolunteers;
+    private final FilteredList<Event> filteredEvents;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyUserPrefs userPrefs) {
-        requireAllNonNull(addressBook, userPrefs);
+    public ModelManager(ReadOnlyEventStorage eventStorage, ReadOnlyVolunteerStorage volunteerStorage,
+                        ReadOnlyUserPrefs userPrefs) {
+        requireAllNonNull(volunteerStorage, eventStorage, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with volunteer storage: " + volunteerStorage + " and user prefs " + userPrefs);
+        logger.fine("Initializing with event storage: " + eventStorage + " and user prefs " + userPrefs);
 
-        this.addressBook = new AddressBook(addressBook);
+        this.eventStorage = new EventStorage(eventStorage);
+        this.volunteerStorage = new VolunteerStorage(volunteerStorage);
         this.userPrefs = new UserPrefs(userPrefs);
-        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredEvents = new FilteredList<>(this.eventStorage.getEventList());
+        filteredVolunteers = new FilteredList<>(this.volunteerStorage.getPersonList());
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new EventStorage(), new VolunteerStorage(), new UserPrefs());
     }
 
     //=========== UserPrefs ==================================================================================
@@ -65,67 +72,129 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public Path getAddressBookFilePath() {
-        return userPrefs.getAddressBookFilePath();
+    public Path getVolunteerStorageFilePath() {
+        return userPrefs.getVolunteerStorageFilePath();
     }
 
     @Override
-    public void setAddressBookFilePath(Path addressBookFilePath) {
-        requireNonNull(addressBookFilePath);
-        userPrefs.setAddressBookFilePath(addressBookFilePath);
-    }
-
-    //=========== AddressBook ================================================================================
-
-    @Override
-    public void setAddressBook(ReadOnlyAddressBook addressBook) {
-        this.addressBook.resetData(addressBook);
+    public Path getEventStorageFilePath() {
+        return userPrefs.getEventStorageFilePath();
     }
 
     @Override
-    public ReadOnlyAddressBook getAddressBook() {
-        return addressBook;
+    public void setVolunteerStorageFilePath(Path volunteerStorageFilePath) {
+        requireNonNull(volunteerStorageFilePath);
+        userPrefs.setVolunteerStorageFilePath(volunteerStorageFilePath);
     }
 
     @Override
-    public boolean hasPerson(Person person) {
-        requireNonNull(person);
-        return addressBook.hasPerson(person);
+    public void setEventStorageFilePath(Path eventStorageFilePath) {
+        requireNonNull(eventStorageFilePath);
+        userPrefs.setEventStorageFilePath(eventStorageFilePath);
+    }
+
+    //=========== Event Storage ================================================================================
+    @Override
+    public void setEventStorage(ReadOnlyEventStorage eventStorage) {
+        this.eventStorage.resetData(eventStorage);
     }
 
     @Override
-    public void deletePerson(Person target) {
-        addressBook.removePerson(target);
+    public ReadOnlyEventStorage getEventStorage() {
+        return eventStorage;
     }
 
     @Override
-    public void addPerson(Person person) {
-        addressBook.addPerson(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    public boolean hasEvent(Event event) {
+        requireNonNull(event);
+        return eventStorage.hasEvent(event);
     }
 
     @Override
-    public void setPerson(Person target, Person editedPerson) {
-        requireAllNonNull(target, editedPerson);
+    public void deleteEvent(Event target) {
+        eventStorage.removeEvent(target);
+    }
+    @Override
+    public void addEvent(Event event) {
+        eventStorage.addEvent(event);
+        updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+    }
 
-        addressBook.setPerson(target, editedPerson);
+    @Override
+    public void setEvent(Event target, Event editedEvent) {
+        requireAllNonNull(target, editedEvent);
+
+        eventStorage.setEvent(target, editedEvent);
+    }
+
+    //=========== Volunteer Storage ================================================================================
+
+    @Override
+    public void setVolunteerStorage(ReadOnlyVolunteerStorage volunteerStorage) {
+        this.volunteerStorage.resetData(volunteerStorage);
+    }
+
+    @Override
+    public ReadOnlyVolunteerStorage getVolunteerStorage() {
+        return volunteerStorage;
+    }
+
+    @Override
+    public boolean hasPerson(Volunteer volunteer) {
+        requireNonNull(volunteer);
+        return volunteerStorage.hasPerson(volunteer);
+    }
+
+    @Override
+    public void deletePerson(Volunteer target) {
+        volunteerStorage.removePerson(target);
+    }
+
+    @Override
+    public void addPerson(Volunteer volunteer) {
+        volunteerStorage.addPerson(volunteer);
+        updateFilteredVolunteerList(PREDICATE_SHOW_ALL_PERSONS);
+    }
+
+    @Override
+    public void setPerson(Volunteer target, Volunteer editedVolunteer) {
+        requireAllNonNull(target, editedVolunteer);
+
+        volunteerStorage.setPerson(target, editedVolunteer);
+    }
+
+    //=========== Filtered Event List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Event} backed by the internal list of
+     * {@code versionedEventStorage}
+     */
+    @Override
+    public ObservableList<Event> getFilteredEventList() {
+        return filteredEvents;
+    }
+
+    @Override
+    public void updateFilteredEventList(Predicate<Event> predicate) {
+        requireNonNull(predicate);
+        filteredEvents.setPredicate(predicate);
     }
 
     //=========== Filtered Person List Accessors =============================================================
 
     /**
      * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
-     * {@code versionedAddressBook}
+     * {@code versionedVolunteerStorage}
      */
     @Override
-    public ObservableList<Person> getFilteredPersonList() {
-        return filteredPersons;
+    public ObservableList<Volunteer> getFilteredVolunteerList() {
+        return filteredVolunteers;
     }
 
     @Override
-    public void updateFilteredPersonList(Predicate<Person> predicate) {
+    public void updateFilteredVolunteerList(Predicate<Volunteer> predicate) {
         requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
+        filteredVolunteers.setPredicate(predicate);
     }
 
     @Override
@@ -140,9 +209,11 @@ public class ModelManager implements Model {
         }
 
         ModelManager otherModelManager = (ModelManager) other;
-        return addressBook.equals(otherModelManager.addressBook)
+        return volunteerStorage.equals(otherModelManager.volunteerStorage)
+                && eventStorage.equals(otherModelManager.eventStorage)
                 && userPrefs.equals(otherModelManager.userPrefs)
-                && filteredPersons.equals(otherModelManager.filteredPersons);
+                && filteredVolunteers.equals(otherModelManager.filteredVolunteers)
+                && filteredEvents.equals(otherModelManager.filteredEvents);
     }
 
 }

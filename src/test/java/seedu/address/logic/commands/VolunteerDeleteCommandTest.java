@@ -17,7 +17,7 @@ import seedu.address.logic.Messages;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Person;
+import seedu.address.model.person.Volunteer;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for
@@ -29,14 +29,14 @@ public class VolunteerDeleteCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
-        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Volunteer volunteerToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         VolunteerDeleteCommand volunteerDeleteCommand = new VolunteerDeleteCommand(INDEX_FIRST_PERSON);
 
         String expectedMessage = String.format(VolunteerDeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS,
-                Messages.format(personToDelete));
+                Messages.format(volunteerToDelete));
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deletePerson(personToDelete);
+        ModelManager expectedModel = new ModelManager(model.getVolunteerStorage(), new UserPrefs());
+        expectedModel.deletePerson(volunteerToDelete);
 
         assertCommandSuccess(volunteerDeleteCommand, model, expectedMessage, expectedModel);
     }
@@ -53,14 +53,14 @@ public class VolunteerDeleteCommandTest {
     public void execute_validIndexFilteredList_success() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
-        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Volunteer volunteerToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         VolunteerDeleteCommand volunteerDeleteCommand = new VolunteerDeleteCommand(INDEX_FIRST_PERSON);
 
         String expectedMessage = String.format(VolunteerDeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS,
-                Messages.format(personToDelete));
+                Messages.format(volunteerToDelete));
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deletePerson(personToDelete);
+        Model expectedModel = new ModelManager(model.getVolunteerStorage(), new UserPrefs());
+        expectedModel.deletePerson(volunteerToDelete);
         showNoPerson(expectedModel);
 
         assertCommandSuccess(volunteerDeleteCommand, model, expectedMessage, expectedModel);
@@ -72,7 +72,7 @@ public class VolunteerDeleteCommandTest {
 
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
         // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getVolunteerStorage().getPersonList().size());
 
         VolunteerDeleteCommand volunteerDeleteCommand = new VolunteerDeleteCommand(outOfBoundIndex);
 
@@ -113,7 +113,7 @@ public class VolunteerDeleteCommandTest {
      * Updates {@code model}'s filtered list to show no one.
      */
     private void showNoPerson(Model model) {
-        model.updateFilteredPersonList(p -> false);
+        model.updateFilteredVolunteerList(p -> false);
 
         assertTrue(model.getFilteredPersonList().isEmpty());
     }

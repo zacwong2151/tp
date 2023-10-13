@@ -9,25 +9,25 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.AddressBook;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.Person;
+import seedu.address.model.VolunteerStorage;
+import seedu.address.model.ReadOnlyVolunteerStorage;
+import seedu.address.model.person.Volunteer;
 
 /**
- * An Immutable AddressBook that is serializable to JSON format.
+ * An Immutable Volunteer Storage that is serializable to JSON format.
  */
-@JsonRootName(value = "addressbook")
-class JsonSerializableAddressBook {
+@JsonRootName(value = "volunteerStorage")
+class JsonSerializableVolunteerStorage {
 
     public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
 
-    private final List<JsonAdaptedPerson> persons = new ArrayList<>();
+    private final List<JsonAdaptedVolunteer> persons = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonSerializableAddressBook} with the given persons.
      */
     @JsonCreator
-    public JsonSerializableAddressBook(@JsonProperty("persons") List<JsonAdaptedPerson> persons) {
+    public JsonSerializableVolunteerStorage(@JsonProperty("persons") List<JsonAdaptedVolunteer> persons) {
         this.persons.addAll(persons);
     }
 
@@ -36,8 +36,8 @@ class JsonSerializableAddressBook {
      *
      * @param source future changes to this will not affect the created {@code JsonSerializableAddressBook}.
      */
-    public JsonSerializableAddressBook(ReadOnlyAddressBook source) {
-        persons.addAll(source.getPersonList().stream().map(JsonAdaptedPerson::new).collect(Collectors.toList()));
+    public JsonSerializableVolunteerStorage(ReadOnlyVolunteerStorage source) {
+        persons.addAll(source.getPersonList().stream().map(JsonAdaptedVolunteer::new).collect(Collectors.toList()));
     }
 
     /**
@@ -45,16 +45,16 @@ class JsonSerializableAddressBook {
      *
      * @throws IllegalValueException if there were any data constraints violated.
      */
-    public AddressBook toModelType() throws IllegalValueException {
-        AddressBook addressBook = new AddressBook();
-        for (JsonAdaptedPerson jsonAdaptedPerson : persons) {
-            Person person = jsonAdaptedPerson.toModelType();
-            if (addressBook.hasPerson(person)) {
+    public VolunteerStorage toModelType() throws IllegalValueException {
+        VolunteerStorage volunteerStorage = new VolunteerStorage();
+        for (JsonAdaptedVolunteer jsonAdaptedVolunteer : persons) {
+            Volunteer volunteer = jsonAdaptedVolunteer.toModelType();
+            if (volunteerStorage.hasPerson(volunteer)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
             }
-            addressBook.addPerson(person);
+            volunteerStorage.addPerson(volunteer);
         }
-        return addressBook;
+        return volunteerStorage;
     }
 
 }

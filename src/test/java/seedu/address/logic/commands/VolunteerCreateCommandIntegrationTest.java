@@ -11,7 +11,7 @@ import seedu.address.logic.Messages;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Person;
+import seedu.address.model.person.Volunteer;
 import seedu.address.testutil.PersonBuilder;
 
 /**
@@ -28,20 +28,20 @@ public class VolunteerCreateCommandIntegrationTest {
 
     @Test
     public void execute_newPerson_success() {
-        Person validPerson = new PersonBuilder().build();
+        Volunteer validVolunteer = new PersonBuilder().build();
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.addPerson(validPerson);
+        Model expectedModel = new ModelManager(model.getVolunteerStorage(), new UserPrefs());
+        expectedModel.addPerson(validVolunteer);
 
-        assertCommandSuccess(new VolunteerCreateCommand(validPerson), model,
-                String.format(VolunteerCreateCommand.MESSAGE_SUCCESS, Messages.format(validPerson)),
+        assertCommandSuccess(new VolunteerCreateCommand(validVolunteer), model,
+                String.format(VolunteerCreateCommand.MESSAGE_SUCCESS, Messages.format(validVolunteer)),
                 expectedModel);
     }
 
     @Test
     public void execute_duplicatePerson_throwsCommandException() {
-        Person personInList = model.getAddressBook().getPersonList().get(0);
-        assertCommandFailure(new VolunteerCreateCommand(personInList), model,
+        Volunteer volunteerInList = model.getVolunteerStorage().getPersonList().get(0);
+        assertCommandFailure(new VolunteerCreateCommand(volunteerInList), model,
                 VolunteerCreateCommand.MESSAGE_DUPLICATE_PERSON);
     }
 
