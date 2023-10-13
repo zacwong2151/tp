@@ -356,7 +356,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case resumes from step 1.
 
-**<a name="UCV02"></a>Use case UCV02: List all volunteers**
+**Use case UCV02: List all volunteers**
 
 **MSS**
 
@@ -387,6 +387,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 2a1. iVolunteer shows an error message that there is no such volunteer in the given index.
 
       Use case resumes from step 2.
+
+**Use case UCV04: Clear all volunteers in volunteer list**
+
+**MSS**
+
+1. User clears all volunteers in volunteer list.
+2. The volunteer list becomes empty.
+
+    Use case ends.
 
 *{More to be added}*
 
