@@ -18,8 +18,8 @@ import org.junit.jupiter.api.Test;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.person.Volunteer;
-import seedu.address.model.person.exceptions.DuplicateVolunteerException;
+import seedu.address.model.volunteer.Volunteer;
+import seedu.address.model.volunteer.exceptions.DuplicateVolunteerException;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddressBookTest {

@@ -9,8 +9,8 @@ import seedu.address.model.EventStorage;
 import seedu.address.model.VolunteerStorage;
 import seedu.address.model.ReadOnlyVolunteerStorage;
 import seedu.address.model.event.Event;
-import seedu.address.model.person.*;
-import seedu.address.model.person.Volunteer;
+import seedu.address.model.volunteer.*;
+import seedu.address.model.volunteer.Volunteer;
 import seedu.address.model.tag.Tag;
 
 /**

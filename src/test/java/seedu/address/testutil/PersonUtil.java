@@ -8,9 +8,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Set;
 
-import seedu.address.logic.commands.VolunteerCreateCommand;
-import seedu.address.logic.commands.VolunteerEditCommand.EditPersonDescriptor;
-import seedu.address.model.person.Volunteer;
+import seedu.address.logic.commands.volunteerCommands.VolunteerCreateCommand;
+import seedu.address.logic.commands.volunteerCommands.VolunteerEditCommand.EditPersonDescriptor;
+import seedu.address.model.volunteer.Volunteer;
 import seedu.address.model.tag.Tag;
 
 /**

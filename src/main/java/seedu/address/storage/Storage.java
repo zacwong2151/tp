@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
 
-import org.w3c.dom.events.Event;
 import seedu.address.commons.exceptions.DataLoadingException;
 import seedu.address.model.ReadOnlyEventStorage;
 import seedu.address.model.ReadOnlyVolunteerStorage;

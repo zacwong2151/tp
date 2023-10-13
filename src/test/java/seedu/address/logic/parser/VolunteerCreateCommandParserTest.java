@@ -36,9 +36,10 @@ import static seedu.address.testutil.TypicalPersons.BOB;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.Messages;
-import seedu.address.logic.commands.VolunteerCreateCommand;
-import seedu.address.model.person.*;
-import seedu.address.model.person.Volunteer;
+import seedu.address.logic.commands.volunteerCommands.VolunteerCreateCommand;
+import seedu.address.logic.parser.volunteerCommandParsers.VolunteerCreateCommandParser;
+import seedu.address.model.volunteer.*;
+import seedu.address.model.volunteer.Volunteer;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 

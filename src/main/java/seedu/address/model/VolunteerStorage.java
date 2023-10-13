@@ -6,10 +6,8 @@ import java.util.List;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.model.event.Event;
-import seedu.address.model.event.UniqueEventList;
-import seedu.address.model.person.Volunteer;
-import seedu.address.model.person.UniqueVolunteerList;
+import seedu.address.model.volunteer.Volunteer;
+import seedu.address.model.volunteer.UniqueVolunteerList;
 
 /**
  * Wraps all data at the address-book level

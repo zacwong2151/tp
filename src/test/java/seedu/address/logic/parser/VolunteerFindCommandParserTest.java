@@ -8,8 +8,9 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.commands.VolunteerFindCommand;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.logic.commands.volunteerCommands.VolunteerFindCommand;
+import seedu.address.logic.parser.volunteerCommandParsers.VolunteerFindCommandParser;
+import seedu.address.model.volunteer.NameContainsKeywordsPredicate;
 
 public class VolunteerFindCommandParserTest {
 

@@ -12,7 +12,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.EventStorage;
 import seedu.address.model.ReadOnlyEventStorage;
 import seedu.address.model.event.Event;
-import seedu.address.model.person.Volunteer;
 
 /**
  * An Immutable Event Storage that is serializable to JSON format.

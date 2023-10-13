@@ -10,7 +10,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.ReadOnlyEventStorage;
 import seedu.address.model.ReadOnlyVolunteerStorage;
 import seedu.address.model.event.Event;
-import seedu.address.model.person.Volunteer;
+import seedu.address.model.volunteer.Volunteer;
 
 /**
  * API of the Logic component

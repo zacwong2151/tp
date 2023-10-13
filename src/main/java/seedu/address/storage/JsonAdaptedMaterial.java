@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.Material;
-import seedu.address.model.event.Role;
-import seedu.address.model.tag.Tag;
 
 /**
  * Jackson-friendly version of {@link Material}.

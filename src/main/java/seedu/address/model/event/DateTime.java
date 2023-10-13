@@ -1,7 +1,5 @@
 package seedu.address.model.event;
 
-import seedu.address.logic.parser.exceptions.ParseException;
-
 import java.time.LocalDateTime;
 
 import static java.util.Objects.requireNonNull;

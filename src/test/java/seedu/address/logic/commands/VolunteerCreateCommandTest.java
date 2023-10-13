@@ -18,11 +18,12 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.volunteerCommands.VolunteerCreateCommand;
 import seedu.address.model.VolunteerStorage;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyVolunteerStorage;
 import seedu.address.model.ReadOnlyUserPrefs;
-import seedu.address.model.person.Volunteer;
+import seedu.address.model.volunteer.Volunteer;
 import seedu.address.testutil.PersonBuilder;
 
 public class VolunteerCreateCommandTest {

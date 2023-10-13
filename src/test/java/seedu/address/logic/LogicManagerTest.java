@@ -19,15 +19,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.VolunteerCreateCommand;
-import seedu.address.logic.commands.VolunteerListCommand;
+import seedu.address.logic.commands.volunteerCommands.VolunteerCreateCommand;
+import seedu.address.logic.commands.volunteerCommands.VolunteerListCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyVolunteerStorage;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Volunteer;
+import seedu.address.model.volunteer.Volunteer;
 import seedu.address.storage.JsonVolunteerStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.StorageManager;

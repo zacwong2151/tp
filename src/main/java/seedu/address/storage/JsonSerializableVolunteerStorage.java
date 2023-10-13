@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.VolunteerStorage;
 import seedu.address.model.ReadOnlyVolunteerStorage;
-import seedu.address.model.person.Volunteer;
+import seedu.address.model.volunteer.Volunteer;
 
 /**
  * An Immutable Volunteer Storage that is serializable to JSON format.

@@ -15,10 +15,11 @@ import java.util.List;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.volunteerCommands.VolunteerEditCommand;
 import seedu.address.model.VolunteerStorage;
 import seedu.address.model.Model;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.person.Volunteer;
+import seedu.address.model.volunteer.NameContainsKeywordsPredicate;
+import seedu.address.model.volunteer.Volunteer;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
