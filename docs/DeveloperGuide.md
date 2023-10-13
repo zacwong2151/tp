@@ -295,28 +295,62 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `iVolunteer` and the **Actor** is the `Volunteer Coordinator`, unless specified otherwise)
 
-**Use case: Delete a person**
+**Use case 2: List all volunteering events**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to list all volunteering events.
+2.  iVolunteer list out a summarized version of all volunteering events.
 
     Use case ends.
 
 **Extensions**
 
+* 1a. The input command is incorrect.
+
+    * 1a1. System prompts the user to provide a valid command.
+      
+      Use case resumes from step 1.
+
 * 2a. The list is empty.
 
   Use case ends.
 
-* 3a. The given index is invalid.
+**Use case 3: Read an individual event**
 
-    * 3a1. AddressBook shows an error message.
+**MSS**
+
+1.  User </u>lists all volunteering events (UC02)</u>.
+2.  User requests to read an individual event.
+3.  iVolunteer shows a detailed description about that particular event.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. User did not input a correct command.
+
+    * 2a1. System prompts user to input a valid command.
+
+      Use case resumes at step 2.
+
+* 2b. User did not input an index after the command.
+
+    * 2b1. System prompts user to input an index.
+
+      Use case resumes at step 2.
+
+* 2c. User did not input a valid index after the command.
+
+    * 2c1. System prompts user to input a valid index.
+
+      Use case resumes at step 2.
+
+* 2d. User did not leave a single space between the command and the index.
+
+    * 2d1. System prompts user to separate parameters with a single space.
 
       Use case resumes at step 2.
 
