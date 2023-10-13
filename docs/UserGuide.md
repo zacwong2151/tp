@@ -82,26 +82,47 @@ Shows a message explaining how to access the help page.
 Format: `help`
 
 
-### Adding a volunteer: `add`
 
-Adds a volunteer to the address book.
+### Adding a volunteer into an event: `eaddv` [COMING SOON]
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+Adds a volunteer to an event by id or name.
 
-<box type="tip" seamless>
+Format: `eaddv vid/VOLUNTEER_ID eid/EVENT_ID` or `eaddv vn/VOLUNTEER_NAME en/EVENT_NAME`
 
-**Tip:** A volunteer can have any number of tags (including 0)
-</box>
+Parameters:
+* vn/ - Volunteer name
+* vid/ - Volunteer id
+* eid/ - Event id
+* en/ - Event name
+
+Restrictions:
+* The maximum number of characters of the event and volunteer is 50.
+* The event and volunteer name entered must exist.
+* The event id must be greater than or equal to 0 and lesser than the number of events existed.
+* The volunteer id must be greater than or equal to 0 and lesser than the number of volunteers existed.
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `eaddv vid/1 eid/1`
+* `eaddv vn/Betsy Crowe en/fundraising`
 
-### Listing all volunteers : `list`
+### Listing all volunteers in an event: `elistv` [COMING SOON]
 
-Shows a list of all volunteers in the address book.
+Shows a list of all volunteers in an event.
 
-Format: `list`
+Format: `elistv eid/EVENT_ID` or `elistv en/EVENT_NAME`
+
+Parameters:
+* eid/ - Event id 
+* en/ - Event name
+
+Restrictions:
+* The maximum number of characters of the event is 50.
+* The event name entered must exist.
+* The event id must be greater than or equal to 0 and lesser than the number of events existed.
+
+Examples:
+* `elistv eid/1`
+* `elistv en/fundraising`
 
 ### Editing a volunteer : `edit`
 
@@ -138,19 +159,27 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
-### Deleting a volunteer : `delete`
+### Removing a volunteer in an event: `eremovev` [COMING SOON]
 
-Deletes the specified volunteer from the address book.
+Removes the specified volunteer from an event by name or id.
 
-Format: `delete INDEX`
+Format: `eremovev vid/VOLUNTEER_ID eid/EVENT_ID` or `eremovev vn/VOLUNTEER_NAME en/EVENT_NAME`
 
-* Deletes the volunteer at the specified `INDEX`.
-* The index refers to the index number shown in the displayed volunteer list.
-* The index **must be a positive integer** 1, 2, 3, …​
+Parameters:
+* vn/ - Volunteer name
+* vid/ - Volunteer id
+* en/ - Event name
+* eid/ - Event id
+
+Restrictions:
+* The maximum number of characters of the event is 50.
+* The event and volunteer name entered must exist.
+* The maximum number of characters of a volunteer name is 30.
+* The id must not exceed the number of volunteers in the event and greater or equal to 0.
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd volunteer in the address book.
-* `find Betsy` followed by `delete 1` deletes the 1st volunteer in the results of the `find` command.
+* `eremovev vid/1 eid/1`
+* `eremovev vn/John en/fundraising`
 
 ### Clearing all entries : `clear`
 
