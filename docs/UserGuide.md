@@ -209,6 +209,24 @@ Restrictions:
 Examples:
 * `ecreate n/food donation r/chef r/packer d/23-9-2023 1500 dsc/help food distribution m/50 potatoes b/50` creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
 
+### Listing all events : `elist` [coming soon]
+Volunteer coordinators can see all the events they are organising. For each event, only the most important information will be shown: name, date and time, location.
+
+Format: `elist`
+
+### Reading an individual event : `eshow` [coming soon]
+Volunteer coordinators can read up more about an individual event, to familiarize themselves with its requirements while planning for it.
+
+Format: `eshow EVENT_ID`
+
+Restrictions:
+* First part must be `eshow`
+* Second part must be an integer that represents a valid `EVENT_ID`: If the list of events is 10 events long, the acceptable values will be from 1-10.
+* First and second parts must be separated by a single space.
+
+Examples:
+* `eshow 7` will result in a pop-up window appearing, listing all details of the event at id `7`. This includes its name, date and time, location, roles needed, logistics needed (if any), budget (if any), and a description.
+
 ### Exiting the program : `exit`
 
 Exits the program.
