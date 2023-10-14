@@ -304,7 +304,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1.  User requests to list all events
 2.  iVolunteer shows a list of events
 3.  User requests to delete a specific event in the list
-4.  iVolunteer deletes the person
+4.  iVolunteer deletes the event
 
     Use case ends.
 
@@ -316,13 +316,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1b. The given command is invalid.
 
-    * 1a1. iVolunteer requests for the correct command.
-    * 1a2. User enters correct command <br>
-    Steps 1a1-1a2 are repeated until the data entered is correct <br>
+    * 1b1. iVolunteer requests for the correct command.
+    * 1b2. User enters correct command <br>
+    Steps 1b1-1b2 are repeated until the data entered is correct <br>
     Use case resumes at step 2.
 
 * 3a. The given command is invalid
-  * Same steps as 1b.
+    * 3a1. iVolunteer requests for the correct command with valid event number
+    * 3a2. User enters correct command <br>
+    Steps 3a1-3a2 are repeated until the data entered is correct <br>
+    Use case resumes at step 4.
 
 *{More to be added}*
 
