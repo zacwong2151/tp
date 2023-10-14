@@ -314,15 +314,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   Use case ends.
 
-* 1b. The given command is invalid.
+* 1b. Invalid command word.
 
     * 1b1. iVolunteer requests for the correct command.
     * 1b2. User enters correct command <br>
     Steps 1b1-1b2 are repeated until the data entered is correct <br>
     Use case resumes at step 2.
 
-* 3a. The given command is invalid
-    * 3a1. iVolunteer requests for the correct command with valid event number
+* 3a. Invalid event id
+    * 3a1. iVolunteer requests for the correct command with valid event id
     * 3a2. User enters correct command <br>
     Steps 3a1-3a2 are repeated until the data entered is correct <br>
     Use case resumes at step 4.
