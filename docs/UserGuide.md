@@ -138,7 +138,7 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
-### Deleting an event : `delete`
+### Deleting an event : `edelete`
 
 Deletes the event from the event list.
 
@@ -149,15 +149,15 @@ Format: `edelete eid/EVENT_ID`
 * The id **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `event list` followed by `edelete 2` deletes the 2nd event in the event list.
-* `find Beach cleaning` followed by `edelete 1` deletes the 1st event in the results of the `find` command (tentative feature)
+* `elist` followed by `edelete 2` deletes the 2nd event in the event list.
+* `efind Beach cleaning` followed by `edelete 1` deletes the 1st event in the results of the `find` command (tentative feature)
 
 
-### Clearing all entries : `clear`
+### Clearing all entries : `eclear`
 
 Clears all entries from the event list.
 
-Format: `clear`
+Format: `eclear`
 
 ### Create an event [coming soon]
 
