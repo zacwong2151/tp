@@ -365,7 +365,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-**Use case UCV03: Delete all volunteers**
+**Use case UCV03: Delete a volunteer**
 
 **MSS**
 
