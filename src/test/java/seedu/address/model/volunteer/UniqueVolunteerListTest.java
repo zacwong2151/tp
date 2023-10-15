@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.BOB;
+import static seedu.address.testutil.TypicalVolunteers.ALICE;
+import static seedu.address.testutil.TypicalVolunteers.BOB;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -60,23 +60,23 @@ public class UniqueVolunteerListTest {
 
     @Test
     public void setPerson_nullTargetPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> uniqueVolunteerList.setPerson(null, ALICE));
+        assertThrows(NullPointerException.class, () -> uniqueVolunteerList.setVolunteer(null, ALICE));
     }
 
     @Test
     public void setPerson_nullEditedPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> uniqueVolunteerList.setPerson(ALICE, null));
+        assertThrows(NullPointerException.class, () -> uniqueVolunteerList.setVolunteer(ALICE, null));
     }
 
     @Test
     public void setPerson_targetPersonNotInList_throwsPersonNotFoundException() {
-        assertThrows(VolunteerNotFoundException.class, () -> uniqueVolunteerList.setPerson(ALICE, ALICE));
+        assertThrows(VolunteerNotFoundException.class, () -> uniqueVolunteerList.setVolunteer(ALICE, ALICE));
     }
 
     @Test
     public void setPerson_editedPersonIsSamePerson_success() {
         uniqueVolunteerList.add(ALICE);
-        uniqueVolunteerList.setPerson(ALICE, ALICE);
+        uniqueVolunteerList.setVolunteer(ALICE, ALICE);
         UniqueVolunteerList expectedUniqueVolunteerList = new UniqueVolunteerList();
         expectedUniqueVolunteerList.add(ALICE);
         assertEquals(expectedUniqueVolunteerList, uniqueVolunteerList);
@@ -87,7 +87,7 @@ public class UniqueVolunteerListTest {
         uniqueVolunteerList.add(ALICE);
         Volunteer editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
                 .build();
-        uniqueVolunteerList.setPerson(ALICE, editedAlice);
+        uniqueVolunteerList.setVolunteer(ALICE, editedAlice);
         UniqueVolunteerList expectedUniqueVolunteerList = new UniqueVolunteerList();
         expectedUniqueVolunteerList.add(editedAlice);
         assertEquals(expectedUniqueVolunteerList, uniqueVolunteerList);
@@ -96,7 +96,7 @@ public class UniqueVolunteerListTest {
     @Test
     public void setPerson_editedPersonHasDifferentIdentity_success() {
         uniqueVolunteerList.add(ALICE);
-        uniqueVolunteerList.setPerson(ALICE, BOB);
+        uniqueVolunteerList.setVolunteer(ALICE, BOB);
         UniqueVolunteerList expectedUniqueVolunteerList = new UniqueVolunteerList();
         expectedUniqueVolunteerList.add(BOB);
         assertEquals(expectedUniqueVolunteerList, uniqueVolunteerList);
@@ -106,7 +106,7 @@ public class UniqueVolunteerListTest {
     public void setPerson_editedPersonHasNonUniqueIdentity_throwsDuplicatePersonException() {
         uniqueVolunteerList.add(ALICE);
         uniqueVolunteerList.add(BOB);
-        assertThrows(DuplicateVolunteerException.class, () -> uniqueVolunteerList.setPerson(ALICE, BOB));
+        assertThrows(DuplicateVolunteerException.class, () -> uniqueVolunteerList.setVolunteer(ALICE, BOB));
     }
 
     @Test
@@ -159,7 +159,8 @@ public class UniqueVolunteerListTest {
     @Test
     public void setPersons_listWithDuplicatePersons_throwsDuplicatePersonException() {
         List<Volunteer> listWithDuplicateVolunteers = Arrays.asList(ALICE, ALICE);
-        assertThrows(DuplicateVolunteerException.class, () -> uniqueVolunteerList.setPersons(listWithDuplicateVolunteers));
+        assertThrows(DuplicateVolunteerException.class, () ->
+                        uniqueVolunteerList.setPersons(listWithDuplicateVolunteers));
     }
 
     @Test

@@ -21,7 +21,7 @@ import seedu.address.model.volunteer.Volunteer;
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
  */
-public class TypicalPersons {
+public class TypicalVolunteers {
 
     public static final Volunteer ALICE = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
@@ -57,15 +57,15 @@ public class TypicalPersons {
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
-    private TypicalPersons() {} // prevents instantiation
+    private TypicalVolunteers() {} // prevents instantiation
 
     /**
-     * Returns an {@code AddressBook} with all the typical persons.
+     * Returns an {@code VolunteerStorage} with all the typical volunteers.
      */
-    public static VolunteerStorage getTypicalAddressBook() {
+    public static VolunteerStorage getTypicalVolunteerStorage() {
         VolunteerStorage ab = new VolunteerStorage();
         for (Volunteer volunteer : getTypicalPersons()) {
-            ab.addPerson(volunteer);
+            ab.addVolunteer(volunteer);
         }
         return ab;
     }

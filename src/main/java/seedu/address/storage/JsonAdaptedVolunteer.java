@@ -10,9 +10,12 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.volunteer.*;
-import seedu.address.model.volunteer.Volunteer;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.volunteer.Address;
+import seedu.address.model.volunteer.Email;
+import seedu.address.model.volunteer.Name;
+import seedu.address.model.volunteer.Phone;
+import seedu.address.model.volunteer.Volunteer;
 
 /**
  * Jackson-friendly version of {@link Volunteer}.

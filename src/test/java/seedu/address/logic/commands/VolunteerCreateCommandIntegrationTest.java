@@ -2,7 +2,8 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalEvents.getTypicalEventStorage;
+import static seedu.address.testutil.TypicalVolunteers.getTypicalVolunteerStorage;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,15 +25,15 @@ public class VolunteerCreateCommandIntegrationTest {
 
     @BeforeEach
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        model = new ModelManager(getTypicalEventStorage(), getTypicalVolunteerStorage(), new UserPrefs());
     }
 
     @Test
     public void execute_newPerson_success() {
         Volunteer validVolunteer = new PersonBuilder().build();
 
-        Model expectedModel = new ModelManager(model.getVolunteerStorage(), new UserPrefs());
-        expectedModel.addPerson(validVolunteer);
+        Model expectedModel = new ModelManager(model.getEventStorage(), model.getVolunteerStorage(), new UserPrefs());
+        expectedModel.addVolunteer(validVolunteer);
 
         assertCommandSuccess(new VolunteerCreateCommand(validVolunteer), model,
                 String.format(VolunteerCreateCommand.MESSAGE_SUCCESS, Messages.format(validVolunteer)),
@@ -41,7 +42,7 @@ public class VolunteerCreateCommandIntegrationTest {
 
     @Test
     public void execute_duplicatePerson_throwsCommandException() {
-        Volunteer volunteerInList = model.getVolunteerStorage().getPersonList().get(0);
+        Volunteer volunteerInList = model.getVolunteerStorage().getVolunteerList().get(0);
         assertCommandFailure(new VolunteerCreateCommand(volunteerInList), model,
                 VolunteerCreateCommand.MESSAGE_DUPLICATE_PERSON);
     }

@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalVolunteers.ALICE;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -19,10 +19,13 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.volunteerCommands.VolunteerCreateCommand;
-import seedu.address.model.VolunteerStorage;
+import seedu.address.model.EventStorage;
 import seedu.address.model.Model;
-import seedu.address.model.ReadOnlyVolunteerStorage;
+import seedu.address.model.ReadOnlyEventStorage;
 import seedu.address.model.ReadOnlyUserPrefs;
+import seedu.address.model.ReadOnlyVolunteerStorage;
+import seedu.address.model.VolunteerStorage;
+import seedu.address.model.event.Event;
 import seedu.address.model.volunteer.Volunteer;
 import seedu.address.testutil.PersonBuilder;
 
@@ -116,12 +119,27 @@ public class VolunteerCreateCommandTest {
         }
 
         @Override
+        public Path getEventStorageFilePath() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void setVolunteerStorageFilePath(Path addressBookFilePath) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void addPerson(Volunteer volunteer) {
+        public void setEventStorageFilePath(Path addressBookFilePath) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addVolunteer(Volunteer volunteer) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addEvent(Event event) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -131,32 +149,67 @@ public class VolunteerCreateCommandTest {
         }
 
         @Override
+        public void setEventStorage(ReadOnlyEventStorage newData) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public ReadOnlyVolunteerStorage getVolunteerStorage() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public boolean hasPerson(Volunteer volunteer) {
+        public ReadOnlyEventStorage getEventStorage() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void deletePerson(Volunteer target) {
+        public boolean hasVolunteer(Volunteer volunteer) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void setPerson(Volunteer target, Volunteer editedVolunteer) {
+        public boolean hasEvent(Event event) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public ObservableList<Volunteer> getFilteredPersonList() {
+        public void deleteVolunteer(Volunteer target) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void deleteEvent(Event target) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setVolunteer(Volunteer target, Volunteer editedVolunteer) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setEvent(Event target, Event editedEvent) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Volunteer> getFilteredVolunteerList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Event> getFilteredEventList() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
         public void updateFilteredVolunteerList(Predicate<Volunteer> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredEventList(Predicate<Event> predicate) {
             throw new AssertionError("This method should not be called.");
         }
     }
@@ -173,7 +226,7 @@ public class VolunteerCreateCommandTest {
         }
 
         @Override
-        public boolean hasPerson(Volunteer volunteer) {
+        public boolean hasVolunteer(Volunteer volunteer) {
             requireNonNull(volunteer);
             return this.volunteer.isSamePerson(volunteer);
         }
@@ -186,13 +239,13 @@ public class VolunteerCreateCommandTest {
         final ArrayList<Volunteer> personsAdded = new ArrayList<>();
 
         @Override
-        public boolean hasPerson(Volunteer volunteer) {
+        public boolean hasVolunteer(Volunteer volunteer) {
             requireNonNull(volunteer);
             return personsAdded.stream().anyMatch(volunteer::isSamePerson);
         }
 
         @Override
-        public void addPerson(Volunteer volunteer) {
+        public void addVolunteer(Volunteer volunteer) {
             requireNonNull(volunteer);
             personsAdded.add(volunteer);
         }
@@ -200,6 +253,11 @@ public class VolunteerCreateCommandTest {
         @Override
         public ReadOnlyVolunteerStorage getVolunteerStorage() {
             return new VolunteerStorage();
+        }
+
+        @Override
+        public ReadOnlyEventStorage getEventStorage() {
+            return new EventStorage();
         }
     }
 

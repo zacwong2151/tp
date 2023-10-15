@@ -11,21 +11,23 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.address.testutil.TypicalEvents.getTypicalEventStorage;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalVolunteers.getTypicalVolunteerStorage;
 
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
+import seedu.address.logic.commands.volunteerCommands.VolunteerClearCommand;
 import seedu.address.logic.commands.volunteerCommands.VolunteerEditCommand;
 import seedu.address.logic.commands.volunteerCommands.VolunteerEditCommand.EditPersonDescriptor;
-import seedu.address.logic.commands.volunteerCommands.VolunteerClearCommand;
-import seedu.address.model.VolunteerStorage;
+import seedu.address.model.EventStorage;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.VolunteerStorage;
 import seedu.address.model.volunteer.Volunteer;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
@@ -35,7 +37,7 @@ import seedu.address.testutil.PersonBuilder;
  */
 public class VolunteerEditCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalEventStorage(), getTypicalVolunteerStorage(), new UserPrefs());
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
@@ -46,16 +48,17 @@ public class VolunteerEditCommandTest {
         String expectedMessage = String.format(VolunteerEditCommand.MESSAGE_EDIT_PERSON_SUCCESS,
                                                                         Messages.format(editedVolunteer));
 
-        Model expectedModel = new ModelManager(new VolunteerStorage(model.getVolunteerStorage()), new UserPrefs());
-        expectedModel.setPerson(model.getFilteredPersonList().get(0), editedVolunteer);
+        Model expectedModel = new ModelManager(new EventStorage(model.getEventStorage()),
+                                                new VolunteerStorage(model.getVolunteerStorage()), new UserPrefs());
+        expectedModel.setVolunteer(model.getFilteredVolunteerList().get(0), editedVolunteer);
 
         assertCommandSuccess(volunteerEditCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_someFieldsSpecifiedUnfilteredList_success() {
-        Index indexLastPerson = Index.fromOneBased(model.getFilteredPersonList().size());
-        Volunteer lastVolunteer = model.getFilteredPersonList().get(indexLastPerson.getZeroBased());
+        Index indexLastPerson = Index.fromOneBased(model.getFilteredVolunteerList().size());
+        Volunteer lastVolunteer = model.getFilteredVolunteerList().get(indexLastPerson.getZeroBased());
 
         PersonBuilder personInList = new PersonBuilder(lastVolunteer);
         Volunteer editedVolunteer = personInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
@@ -68,8 +71,9 @@ public class VolunteerEditCommandTest {
         String expectedMessage = String.format(VolunteerEditCommand.MESSAGE_EDIT_PERSON_SUCCESS,
                                                                         Messages.format(editedVolunteer));
 
-        Model expectedModel = new ModelManager(new VolunteerStorage(model.getVolunteerStorage()), new UserPrefs());
-        expectedModel.setPerson(lastVolunteer, editedVolunteer);
+        Model expectedModel = new ModelManager(new EventStorage(model.getEventStorage()),
+                                                new VolunteerStorage(model.getVolunteerStorage()), new UserPrefs());
+        expectedModel.setVolunteer(lastVolunteer, editedVolunteer);
 
         assertCommandSuccess(volunteerEditCommand, model, expectedMessage, expectedModel);
     }
@@ -78,12 +82,13 @@ public class VolunteerEditCommandTest {
     public void execute_noFieldSpecifiedUnfilteredList_success() {
         VolunteerEditCommand volunteerEditCommand = new VolunteerEditCommand(INDEX_FIRST_PERSON,
                                                                         new EditPersonDescriptor());
-        Volunteer editedVolunteer = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Volunteer editedVolunteer = model.getFilteredVolunteerList().get(INDEX_FIRST_PERSON.getZeroBased());
 
         String expectedMessage = String.format(VolunteerEditCommand.MESSAGE_EDIT_PERSON_SUCCESS,
                                                                     Messages.format(editedVolunteer));
 
-        Model expectedModel = new ModelManager(new VolunteerStorage(model.getVolunteerStorage()), new UserPrefs());
+        Model expectedModel = new ModelManager(new EventStorage(model.getEventStorage()),
+                                                new VolunteerStorage(model.getVolunteerStorage()), new UserPrefs());
 
         assertCommandSuccess(volunteerEditCommand, model, expectedMessage, expectedModel);
     }
@@ -92,7 +97,7 @@ public class VolunteerEditCommandTest {
     public void execute_filteredList_success() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
-        Volunteer volunteerInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Volunteer volunteerInFilteredList = model.getFilteredVolunteerList().get(INDEX_FIRST_PERSON.getZeroBased());
         Volunteer editedVolunteer = new PersonBuilder(volunteerInFilteredList).withName(VALID_NAME_BOB).build();
         VolunteerEditCommand volunteerEditCommand = new VolunteerEditCommand(INDEX_FIRST_PERSON,
                 new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
@@ -100,15 +105,16 @@ public class VolunteerEditCommandTest {
         String expectedMessage = String.format(VolunteerEditCommand.MESSAGE_EDIT_PERSON_SUCCESS,
                                                                     Messages.format(editedVolunteer));
 
-        Model expectedModel = new ModelManager(new VolunteerStorage(model.getVolunteerStorage()), new UserPrefs());
-        expectedModel.setPerson(model.getFilteredPersonList().get(0), editedVolunteer);
+        Model expectedModel = new ModelManager(new EventStorage(model.getEventStorage()),
+                                                new VolunteerStorage(model.getVolunteerStorage()), new UserPrefs());
+        expectedModel.setVolunteer(model.getFilteredVolunteerList().get(0), editedVolunteer);
 
         assertCommandSuccess(volunteerEditCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_duplicatePersonUnfilteredList_failure() {
-        Volunteer firstVolunteer = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Volunteer firstVolunteer = model.getFilteredVolunteerList().get(INDEX_FIRST_PERSON.getZeroBased());
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(firstVolunteer).build();
         VolunteerEditCommand volunteerEditCommand = new VolunteerEditCommand(INDEX_SECOND_PERSON, descriptor);
 
@@ -120,7 +126,8 @@ public class VolunteerEditCommandTest {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
         // edit person in filtered list into a duplicate in address book
-        Volunteer volunteerInList = model.getVolunteerStorage().getPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+        Volunteer volunteerInList = model.getVolunteerStorage().getVolunteerList()
+                                    .get(INDEX_SECOND_PERSON.getZeroBased());
         VolunteerEditCommand volunteerEditCommand = new VolunteerEditCommand(INDEX_FIRST_PERSON,
                 new EditPersonDescriptorBuilder(volunteerInList).build());
 
@@ -129,7 +136,7 @@ public class VolunteerEditCommandTest {
 
     @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredVolunteerList().size() + 1);
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build();
         VolunteerEditCommand volunteerEditCommand = new VolunteerEditCommand(outOfBoundIndex, descriptor);
 
@@ -145,7 +152,7 @@ public class VolunteerEditCommandTest {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
         // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getVolunteerStorage().getPersonList().size());
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getVolunteerStorage().getVolunteerList().size());
 
         VolunteerEditCommand volunteerEditCommand = new VolunteerEditCommand(outOfBoundIndex,
                 new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());

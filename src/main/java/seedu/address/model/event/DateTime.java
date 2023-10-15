@@ -1,9 +1,9 @@
 package seedu.address.model.event;
 
-import java.time.LocalDateTime;
-
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
+
+import java.time.LocalDateTime;
 
 /**
  * Represents an Event's date and time in the Event list.
@@ -11,8 +11,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class DateTime {
 
-    public static final String MESSAGE_CONSTRAINTS = "DateTime must be in the format DD/MM/YYYY TTTT, " +
-                                                        "and it should not be blank";
+    public static final String MESSAGE_CONSTRAINTS = "DateTime must be in the format DD/MM/YYYY TTTT, "
+                                                        + "and it should not be blank";
 
     /*
      * To be changed

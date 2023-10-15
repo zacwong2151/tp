@@ -112,19 +112,19 @@ public interface Model {
     /**
      * Returns true if a volunteer with the same identity as {@code volunteer} exists in the volunteer storage.
      */
-    boolean hasPerson(Volunteer volunteer);
+    boolean hasVolunteer(Volunteer volunteer);
 
     /**
      * Deletes the given volunteer.
      * The volunteer must exist in the volunteer storage.
      */
-    void deletePerson(Volunteer target);
+    void deleteVolunteer(Volunteer target);
 
     /**
      * Adds the given volunteer.
      * {@code volunteer} must not already exist in the volunteer storage.
      */
-    void addPerson(Volunteer volunteer);
+    void addVolunteer(Volunteer volunteer);
 
     /**
      * Replaces the given volunteer {@code target} with {@code editedVolunteer}.
@@ -132,7 +132,7 @@ public interface Model {
      * The person identity of {@code editedVolunteer} must not be the same as another existing volunteer
      * in the volunteer storage.
      */
-    void setPerson(Volunteer target, Volunteer editedVolunteer);
+    void setVolunteer(Volunteer target, Volunteer editedVolunteer);
 
     /** Returns an unmodifiable view of the filtered volunteer list */
     ObservableList<Volunteer> getFilteredVolunteerList();

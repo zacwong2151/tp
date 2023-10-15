@@ -43,7 +43,7 @@ public class VolunteerDeleteCommand extends Command {
         }
 
         Volunteer volunteerToDelete = lastShownList.get(targetIndex.getZeroBased());
-        model.deletePerson(volunteerToDelete);
+        model.deleteVolunteer(volunteerToDelete);
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(volunteerToDelete)));
     }
 

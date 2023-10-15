@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.address.logic.parser.Prefix;
-import seedu.address.model.event.*;
+import seedu.address.model.event.Event;
 import seedu.address.model.volunteer.Volunteer;
 
 /**

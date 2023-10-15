@@ -53,7 +53,7 @@ public class UniqueVolunteerList implements Iterable<Volunteer> {
      * {@code target} must exist in the list.
      * The person identity of {@code editedPerson} must not be the same as another existing person in the list.
      */
-    public void setPerson(Volunteer target, Volunteer editedVolunteer) {
+    public void setVolunteer(Volunteer target, Volunteer editedVolunteer) {
         requireAllNonNull(target, editedVolunteer);
 
         int index = internalList.indexOf(target);

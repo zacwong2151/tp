@@ -2,7 +2,7 @@ package seedu.address.storage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalVolunteers.getTypicalVolunteerStorage;
 
 import java.nio.file.Path;
 
@@ -11,9 +11,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import seedu.address.commons.core.GuiSettings;
-import seedu.address.model.VolunteerStorage;
 import seedu.address.model.ReadOnlyVolunteerStorage;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.VolunteerStorage;
 
 public class StorageManagerTest {
 
@@ -24,9 +24,10 @@ public class StorageManagerTest {
 
     @BeforeEach
     public void setUp() {
-        JsonVolunteerStorage addressBookStorage = new JsonVolunteerStorage(getTempFilePath("ab"));
+        JsonVolunteerStorage volunteerStorage = new JsonVolunteerStorage(getTempFilePath("ab"));
+        JsonEventStorage eventStorage = new JsonEventStorage(getTempFilePath("bc"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
-        storageManager = new StorageManager(addressBookStorage, userPrefsStorage);
+        storageManager = new StorageManager(eventStorage, volunteerStorage, userPrefsStorage);
     }
 
     private Path getTempFilePath(String fileName) {
@@ -54,7 +55,7 @@ public class StorageManagerTest {
          * {@link JsonAddressBookStorage} class.
          * More extensive testing of UserPref saving/reading is done in {@link JsonAddressBookStorageTest} class.
          */
-        VolunteerStorage original = getTypicalAddressBook();
+        VolunteerStorage original = getTypicalVolunteerStorage();
         storageManager.saveVolunteerStorage(original);
         ReadOnlyVolunteerStorage retrieved = storageManager.readVolunteerStorage().get();
         assertEquals(original, new VolunteerStorage(retrieved));

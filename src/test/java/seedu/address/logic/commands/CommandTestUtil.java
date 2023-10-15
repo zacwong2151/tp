@@ -16,8 +16,8 @@ import java.util.List;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.volunteerCommands.VolunteerEditCommand;
-import seedu.address.model.VolunteerStorage;
 import seedu.address.model.Model;
+import seedu.address.model.VolunteerStorage;
 import seedu.address.model.volunteer.NameContainsKeywordsPredicate;
 import seedu.address.model.volunteer.Volunteer;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
@@ -106,24 +106,24 @@ public class CommandTestUtil {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
         VolunteerStorage expectedAddressBook = new VolunteerStorage(actualModel.getVolunteerStorage());
-        List<Volunteer> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPersonList());
+        List<Volunteer> expectedFilteredList = new ArrayList<>(actualModel.getFilteredVolunteerList());
 
         assertThrows(CommandException.class, expectedMessage, () -> command.execute(actualModel));
         assertEquals(expectedAddressBook, actualModel.getVolunteerStorage());
-        assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
+        assertEquals(expectedFilteredList, actualModel.getFilteredVolunteerList());
     }
     /**
      * Updates {@code model}'s filtered list to show only the person at the given {@code targetIndex} in the
      * {@code model}'s address book.
      */
     public static void showPersonAtIndex(Model model, Index targetIndex) {
-        assertTrue(targetIndex.getZeroBased() < model.getFilteredPersonList().size());
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredVolunteerList().size());
 
-        Volunteer volunteer = model.getFilteredPersonList().get(targetIndex.getZeroBased());
+        Volunteer volunteer = model.getFilteredVolunteerList().get(targetIndex.getZeroBased());
         final String[] splitName = volunteer.getName().fullName.split("\\s+");
         model.updateFilteredVolunteerList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
-        assertEquals(1, model.getFilteredPersonList().size());
+        assertEquals(1, model.getFilteredVolunteerList().size());
     }
 
 }

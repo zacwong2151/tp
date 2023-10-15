@@ -3,7 +3,7 @@ package seedu.address.storage;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.address.storage.JsonAdaptedVolunteer.MISSING_FIELD_MESSAGE_FORMAT;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalVolunteers.BENSON;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +48,8 @@ public class JsonAdaptedVolunteerTest {
 
     @Test
     public void toModelType_nullName_throwsIllegalValueException() {
-        JsonAdaptedVolunteer person = new JsonAdaptedVolunteer(null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS);
+        JsonAdaptedVolunteer person = new JsonAdaptedVolunteer(null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
+                                                                VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -63,7 +64,8 @@ public class JsonAdaptedVolunteerTest {
 
     @Test
     public void toModelType_nullPhone_throwsIllegalValueException() {
-        JsonAdaptedVolunteer person = new JsonAdaptedVolunteer(VALID_NAME, null, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS);
+        JsonAdaptedVolunteer person = new JsonAdaptedVolunteer(VALID_NAME, null, VALID_EMAIL, VALID_ADDRESS,
+                                                                VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -78,7 +80,8 @@ public class JsonAdaptedVolunteerTest {
 
     @Test
     public void toModelType_nullEmail_throwsIllegalValueException() {
-        JsonAdaptedVolunteer person = new JsonAdaptedVolunteer(VALID_NAME, VALID_PHONE, null, VALID_ADDRESS, VALID_TAGS);
+        JsonAdaptedVolunteer person = new JsonAdaptedVolunteer(VALID_NAME, VALID_PHONE, null, VALID_ADDRESS,
+                                                                VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }

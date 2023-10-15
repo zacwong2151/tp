@@ -36,14 +36,16 @@ public class IVolunteerParserTest {
     @Test
     public void parseCommand_add() throws Exception {
         Volunteer volunteer = new PersonBuilder().build();
-        VolunteerCreateCommand command = (VolunteerCreateCommand) parser.parseCommand(PersonUtil.getAddCommand(volunteer));
+        VolunteerCreateCommand command = (VolunteerCreateCommand) parser.parseCommand(PersonUtil
+                                            .getAddCommand(volunteer));
         assertEquals(new VolunteerCreateCommand(volunteer), command);
     }
 
     @Test
     public void parseCommand_clear() throws Exception {
         assertTrue(parser.parseCommand(VolunteerClearCommand.COMMAND_WORD) instanceof VolunteerClearCommand);
-        assertTrue(parser.parseCommand(VolunteerClearCommand.COMMAND_WORD + " 3") instanceof VolunteerClearCommand);
+        assertTrue(parser.parseCommand(VolunteerClearCommand.COMMAND_WORD + " 3")
+                    instanceof VolunteerClearCommand);
     }
 
     @Test

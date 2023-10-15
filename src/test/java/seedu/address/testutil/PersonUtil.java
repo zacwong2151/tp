@@ -10,8 +10,8 @@ import java.util.Set;
 
 import seedu.address.logic.commands.volunteerCommands.VolunteerCreateCommand;
 import seedu.address.logic.commands.volunteerCommands.VolunteerEditCommand.EditPersonDescriptor;
-import seedu.address.model.volunteer.Volunteer;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.volunteer.Volunteer;
 
 /**
  * A utility class for Person.

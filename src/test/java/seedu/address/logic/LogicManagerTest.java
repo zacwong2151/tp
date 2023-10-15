@@ -8,7 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalPersons.AMY;
+import static seedu.address.testutil.TypicalVolunteers.AMY;
 
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
@@ -19,17 +19,19 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.volunteerCommands.VolunteerCreateCommand;
 import seedu.address.logic.commands.volunteerCommands.VolunteerListCommand;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.ReadOnlyEventStorage;
 import seedu.address.model.ReadOnlyVolunteerStorage;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.volunteer.Volunteer;
-import seedu.address.storage.JsonVolunteerStorage;
+import seedu.address.storage.JsonEventStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.JsonVolunteerStorage;
 import seedu.address.storage.StorageManager;
 import seedu.address.testutil.PersonBuilder;
 
@@ -45,10 +47,12 @@ public class LogicManagerTest {
 
     @BeforeEach
     public void setUp() {
-        JsonVolunteerStorage addressBookStorage =
-                new JsonVolunteerStorage(temporaryFolder.resolve("addressBook.json"));
+        JsonVolunteerStorage volunteerStorage =
+                new JsonVolunteerStorage(temporaryFolder.resolve("volunteerStorage.json"));
+        JsonEventStorage eventStorage =
+                new JsonEventStorage(temporaryFolder.resolve("eventStorage.json"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(temporaryFolder.resolve("userPrefs.json"));
-        StorageManager storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        StorageManager storage = new StorageManager(eventStorage, volunteerStorage, userPrefsStorage);
         logic = new LogicManager(model, storage);
     }
 
@@ -84,7 +88,7 @@ public class LogicManagerTest {
 
     @Test
     public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
-        assertThrows(UnsupportedOperationException.class, () -> logic.getFilteredPersonList().remove(0));
+        assertThrows(UnsupportedOperationException.class, () -> logic.getFilteredVolunteerList().remove(0));
     }
 
     /**
@@ -123,7 +127,7 @@ public class LogicManagerTest {
      */
     private void assertCommandFailure(String inputCommand, Class<? extends Throwable> expectedException,
             String expectedMessage) {
-        Model expectedModel = new ModelManager(model.getVolunteerStorage(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getEventStorage(), model.getVolunteerStorage(), new UserPrefs());
         assertCommandFailure(inputCommand, expectedException, expectedMessage, expectedModel);
     }
 
@@ -149,8 +153,17 @@ public class LogicManagerTest {
     private void assertCommandFailureForExceptionFromStorage(IOException e, String expectedMessage) {
         Path prefPath = temporaryFolder.resolve("ExceptionUserPrefs.json");
 
-        // Inject LogicManager with an AddressBookStorage that throws the IOException e when saving
-        JsonVolunteerStorage addressBookStorage = new JsonVolunteerStorage(prefPath) {
+        // Inject LogicManager with an EventStorage that throws the IOException e when saving
+        JsonEventStorage eventStorage = new JsonEventStorage(prefPath) {
+            @Override
+            public void saveEventStorage(ReadOnlyEventStorage eventStorage, Path filePath)
+                    throws IOException {
+                throw e;
+            }
+        };
+
+        // Inject LogicManager with an VolunteerStorage that throws the IOException e when saving
+        JsonVolunteerStorage volunteerStorage = new JsonVolunteerStorage(prefPath) {
             @Override
             public void saveVolunteerStorage(ReadOnlyVolunteerStorage volunteerStorage, Path filePath)
                     throws IOException {
@@ -160,7 +173,7 @@ public class LogicManagerTest {
 
         JsonUserPrefsStorage userPrefsStorage =
                 new JsonUserPrefsStorage(temporaryFolder.resolve("ExceptionUserPrefs.json"));
-        StorageManager storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        StorageManager storage = new StorageManager(eventStorage, volunteerStorage, userPrefsStorage);
 
         logic = new LogicManager(model, storage);
 
@@ -169,7 +182,7 @@ public class LogicManagerTest {
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
         Volunteer expectedVolunteer = new PersonBuilder(AMY).withTags().build();
         ModelManager expectedModel = new ModelManager();
-        expectedModel.addPerson(expectedVolunteer);
+        expectedModel.addVolunteer(expectedVolunteer);
         assertCommandFailure(addCommand, CommandException.class, expectedMessage, expectedModel);
     }
 }

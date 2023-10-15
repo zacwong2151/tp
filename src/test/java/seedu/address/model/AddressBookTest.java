@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalVolunteers.ALICE;
+import static seedu.address.testutil.TypicalVolunteers.getTypicalVolunteerStorage;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -24,23 +24,23 @@ import seedu.address.testutil.PersonBuilder;
 
 public class AddressBookTest {
 
-    private final VolunteerStorage addressBook = new VolunteerStorage();
+    private final VolunteerStorage volunteerStorage = new VolunteerStorage();
 
     @Test
     public void constructor() {
-        assertEquals(Collections.emptyList(), addressBook.getPersonList());
+        assertEquals(Collections.emptyList(), volunteerStorage.getVolunteerList());
     }
 
     @Test
     public void resetData_null_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> addressBook.resetData(null));
+        assertThrows(NullPointerException.class, () -> volunteerStorage.resetData(null));
     }
 
     @Test
     public void resetData_withValidReadOnlyAddressBook_replacesData() {
-        VolunteerStorage newData = getTypicalAddressBook();
-        addressBook.resetData(newData);
-        assertEquals(newData, addressBook);
+        VolunteerStorage newData = getTypicalVolunteerStorage();
+        volunteerStorage.resetData(newData);
+        assertEquals(newData, volunteerStorage);
     }
 
     @Test
@@ -51,42 +51,44 @@ public class AddressBookTest {
         List<Volunteer> newVolunteers = Arrays.asList(ALICE, editedAlice);
         VolunteerStorageStub newData = new VolunteerStorageStub(newVolunteers);
 
-        assertThrows(DuplicateVolunteerException.class, () -> addressBook.resetData(newData));
+        assertThrows(DuplicateVolunteerException.class, () -> volunteerStorage.resetData(newData));
     }
 
     @Test
     public void hasPerson_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> addressBook.hasPerson(null));
+        assertThrows(NullPointerException.class, () -> volunteerStorage.hasVolunteer(null));
     }
 
     @Test
     public void hasPerson_personNotInAddressBook_returnsFalse() {
-        assertFalse(addressBook.hasPerson(ALICE));
+        assertFalse(volunteerStorage.hasVolunteer(ALICE));
     }
 
     @Test
     public void hasPerson_personInAddressBook_returnsTrue() {
-        addressBook.addPerson(ALICE);
-        assertTrue(addressBook.hasPerson(ALICE));
+        volunteerStorage.addVolunteer(ALICE);
+        assertTrue(volunteerStorage.hasVolunteer(ALICE));
     }
 
     @Test
     public void hasPerson_personWithSameIdentityFieldsInAddressBook_returnsTrue() {
-        addressBook.addPerson(ALICE);
+        volunteerStorage.addVolunteer(ALICE);
         Volunteer editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
                 .build();
-        assertTrue(addressBook.hasPerson(editedAlice));
+        assertTrue(volunteerStorage.hasVolunteer(editedAlice));
     }
 
     @Test
     public void getPersonList_modifyList_throwsUnsupportedOperationException() {
-        assertThrows(UnsupportedOperationException.class, () -> addressBook.getPersonList().remove(0));
+        assertThrows(UnsupportedOperationException.class, () -> volunteerStorage.getVolunteerList().remove(0));
     }
 
     @Test
     public void toStringMethod() {
-        String expected = VolunteerStorage.class.getCanonicalName() + "{persons=" + addressBook.getPersonList() + "}";
-        assertEquals(expected, addressBook.toString());
+        String expected = VolunteerStorage.class.getCanonicalName() + "{volunteers="
+                            + volunteerStorage.getVolunteerList()
+                            + "}";
+        assertEquals(expected, volunteerStorage.toString());
     }
 
     /**
@@ -100,7 +102,7 @@ public class AddressBookTest {
         }
 
         @Override
-        public ObservableList<Volunteer> getPersonList() {
+        public ObservableList<Volunteer> getVolunteerList() {
             return volunteers;
         }
     }

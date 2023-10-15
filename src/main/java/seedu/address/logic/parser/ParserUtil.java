@@ -9,13 +9,18 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.event.*;
-
+import seedu.address.model.event.Budget;
+import seedu.address.model.event.DateTime;
+import seedu.address.model.event.Description;
+import seedu.address.model.event.EventName;
+import seedu.address.model.event.Location;
+import seedu.address.model.event.Material;
+import seedu.address.model.event.Role;
+import seedu.address.model.tag.Tag;
 import seedu.address.model.volunteer.Address;
 import seedu.address.model.volunteer.Email;
 import seedu.address.model.volunteer.Name;
 import seedu.address.model.volunteer.Phone;
-import seedu.address.model.tag.Tag;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -79,7 +84,12 @@ public class ParserUtil {
         return roleSet;
     }
 
-    //Need to change
+    /**
+     * Parses a {@code String dateAndTime} into a {@code DateTime}.
+     * @param dateAndTime The string to be parsed.
+     * @return A DateTime object representing the date and time
+     * @throws ParseException if the given {@code dateAndTime} is not valid.
+     */
     public static DateTime parseDateAndTime(String dateAndTime) throws ParseException {
         requireNonNull(dateAndTime);
         String trimmedDateAndTime = dateAndTime.trim();
@@ -89,6 +99,12 @@ public class ParserUtil {
         return new DateTime(trimmedDateAndTime);
     }
 
+    /**
+     * Parses a {@code location} into a {@code Location}.
+     * @param location The string to be parsed.
+     * @return A Location object representing the location.
+     * @throws ParseException if the {@code location} is not valid.
+     */
     public static Location parseLocation(String location) throws ParseException {
         requireNonNull(location);
         String trimmedLocation = location.trim();
@@ -98,6 +114,12 @@ public class ParserUtil {
         return new Location(trimmedLocation);
     }
 
+    /**
+     * Parses the {@code description} into a {@code Description}.
+     * @param description The string to be parsed.
+     * @return A Description object representing the description
+     * @throws ParseException if the {@code description} is not valid.
+     */
     public static Description parseDescription(String description) throws ParseException {
         requireNonNull(description);
         String trimmedDescription = description.trim();

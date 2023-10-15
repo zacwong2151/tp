@@ -3,10 +3,10 @@ package seedu.address.storage;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.HOON;
-import static seedu.address.testutil.TypicalPersons.IDA;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalVolunteers.ALICE;
+import static seedu.address.testutil.TypicalVolunteers.HOON;
+import static seedu.address.testutil.TypicalVolunteers.IDA;
+import static seedu.address.testutil.TypicalVolunteers.getTypicalVolunteerStorage;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -16,8 +16,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import seedu.address.commons.exceptions.DataLoadingException;
-import seedu.address.model.VolunteerStorage;
 import seedu.address.model.ReadOnlyVolunteerStorage;
+import seedu.address.model.VolunteerStorage;
 
 public class JsonVolunteerStorageTest {
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "JsonAddressBookStorageTest");
@@ -63,7 +63,7 @@ public class JsonVolunteerStorageTest {
     @Test
     public void readAndSaveAddressBook_allInOrder_success() throws Exception {
         Path filePath = testFolder.resolve("TempAddressBook.json");
-        VolunteerStorage original = getTypicalAddressBook();
+        VolunteerStorage original = getTypicalVolunteerStorage();
         JsonVolunteerStorage jsonAddressBookStorage = new JsonVolunteerStorage(filePath);
 
         // Save in new file and read back
@@ -72,14 +72,14 @@ public class JsonVolunteerStorageTest {
         assertEquals(original, new VolunteerStorage(readBack));
 
         // Modify data, overwrite exiting file, and read back
-        original.addPerson(HOON);
-        original.removePerson(ALICE);
+        original.addVolunteer(HOON);
+        original.removeVolunteer(ALICE);
         jsonAddressBookStorage.saveVolunteerStorage(original, filePath);
         readBack = jsonAddressBookStorage.readVolunteerStorage(filePath).get();
         assertEquals(original, new VolunteerStorage(readBack));
 
         // Save and read without specifying file path
-        original.addPerson(IDA);
+        original.addVolunteer(IDA);
         jsonAddressBookStorage.saveVolunteerStorage(original); // file path not specified
         readBack = jsonAddressBookStorage.readVolunteerStorage().get(); // file path not specified
         assertEquals(original, new VolunteerStorage(readBack));

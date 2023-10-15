@@ -9,9 +9,9 @@ import java.util.regex.Pattern;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.eventCommands.EventCreateCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.eventCommands.EventCreateCommand;
 import seedu.address.logic.commands.volunteerCommands.VolunteerClearCommand;
 import seedu.address.logic.commands.volunteerCommands.VolunteerCreateCommand;
 import seedu.address.logic.commands.volunteerCommands.VolunteerDeleteCommand;

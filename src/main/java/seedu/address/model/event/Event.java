@@ -56,7 +56,7 @@ public class Event {
     public Location getLocation() {
         return location;
     }
-    public Description getDescription() {return description;}
+    public Description getDescription() { return description; }
     /**
      * Returns an immutable Material set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -64,8 +64,7 @@ public class Event {
     public Set<Material> getMaterials() {
         return Collections.unmodifiableSet(materials);
     }
-    public Budget getBudget() {return budget;}
-
+    public Budget getBudget() { return budget; }
     /**
      * Returns true if both events have the same name.
      * This defines a weaker notion of equality between two persons.
@@ -93,16 +92,6 @@ public class Event {
         if (!(other instanceof Event)) {
             return false;
         }
-
-        /**
-         *  this.name = name;
-         *         this.roles = roles;
-         *         this.dateAndTime = dateAndTime;
-         *         this.location = location;
-         *         this.description = description;
-         *         this.materials = materials;
-         *         this.budget = budget;
-         */
 
         Event otherEvent = (Event) other;
         return eventName.equals(otherEvent.eventName)

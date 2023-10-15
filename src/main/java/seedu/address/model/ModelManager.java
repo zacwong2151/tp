@@ -40,7 +40,7 @@ public class ModelManager implements Model {
         this.volunteerStorage = new VolunteerStorage(volunteerStorage);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredEvents = new FilteredList<>(this.eventStorage.getEventList());
-        filteredVolunteers = new FilteredList<>(this.volunteerStorage.getPersonList());
+        filteredVolunteers = new FilteredList<>(this.volunteerStorage.getVolunteerList());
     }
 
     public ModelManager() {
@@ -140,27 +140,27 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public boolean hasPerson(Volunteer volunteer) {
+    public boolean hasVolunteer(Volunteer volunteer) {
         requireNonNull(volunteer);
-        return volunteerStorage.hasPerson(volunteer);
+        return volunteerStorage.hasVolunteer(volunteer);
     }
 
     @Override
-    public void deletePerson(Volunteer target) {
-        volunteerStorage.removePerson(target);
+    public void deleteVolunteer(Volunteer target) {
+        volunteerStorage.removeVolunteer(target);
     }
 
     @Override
-    public void addPerson(Volunteer volunteer) {
-        volunteerStorage.addPerson(volunteer);
+    public void addVolunteer(Volunteer volunteer) {
+        volunteerStorage.addVolunteer(volunteer);
         updateFilteredVolunteerList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
     @Override
-    public void setPerson(Volunteer target, Volunteer editedVolunteer) {
+    public void setVolunteer(Volunteer target, Volunteer editedVolunteer) {
         requireAllNonNull(target, editedVolunteer);
 
-        volunteerStorage.setPerson(target, editedVolunteer);
+        volunteerStorage.setVolunteer(target, editedVolunteer);
     }
 
     //=========== Filtered Event List Accessors =============================================================

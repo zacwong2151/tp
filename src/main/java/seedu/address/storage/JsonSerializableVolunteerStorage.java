@@ -9,8 +9,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.VolunteerStorage;
 import seedu.address.model.ReadOnlyVolunteerStorage;
+import seedu.address.model.VolunteerStorage;
 import seedu.address.model.volunteer.Volunteer;
 
 /**
@@ -37,7 +37,7 @@ class JsonSerializableVolunteerStorage {
      * @param source future changes to this will not affect the created {@code JsonSerializableAddressBook}.
      */
     public JsonSerializableVolunteerStorage(ReadOnlyVolunteerStorage source) {
-        persons.addAll(source.getPersonList().stream().map(JsonAdaptedVolunteer::new).collect(Collectors.toList()));
+        persons.addAll(source.getVolunteerList().stream().map(JsonAdaptedVolunteer::new).collect(Collectors.toList()));
     }
 
     /**
@@ -49,10 +49,10 @@ class JsonSerializableVolunteerStorage {
         VolunteerStorage volunteerStorage = new VolunteerStorage();
         for (JsonAdaptedVolunteer jsonAdaptedVolunteer : persons) {
             Volunteer volunteer = jsonAdaptedVolunteer.toModelType();
-            if (volunteerStorage.hasPerson(volunteer)) {
+            if (volunteerStorage.hasVolunteer(volunteer)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
             }
-            volunteerStorage.addPerson(volunteer);
+            volunteerStorage.addVolunteer(volunteer);
         }
         return volunteerStorage;
     }

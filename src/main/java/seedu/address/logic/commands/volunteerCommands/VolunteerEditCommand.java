@@ -23,9 +23,12 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.volunteer.*;
-import seedu.address.model.volunteer.Volunteer;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.volunteer.Address;
+import seedu.address.model.volunteer.Email;
+import seedu.address.model.volunteer.Name;
+import seedu.address.model.volunteer.Phone;
+import seedu.address.model.volunteer.Volunteer;
 
 /**
  * Edits the details of an existing person in the address book.
@@ -78,11 +81,11 @@ public class VolunteerEditCommand extends Command {
         Volunteer volunteerToEdit = lastShownList.get(index.getZeroBased());
         Volunteer editedVolunteer = createEditedPerson(volunteerToEdit, editPersonDescriptor);
 
-        if (!volunteerToEdit.isSamePerson(editedVolunteer) && model.hasPerson(editedVolunteer)) {
+        if (!volunteerToEdit.isSamePerson(editedVolunteer) && model.hasVolunteer(editedVolunteer)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
-        model.setPerson(volunteerToEdit, editedVolunteer);
+        model.setVolunteer(volunteerToEdit, editedVolunteer);
         model.updateFilteredVolunteerList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedVolunteer)));
     }

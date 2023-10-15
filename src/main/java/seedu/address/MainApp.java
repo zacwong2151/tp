@@ -15,11 +15,21 @@ import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
-import seedu.address.model.*;
 import seedu.address.model.EventStorage;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.ReadOnlyEventStorage;
+import seedu.address.model.ReadOnlyUserPrefs;
+import seedu.address.model.ReadOnlyVolunteerStorage;
+import seedu.address.model.UserPrefs;
 import seedu.address.model.VolunteerStorage;
 import seedu.address.model.util.SampleDataUtil;
-import seedu.address.storage.*;
+import seedu.address.storage.JsonEventStorage;
+import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.JsonVolunteerStorage;
+import seedu.address.storage.Storage;
+import seedu.address.storage.StorageManager;
+import seedu.address.storage.UserPrefsStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
@@ -49,7 +59,8 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
-        seedu.address.storage.VolunteerStorage volunteerStorage = new JsonVolunteerStorage(userPrefs.getVolunteerStorageFilePath());
+        seedu.address.storage.VolunteerStorage volunteerStorage = new JsonVolunteerStorage(
+                                                                userPrefs.getVolunteerStorageFilePath());
         seedu.address.storage.EventStorage eventStorage = new JsonEventStorage(userPrefs.getEventStorageFilePath());
 
         storage = new StorageManager(eventStorage, volunteerStorage, userPrefsStorage);

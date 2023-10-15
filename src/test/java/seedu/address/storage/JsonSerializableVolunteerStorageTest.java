@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.JsonUtil;
 import seedu.address.model.VolunteerStorage;
-import seedu.address.testutil.TypicalPersons;
+import seedu.address.testutil.TypicalVolunteers;
 
 public class JsonSerializableVolunteerStorageTest {
 
@@ -25,7 +25,7 @@ public class JsonSerializableVolunteerStorageTest {
         JsonSerializableVolunteerStorage dataFromFile = JsonUtil.readJsonFile(TYPICAL_PERSONS_FILE,
                 JsonSerializableVolunteerStorage.class).get();
         VolunteerStorage addressBookFromFile = dataFromFile.toModelType();
-        VolunteerStorage typicalPersonsAddressBook = TypicalPersons.getTypicalAddressBook();
+        VolunteerStorage typicalPersonsAddressBook = TypicalVolunteers.getTypicalVolunteerStorage();
         assertEquals(addressBookFromFile, typicalPersonsAddressBook);
     }
 

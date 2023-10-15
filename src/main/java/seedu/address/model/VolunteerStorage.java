@@ -6,8 +6,8 @@ import java.util.List;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.model.volunteer.Volunteer;
 import seedu.address.model.volunteer.UniqueVolunteerList;
+import seedu.address.model.volunteer.Volunteer;
 
 /**
  * Wraps all data at the address-book level
@@ -15,7 +15,7 @@ import seedu.address.model.volunteer.UniqueVolunteerList;
  */
 public class VolunteerStorage implements ReadOnlyVolunteerStorage {
 
-    private final UniqueVolunteerList persons;
+    private final UniqueVolunteerList volunteers;
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
@@ -24,7 +24,7 @@ public class VolunteerStorage implements ReadOnlyVolunteerStorage {
      *   among constructors.
      */
     {
-        persons = new UniqueVolunteerList();
+        volunteers = new UniqueVolunteerList();
     }
 
     public VolunteerStorage() {}
@@ -40,57 +40,58 @@ public class VolunteerStorage implements ReadOnlyVolunteerStorage {
     //// list overwrite operations
 
     /**
-     * Replaces the contents of the person list with {@code persons}.
-     * {@code persons} must not contain duplicate persons.
+     * Replaces the contents of the volunteer list with {@code volunteers}.
+     * {@code volunteers} must not contain duplicate volunteers.
      */
-    public void setPersons(List<Volunteer> volunteers) {
-        this.persons.setPersons(volunteers);
+    public void setVolunteers(List<Volunteer> volunteers) {
+        this.volunteers.setPersons(volunteers);
     }
 
     /**
-     * Resets the existing data of this {@code AddressBook} with {@code newData}.
+     * Resets the existing data of this {@code VolunteerStorage} with {@code newData}.
      */
     public void resetData(ReadOnlyVolunteerStorage newData) {
         requireNonNull(newData);
 
-        setPersons(newData.getPersonList());
+        setVolunteers(newData.getVolunteerList());
     }
 
     //// person-level operations
 
     /**
-     * Returns true if a person with the same identity as {@code person} exists in the address book.
+     * Returns true if a volunteer with the same identity as {@code volunteer} exists in the VolunteerStorage.
      */
-    public boolean hasPerson(Volunteer volunteer) {
+    public boolean hasVolunteer(Volunteer volunteer) {
         requireNonNull(volunteer);
-        return persons.contains(volunteer);
+        return volunteers.contains(volunteer);
     }
 
     /**
-     * Adds a person to the address book.
-     * The person must not already exist in the address book.
+     * Adds a volunteer to the volunteer storage.
+     * The volunteer must not already exist in the volunteer storage.
      */
-    public void addPerson(Volunteer p) {
-        persons.add(p);
+    public void addVolunteer(Volunteer p) {
+        volunteers.add(p);
     }
 
     /**
-     * Replaces the given person {@code target} in the list with {@code editedPerson}.
-     * {@code target} must exist in the address book.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
+     * Replaces the given person {@code target} in the list with {@code editedVolunteer}.
+     * {@code target} must exist in the volunteer storage.
+     * The volunteer identity of {@code editedVolunteer} must not be the same as another existing volunteer
+     * in the volunteer storage.
      */
-    public void setPerson(Volunteer target, Volunteer editedVolunteer) {
+    public void setVolunteer(Volunteer target, Volunteer editedVolunteer) {
         requireNonNull(editedVolunteer);
 
-        persons.setPerson(target, editedVolunteer);
+        volunteers.setVolunteer(target, editedVolunteer);
     }
 
     /**
-     * Removes {@code key} from this {@code AddressBook}.
-     * {@code key} must exist in the address book.
+     * Removes {@code key} from this {@code VolunteerStorage}.
+     * {@code key} must exist in the volunteer storage.
      */
-    public void removePerson(Volunteer key) {
-        persons.remove(key);
+    public void removeVolunteer(Volunteer key) {
+        volunteers.remove(key);
     }
 
     //// util methods
@@ -98,13 +99,13 @@ public class VolunteerStorage implements ReadOnlyVolunteerStorage {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("persons", persons)
+                .add("volunteers", volunteers)
                 .toString();
     }
 
     @Override
-    public ObservableList<Volunteer> getPersonList() {
-        return persons.asUnmodifiableObservableList();
+    public ObservableList<Volunteer> getVolunteerList() {
+        return volunteers.asUnmodifiableObservableList();
     }
 
     @Override
@@ -119,11 +120,11 @@ public class VolunteerStorage implements ReadOnlyVolunteerStorage {
         }
 
         VolunteerStorage otherVolunteerStorage = (VolunteerStorage) other;
-        return persons.equals(otherVolunteerStorage.persons);
+        return volunteers.equals(otherVolunteerStorage.volunteers);
     }
 
     @Override
     public int hashCode() {
-        return persons.hashCode();
+        return volunteers.hashCode();
     }
 }

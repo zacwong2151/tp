@@ -6,9 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.address.testutil.TypicalEvents.getTypicalEventStorage;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalVolunteers.getTypicalVolunteerStorage;
 
 import org.junit.jupiter.api.Test;
 
@@ -26,25 +27,26 @@ import seedu.address.model.volunteer.Volunteer;
  */
 public class VolunteerDeleteCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalEventStorage(), getTypicalVolunteerStorage(), new UserPrefs());
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
-        Volunteer volunteerToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Volunteer volunteerToDelete = model.getFilteredVolunteerList().get(INDEX_FIRST_PERSON.getZeroBased());
         VolunteerDeleteCommand volunteerDeleteCommand = new VolunteerDeleteCommand(INDEX_FIRST_PERSON);
 
         String expectedMessage = String.format(VolunteerDeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS,
                 Messages.format(volunteerToDelete));
 
-        ModelManager expectedModel = new ModelManager(model.getVolunteerStorage(), new UserPrefs());
-        expectedModel.deletePerson(volunteerToDelete);
+        ModelManager expectedModel = new ModelManager(model.getEventStorage(), model.getVolunteerStorage(),
+                                                        new UserPrefs());
+        expectedModel.deleteVolunteer(volunteerToDelete);
 
         assertCommandSuccess(volunteerDeleteCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredVolunteerList().size() + 1);
         VolunteerDeleteCommand volunteerDeleteCommand = new VolunteerDeleteCommand(outOfBoundIndex);
 
         assertCommandFailure(volunteerDeleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -54,14 +56,14 @@ public class VolunteerDeleteCommandTest {
     public void execute_validIndexFilteredList_success() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
-        Volunteer volunteerToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Volunteer volunteerToDelete = model.getFilteredVolunteerList().get(INDEX_FIRST_PERSON.getZeroBased());
         VolunteerDeleteCommand volunteerDeleteCommand = new VolunteerDeleteCommand(INDEX_FIRST_PERSON);
 
         String expectedMessage = String.format(VolunteerDeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS,
                 Messages.format(volunteerToDelete));
 
-        Model expectedModel = new ModelManager(model.getVolunteerStorage(), new UserPrefs());
-        expectedModel.deletePerson(volunteerToDelete);
+        Model expectedModel = new ModelManager(model.getEventStorage(), model.getVolunteerStorage(), new UserPrefs());
+        expectedModel.deleteVolunteer(volunteerToDelete);
         showNoPerson(expectedModel);
 
         assertCommandSuccess(volunteerDeleteCommand, model, expectedMessage, expectedModel);
@@ -73,7 +75,7 @@ public class VolunteerDeleteCommandTest {
 
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
         // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getVolunteerStorage().getPersonList().size());
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getVolunteerStorage().getVolunteerList().size());
 
         VolunteerDeleteCommand volunteerDeleteCommand = new VolunteerDeleteCommand(outOfBoundIndex);
 
@@ -116,6 +118,6 @@ public class VolunteerDeleteCommandTest {
     private void showNoPerson(Model model) {
         model.updateFilteredVolunteerList(p -> false);
 
-        assertTrue(model.getFilteredPersonList().isEmpty());
+        assertTrue(model.getFilteredVolunteerList().isEmpty());
     }
 }
