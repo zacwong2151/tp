@@ -94,7 +94,10 @@ public class PersonTest {
 
     @Test
     public void hashCodeMethod() {
-        // test case created by zac: I created this cos codecov CI was giving problems, hopefully this doesn't create problems down the line
+        /*
+        test case created by zac: I created this cos codecov CI was giving problems,
+        hopefully this doesn't create problems down the line
+        */
         Person person = new PersonBuilder(ALICE).build();
         int expected = person.hashCode();
         assertEquals(expected, -1784892035);
