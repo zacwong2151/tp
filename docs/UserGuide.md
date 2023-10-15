@@ -163,11 +163,11 @@ Format: `clear`
 
 Volunteer Coordinators can create new volunteer profiles, and add the volunteer into the volunteer list.
 
-Format: `vcreate vn/VOLUNTEER_NAME hp/PHONE_NUMBER e/EMAIL [s/SKILLS]…`
+Format: `vcreate n/VOLUNTEER_NAME p/PHONE_NUMBER e/EMAIL [s/SKILLS]…`
 
 Parameters:
- * vn/ - Volunteer name
- * hp/ - Phone number of the volunteer
+ * n/ - Volunteer name
+ * p/ - Phone number of the volunteer
  * e/ - Email address of the volunteer
  * s/ - Skills a volunteer may have
 
@@ -182,8 +182,8 @@ Restrictions:
 * The phone number must be a valid 8-digit Singapore phone number.
 
 Examples:
-* `vcreate vn/John hp/91234567 e/john123@gmail.com` creates a volunteer named `John` with a phone number of `91234567` and an email address of `john123@gmail.com`, with no specific skills. The volunteer profile will be appended to the bottom of the volunteer list.
-* `vcreate vn/Mary hp/92345678 e/mary123@gmail.com s/Cooking s/Carrying heavy goods` creates a volunteer named `Mary` with a phone number of `92345678` and an email address of `mary123@gmail.com`, with two skills: `Cooking` and `Carrying heavy goods`. The volunteer profile will be appended to the bottom of the volunteer list.
+* `vcreate n/John p/91234567 e/john123@gmail.com` creates a volunteer named `John` with a phone number of `91234567` and an email address of `john123@gmail.com`, with no specific skills. The volunteer profile will be appended to the bottom of the volunteer list.
+* `vcreate n/Mary p/92345678 e/mary123@gmail.com s/Cooking s/Carrying heavy goods` creates a volunteer named `Mary` with a phone number of `92345678` and an email address of `mary123@gmail.com`, with two skills: `Cooking` and `Carrying heavy goods`. The volunteer profile will be appended to the bottom of the volunteer list.
 
 ### Listing all volunteers : `vlist` [coming soon]
 
