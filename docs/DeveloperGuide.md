@@ -301,9 +301,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* *`    | volunteer coordinator  | change the logistics and other materials needed for an event                          | update the event with the correct logistics required            |
 | `* *`    | volunteer coordinator  | change the description of the event                                                   | update the event with the correct description                   |
 | `* *`    | volunteer coordinator  | change the budget for the volunteering event                                          | update the event with the correct budget                        |
-| `* *`    | volunteer coordinator  | be able to check the roles needed for an event                                        | know what roles are required for an event                       | 
+| `* *`    | volunteer coordinator  | be able to check the roles needed for an event                                        | know what roles are required for an event                       |
 | `* *`    | volunteer coordinator  | be able to check the location and approximate area of the event                       | know where an event will be held                                |
-| `* *`    | volunteer coordinator  | be able to check the logistics and other materials needed for an event                | know what other materials are required                          | 
+| `* *`    | volunteer coordinator  | be able to check the logistics and other materials needed for an event                | know what other materials are required                          |
 | `* *`    | volunteer coordinator  | check the description of an event                                                     | have a better idea of the details of the event                  |
 | `* *`    | volunteer coordinator  | be able to check the budget for an event                                              | know the budget assigned for the event                          |
 | `* *`    | volunteer coordinator  | check how many volunteers are in a certain event                                      | have an estimate on the current manpower for an event           |

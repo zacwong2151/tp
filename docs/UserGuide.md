@@ -30,11 +30,11 @@ iVolunteer is your dedicated application for volunteer coordination, designed wi
    Some example commands you can try:
 
    * `elist` : Lists all events
-   
+
    * `eadd n/food donation r/chef r/packer d/23-9-2023 1500 dsc/help food distribution m/50 potatoes b/50` : Creates an event with eventName `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
 
    * `edelete 3` : Deletes the 3rd event in the current event list
-   
+
    * `vlist` : Lists all volunteers.
 
    * `vadd n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a volunteer named `John Doe` to the list of volunteers.
@@ -110,7 +110,7 @@ Shows a list of all volunteers in an event.
 Format: `elistv eid/EVENT_ID` or `elistv en/EVENT_NAME`
 
 Parameters:
-* eid/ - Event id 
+* eid/ - Event id
 * en/ - Event name
 
 Restrictions:
