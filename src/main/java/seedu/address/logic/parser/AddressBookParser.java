@@ -8,15 +8,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.VolunteerClearCommand;
+import seedu.address.logic.commands.VolunteerCreateCommand;
+import seedu.address.logic.commands.VolunteerDeleteCommand;
+import seedu.address.logic.commands.VolunteerEditCommand;
+import seedu.address.logic.commands.VolunteerFindCommand;
+import seedu.address.logic.commands.VolunteerListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -53,23 +53,23 @@ public class AddressBookParser {
 
         switch (commandWord) {
 
-        case AddCommand.COMMAND_WORD:
-            return new AddCommandParser().parse(arguments);
+        case VolunteerCreateCommand.COMMAND_WORD:
+            return new VolunteerAddCommandParser().parse(arguments);
 
-        case EditCommand.COMMAND_WORD:
-            return new EditCommandParser().parse(arguments);
+        case VolunteerEditCommand.COMMAND_WORD:
+            return new VolunteerEditCommandParser().parse(arguments);
 
-        case DeleteCommand.COMMAND_WORD:
-            return new DeleteCommandParser().parse(arguments);
+        case VolunteerDeleteCommand.COMMAND_WORD:
+            return new VolunteerDeleteCommandParser().parse(arguments);
 
-        case ClearCommand.COMMAND_WORD:
-            return new ClearCommand();
+        case VolunteerClearCommand.COMMAND_WORD:
+            return new VolunteerClearCommand();
 
-        case FindCommand.COMMAND_WORD:
-            return new FindCommandParser().parse(arguments);
+        case VolunteerFindCommand.COMMAND_WORD:
+            return new VolunteerFindCommandParser().parse(arguments);
 
-        case ListCommand.COMMAND_WORD:
-            return new ListCommand();
+        case VolunteerListCommand.COMMAND_WORD:
+            return new VolunteerListCommand();
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();

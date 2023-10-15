@@ -82,26 +82,46 @@ Shows a message explaining how to access the help page.
 Format: `help`
 
 
-### Adding a person: `add`
+### Adding a volunteer into an event: `eaddv` [COMING SOON]
 
-Adds a person to the address book.
+Adds a volunteer to an event by id or name.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+Format: `eaddv vid/VOLUNTEER_ID eid/EVENT_ID` or `eaddv vn/VOLUNTEER_NAME en/EVENT_NAME`
 
-<box type="tip" seamless>
+Parameters:
+* vn/ - Volunteer name
+* vid/ - Volunteer id
+* eid/ - Event id
+* en/ - Event name
 
-**Tip:** A person can have any number of tags (including 0)
-</box>
+Restrictions:
+* The maximum number of characters of the event and volunteer is 50.
+* The event and volunteer name entered must exist.
+* The event id must be greater than or equal to 0 and lesser than the number of events existed.
+* The volunteer id must be greater than or equal to 0 and lesser than the number of volunteers existed.
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `eaddv vid/1 eid/1`
+* `eaddv vn/Betsy Crowe en/fundraising`
 
-### Listing all persons : `list`
+### Listing all volunteers in an event: `elistv` [COMING SOON]
 
-Shows a list of all persons in the address book.
+Shows a list of all volunteers in an event.
 
-Format: `list`
+Format: `elistv eid/EVENT_ID` or `elistv en/EVENT_NAME`
+
+Parameters:
+* eid/ - Event id 
+* en/ - Event name
+
+Restrictions:
+* The maximum number of characters of the event is 50.
+* The event name entered must exist.
+* The event id must be greater than or equal to 0 and lesser than the number of events existed.
+
+Examples:
+* `elistv eid/1`
+* `elistv en/fundraising`
 
 ### Editing a person : `edit`
 
@@ -152,6 +172,27 @@ Examples:
 * `elist` followed by `edelete 2` deletes the 2nd event in the event list.
 * `efind Beach cleaning` followed by `edelete 1` deletes the 1st event in the results of the `find` command (tentative feature)
 
+### Removing a volunteer in an event: `eremovev` [COMING SOON]
+
+Removes the specified volunteer from an event by name or id.
+
+Format: `eremovev vid/VOLUNTEER_ID eid/EVENT_ID` or `eremovev vn/VOLUNTEER_NAME en/EVENT_NAME`
+
+Parameters:
+* vn/ - Volunteer name
+* vid/ - Volunteer id
+* en/ - Event name
+* eid/ - Event id
+
+Restrictions:
+* The maximum number of characters of the event is 50.
+* The event and volunteer name entered must exist.
+* The maximum number of characters of a volunteer name is 30.
+* The id must not exceed the number of volunteers in the event and greater or equal to 0.
+
+Examples:
+* `eremovev vid/1 eid/1`
+* `eremovev vn/John en/fundraising`
 
 ### Clearing all entries : `eclear`
 
@@ -159,25 +200,46 @@ Clears all entries from the event list.
 
 Format: `eclear`
 
-### Create an event [coming soon]
+### Creating an event [coming soon]
 
-Volunteer Coordinators can create new events by specifying the following parameters.
-* Roles needed
-* Date and Time
-* Location
-* Brief Description
-* Logistics and material needed(optional)
-* Budget(optional)
+Volunteer Coordinators can create new events.
 
-Format: `event create n/EVENT_NAME r/ROLES_NEEDED… d/DATE_AND_TIME l/LOCATION dsc/DESCRIPTION [m/MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET]`
-* Note that shorthands `e create` and `ec` can also be used instead of `event create`
+Format: `ecreate add n/EVENT_NAME r/ROLES_NEEDED… d/DATE_AND_TIME l/LOCATION dsc/DESCRIPTION [m/MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET]`
+
+Parameters:
+ * n/ - Event name
+ * r/ - Roles needed for the event
+ * d/ - Date and time of the event
+ * l/ - Location of the event
+ * dsc/ - Description of the event
+ * m/ - Materials needed for the event
+ * b/ - Budget for the event
+
+Restrictions:
 * All parameters must be separated by a single space.
-* Date and Time - The format must be exactly `DD-MM-YYYY TTTT`
-* Budget - Argument must be a floating point number with at most 2 decimal places.
-
+* The date and time format must be exactly `DD-MM-YYYY TTTT`
+* The budget argument must be a floating point number with 2 decimal places.
 
 Examples:
-* `event create n/food donation r/chef r/packer d/23-9-2023 1500 dsc/help food distribution m/50 potatoes b/50` creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
+* `ecreate n/food donation r/chef r/packer d/23-9-2023 1500 dsc/help food distribution m/50 potatoes b/50` creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
+
+### Listing all events : `elist` [coming soon]
+Volunteer coordinators can see all the events they are organising. For each event, only the most important information will be shown: name, date and time, location.
+
+Format: `elist`
+
+### Reading an individual event : `eshow` [coming soon]
+Volunteer coordinators can read up more about an individual event, to familiarize themselves with its requirements while planning for it.
+
+Format: `eshow EVENT_ID`
+
+Restrictions:
+* First part must be `eshow`
+* Second part must be an integer that represents a valid `EVENT_ID`: If the list of events is 10 events long, the acceptable values will be from 1-10.
+* First and second parts must be separated by a single space.
+
+Examples:
+* `eshow 7` will result in a pop-up window appearing, listing all details of the event at id `7`. This includes its name, date and time, location, roles needed, logistics needed (if any), budget (if any), and a description.
 
 ### Exiting the program : `exit`
 

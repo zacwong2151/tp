@@ -16,9 +16,9 @@ import seedu.address.model.person.Person;
 /**
  * Adds a person to the address book.
  */
-public class AddCommand extends Command {
+public class VolunteerCreateCommand extends Command {
 
-    public static final String COMMAND_WORD = "add";
+    public static final String COMMAND_WORD = "vcreate";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
             + "Parameters: "
@@ -43,7 +43,7 @@ public class AddCommand extends Command {
     /**
      * Creates an AddCommand to add the specified {@code Person}
      */
-    public AddCommand(Person person) {
+    public VolunteerCreateCommand(Person person) {
         requireNonNull(person);
         toAdd = person;
     }
@@ -67,12 +67,12 @@ public class AddCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof AddCommand)) {
+        if (!(other instanceof VolunteerCreateCommand)) {
             return false;
         }
 
-        AddCommand otherAddCommand = (AddCommand) other;
-        return toAdd.equals(otherAddCommand.toAdd);
+        VolunteerCreateCommand otherVolunteerCreateCommand = (VolunteerCreateCommand) other;
+        return toAdd.equals(otherVolunteerCreateCommand.toAdd);
     }
 
     @Override
