@@ -162,7 +162,7 @@ Examples:
 
 Deletes the event from the event list.
 
-Format: `edelete eid/EVENT_ID`
+Format: `edelete EVENT_ID`
 
 * Deletes the event at the specified `id`.
 * The id refers to the index number shown in the displayed event list.
