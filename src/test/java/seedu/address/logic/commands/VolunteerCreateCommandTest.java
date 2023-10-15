@@ -27,41 +27,41 @@ import seedu.address.model.ReadOnlyVolunteerStorage;
 import seedu.address.model.VolunteerStorage;
 import seedu.address.model.event.Event;
 import seedu.address.model.volunteer.Volunteer;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.VolunteerBuilder;
 
 public class VolunteerCreateCommandTest {
 
     @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
+    public void constructor_nullVolunteer_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> new VolunteerCreateCommand(null));
     }
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Volunteer validVolunteer = new PersonBuilder().build();
+    public void execute_volunteerAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingVolunteerAdded modelStub = new ModelStubAcceptingVolunteerAdded();
+        Volunteer validVolunteer = new VolunteerBuilder().build();
 
         CommandResult commandResult = new VolunteerCreateCommand(validVolunteer).execute(modelStub);
 
         assertEquals(String.format(VolunteerCreateCommand.MESSAGE_SUCCESS, Messages.format(validVolunteer)),
                 commandResult.getFeedbackToUser());
-        assertEquals(Arrays.asList(validVolunteer), modelStub.personsAdded);
+        assertEquals(Arrays.asList(validVolunteer), modelStub.volunteersAdded);
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() {
-        Volunteer validVolunteer = new PersonBuilder().build();
+    public void execute_duplicateVolunteer_throwsCommandException() {
+        Volunteer validVolunteer = new VolunteerBuilder().build();
         VolunteerCreateCommand volunteerCreateCommand = new VolunteerCreateCommand(validVolunteer);
-        ModelStub modelStub = new ModelStubWithPerson(validVolunteer);
+        ModelStub modelStub = new ModelStubWithVolunteer(validVolunteer);
 
-        assertThrows(CommandException.class, VolunteerCreateCommand.MESSAGE_DUPLICATE_PERSON, ()
+        assertThrows(CommandException.class, VolunteerCreateCommand.MESSAGE_DUPLICATE_VOLUNTEER, ()
                                                     -> volunteerCreateCommand.execute(modelStub));
     }
 
     @Test
     public void equals() {
-        Volunteer alice = new PersonBuilder().withName("Alice").build();
-        Volunteer bob = new PersonBuilder().withName("Bob").build();
+        Volunteer alice = new VolunteerBuilder().withName("Alice").build();
+        Volunteer bob = new VolunteerBuilder().withName("Bob").build();
         VolunteerCreateCommand addAliceCommand = new VolunteerCreateCommand(alice);
         VolunteerCreateCommand addBobCommand = new VolunteerCreateCommand(bob);
 
@@ -78,7 +78,7 @@ public class VolunteerCreateCommandTest {
         // null -> returns false
         assertFalse(addAliceCommand.equals(null));
 
-        // different person -> returns false
+        // different volunteer -> returns false
         assertFalse(addAliceCommand.equals(addBobCommand));
     }
 
@@ -129,7 +129,7 @@ public class VolunteerCreateCommandTest {
         }
 
         @Override
-        public void setEventStorageFilePath(Path addressBookFilePath) {
+        public void setEventStorageFilePath(Path eventStorageFilePath) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -215,12 +215,12 @@ public class VolunteerCreateCommandTest {
     }
 
     /**
-     * A Model stub that contains a single person.
+     * A Model stub that contains a single volunteer.
      */
-    private class ModelStubWithPerson extends ModelStub {
+    private class ModelStubWithVolunteer extends ModelStub {
         private final Volunteer volunteer;
 
-        ModelStubWithPerson(Volunteer volunteer) {
+        ModelStubWithVolunteer(Volunteer volunteer) {
             requireNonNull(volunteer);
             this.volunteer = volunteer;
         }
@@ -228,26 +228,26 @@ public class VolunteerCreateCommandTest {
         @Override
         public boolean hasVolunteer(Volunteer volunteer) {
             requireNonNull(volunteer);
-            return this.volunteer.isSamePerson(volunteer);
+            return this.volunteer.isSameVolunteer(volunteer);
         }
     }
 
     /**
-     * A Model stub that always accept the person being added.
+     * A Model stub that always accept the volunteer being added.
      */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Volunteer> personsAdded = new ArrayList<>();
+    private class ModelStubAcceptingVolunteerAdded extends ModelStub {
+        final ArrayList<Volunteer> volunteersAdded = new ArrayList<>();
 
         @Override
         public boolean hasVolunteer(Volunteer volunteer) {
             requireNonNull(volunteer);
-            return personsAdded.stream().anyMatch(volunteer::isSamePerson);
+            return volunteersAdded.stream().anyMatch(volunteer::isSameVolunteer);
         }
 
         @Override
         public void addVolunteer(Volunteer volunteer) {
             requireNonNull(volunteer);
-            personsAdded.add(volunteer);
+            volunteersAdded.add(volunteer);
         }
 
         @Override

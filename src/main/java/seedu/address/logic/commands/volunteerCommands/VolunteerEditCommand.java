@@ -5,8 +5,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SKILL;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_VOLUNTEERS;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -23,7 +23,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.skill.Skill;
 import seedu.address.model.volunteer.Address;
 import seedu.address.model.volunteer.Email;
 import seedu.address.model.volunteer.Name;
@@ -31,42 +31,42 @@ import seedu.address.model.volunteer.Phone;
 import seedu.address.model.volunteer.Volunteer;
 
 /**
- * Edits the details of an existing person in the address book.
+ * Edits the details of an existing volunteer in the address book.
  */
 public class VolunteerEditCommand extends Command {
 
     public static final String COMMAND_WORD = "vedit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
-            + "by the index number used in the displayed person list. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the volunteer identified "
+            + "by the index number used in the displayed volunteer list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_SKILL + "SKILL]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
+    public static final String MESSAGE_EDIT_VOLUNTEER_SUCCESS = "Edited Volunteer: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_VOLUNTEER = "This volunteer already exists in the address book.";
 
     private final Index index;
-    private final EditPersonDescriptor editPersonDescriptor;
+    private final EditVolunteerDescriptor editVolunteerDescriptor;
 
     /**
-     * @param index of the person in the filtered person list to edit
-     * @param editPersonDescriptor details to edit the person with
+     * @param index of the volunteer in the filtered volunteer list to edit
+     * @param editVolunteerDescriptor details to edit the volunteer with
      */
-    public VolunteerEditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
+    public VolunteerEditCommand(Index index, EditVolunteerDescriptor editVolunteerDescriptor) {
         requireNonNull(index);
-        requireNonNull(editPersonDescriptor);
+        requireNonNull(editVolunteerDescriptor);
 
         this.index = index;
-        this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
+        this.editVolunteerDescriptor = new EditVolunteerDescriptor(editVolunteerDescriptor);
     }
 
     @Override
@@ -75,35 +75,36 @@ public class VolunteerEditCommand extends Command {
         List<Volunteer> lastShownList = model.getFilteredVolunteerList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_VOLUNTEER_DISPLAYED_INDEX);
         }
 
         Volunteer volunteerToEdit = lastShownList.get(index.getZeroBased());
-        Volunteer editedVolunteer = createEditedPerson(volunteerToEdit, editPersonDescriptor);
+        Volunteer editedVolunteer = createEditedVolunteer(volunteerToEdit, editVolunteerDescriptor);
 
-        if (!volunteerToEdit.isSamePerson(editedVolunteer) && model.hasVolunteer(editedVolunteer)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        if (!volunteerToEdit.isSameVolunteer(editedVolunteer) && model.hasVolunteer(editedVolunteer)) {
+            throw new CommandException(MESSAGE_DUPLICATE_VOLUNTEER);
         }
 
         model.setVolunteer(volunteerToEdit, editedVolunteer);
-        model.updateFilteredVolunteerList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedVolunteer)));
+        model.updateFilteredVolunteerList(PREDICATE_SHOW_ALL_VOLUNTEERS);
+        return new CommandResult(String.format(MESSAGE_EDIT_VOLUNTEER_SUCCESS, Messages.format(editedVolunteer)));
     }
 
     /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with {@code editPersonDescriptor}.
+     * Creates and returns a {@code Volunteer} with the details of {@code volunteerToEdit}
+     * edited with {@code editVolunteerDescriptor}.
      */
-    private static Volunteer createEditedPerson(Volunteer volunteerToEdit, EditPersonDescriptor editPersonDescriptor) {
+    private static Volunteer createEditedVolunteer(Volunteer volunteerToEdit,
+                                                   EditVolunteerDescriptor editVolunteerDescriptor) {
         assert volunteerToEdit != null;
 
-        Name updatedName = editPersonDescriptor.getName().orElse(volunteerToEdit.getName());
-        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(volunteerToEdit.getPhone());
-        Email updatedEmail = editPersonDescriptor.getEmail().orElse(volunteerToEdit.getEmail());
-        Address updatedAddress = editPersonDescriptor.getAddress().orElse(volunteerToEdit.getAddress());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(volunteerToEdit.getTags());
+        Name updatedName = editVolunteerDescriptor.getName().orElse(volunteerToEdit.getName());
+        Phone updatedPhone = editVolunteerDescriptor.getPhone().orElse(volunteerToEdit.getPhone());
+        Email updatedEmail = editVolunteerDescriptor.getEmail().orElse(volunteerToEdit.getEmail());
+        Address updatedAddress = editVolunteerDescriptor.getAddress().orElse(volunteerToEdit.getAddress());
+        Set<Skill> updatedSkills = editVolunteerDescriptor.getSkills().orElse(volunteerToEdit.getSkills());
 
-        return new Volunteer(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Volunteer(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedSkills);
     }
 
     @Override
@@ -119,47 +120,47 @@ public class VolunteerEditCommand extends Command {
 
         VolunteerEditCommand otherVolunteerEditCommand = (VolunteerEditCommand) other;
         return index.equals(otherVolunteerEditCommand.index)
-                && editPersonDescriptor.equals(otherVolunteerEditCommand.editPersonDescriptor);
+                && editVolunteerDescriptor.equals(otherVolunteerEditCommand.editVolunteerDescriptor);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .add("index", index)
-                .add("editPersonDescriptor", editPersonDescriptor)
+                .add("editVolunteerDescriptor", editVolunteerDescriptor)
                 .toString();
     }
 
     /**
-     * Stores the details to edit the person with. Each non-empty field value will replace the
-     * corresponding field value of the person.
+     * Stores the details to edit the volunteer with. Each non-empty field value will replace the
+     * corresponding field value of the volunteer.
      */
-    public static class EditPersonDescriptor {
+    public static class EditVolunteerDescriptor {
         private Name name;
         private Phone phone;
         private Email email;
         private Address address;
-        private Set<Tag> tags;
+        private Set<Skill> skills;
 
-        public EditPersonDescriptor() {}
+        public EditVolunteerDescriptor() {}
 
         /**
          * Copy constructor.
-         * A defensive copy of {@code tags} is used internally.
+         * A defensive copy of {@code skills} is used internally.
          */
-        public EditPersonDescriptor(EditPersonDescriptor toCopy) {
+        public EditVolunteerDescriptor(EditVolunteerDescriptor toCopy) {
             setName(toCopy.name);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
-            setTags(toCopy.tags);
+            setSkills(toCopy.skills);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, skills);
         }
 
         public void setName(Name name) {
@@ -195,20 +196,20 @@ public class VolunteerEditCommand extends Command {
         }
 
         /**
-         * Sets {@code tags} to this object's {@code tags}.
-         * A defensive copy of {@code tags} is used internally.
+         * Sets {@code skills} to this object's {@code skills}.
+         * A defensive copy of {@code skills} is used internally.
          */
-        public void setTags(Set<Tag> tags) {
-            this.tags = (tags != null) ? new HashSet<>(tags) : null;
+        public void setSkills(Set<Skill> skills) {
+            this.skills = (skills != null) ? new HashSet<>(skills) : null;
         }
 
         /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
+         * Returns an unmodifiable skill set, which throws {@code UnsupportedOperationException}
          * if modification is attempted.
-         * Returns {@code Optional#empty()} if {@code tags} is null.
+         * Returns {@code Optional#empty()} if {@code skills} is null.
          */
-        public Optional<Set<Tag>> getTags() {
-            return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
+        public Optional<Set<Skill>> getSkills() {
+            return (skills != null) ? Optional.of(Collections.unmodifiableSet(skills)) : Optional.empty();
         }
 
         @Override
@@ -218,16 +219,16 @@ public class VolunteerEditCommand extends Command {
             }
 
             // instanceof handles nulls
-            if (!(other instanceof EditPersonDescriptor)) {
+            if (!(other instanceof EditVolunteerDescriptor)) {
                 return false;
             }
 
-            EditPersonDescriptor otherEditPersonDescriptor = (EditPersonDescriptor) other;
-            return Objects.equals(name, otherEditPersonDescriptor.name)
-                    && Objects.equals(phone, otherEditPersonDescriptor.phone)
-                    && Objects.equals(email, otherEditPersonDescriptor.email)
-                    && Objects.equals(address, otherEditPersonDescriptor.address)
-                    && Objects.equals(tags, otherEditPersonDescriptor.tags);
+            EditVolunteerDescriptor otherEditVolunteerDescriptor = (EditVolunteerDescriptor) other;
+            return Objects.equals(name, otherEditVolunteerDescriptor.name)
+                    && Objects.equals(phone, otherEditVolunteerDescriptor.phone)
+                    && Objects.equals(email, otherEditVolunteerDescriptor.email)
+                    && Objects.equals(address, otherEditVolunteerDescriptor.address)
+                    && Objects.equals(skills, otherEditVolunteerDescriptor.skills);
         }
 
         @Override
@@ -237,7 +238,7 @@ public class VolunteerEditCommand extends Command {
                     .add("phone", phone)
                     .add("email", email)
                     .add("address", address)
-                    .add("tags", tags)
+                    .add("skills", skills)
                     .toString();
         }
     }

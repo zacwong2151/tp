@@ -16,7 +16,7 @@ import seedu.address.model.event.EventName;
 import seedu.address.model.event.Location;
 import seedu.address.model.event.Material;
 import seedu.address.model.event.Role;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.skill.Skill;
 import seedu.address.model.volunteer.Address;
 import seedu.address.model.volunteer.Email;
 import seedu.address.model.volunteer.Name;
@@ -67,7 +67,7 @@ public class ParserUtil {
         requireNonNull(role);
         String trimmedRole = role.trim();
         if (!Role.isValidRoleName(trimmedRole)) {
-            throw new ParseException(Tag.MESSAGE_CONSTRAINTS);
+            throw new ParseException(Skill.MESSAGE_CONSTRAINTS);
         }
         return new Role(trimmedRole);
     }
@@ -145,7 +145,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses {@code Collection<String> roles} into a {@code Set<Tag>}.
+     * Parses {@code Collection<String> roles} into a {@code Set<Skill>}.
      */
     public static Set<Material> parseMaterials(Collection<String> materials) throws ParseException {
         requireNonNull(materials);
@@ -232,29 +232,29 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String tag} into a {@code Tag}.
+     * Parses a {@code String skill} into a {@code Skill}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code tag} is invalid.
+     * @throws ParseException if the given {@code skill} is invalid.
      */
-    public static Tag parseTag(String tag) throws ParseException {
-        requireNonNull(tag);
-        String trimmedTag = tag.trim();
-        if (!Tag.isValidTagName(trimmedTag)) {
-            throw new ParseException(Tag.MESSAGE_CONSTRAINTS);
+    public static Skill parseSkill(String skill) throws ParseException {
+        requireNonNull(skill);
+        String trimmedSkill = skill.trim();
+        if (!Skill.isValidSkillName(trimmedSkill)) {
+            throw new ParseException(Skill.MESSAGE_CONSTRAINTS);
         }
-        return new Tag(trimmedTag);
+        return new Skill(trimmedSkill);
     }
 
     /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
+     * Parses {@code Collection<String> skills} into a {@code Set<Skill>}.
      */
-    public static Set<Tag> parseTags(Collection<String> tags) throws ParseException {
-        requireNonNull(tags);
-        final Set<Tag> tagSet = new HashSet<>();
-        for (String tagName : tags) {
-            tagSet.add(parseTag(tagName));
+    public static Set<Skill> parseSkills(Collection<String> skills) throws ParseException {
+        requireNonNull(skills);
+        final Set<Skill> skillSet = new HashSet<>();
+        for (String skillName : skills) {
+            skillSet.add(parseSkill(skillName));
         }
-        return tagSet;
+        return skillSet;
     }
 }

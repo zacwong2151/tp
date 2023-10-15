@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.skill.Skill;
 import seedu.address.model.volunteer.Address;
 import seedu.address.model.volunteer.Email;
 import seedu.address.model.volunteer.Name;
@@ -22,21 +22,21 @@ import seedu.address.model.volunteer.Volunteer;
  */
 class JsonAdaptedVolunteer {
 
-    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
+    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Volunteer's %s field is missing!";
 
     private final String name;
     private final String phone;
     private final String email;
     private final String address;
-    private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final List<JsonAdaptedSkill> tags = new ArrayList<>();
 
     /**
-     * Constructs a {@code JsonAdaptedPerson} with the given person details.
+     * Constructs a {@code JsonAdaptedVolunteer} with the given volunteer details.
      */
     @JsonCreator
     public JsonAdaptedVolunteer(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
                                 @JsonProperty("email") String email, @JsonProperty("address") String address,
-                                @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+                                @JsonProperty("tags") List<JsonAdaptedSkill> tags) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -47,27 +47,27 @@ class JsonAdaptedVolunteer {
     }
 
     /**
-     * Converts a given {@code Person} into this class for Jackson use.
+     * Converts a given {@code Volunteer} into this class for Jackson use.
      */
     public JsonAdaptedVolunteer(Volunteer source) {
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
-        tags.addAll(source.getTags().stream()
-                .map(JsonAdaptedTag::new)
+        tags.addAll(source.getSkills().stream()
+                .map(JsonAdaptedSkill::new)
                 .collect(Collectors.toList()));
     }
 
     /**
-     * Converts this Jackson-friendly adapted person object into the model's {@code Person} object.
+     * Converts this Jackson-friendly adapted Volunteer object into the model's {@code Volunteer} object.
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person.
+     * @throws IllegalValueException if there were any data constraints violated in the adapted volunteer.
      */
     public Volunteer toModelType() throws IllegalValueException {
-        final List<Tag> personTags = new ArrayList<>();
-        for (JsonAdaptedTag tag : tags) {
-            personTags.add(tag.toModelType());
+        final List<Skill> volunteerSkills = new ArrayList<>();
+        for (JsonAdaptedSkill tag : tags) {
+            volunteerSkills.add(tag.toModelType());
         }
 
         if (name == null) {
@@ -102,8 +102,8 @@ class JsonAdaptedVolunteer {
         }
         final Address modelAddress = new Address(address);
 
-        final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Volunteer(modelName, modelPhone, modelEmail, modelAddress, modelTags);
+        final Set<Skill> modelSkills = new HashSet<>(volunteerSkills);
+        return new Volunteer(modelName, modelPhone, modelEmail, modelAddress, modelSkills);
     }
 
 }

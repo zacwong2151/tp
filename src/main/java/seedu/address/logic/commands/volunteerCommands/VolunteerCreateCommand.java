@@ -5,7 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SKILL;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
@@ -16,34 +16,34 @@ import seedu.address.model.Model;
 import seedu.address.model.volunteer.Volunteer;
 
 /**
- * Adds a person to the address book.
+ * Adds a volunteer to the volunteer storage.
  */
 public class VolunteerCreateCommand extends Command {
 
     public static final String COMMAND_WORD = "vcreate";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a volunteer to the address book. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_SKILL + "SKILL]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
-            + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney";
+            + PREFIX_SKILL + "friends "
+            + PREFIX_SKILL + "owesMoney";
 
-    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_SUCCESS = "New volunteer added: %1$s";
+    public static final String MESSAGE_DUPLICATE_VOLUNTEER = "This volunteer already exists in the address book";
 
     private final Volunteer toAdd;
 
     /**
-     * Creates an AddCommand to add the specified {@code Person}
+     * Creates a VolunteerCreateCommand to add the specified {@code Volunteer}
      */
     public VolunteerCreateCommand(Volunteer volunteer) {
         requireNonNull(volunteer);
@@ -55,7 +55,7 @@ public class VolunteerCreateCommand extends Command {
         requireNonNull(model);
 
         if (model.hasVolunteer(toAdd)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(MESSAGE_DUPLICATE_VOLUNTEER);
         }
 
         model.addVolunteer(toAdd);

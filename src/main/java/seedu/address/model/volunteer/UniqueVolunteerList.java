@@ -12,15 +12,16 @@ import seedu.address.model.volunteer.exceptions.DuplicateVolunteerException;
 import seedu.address.model.volunteer.exceptions.VolunteerNotFoundException;
 
 /**
- * A list of persons that enforces uniqueness between its elements and does not allow nulls.
- * A person is considered unique by comparing using {@code Person#isSamePerson(Person)}. As such, adding and updating of
- * persons uses Person#isSamePerson(Person) for equality so as to ensure that the person being added or updated is
- * unique in terms of identity in the UniquePersonList. However, the removal of a person uses Person#equals(Object) so
- * as to ensure that the person with exactly the same fields will be removed.
+ * A list of volunteers that enforces uniqueness between its elements and does not allow nulls.
+ * A volunteer is considered unique by comparing using {@code Volunteer#isSameVolunteer(Volunteer)}. As such,
+ * adding and updating of volunteers uses Volunteer#isSameVolunteer(Volunteer) for equality so as to ensure that the
+ * volunteer being added or updated is unique in terms of identity in the UniqueVolunteerList. However, the removal of
+ * a volunteer uses Volunteer#equals(Object) so as to ensure that the volunteer with exactly the same fields will be
+ * removed.
  *
  * Supports a minimal set of list operations.
  *
- * @see Volunteer#isSamePerson(Volunteer)
+ * @see Volunteer#isSameVolunteer(Volunteer)
  */
 public class UniqueVolunteerList implements Iterable<Volunteer> {
 
@@ -29,16 +30,16 @@ public class UniqueVolunteerList implements Iterable<Volunteer> {
             FXCollections.unmodifiableObservableList(internalList);
 
     /**
-     * Returns true if the list contains an equivalent person as the given argument.
+     * Returns true if the list contains an equivalent volunteer as the given argument.
      */
     public boolean contains(Volunteer toCheck) {
         requireNonNull(toCheck);
-        return internalList.stream().anyMatch(toCheck::isSamePerson);
+        return internalList.stream().anyMatch(toCheck::isSameVolunteer);
     }
 
     /**
-     * Adds a person to the list.
-     * The person must not already exist in the list.
+     * Adds a volunteer to the list.
+     * The volunteer must not already exist in the list.
      */
     public void add(Volunteer toAdd) {
         requireNonNull(toAdd);
@@ -49,9 +50,9 @@ public class UniqueVolunteerList implements Iterable<Volunteer> {
     }
 
     /**
-     * Replaces the person {@code target} in the list with {@code editedPerson}.
+     * Replaces the volunteer {@code target} in the list with {@code editedVolunteeer}.
      * {@code target} must exist in the list.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the list.
+     * The volunteer identity of {@code editedVolunteer} must not be the same as another existing volunteer in the list.
      */
     public void setVolunteer(Volunteer target, Volunteer editedVolunteer) {
         requireAllNonNull(target, editedVolunteer);
@@ -61,7 +62,7 @@ public class UniqueVolunteerList implements Iterable<Volunteer> {
             throw new VolunteerNotFoundException();
         }
 
-        if (!target.isSamePerson(editedVolunteer) && contains(editedVolunteer)) {
+        if (!target.isSameVolunteer(editedVolunteer) && contains(editedVolunteer)) {
             throw new DuplicateVolunteerException();
         }
 
@@ -69,8 +70,8 @@ public class UniqueVolunteerList implements Iterable<Volunteer> {
     }
 
     /**
-     * Removes the equivalent person from the list.
-     * The person must exist in the list.
+     * Removes the equivalent volunteer from the list.
+     * The volunteer must exist in the list.
      */
     public void remove(Volunteer toRemove) {
         requireNonNull(toRemove);
@@ -79,18 +80,18 @@ public class UniqueVolunteerList implements Iterable<Volunteer> {
         }
     }
 
-    public void setPersons(UniqueVolunteerList replacement) {
+    public void setVolunteers(UniqueVolunteerList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
     }
 
     /**
-     * Replaces the contents of this list with {@code persons}.
-     * {@code persons} must not contain duplicate persons.
+     * Replaces the contents of this list with {@code volunteers}.
+     * {@code volunteers} must not contain duplicate volunteers.
      */
-    public void setPersons(List<Volunteer> volunteers) {
+    public void setVolunteers(List<Volunteer> volunteers) {
         requireAllNonNull(volunteers);
-        if (!personsAreUnique(volunteers)) {
+        if (!volunteersAreUnique(volunteers)) {
             throw new DuplicateVolunteerException();
         }
 
@@ -135,12 +136,12 @@ public class UniqueVolunteerList implements Iterable<Volunteer> {
     }
 
     /**
-     * Returns true if {@code persons} contains only unique persons.
+     * Returns true if {@code volunteers} contains only unique volunteers.
      */
-    private boolean personsAreUnique(List<Volunteer> volunteers) {
+    private boolean volunteersAreUnique(List<Volunteer> volunteers) {
         for (int i = 0; i < volunteers.size() - 1; i++) {
             for (int j = i + 1; j < volunteers.size(); j++) {
-                if (volunteers.get(i).isSamePerson(volunteers.get(j))) {
+                if (volunteers.get(i).isSameVolunteer(volunteers.get(j))) {
                     return false;
                 }
             }

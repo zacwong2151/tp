@@ -8,12 +8,12 @@ import seedu.address.model.Model;
 import seedu.address.model.VolunteerStorage;
 
 /**
- * Clears the address book.
+ * Clears the volunteer storage.
  */
 public class VolunteerClearCommand extends Command {
 
     public static final String COMMAND_WORD = "vclear";
-    public static final String MESSAGE_SUCCESS = "Address book has been cleared!";
+    public static final String MESSAGE_SUCCESS = "Volunteer storage has been cleared!";
 
 
     @Override

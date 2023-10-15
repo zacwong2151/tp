@@ -3,7 +3,7 @@ package seedu.address.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_VOLUNTEERS;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalVolunteers.ALICE;
 import static seedu.address.testutil.TypicalVolunteers.BENSON;
@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.volunteer.NameContainsKeywordsPredicate;
-import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.VolunteerStorageBuilder;
 
 public class ModelManagerTest {
 
@@ -73,23 +73,23 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void hasPerson_nullPerson_throwsNullPointerException() {
+    public void hasVolunteer_nullVolunteer_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> modelManager.hasVolunteer(null));
     }
 
     @Test
-    public void hasPerson_personNotInAddressBook_returnsFalse() {
+    public void hasVolunteer_volunteerNotInAddressBook_returnsFalse() {
         assertFalse(modelManager.hasVolunteer(ALICE));
     }
 
     @Test
-    public void hasPerson_personInAddressBook_returnsTrue() {
+    public void hasVolunteer_volunteernInAddressBook_returnsTrue() {
         modelManager.addVolunteer(ALICE);
         assertTrue(modelManager.hasVolunteer(ALICE));
     }
 
     @Test
-    public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
+    public void getFilteredVolunteerList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredVolunteerList().remove(0));
     }
 
@@ -99,7 +99,8 @@ public class ModelManagerTest {
         EventStorage eventStorage = new EventStorage();
         EventStorage differentEventStorage = new EventStorage();
 
-        VolunteerStorage volunteerStorage = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        VolunteerStorage volunteerStorage = new VolunteerStorageBuilder().withVolunteer(ALICE).withVolunteer(BENSON)
+                .build();
         VolunteerStorage differentVolunteerStorage = new VolunteerStorage();
         UserPrefs userPrefs = new UserPrefs();
 
@@ -126,7 +127,7 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(new ModelManager(eventStorage, volunteerStorage, userPrefs)));
 
         // resets modelManager to initial state for upcoming tests
-        modelManager.updateFilteredVolunteerList(PREDICATE_SHOW_ALL_PERSONS);
+        modelManager.updateFilteredVolunteerList(PREDICATE_SHOW_ALL_VOLUNTEERS);
 
         // different userPrefs -> returns false
         UserPrefs differentUserPrefs = new UserPrefs();

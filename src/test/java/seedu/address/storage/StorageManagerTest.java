@@ -49,11 +49,11 @@ public class StorageManagerTest {
     }
 
     @Test
-    public void addressBookReadSave() throws Exception {
+    public void volunteerStorageReadSave() throws Exception {
         /*
          * Note: This is an integration test that verifies the StorageManager is properly wired to the
-         * {@link JsonAddressBookStorage} class.
-         * More extensive testing of UserPref saving/reading is done in {@link JsonAddressBookStorageTest} class.
+         * {@link JsonVolunteerStorage} class.
+         * More extensive testing of UserPref saving/reading is done in {@link JsonVolunteerStorageTest} class.
          */
         VolunteerStorage original = getTypicalVolunteerStorage();
         storageManager.saveVolunteerStorage(original);
@@ -62,7 +62,7 @@ public class StorageManagerTest {
     }
 
     @Test
-    public void getAddressBookFilePath() {
+    public void getVolunteerStorageFilePath() {
         assertNotNull(storageManager.getVolunteerStorageFilePath());
     }
 

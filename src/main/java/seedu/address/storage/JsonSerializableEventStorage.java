@@ -19,12 +19,12 @@ import seedu.address.model.event.Event;
 @JsonRootName(value = "eventStorage")
 class JsonSerializableEventStorage {
 
-    public static final String MESSAGE_DUPLICATE_PERSON = "Events list contains duplicate event(s).";
+    public static final String MESSAGE_DUPLICATE_EVENT = "Events list contains duplicate event(s).";
 
     private final List<JsonAdaptedEvent> events = new ArrayList<>();
 
     /**
-     * Constructs a {@code JsonSerializableEventStorage} with the given persons.
+     * Constructs a {@code JsonSerializableEventStorage} with the given events.
      */
     @JsonCreator
     public JsonSerializableEventStorage(@JsonProperty("events") List<JsonAdaptedEvent> events) {
@@ -50,7 +50,7 @@ class JsonSerializableEventStorage {
         for (JsonAdaptedEvent jsonAdaptedEvent : events) {
             Event event = jsonAdaptedEvent.toModelType();
             if (eventStorage.hasEvent(event)) {
-                throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
+                throw new IllegalValueException(MESSAGE_DUPLICATE_EVENT);
             }
             eventStorage.addEvent(event);
         }

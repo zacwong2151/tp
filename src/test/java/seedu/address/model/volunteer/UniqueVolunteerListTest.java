@@ -17,64 +17,64 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.model.volunteer.exceptions.DuplicateVolunteerException;
 import seedu.address.model.volunteer.exceptions.VolunteerNotFoundException;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.VolunteerBuilder;
 
 public class UniqueVolunteerListTest {
 
     private final UniqueVolunteerList uniqueVolunteerList = new UniqueVolunteerList();
 
     @Test
-    public void contains_nullPerson_throwsNullPointerException() {
+    public void contains_nullVolunteer_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> uniqueVolunteerList.contains(null));
     }
 
     @Test
-    public void contains_personNotInList_returnsFalse() {
+    public void contains_volunteerNotInList_returnsFalse() {
         assertFalse(uniqueVolunteerList.contains(ALICE));
     }
 
     @Test
-    public void contains_personInList_returnsTrue() {
+    public void contains_volunteerInList_returnsTrue() {
         uniqueVolunteerList.add(ALICE);
         assertTrue(uniqueVolunteerList.contains(ALICE));
     }
 
     @Test
-    public void contains_personWithSameIdentityFieldsInList_returnsTrue() {
+    public void contains_volunteerWithSameIdentityFieldsInList_returnsTrue() {
         uniqueVolunteerList.add(ALICE);
-        Volunteer editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+        Volunteer editedAlice = new VolunteerBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withSkills(VALID_TAG_HUSBAND)
                 .build();
         assertTrue(uniqueVolunteerList.contains(editedAlice));
     }
 
     @Test
-    public void add_nullPerson_throwsNullPointerException() {
+    public void add_nullVolunteer_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> uniqueVolunteerList.add(null));
     }
 
     @Test
-    public void add_duplicatePerson_throwsDuplicatePersonException() {
+    public void add_duplicateVolunteer_throwsDuplicateVolunteerException() {
         uniqueVolunteerList.add(ALICE);
         assertThrows(DuplicateVolunteerException.class, () -> uniqueVolunteerList.add(ALICE));
     }
 
     @Test
-    public void setPerson_nullTargetPerson_throwsNullPointerException() {
+    public void setVolunteer_nullTargetVolunteer_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> uniqueVolunteerList.setVolunteer(null, ALICE));
     }
 
     @Test
-    public void setPerson_nullEditedPerson_throwsNullPointerException() {
+    public void setVolunteer_nullEditedVolunteer_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> uniqueVolunteerList.setVolunteer(ALICE, null));
     }
 
     @Test
-    public void setPerson_targetPersonNotInList_throwsPersonNotFoundException() {
+    public void setVolunteer_targetVolunteerNotInList_throwsVolunteerNotFoundException() {
         assertThrows(VolunteerNotFoundException.class, () -> uniqueVolunteerList.setVolunteer(ALICE, ALICE));
     }
 
     @Test
-    public void setPerson_editedPersonIsSamePerson_success() {
+    public void setVolunteer_editedVolunteerIsSameVolunteer_success() {
         uniqueVolunteerList.add(ALICE);
         uniqueVolunteerList.setVolunteer(ALICE, ALICE);
         UniqueVolunteerList expectedUniqueVolunteerList = new UniqueVolunteerList();
@@ -83,9 +83,9 @@ public class UniqueVolunteerListTest {
     }
 
     @Test
-    public void setPerson_editedPersonHasSameIdentity_success() {
+    public void setVolunteer_editedVolunteerHasSameIdentity_success() {
         uniqueVolunteerList.add(ALICE);
-        Volunteer editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+        Volunteer editedAlice = new VolunteerBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withSkills(VALID_TAG_HUSBAND)
                 .build();
         uniqueVolunteerList.setVolunteer(ALICE, editedAlice);
         UniqueVolunteerList expectedUniqueVolunteerList = new UniqueVolunteerList();
@@ -94,7 +94,7 @@ public class UniqueVolunteerListTest {
     }
 
     @Test
-    public void setPerson_editedPersonHasDifferentIdentity_success() {
+    public void setVolunteer_editedVolunteerHasDifferentIdentity_success() {
         uniqueVolunteerList.add(ALICE);
         uniqueVolunteerList.setVolunteer(ALICE, BOB);
         UniqueVolunteerList expectedUniqueVolunteerList = new UniqueVolunteerList();
@@ -103,24 +103,24 @@ public class UniqueVolunteerListTest {
     }
 
     @Test
-    public void setPerson_editedPersonHasNonUniqueIdentity_throwsDuplicatePersonException() {
+    public void setVolunteer_editedVolunteerHasNonUniqueIdentity_throwsDuplicateVolunteerException() {
         uniqueVolunteerList.add(ALICE);
         uniqueVolunteerList.add(BOB);
         assertThrows(DuplicateVolunteerException.class, () -> uniqueVolunteerList.setVolunteer(ALICE, BOB));
     }
 
     @Test
-    public void remove_nullPerson_throwsNullPointerException() {
+    public void remove_nullVolunteer_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> uniqueVolunteerList.remove(null));
     }
 
     @Test
-    public void remove_personDoesNotExist_throwsPersonNotFoundException() {
+    public void remove_volunteerDoesNotExist_throwsVolunteerNotFoundException() {
         assertThrows(VolunteerNotFoundException.class, () -> uniqueVolunteerList.remove(ALICE));
     }
 
     @Test
-    public void remove_existingPerson_removesPerson() {
+    public void remove_existingVolunteer_removesVolunteer() {
         uniqueVolunteerList.add(ALICE);
         uniqueVolunteerList.remove(ALICE);
         UniqueVolunteerList expectedUniqueVolunteerList = new UniqueVolunteerList();
@@ -128,29 +128,29 @@ public class UniqueVolunteerListTest {
     }
 
     @Test
-    public void setPersons_nullUniquePersonList_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> uniqueVolunteerList.setPersons((UniqueVolunteerList) null));
+    public void setVolunteers_nullUniqueVolunteerList_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> uniqueVolunteerList.setVolunteers((UniqueVolunteerList) null));
     }
 
     @Test
-    public void setPersons_uniquePersonList_replacesOwnListWithProvidedUniquePersonList() {
+    public void setVolnuteers_uniqueVolunteerList_replacesOwnListWithProvidedUniqueVolunteerList() {
         uniqueVolunteerList.add(ALICE);
         UniqueVolunteerList expectedUniqueVolunteerList = new UniqueVolunteerList();
         expectedUniqueVolunteerList.add(BOB);
-        uniqueVolunteerList.setPersons(expectedUniqueVolunteerList);
+        uniqueVolunteerList.setVolunteers(expectedUniqueVolunteerList);
         assertEquals(expectedUniqueVolunteerList, uniqueVolunteerList);
     }
 
     @Test
-    public void setPersons_nullList_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> uniqueVolunteerList.setPersons((List<Volunteer>) null));
+    public void setVolunteers_nullList_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> uniqueVolunteerList.setVolunteers((List<Volunteer>) null));
     }
 
     @Test
-    public void setPersons_list_replacesOwnListWithProvidedList() {
+    public void setVolunteers_list_replacesOwnListWithProvidedList() {
         uniqueVolunteerList.add(ALICE);
         List<Volunteer> volunteerList = Collections.singletonList(BOB);
-        uniqueVolunteerList.setPersons(volunteerList);
+        uniqueVolunteerList.setVolunteers(volunteerList);
         UniqueVolunteerList expectedUniqueVolunteerList = new UniqueVolunteerList();
         expectedUniqueVolunteerList.add(BOB);
         assertEquals(expectedUniqueVolunteerList, uniqueVolunteerList);
@@ -160,7 +160,7 @@ public class UniqueVolunteerListTest {
     public void setPersons_listWithDuplicatePersons_throwsDuplicatePersonException() {
         List<Volunteer> listWithDuplicateVolunteers = Arrays.asList(ALICE, ALICE);
         assertThrows(DuplicateVolunteerException.class, () ->
-                        uniqueVolunteerList.setPersons(listWithDuplicateVolunteers));
+                        uniqueVolunteerList.setVolunteers(listWithDuplicateVolunteers));
     }
 
     @Test

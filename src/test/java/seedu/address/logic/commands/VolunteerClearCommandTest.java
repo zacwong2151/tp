@@ -15,7 +15,7 @@ import seedu.address.model.VolunteerStorage;
 public class VolunteerClearCommandTest {
 
     @Test
-    public void execute_emptyAddressBook_success() {
+    public void execute_emptyVolunteerStorage_success() {
         Model model = new ModelManager();
         Model expectedModel = new ModelManager();
 
@@ -23,7 +23,7 @@ public class VolunteerClearCommandTest {
     }
 
     @Test
-    public void execute_nonEmptyAddressBook_success() {
+    public void execute_nonEmptyVolunteerStorage_success() {
         Model model = new ModelManager(getTypicalEventStorage(), getTypicalVolunteerStorage(), new UserPrefs());
         Model expectedModel = new ModelManager(getTypicalEventStorage(), getTypicalVolunteerStorage(), new UserPrefs());
         expectedModel.setVolunteerStorage(new VolunteerStorage());

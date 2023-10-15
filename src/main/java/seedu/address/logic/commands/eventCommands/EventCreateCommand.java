@@ -18,7 +18,7 @@ import seedu.address.model.Model;
 import seedu.address.model.event.Event;
 
 /**
- * Adds a person to the address book.
+ * Adds an event to the EventStorage.
  */
 public class EventCreateCommand extends Command {
 
@@ -44,12 +44,12 @@ public class EventCreateCommand extends Command {
             + PREFIX_MATERIALS + "TONGS "
             + PREFIX_BUDGET + "50.00";
     public static final String MESSAGE_SUCCESS = "New EVENT added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This event already exists in the event list";
+    public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists in the event list";
 
     private final Event toAdd;
 
     /**
-     * Creates an AddCommand to add the specified {@code Person}
+     * Creates an EventCreateCommand to add the specified {@code Event}
      */
     public EventCreateCommand(Event event) {
         requireNonNull(event);
@@ -61,7 +61,7 @@ public class EventCreateCommand extends Command {
         requireNonNull(model);
 
         if (model.hasEvent(toAdd)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(MESSAGE_DUPLICATE_EVENT);
         }
 
         model.addEvent(toAdd);

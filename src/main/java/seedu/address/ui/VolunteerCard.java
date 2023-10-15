@@ -12,7 +12,7 @@ import seedu.address.model.volunteer.Volunteer;
 /**
  * An UI component that displays information of a {@code Person}.
  */
-public class PersonCard extends UiPart<Region> {
+public class VolunteerCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
 
@@ -39,12 +39,12 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
-    private FlowPane tags;
+    private FlowPane skills;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
      */
-    public PersonCard(Volunteer volunteer, int displayedIndex) {
+    public VolunteerCard(Volunteer volunteer, int displayedIndex) {
         super(FXML);
         this.volunteer = volunteer;
         id.setText(displayedIndex + ". ");
@@ -52,8 +52,8 @@ public class PersonCard extends UiPart<Region> {
         phone.setText(volunteer.getPhone().value);
         address.setText(volunteer.getAddress().value);
         email.setText(volunteer.getEmail().value);
-        volunteer.getTags().stream()
-                .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        volunteer.getSkills().stream()
+                .sorted(Comparator.comparing(skill -> skill.skillName))
+                .forEach(skill -> skills.getChildren().add(new Label(skill.skillName)));
     }
 }

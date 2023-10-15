@@ -4,13 +4,13 @@ import javafx.collections.ObservableList;
 import seedu.address.model.volunteer.Volunteer;
 
 /**
- * Unmodifiable view of an address book
+ * Unmodifiable view of a volunteer storage
  */
 public interface ReadOnlyVolunteerStorage {
 
     /**
-     * Returns an unmodifiable view of the persons list.
-     * This list will not contain any duplicate persons.
+     * Returns an unmodifiable view of the volunteers list.
+     * This list will not contain any duplicate volunteers.
      */
     ObservableList<Volunteer> getVolunteerList();
 

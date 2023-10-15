@@ -1,9 +1,10 @@
 package seedu.address.logic.commands;
 
+
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.address.logic.commands.CommandTestUtil.showVolunteerAtIndex;
 import static seedu.address.testutil.TypicalEvents.getTypicalEventStorage;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_VOLUNTEER;
 import static seedu.address.testutil.TypicalVolunteers.getTypicalVolunteerStorage;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -35,7 +36,7 @@ public class VolunteerListCommandTest {
 
     @Test
     public void execute_listIsFiltered_showsEverything() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        showVolunteerAtIndex(model, INDEX_FIRST_VOLUNTEER);
         assertCommandSuccess(new VolunteerListCommand(), model, VolunteerListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 }

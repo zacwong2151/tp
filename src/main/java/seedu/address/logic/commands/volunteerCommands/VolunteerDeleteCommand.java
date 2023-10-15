@@ -14,18 +14,18 @@ import seedu.address.model.Model;
 import seedu.address.model.volunteer.Volunteer;
 
 /**
- * Deletes a person identified using it's displayed index from the address book.
+ * Deletes a volunteer identified using it's displayed index from the volunteer storage.
  */
 public class VolunteerDeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "vdelete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the person identified by the index number used in the displayed person list.\n"
+            + ": Deletes the volunteer identified by the index number used in the displayed volunteer list.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_DELETE_VOLUNTEER_SUCCESS = "Deleted Volunteer: %1$s";
 
     private final Index targetIndex;
 
@@ -39,12 +39,12 @@ public class VolunteerDeleteCommand extends Command {
         List<Volunteer> lastShownList = model.getFilteredVolunteerList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_VOLUNTEER_DISPLAYED_INDEX);
         }
 
         Volunteer volunteerToDelete = lastShownList.get(targetIndex.getZeroBased());
         model.deleteVolunteer(volunteerToDelete);
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(volunteerToDelete)));
+        return new CommandResult(String.format(MESSAGE_DELETE_VOLUNTEER_SUCCESS, Messages.format(volunteerToDelete)));
     }
 
     @Override

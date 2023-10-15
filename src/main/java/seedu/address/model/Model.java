@@ -16,7 +16,7 @@ public interface Model {
     Predicate<Event> PREDICATE_SHOW_ALL_EVENTS = unused -> true;
 
     /** {@code Predicate} that always evaluate to true */
-    Predicate<Volunteer> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    Predicate<Volunteer> PREDICATE_SHOW_ALL_VOLUNTEERS = unused -> true;
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -99,7 +99,7 @@ public interface Model {
     /**
      * Sets the user prefs' volunteer storage file path.
      */
-    void setVolunteerStorageFilePath(Path addressBookFilePath);
+    void setVolunteerStorageFilePath(Path volunteerStorageFilePath);
 
     /**
      * Replaces volunteer storage data with the data in {@code volunteerStorage}.
@@ -129,7 +129,7 @@ public interface Model {
     /**
      * Replaces the given volunteer {@code target} with {@code editedVolunteer}.
      * {@code target} must exist in the volunteer storage.
-     * The person identity of {@code editedVolunteer} must not be the same as another existing volunteer
+     * The volunteer identity of {@code editedVolunteer} must not be the same as another existing volunteer
      * in the volunteer storage.
      */
     void setVolunteer(Volunteer target, Volunteer editedVolunteer);

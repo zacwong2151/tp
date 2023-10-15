@@ -12,11 +12,11 @@ import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 
 /**
- * A list of persons that enforces uniqueness between its elements and does not allow nulls.
- * A person is considered unique by comparing using {@code Person#isSamePerson(Person)}. As such, adding and updating of
- * persons uses Person#isSamePerson(Person) for equality so as to ensure that the person being added or updated is
- * unique in terms of identity in the UniquePersonList. However, the removal of a person uses Person#equals(Object) so
- * as to ensure that the person with exactly the same fields will be removed.
+ * A list of events that enforces uniqueness between its elements and does not allow nulls.
+ * An event is considered unique by comparing using {@code Event#isSameEvent(Event)}. As such, adding and updating of
+ * events uses Event#isSameEvent(Event) for equality so as to ensure that the event being added or updated is
+ * unique in terms of identity in the UniqueEventList. However, the removal of an event uses Event#equals(Object) so
+ * as to ensure that the event with exactly the same fields will be removed.
  *
  * Supports a minimal set of list operations.
  *
@@ -79,11 +79,6 @@ public class UniqueEventList implements Iterable<Event> {
         }
     }
 
-    public void setPersons(UniqueEventList replacement) {
-        requireNonNull(replacement);
-        internalList.setAll(replacement.internalList);
-    }
-
     /**
      * Replaces the contents of this list with {@code events}.
      * {@code events} must not contain duplicate events.
@@ -135,7 +130,7 @@ public class UniqueEventList implements Iterable<Event> {
     }
 
     /**
-     * Returns true if {@code persons} contains only unique events.
+     * Returns true if {@code events} contains only unique events.
      */
     private boolean eventsAreUnique(List<Event> events) {
         for (int i = 0; i < events.size() - 1; i++) {

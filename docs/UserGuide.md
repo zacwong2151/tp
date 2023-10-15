@@ -31,7 +31,7 @@ iVolunteer is your dedicated application for volunteer coordination, designed wi
 
    * `elist` : Lists all events
 
-   * `eadd n/food donation r/chef r/packer d/23-9-2023 1500 dsc/help food distribution m/50 potatoes b/50` : Creates an event with eventName `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
+   * `eadd n/food donation r/chef r/packer d/23-9-2023 1500 dsc/help food distribution m/50 potatoes b/50` : Creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
 
    * `edelete 3` : Deletes the 3rd event in the current event list
 
@@ -131,15 +131,15 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 * Edits the volunteer at the specified `INDEX`. The index refers to the index number shown in the displayed volunteer list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the volunteer will be removed i.e adding of tags is not cumulative.
-* You can remove all the volunteer’s tags by typing `t/` without
-    specifying any tags after it.
+* When editing skills, the existing skills of the volunteer will be removed i.e adding of skills is not cumulative.
+* You can remove all the volunteer’s skills by typing `t/` without
+    specifying any skills after it.
 
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st volunteer to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the eventName of the 2nd volunteer to be `Betsy Crower` and clears all existing tags.
+*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd volunteer to be `Betsy Crower` and clears all existing skills.
 
-### Locating volunteers by eventName: `find`
+### Locating volunteers by name: `find`
 
 Finds volunteers whose names contain any of the given keywords.
 
@@ -147,7 +147,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the eventName is searched.
+* Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
@@ -192,7 +192,7 @@ Volunteer Coordinators can create new events.
 Format: `ecreate add n/EVENT_NAME r/ROLES_NEEDED… d/DATE_AND_TIME l/LOCATION dsc/DESCRIPTION [m/MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET]`
 
 Parameters:
- * n/ - Event eventName
+ * n/ - Event name
  * r/ - Roles needed for the event
  * d/ - Date and time of the event
  * l/ - Location of the event
@@ -206,7 +206,7 @@ Restrictions:
 * The budget argument must be a floating point number with 2 decimal places.
 
 Examples:
-* `ecreate n/food donation r/chef r/packer d/23-9-2023 1500 dsc/help food distribution m/50 potatoes b/50` creates an event with eventName `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
+* `ecreate n/food donation r/chef r/packer d/23-9-2023 1500 dsc/help food distribution m/50 potatoes b/50` creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
 
 ### Listing all events : `elist` [coming soon]
 Volunteer coordinators can see all the events they are organising. For each event, only the most important information will be shown: name, date and time, location.

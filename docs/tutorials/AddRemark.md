@@ -226,7 +226,7 @@ If you are stuck, check out the sample
 
 ## Add `Remark` to the model
 
-Now that we have all the information that we need, let’s lay the groundwork for propagating the remarks added into the in-memory storage of volunteer data. We achieve that by working with the `Person` model. Each field in a Person is implemented as a separate class (e.g. a `Name` object represents the volunteer’s eventName). That means we should add a `Remark` class so that we can use a `Remark` object to represent a remark given to a volunteer.
+Now that we have all the information that we need, let’s lay the groundwork for propagating the remarks added into the in-memory storage of volunteer data. We achieve that by working with the `Person` model. Each field in a Person is implemented as a separate class (e.g. a `Name` object represents the volunteer’s name). That means we should add a `Remark` class so that we can use a `Remark` object to represent a remark given to a volunteer.
 
 ### Add a new `Remark` class
 
@@ -243,7 +243,7 @@ Let’s change `RemarkCommand` and `RemarkCommandParser` to use the new `Remark`
 
 Without getting too deep into `fxml`, let’s go on a 5 minute adventure to get some placeholder text to show up for each volunteer.
 
-Simply add the following to [`seedu.address.ui.PersonCard`](https://github.com/se-edu/addressbook-level3/commit/850b78879582f38accb05dd20c245963c65ea599#diff-639834f1e05afe2276a86372adf0fe5f69314642c2d93cfa543d614ce5a76688).
+Simply add the following to [`seedu.address.ui.VolunteerCard`](https://github.com/se-edu/addressbook-level3/commit/850b78879582f38accb05dd20c245963c65ea599#diff-639834f1e05afe2276a86372adf0fe5f69314642c2d93cfa543d614ce5a76688).
 
 **`PersonCard.java`:**
 
@@ -391,7 +391,7 @@ Then, create a test for the `execute` method.
 
 ![Creating a test for `execute`.](../images/add-remark/CreateTest.png)
 
-Following convention, let’s change the eventName of the generated method to `execute_addRemarkUnfilteredList_success`.
+Following convention, let’s change the name of the generated method to `execute_addRemarkUnfilteredList_success`.
 
 Let’s use the utility functions provided in `CommandTestUtil`. The functions ensure that commands produce the expected `CommandResult` and output the correct message. In this case, `CommandTestUtil#assertCommandSuccess` is the best fit as we are testing that a `RemarkCommand` will successfully add a `Remark`.
 

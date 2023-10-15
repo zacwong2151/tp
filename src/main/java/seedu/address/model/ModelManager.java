@@ -15,7 +15,7 @@ import seedu.address.model.event.Event;
 import seedu.address.model.volunteer.Volunteer;
 
 /**
- * Represents the in-memory model of the address book data.
+ * Represents the in-memory model of the eventStorage and volunteerStorage data.
  */
 public class ModelManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
@@ -27,7 +27,7 @@ public class ModelManager implements Model {
     private final FilteredList<Event> filteredEvents;
 
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a ModelManager with the given eventStorage, volunteerStorage and userPrefs.
      */
     public ModelManager(ReadOnlyEventStorage eventStorage, ReadOnlyVolunteerStorage volunteerStorage,
                         ReadOnlyUserPrefs userPrefs) {
@@ -153,7 +153,7 @@ public class ModelManager implements Model {
     @Override
     public void addVolunteer(Volunteer volunteer) {
         volunteerStorage.addVolunteer(volunteer);
-        updateFilteredVolunteerList(PREDICATE_SHOW_ALL_PERSONS);
+        updateFilteredVolunteerList(PREDICATE_SHOW_ALL_VOLUNTEERS);
     }
 
     @Override
@@ -180,10 +180,10 @@ public class ModelManager implements Model {
         filteredEvents.setPredicate(predicate);
     }
 
-    //=========== Filtered Person List Accessors =============================================================
+    //=========== Filtered Volunteer Storage Accessors =============================================================
 
     /**
-     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
+     * Returns an unmodifiable view of the list of {@code Volunteer} backed by the internal list of
      * {@code versionedVolunteerStorage}
      */
     @Override

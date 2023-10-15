@@ -8,10 +8,10 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.skill.Skill;
 
 /**
- * Represents a Person in the address book.
+ * Represents a Volnuteer in the VolunteerStorage.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Volunteer {
@@ -23,18 +23,18 @@ public class Volunteer {
 
     // Data fields
     private final Address address;
-    private final Set<Tag> tags = new HashSet<>();
+    private final Set<Skill> skills = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Volunteer(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Volunteer(Name name, Phone phone, Email email, Address address, Set<Skill> skills) {
+        requireAllNonNull(name, phone, email, address, skills);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
-        this.tags.addAll(tags);
+        this.skills.addAll(skills);
     }
 
     public Name getName() {
@@ -54,18 +54,18 @@ public class Volunteer {
     }
 
     /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
+     * Returns an immutable skill set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
-    public Set<Tag> getTags() {
-        return Collections.unmodifiableSet(tags);
+    public Set<Skill> getSkills() {
+        return Collections.unmodifiableSet(skills);
     }
 
     /**
-     * Returns true if both persons have the same name.
-     * This defines a weaker notion of equality between two persons.
+     * Returns true if both volunteers have the same name.
+     * This defines a weaker notion of equality between two volunteers.
      */
-    public boolean isSamePerson(Volunteer otherVolunteer) {
+    public boolean isSameVolunteer(Volunteer otherVolunteer) {
         if (otherVolunteer == this) {
             return true;
         }
@@ -75,8 +75,8 @@ public class Volunteer {
     }
 
     /**
-     * Returns true if both persons have the same identity and data fields.
-     * This defines a stronger notion of equality between two persons.
+     * Returns true if both volunteers have the same identity and data fields.
+     * This defines a stronger notion of equality between two volunteers.
      */
     @Override
     public boolean equals(Object other) {
@@ -94,13 +94,13 @@ public class Volunteer {
                 && phone.equals(otherVolunteer.phone)
                 && email.equals(otherVolunteer.email)
                 && address.equals(otherVolunteer.address)
-                && tags.equals(otherVolunteer.tags);
+                && skills.equals(otherVolunteer.skills);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, skills);
     }
 
     @Override
@@ -110,7 +110,7 @@ public class Volunteer {
                 .add("phone", phone)
                 .add("email", email)
                 .add("address", address)
-                .add("tags", tags)
+                .add("skills", skills)
                 .toString();
     }
 

@@ -19,38 +19,39 @@ import seedu.address.model.volunteer.Volunteer;
 @JsonRootName(value = "volunteerStorage")
 class JsonSerializableVolunteerStorage {
 
-    public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
+    public static final String MESSAGE_DUPLICATE_VOLUNTEER = "Volunteers list contains duplicate volunteer(s).";
 
-    private final List<JsonAdaptedVolunteer> persons = new ArrayList<>();
+    private final List<JsonAdaptedVolunteer> volunteers = new ArrayList<>();
 
     /**
-     * Constructs a {@code JsonSerializableAddressBook} with the given persons.
+     * Constructs a {@code JsonSerializableVolunteerStorage} with the given volunteers.
      */
     @JsonCreator
-    public JsonSerializableVolunteerStorage(@JsonProperty("persons") List<JsonAdaptedVolunteer> persons) {
-        this.persons.addAll(persons);
+    public JsonSerializableVolunteerStorage(@JsonProperty("volunteers") List<JsonAdaptedVolunteer> volunteers) {
+        this.volunteers.addAll(volunteers);
     }
 
     /**
-     * Converts a given {@code ReadOnlyAddressBook} into this class for Jackson use.
+     * Converts a given {@code ReadOnlyVolunteerStorage} into this class for Jackson use.
      *
-     * @param source future changes to this will not affect the created {@code JsonSerializableAddressBook}.
+     * @param source future changes to this will not affect the created {@code JsonSerializableVolunteerStorage}.
      */
     public JsonSerializableVolunteerStorage(ReadOnlyVolunteerStorage source) {
-        persons.addAll(source.getVolunteerList().stream().map(JsonAdaptedVolunteer::new).collect(Collectors.toList()));
+        volunteers.addAll(source.getVolunteerList().stream().map(JsonAdaptedVolunteer::new)
+                    .collect(Collectors.toList()));
     }
 
     /**
-     * Converts this address book into the model's {@code AddressBook} object.
+     * Converts this volunteer storage into the model's {@code VolunteerStorage} object.
      *
      * @throws IllegalValueException if there were any data constraints violated.
      */
     public VolunteerStorage toModelType() throws IllegalValueException {
         VolunteerStorage volunteerStorage = new VolunteerStorage();
-        for (JsonAdaptedVolunteer jsonAdaptedVolunteer : persons) {
+        for (JsonAdaptedVolunteer jsonAdaptedVolunteer : volunteers) {
             Volunteer volunteer = jsonAdaptedVolunteer.toModelType();
             if (volunteerStorage.hasVolunteer(volunteer)) {
-                throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
+                throw new IllegalValueException(MESSAGE_DUPLICATE_VOLUNTEER);
             }
             volunteerStorage.addVolunteer(volunteer);
         }

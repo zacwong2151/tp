@@ -18,7 +18,7 @@ public interface VolunteerStorage {
     Path getVolunteerStorageFilePath();
 
     /**
-     * Returns AddressBook data as a {@link ReadOnlyVolunteerStorage}.
+     * Returns VolunteerStorage data as a {@link ReadOnlyVolunteerStorage}.
      * Returns {@code Optional.empty()} if storage file is not found.
      *
      * @throws DataLoadingException if loading the data from storage failed.
@@ -32,14 +32,14 @@ public interface VolunteerStorage {
 
     /**
      * Saves the given {@link ReadOnlyVolunteerStorage} to the storage.
-     * @param addressBook cannot be null.
+     * @param volunteerStorage cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
-    void saveVolunteerStorage(ReadOnlyVolunteerStorage addressBook) throws IOException;
+    void saveVolunteerStorage(ReadOnlyVolunteerStorage volunteerStorage) throws IOException;
 
     /**
      * @see #saveVolunteerStorage(ReadOnlyVolunteerStorage)
      */
-    void saveVolunteerStorage(ReadOnlyVolunteerStorage addressBook, Path filePath) throws IOException;
+    void saveVolunteerStorage(ReadOnlyVolunteerStorage volunteerStorage, Path filePath) throws IOException;
 
 }

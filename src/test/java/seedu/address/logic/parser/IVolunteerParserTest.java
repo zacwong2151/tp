@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_VOLUNTEER;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,15 +19,15 @@ import seedu.address.logic.commands.volunteerCommands.VolunteerClearCommand;
 import seedu.address.logic.commands.volunteerCommands.VolunteerCreateCommand;
 import seedu.address.logic.commands.volunteerCommands.VolunteerDeleteCommand;
 import seedu.address.logic.commands.volunteerCommands.VolunteerEditCommand;
-import seedu.address.logic.commands.volunteerCommands.VolunteerEditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.volunteerCommands.VolunteerEditCommand.EditVolunteerDescriptor;
 import seedu.address.logic.commands.volunteerCommands.VolunteerFindCommand;
 import seedu.address.logic.commands.volunteerCommands.VolunteerListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.volunteer.NameContainsKeywordsPredicate;
 import seedu.address.model.volunteer.Volunteer;
-import seedu.address.testutil.EditPersonDescriptorBuilder;
-import seedu.address.testutil.PersonBuilder;
-import seedu.address.testutil.PersonUtil;
+import seedu.address.testutil.EditVolunteerDescriptorBuilder;
+import seedu.address.testutil.VolunteerBuilder;
+import seedu.address.testutil.VolunteerUtil;
 
 public class IVolunteerParserTest {
 
@@ -35,8 +35,8 @@ public class IVolunteerParserTest {
 
     @Test
     public void parseCommand_add() throws Exception {
-        Volunteer volunteer = new PersonBuilder().build();
-        VolunteerCreateCommand command = (VolunteerCreateCommand) parser.parseCommand(PersonUtil
+        Volunteer volunteer = new VolunteerBuilder().build();
+        VolunteerCreateCommand command = (VolunteerCreateCommand) parser.parseCommand(VolunteerUtil
                                             .getAddCommand(volunteer));
         assertEquals(new VolunteerCreateCommand(volunteer), command);
     }
@@ -51,18 +51,18 @@ public class IVolunteerParserTest {
     @Test
     public void parseCommand_delete() throws Exception {
         VolunteerDeleteCommand command = (VolunteerDeleteCommand) parser.parseCommand(
-                VolunteerDeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new VolunteerDeleteCommand(INDEX_FIRST_PERSON), command);
+                VolunteerDeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_VOLUNTEER.getOneBased());
+        assertEquals(new VolunteerDeleteCommand(INDEX_FIRST_VOLUNTEER), command);
     }
 
     @Test
     public void parseCommand_edit() throws Exception {
-        Volunteer volunteer = new PersonBuilder().build();
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(volunteer).build();
+        Volunteer volunteer = new VolunteerBuilder().build();
+        EditVolunteerDescriptor descriptor = new EditVolunteerDescriptorBuilder(volunteer).build();
         VolunteerEditCommand command = (VolunteerEditCommand) parser.parseCommand(
-                                    VolunteerEditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
-                                            + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
-        assertEquals(new VolunteerEditCommand(INDEX_FIRST_PERSON, descriptor), command);
+                                    VolunteerEditCommand.COMMAND_WORD + " " + INDEX_FIRST_VOLUNTEER.getOneBased()
+                                            + " " + VolunteerUtil.getEditVolunteerDescriptorDetails(descriptor));
+        assertEquals(new VolunteerEditCommand(INDEX_FIRST_VOLUNTEER, descriptor), command);
     }
 
     @Test

@@ -67,7 +67,7 @@ public class Event {
     public Budget getBudget() { return budget; }
     /**
      * Returns true if both events have the same name.
-     * This defines a weaker notion of equality between two persons.
+     * This defines a weaker notion of equality between two volunteers.
      */
     public boolean isSameEvent(Event otherEvent) {
         if (otherEvent == this) {
@@ -80,7 +80,7 @@ public class Event {
 
     /**
      * Returns true if both events have the same identity and data fields.
-     * This defines a stronger notion of equality between two persons.
+     * This defines a stronger notion of equality between two volunteers.
      */
     @Override
     public boolean equals(Object other) {

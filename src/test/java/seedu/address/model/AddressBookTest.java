@@ -20,7 +20,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.volunteer.Volunteer;
 import seedu.address.model.volunteer.exceptions.DuplicateVolunteerException;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.VolunteerBuilder;
 
 public class AddressBookTest {
 
@@ -44,9 +44,9 @@ public class AddressBookTest {
     }
 
     @Test
-    public void resetData_withDuplicatePersons_throwsDuplicatePersonException() {
-        // Two persons with the same identity fields
-        Volunteer editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+    public void resetData_withDuplicateVolunteers_throwsDuplicateVolunteerException() {
+        // Two volunteers with the same identity fields
+        Volunteer editedAlice = new VolunteerBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withSkills(VALID_TAG_HUSBAND)
                 .build();
         List<Volunteer> newVolunteers = Arrays.asList(ALICE, editedAlice);
         VolunteerStorageStub newData = new VolunteerStorageStub(newVolunteers);
@@ -55,31 +55,31 @@ public class AddressBookTest {
     }
 
     @Test
-    public void hasPerson_nullPerson_throwsNullPointerException() {
+    public void hasVolunteer_nullVolunteer_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> volunteerStorage.hasVolunteer(null));
     }
 
     @Test
-    public void hasPerson_personNotInAddressBook_returnsFalse() {
+    public void hasVolunteer_volunteerNotInAddressBook_returnsFalse() {
         assertFalse(volunteerStorage.hasVolunteer(ALICE));
     }
 
     @Test
-    public void hasPerson_personInAddressBook_returnsTrue() {
+    public void hasVolunteer_volunteerInAddressBook_returnsTrue() {
         volunteerStorage.addVolunteer(ALICE);
         assertTrue(volunteerStorage.hasVolunteer(ALICE));
     }
 
     @Test
-    public void hasPerson_personWithSameIdentityFieldsInAddressBook_returnsTrue() {
+    public void hasVolunteer_volunteeryWithSameIdentityFieldsInAddressBook_returnsTrue() {
         volunteerStorage.addVolunteer(ALICE);
-        Volunteer editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+        Volunteer editedAlice = new VolunteerBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withSkills(VALID_TAG_HUSBAND)
                 .build();
         assertTrue(volunteerStorage.hasVolunteer(editedAlice));
     }
 
     @Test
-    public void getPersonList_modifyList_throwsUnsupportedOperationException() {
+    public void geVolunteerList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> volunteerStorage.getVolunteerList().remove(0));
     }
 
@@ -92,7 +92,7 @@ public class AddressBookTest {
     }
 
     /**
-     * A stub ReadOnlyAddressBook whose persons list can violate interface constraints.
+     * A stub ReadOnlyAddressBook whose volunteers list can violate interface constraints.
      */
     private static class VolunteerStorageStub implements ReadOnlyVolunteerStorage {
         private final ObservableList<Volunteer> volunteers = FXCollections.observableArrayList();

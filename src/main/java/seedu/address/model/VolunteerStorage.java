@@ -10,8 +10,8 @@ import seedu.address.model.volunteer.UniqueVolunteerList;
 import seedu.address.model.volunteer.Volunteer;
 
 /**
- * Wraps all data at the address-book level
- * Duplicates are not allowed (by .isSamePerson comparison)
+ * Wraps all data at the volunteer storage level
+ * Duplicates are not allowed (by .isSameVolunteer comparison)
  */
 public class VolunteerStorage implements ReadOnlyVolunteerStorage {
 
@@ -30,7 +30,7 @@ public class VolunteerStorage implements ReadOnlyVolunteerStorage {
     public VolunteerStorage() {}
 
     /**
-     * Creates an AddressBook using the Persons in the {@code toBeCopied}
+     * Creates a VolunteerStorage using the Volunteers in the {@code toBeCopied}
      */
     public VolunteerStorage(ReadOnlyVolunteerStorage toBeCopied) {
         this();
@@ -44,7 +44,7 @@ public class VolunteerStorage implements ReadOnlyVolunteerStorage {
      * {@code volunteers} must not contain duplicate volunteers.
      */
     public void setVolunteers(List<Volunteer> volunteers) {
-        this.volunteers.setPersons(volunteers);
+        this.volunteers.setVolunteers(volunteers);
     }
 
     /**
@@ -56,7 +56,7 @@ public class VolunteerStorage implements ReadOnlyVolunteerStorage {
         setVolunteers(newData.getVolunteerList());
     }
 
-    //// person-level operations
+    //// volunteer-level operations
 
     /**
      * Returns true if a volunteer with the same identity as {@code volunteer} exists in the VolunteerStorage.
@@ -75,7 +75,7 @@ public class VolunteerStorage implements ReadOnlyVolunteerStorage {
     }
 
     /**
-     * Replaces the given person {@code target} in the list with {@code editedVolunteer}.
+     * Replaces the given volunteer {@code target} in the list with {@code editedVolunteer}.
      * {@code target} must exist in the volunteer storage.
      * The volunteer identity of {@code editedVolunteer} must not be the same as another existing volunteer
      * in the volunteer storage.

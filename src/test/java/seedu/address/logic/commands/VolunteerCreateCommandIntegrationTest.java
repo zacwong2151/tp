@@ -14,7 +14,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.volunteer.Volunteer;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.VolunteerBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code AddCommand}.
@@ -30,7 +30,7 @@ public class VolunteerCreateCommandIntegrationTest {
 
     @Test
     public void execute_newPerson_success() {
-        Volunteer validVolunteer = new PersonBuilder().build();
+        Volunteer validVolunteer = new VolunteerBuilder().build();
 
         Model expectedModel = new ModelManager(model.getEventStorage(), model.getVolunteerStorage(), new UserPrefs());
         expectedModel.addVolunteer(validVolunteer);
@@ -44,7 +44,7 @@ public class VolunteerCreateCommandIntegrationTest {
     public void execute_duplicatePerson_throwsCommandException() {
         Volunteer volunteerInList = model.getVolunteerStorage().getVolunteerList().get(0);
         assertCommandFailure(new VolunteerCreateCommand(volunteerInList), model,
-                VolunteerCreateCommand.MESSAGE_DUPLICATE_PERSON);
+                VolunteerCreateCommand.MESSAGE_DUPLICATE_VOLUNTEER);
     }
 
 }

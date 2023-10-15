@@ -31,7 +31,7 @@ public class EventStorage implements ReadOnlyEventStorage {
     public EventStorage() {}
 
     /**
-     * Creates an AddressBook using the Persons in the {@code toBeCopied}
+     * Creates an EventStorage using the Events in the {@code toBeCopied}
      */
     public EventStorage(ReadOnlyEventStorage toBeCopied) {
         this();
@@ -41,8 +41,8 @@ public class EventStorage implements ReadOnlyEventStorage {
     //// list overwrite operations
 
     /**
-     * Replaces the contents of the person list with {@code persons}.
-     * {@code persons} must not contain duplicate persons.
+     * Replaces the contents of the volunteer storage with {@code volunteers}.
+     * {@code volunteers} must not contain duplicate volunteers.
      */
     public void setEvents(List<Event> events) {
         this.events.setEvents(events);
