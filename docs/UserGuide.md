@@ -34,7 +34,7 @@ iVolunteer is your dedicated application for volunteer coordination, designed wi
    * `ecreate n/food donation r/chef r/packer d/23/9/2023 1500 dsc/help food distribution m/50 potatoes b/50` : Creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
 
    * `edelete 3` : Deletes the 3rd event in the current event list
-   
+
    * `vlist` : Lists all volunteers.
 
    * `vcreate n/John Doe p/98765432 e/johnd@example.com` : Adds a volunteer named `John Doe` to the list of volunteers.
@@ -130,7 +130,7 @@ Shows a list of all volunteers in an event.
 Format: `elistv eid/EVENT_ID` or `elistv en/EVENT_NAME`
 
 Parameters:
-* eid/ - Event id 
+* eid/ - Event id
 * en/ - Event name
 
 Restrictions:
@@ -151,13 +151,13 @@ Format: `vedit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 * Edits the volunteer at the specified `INDEX`. The index refers to the index number shown in the displayed volunteer list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the volunteer will be removed i.e adding of tags is not cumulative.
-* You can remove all the volunteer’s tags by typing `t/` without
-    specifying any tags after it.
+* When editing skills, the existing skills of the volunteer will be removed i.e adding of skills is not cumulative.
+* You can remove all the volunteer’s skills by typing `t/` without
+    specifying any skills after it.
 
 Examples:
-*  `vedit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `vedit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st volunteer to be `91234567` and `johndoe@example.com` respectively.
+*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd volunteer to be `Betsy Crower` and clears all existing skills.
 
 ### Locating volunteers by name: `vfind`
 

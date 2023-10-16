@@ -15,16 +15,18 @@ import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
-import seedu.address.model.AddressBook;
+import seedu.address.model.EventStorage;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyEventStorage;
 import seedu.address.model.ReadOnlyUserPrefs;
+import seedu.address.model.ReadOnlyVolunteerStorage;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.VolunteerStorage;
 import seedu.address.model.util.SampleDataUtil;
-import seedu.address.storage.AddressBookStorage;
-import seedu.address.storage.JsonAddressBookStorage;
+import seedu.address.storage.JsonEventStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.JsonVolunteerStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
@@ -48,7 +50,7 @@ public class MainApp extends Application {
 
     @Override
     public void init() throws Exception {
-        logger.info("=============================[ Initializing AddressBook ]===========================");
+        logger.info("=============================[ Initializing iVolunteer ]===========================");
         super.init();
 
         AppParameters appParameters = AppParameters.parse(getParameters());
@@ -57,8 +59,11 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
-        AddressBookStorage addressBookStorage = new JsonAddressBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        seedu.address.storage.VolunteerStorage volunteerStorage = new JsonVolunteerStorage(
+                                                                userPrefs.getVolunteerStorageFilePath());
+        seedu.address.storage.EventStorage eventStorage = new JsonEventStorage(userPrefs.getEventStorageFilePath());
+
+        storage = new StorageManager(eventStorage, volunteerStorage, userPrefsStorage);
 
         model = initModelManager(storage, userPrefs);
 
@@ -68,29 +73,45 @@ public class MainApp extends Application {
     }
 
     /**
-     * Returns a {@code ModelManager} with the data from {@code storage}'s address book and {@code userPrefs}. <br>
-     * The data from the sample address book will be used instead if {@code storage}'s address book is not found,
-     * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
+     * Returns a {@code ModelManager} with the data from {@code storage}'s eventStorage and volunteerStorage and
+     * {@code userPrefs}. <br> The data from the sample event storage and volunteer storage will be used instead if
+     * {@code storage}'s event storage and volunteer storage is not found, or an empty event storage and volunteer
+     * storage will be used instead if errors occur when reading {@code storage}'s event storage and volunteer storage.
      */
     private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
-        logger.info("Using data file : " + storage.getAddressBookFilePath());
+        logger.info("Using data file : " + storage.getVolunteerStorageFilePath());
+        logger.info("Using data file : " + storage.getEventStorageFilePath());
 
-        Optional<ReadOnlyAddressBook> addressBookOptional;
-        ReadOnlyAddressBook initialData;
+        Optional<ReadOnlyEventStorage> eventStorageOptional;
+        ReadOnlyEventStorage initialEventData;
+        Optional<ReadOnlyVolunteerStorage> volunteerStorageOptional;
+        ReadOnlyVolunteerStorage initialVolunteerData;
         try {
-            addressBookOptional = storage.readAddressBook();
-            if (!addressBookOptional.isPresent()) {
-                logger.info("Creating a new data file " + storage.getAddressBookFilePath()
-                        + " populated with a sample AddressBook.");
+            eventStorageOptional = storage.readEventStorage();
+            if (!eventStorageOptional.isPresent()) {
+                logger.info("Creating a new data file " + storage.getEventStorageFilePath()
+                        + " populated with a sample EventStorage.");
             }
-            initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+            initialEventData = eventStorageOptional.orElseGet(SampleDataUtil::getSampleEventStorage);
+
+            volunteerStorageOptional = storage.readVolunteerStorage();
+            if (!volunteerStorageOptional.isPresent()) {
+                logger.info("Creating a new data file " + storage.getVolunteerStorageFilePath()
+                        + " populated with a sample VolunteerStorage.");
+            }
+            initialVolunteerData = volunteerStorageOptional.orElseGet(SampleDataUtil::getSampleVolunteerStorage);
+
         } catch (DataLoadingException e) {
-            logger.warning("Data file at " + storage.getAddressBookFilePath() + " could not be loaded."
-                    + " Will be starting with an empty AddressBook.");
-            initialData = new AddressBook();
+            logger.warning("Data file at " + storage.getVolunteerStorageFilePath() + " could not be loaded."
+                    + " Will be starting with an empty VolunteerStorage.");
+            initialVolunteerData = new VolunteerStorage();
+
+            logger.warning("Data file at " + storage.getEventStorageFilePath() + " could not be loaded."
+                    + " Will be starting with an empty EventStorage.");
+            initialEventData = new EventStorage();
         }
 
-        return new ModelManager(initialData, userPrefs);
+        return new ModelManager(initialEventData, initialVolunteerData, userPrefs);
     }
 
     private void initLogging(Config config) {
@@ -170,13 +191,13 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        logger.info("Starting AddressBook " + MainApp.VERSION);
+        logger.info("Starting iVolunteer " + MainApp.VERSION);
         ui.start(primaryStage);
     }
 
     @Override
     public void stop() {
-        logger.info("============================ [ Stopping Address Book ] =============================");
+        logger.info("============================ [ Stopping iVolunteer ] =============================");
         try {
             storage.saveUserPrefs(model.getUserPrefs());
         } catch (IOException e) {

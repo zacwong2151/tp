@@ -2,17 +2,19 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalEvents.getTypicalEventStorage;
+import static seedu.address.testutil.TypicalVolunteers.getTypicalVolunteerStorage;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.Messages;
+import seedu.address.logic.commands.volunteerCommands.VolunteerCreateCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Person;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.model.volunteer.Volunteer;
+import seedu.address.testutil.VolunteerBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code AddCommand}.
@@ -23,26 +25,26 @@ public class VolunteerCreateCommandIntegrationTest {
 
     @BeforeEach
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        model = new ModelManager(getTypicalEventStorage(), getTypicalVolunteerStorage(), new UserPrefs());
     }
 
     @Test
     public void execute_newPerson_success() {
-        Person validPerson = new PersonBuilder().build();
+        Volunteer validVolunteer = new VolunteerBuilder().build();
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.addPerson(validPerson);
+        Model expectedModel = new ModelManager(model.getEventStorage(), model.getVolunteerStorage(), new UserPrefs());
+        expectedModel.addVolunteer(validVolunteer);
 
-        assertCommandSuccess(new VolunteerCreateCommand(validPerson), model,
-                String.format(VolunteerCreateCommand.MESSAGE_SUCCESS, Messages.format(validPerson)),
+        assertCommandSuccess(new VolunteerCreateCommand(validVolunteer), model,
+                String.format(VolunteerCreateCommand.MESSAGE_SUCCESS, Messages.format(validVolunteer)),
                 expectedModel);
     }
 
     @Test
     public void execute_duplicatePerson_throwsCommandException() {
-        Person personInList = model.getAddressBook().getPersonList().get(0);
-        assertCommandFailure(new VolunteerCreateCommand(personInList), model,
-                VolunteerCreateCommand.MESSAGE_DUPLICATE_PERSON);
+        Volunteer volunteerInList = model.getVolunteerStorage().getVolunteerList().get(0);
+        assertCommandFailure(new VolunteerCreateCommand(volunteerInList), model,
+                VolunteerCreateCommand.MESSAGE_DUPLICATE_VOLUNTEER);
     }
 
 }

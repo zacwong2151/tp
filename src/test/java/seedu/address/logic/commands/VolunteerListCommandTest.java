@@ -1,13 +1,16 @@
 package seedu.address.logic.commands;
 
+
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.logic.commands.CommandTestUtil.showVolunteerAtIndex;
+import static seedu.address.testutil.TypicalEvents.getTypicalEventStorage;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_VOLUNTEER;
+import static seedu.address.testutil.TypicalVolunteers.getTypicalVolunteerStorage;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.commands.volunteerCommands.VolunteerListCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -22,8 +25,8 @@ public class VolunteerListCommandTest {
 
     @BeforeEach
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        model = new ModelManager(getTypicalEventStorage(), getTypicalVolunteerStorage(), new UserPrefs());
+        expectedModel = new ModelManager(model.getEventStorage(), model.getVolunteerStorage(), new UserPrefs());
     }
 
     @Test
@@ -33,7 +36,7 @@ public class VolunteerListCommandTest {
 
     @Test
     public void execute_listIsFiltered_showsEverything() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        showVolunteerAtIndex(model, INDEX_FIRST_VOLUNTEER);
         assertCommandSuccess(new VolunteerListCommand(), model, VolunteerListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 }

@@ -57,7 +57,7 @@
     -->
     <module name="CustomImportOrder">
         <property name="customImportOrderRules"
-            value="STATIC###STANDARD_JAVA_PACKAGE###SPECIAL_IMPORTS###THIRD_PARTY_PACKAGE"/>
+                  value="STATIC###STANDARD_JAVA_PACKAGE###SPECIAL_IMPORTS###THIRD_PARTY_PACKAGE"/>
         <property name="specialImportsRegExp" value="^org\."/>
         <property name="thirdPartyPackageRegExp" value="^com\."/>
         <property name="sortImportsInGroupAlphabetically" value="true"/>
@@ -216,7 +216,7 @@
       some other variants which we don't publicized to promote consistency).
       -->
       <property name="reliefPattern"
-       value="fall through|Fall through|fallthru|Fallthru|falls through|Falls through|fallthrough|Fallthrough|No break|NO break|no break|continue on"/>
+                value="fall through|Fall through|fallthru|Fallthru|falls through|Falls through|fallthrough|Fallthrough|No break|NO break|no break|continue on"/>
     </module>
 
     <module name="MissingSwitchDefault"/>
@@ -243,7 +243,7 @@
       3. Constructors
       4. Methods
     -->
-    <module name ="DeclarationOrder"/>
+    <module name="DeclarationOrder"/>
 
     <!-- Checks that default is after all cases in a switch statement -->
     <module name="DefaultComesLast"/>
@@ -385,10 +385,10 @@
     JAVADOC CHECKS
     -->
 
-    <!-- Checks that all block-tags are ordered correctly. -->
+    <!-- Checks that all block-skills are ordered correctly. -->
     <module name="AtclauseOrder"/>
 
-    <!-- Checks that Javadoc block tags appear only at the beginning of the line. -->
+    <!-- Checks that Javadoc block skills appear only at the beginning of the line. -->
     <module name="JavadocBlockTagLocation"/>
 
     <!-- Checks that all Javadoc comments start from the second line. -->
@@ -400,7 +400,7 @@
     <!-- Checks that each non-empty line in Javadoc has whitespace after leading asterisk. -->
     <module name="JavadocMissingWhitespaceAfterAsterisk"/>
 
-    <!-- Checks that for block tags, indentation of continuation lines is at least 4 spaces. -->
+    <!-- Checks that for block skills, indentation of continuation lines is at least 4 spaces. -->
     <module name="JavadocTagContinuationIndentation"/>
 
     <!-- Checks the Javadoc's format for every class, enumeration and interface. -->
