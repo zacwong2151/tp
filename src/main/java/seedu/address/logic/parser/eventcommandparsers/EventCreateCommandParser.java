@@ -1,4 +1,4 @@
-package seedu.address.logic.parser.eventCommandParsers;
+package seedu.address.logic.parser.eventcommandparsers;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BUDGET;
@@ -12,7 +12,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import seedu.address.logic.commands.eventCommands.EventCreateCommand;
+import seedu.address.logic.commands.eventcommands.EventCreateCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.Parser;
