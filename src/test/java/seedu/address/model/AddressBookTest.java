@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalVolunteers.ALICE;
+import static seedu.address.testutil.TypicalVolunteers.getTypicalVolunteerStorage;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -18,90 +18,92 @@ import org.junit.jupiter.api.Test;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.model.volunteer.Volunteer;
+import seedu.address.model.volunteer.exceptions.DuplicateVolunteerException;
+import seedu.address.testutil.VolunteerBuilder;
 
 public class AddressBookTest {
 
-    private final AddressBook addressBook = new AddressBook();
+    private final VolunteerStorage volunteerStorage = new VolunteerStorage();
 
     @Test
     public void constructor() {
-        assertEquals(Collections.emptyList(), addressBook.getPersonList());
+        assertEquals(Collections.emptyList(), volunteerStorage.getVolunteerList());
     }
 
     @Test
     public void resetData_null_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> addressBook.resetData(null));
+        assertThrows(NullPointerException.class, () -> volunteerStorage.resetData(null));
     }
 
     @Test
     public void resetData_withValidReadOnlyAddressBook_replacesData() {
-        AddressBook newData = getTypicalAddressBook();
-        addressBook.resetData(newData);
-        assertEquals(newData, addressBook);
+        VolunteerStorage newData = getTypicalVolunteerStorage();
+        volunteerStorage.resetData(newData);
+        assertEquals(newData, volunteerStorage);
     }
 
     @Test
-    public void resetData_withDuplicatePersons_throwsDuplicatePersonException() {
-        // Two persons with the same identity fields
-        Person editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+    public void resetData_withDuplicateVolunteers_throwsDuplicateVolunteerException() {
+        // Two volunteers with the same identity fields
+        Volunteer editedAlice = new VolunteerBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withSkills(VALID_TAG_HUSBAND)
                 .build();
-        List<Person> newPersons = Arrays.asList(ALICE, editedAlice);
-        AddressBookStub newData = new AddressBookStub(newPersons);
+        List<Volunteer> newVolunteers = Arrays.asList(ALICE, editedAlice);
+        VolunteerStorageStub newData = new VolunteerStorageStub(newVolunteers);
 
-        assertThrows(DuplicatePersonException.class, () -> addressBook.resetData(newData));
+        assertThrows(DuplicateVolunteerException.class, () -> volunteerStorage.resetData(newData));
     }
 
     @Test
-    public void hasPerson_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> addressBook.hasPerson(null));
+    public void hasVolunteer_nullVolunteer_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> volunteerStorage.hasVolunteer(null));
     }
 
     @Test
-    public void hasPerson_personNotInAddressBook_returnsFalse() {
-        assertFalse(addressBook.hasPerson(ALICE));
+    public void hasVolunteer_volunteerNotInAddressBook_returnsFalse() {
+        assertFalse(volunteerStorage.hasVolunteer(ALICE));
     }
 
     @Test
-    public void hasPerson_personInAddressBook_returnsTrue() {
-        addressBook.addPerson(ALICE);
-        assertTrue(addressBook.hasPerson(ALICE));
+    public void hasVolunteer_volunteerInAddressBook_returnsTrue() {
+        volunteerStorage.addVolunteer(ALICE);
+        assertTrue(volunteerStorage.hasVolunteer(ALICE));
     }
 
     @Test
-    public void hasPerson_personWithSameIdentityFieldsInAddressBook_returnsTrue() {
-        addressBook.addPerson(ALICE);
-        Person editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+    public void hasVolunteer_volunteeryWithSameIdentityFieldsInAddressBook_returnsTrue() {
+        volunteerStorage.addVolunteer(ALICE);
+        Volunteer editedAlice = new VolunteerBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withSkills(VALID_TAG_HUSBAND)
                 .build();
-        assertTrue(addressBook.hasPerson(editedAlice));
+        assertTrue(volunteerStorage.hasVolunteer(editedAlice));
     }
 
     @Test
-    public void getPersonList_modifyList_throwsUnsupportedOperationException() {
-        assertThrows(UnsupportedOperationException.class, () -> addressBook.getPersonList().remove(0));
+    public void geVolunteerList_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> volunteerStorage.getVolunteerList().remove(0));
     }
 
     @Test
     public void toStringMethod() {
-        String expected = AddressBook.class.getCanonicalName() + "{persons=" + addressBook.getPersonList() + "}";
-        assertEquals(expected, addressBook.toString());
+        String expected = VolunteerStorage.class.getCanonicalName() + "{volunteers="
+                            + volunteerStorage.getVolunteerList()
+                            + "}";
+        assertEquals(expected, volunteerStorage.toString());
     }
 
     /**
-     * A stub ReadOnlyAddressBook whose persons list can violate interface constraints.
+     * A stub ReadOnlyAddressBook whose volunteers list can violate interface constraints.
      */
-    private static class AddressBookStub implements ReadOnlyAddressBook {
-        private final ObservableList<Person> persons = FXCollections.observableArrayList();
+    private static class VolunteerStorageStub implements ReadOnlyVolunteerStorage {
+        private final ObservableList<Volunteer> volunteers = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<Person> persons) {
-            this.persons.setAll(persons);
+        VolunteerStorageStub(Collection<Volunteer> volunteers) {
+            this.volunteers.setAll(volunteers);
         }
 
         @Override
-        public ObservableList<Person> getPersonList() {
-            return persons;
+        public ObservableList<Volunteer> getVolunteerList() {
+            return volunteers;
         }
     }
 

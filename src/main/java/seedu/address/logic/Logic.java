@@ -7,8 +7,10 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.Person;
+import seedu.address.model.ReadOnlyEventStorage;
+import seedu.address.model.ReadOnlyVolunteerStorage;
+import seedu.address.model.event.Event;
+import seedu.address.model.volunteer.Volunteer;
 
 /**
  * API of the Logic component
@@ -24,19 +26,34 @@ public interface Logic {
     CommandResult execute(String commandText) throws CommandException, ParseException;
 
     /**
-     * Returns the AddressBook.
+     * Returns the EventStorage.
      *
-     * @see seedu.address.model.Model#getAddressBook()
+     * @see seedu.address.model.Model#getVolunteerStorage()
      */
-    ReadOnlyAddressBook getAddressBook();
+    ReadOnlyEventStorage getEventStorage();
 
-    /** Returns an unmodifiable view of the filtered list of persons */
-    ObservableList<Person> getFilteredPersonList();
+    /** Returns an unmodifiable view of the filtered list of events */
+    ObservableList<Event> getFilteredEventList();
+
+    /**
+     * Returns the user prefs' event storage file path.
+     */
+    Path getEventStorageFilePath();
+
+    /**
+     * Returns the VolunteerStorage.
+     *
+     * @see seedu.address.model.Model#getVolunteerStorage()
+     */
+    ReadOnlyVolunteerStorage getVolunteerStorage();
+
+    /** Returns an unmodifiable view of the filtered list of volunteers */
+    ObservableList<Volunteer> getFilteredVolunteerList();
 
     /**
      * Returns the user prefs' address book file path.
      */
-    Path getAddressBookFilePath();
+    Path getVolunteerStorageFilePath();
 
     /**
      * Returns the user prefs' GUI settings.

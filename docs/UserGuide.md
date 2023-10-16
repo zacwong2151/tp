@@ -30,14 +30,14 @@ iVolunteer is your dedicated application for volunteer coordination, designed wi
    Some example commands you can try:
 
    * `elist` : Lists all events
-   
-   * `eadd n/food donation r/chef r/packer d/23-9-2023 1500 dsc/help food distribution m/50 potatoes b/50` : Creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
+
+   * `ecreate n/food donation r/chef r/packer d/23/9/2023 1500 dsc/help food distribution m/50 potatoes b/50` : Creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
 
    * `edelete 3` : Deletes the 3rd event in the current event list
-   
+
    * `vlist` : Lists all volunteers.
 
-   * `vadd n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a volunteer named `John Doe` to the list of volunteers.
+   * `vcreate n/John Doe p/98765432 e/johnd@example.com` : Adds a volunteer named `John Doe` to the list of volunteers.
 
    * `vdelete 3` : Deletes the 3rd volunteer in the current volunteer list.
 
@@ -81,82 +81,163 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
+### Creating a volunteer: `vcreate`
 
-### Adding a person: `add`
+Creates a volunteer in the volunteer list.
 
-Adds a person to the address book.
+Format: `vcreate n/NAME p/PHONE_NUMBER e/EMAIL [s/SKILL]…​`
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
-
-<box type="tip" seamless>
-
-**Tip:** A person can have any number of tags (including 0)
+**Tip:** A volunteer can have any number of tags (including 0)
 </box>
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `vcreate n/John Doe p/98765432 e/johnd@example.com`
+* `vcreate n/Betsy Crowe t/friend e/betsycrowe@example.com p/1234567 s/chef`
 
-### Listing all persons : `list`
 
-Shows a list of all persons in the address book.
+### Adding a volunteer into an event: `eaddv` [COMING SOON]
 
-Format: `list`
+Adds a volunteer to an event by id or name.
 
-### Editing a person : `edit`
+Format: `eaddv vid/VOLUNTEER_ID eid/EVENT_ID` or `eaddv vn/VOLUNTEER_NAME en/EVENT_NAME`
 
-Edits an existing person in the address book.
+Parameters:
+* vn/ - Volunteer name
+* vid/ - Volunteer id
+* eid/ - Event id
+* en/ - Event name
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
-
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without
-    specifying any tags after it.
+Restrictions:
+* The maximum number of characters of the event and volunteer is 50.
+* The event and volunteer name entered must exist.
+* The event id must be greater than or equal to 0 and lesser than the number of events existed.
+* The volunteer id must be greater than or equal to 0 and lesser than the number of volunteers existed.
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `eaddv vid/1 eid/1`
+* `eaddv vn/Betsy Crowe en/fundraising`
 
-### Locating persons by name: `find`
+### Listing all volunteers : `vlist`
 
-Finds persons whose names contain any of the given keywords.
+Shows a list of all volunteers in the volunteer list.
 
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `vlist`
+
+### Listing all volunteers in an event: `elistv` [COMING SOON]
+
+Shows a list of all volunteers in an event.
+
+Format: `elistv eid/EVENT_ID` or `elistv en/EVENT_NAME`
+
+Parameters:
+* eid/ - Event id
+* en/ - Event name
+
+Restrictions:
+* The maximum number of characters of the event is 50.
+* The event name entered must exist.
+* The event id must be greater than or equal to 0 and lesser than the number of events existed.
+
+Examples:
+* `elistv eid/1`
+* `elistv en/fundraising`
+
+### Editing a volunteer : `vedit`
+
+Edits an existing volunteer in the volunteer list.
+
+Format: `vedit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+
+* Edits the volunteer at the specified `INDEX`. The index refers to the index number shown in the displayed volunteer list. The index **must be a positive integer** 1, 2, 3, …​
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* When editing skills, the existing skills of the volunteer will be removed i.e adding of skills is not cumulative.
+* You can remove all the volunteer’s skills by typing `t/` without
+    specifying any skills after it.
+
+Examples:
+*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st volunteer to be `91234567` and `johndoe@example.com` respectively.
+*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd volunteer to be `Betsy Crower` and clears all existing skills.
+
+### Locating volunteers by name: `vfind`
+
+Finds volunteers whose names contain any of the given keywords.
+
+Format: `vfind KEYWORD [MORE_KEYWORDS]`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
+* Volunteers matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
+* `vfind John` returns `john` and `John Doe`
+* `vfind alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
-### Deleting a person : `delete`
+### Deleting a volunteer : `vdelete`
 
-Deletes the specified person from the address book.
+Deletes the specified volunteer from the volunteer list.
 
-Format: `delete INDEX`
+Format: `vdelete INDEX`
 
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
+* Deletes the volunteer at the specified `INDEX`.
+* The index refers to the index number shown in the displayed volunteer list.
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
-* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+* `vlist` followed by `vdelete 2` deletes the 2nd volunteer in the volunteer list.
+* `vfind Betsy` followed by `vdelete 1` deletes the 1st volunteer in the results of the `vfind` command.
 
-### Clearing all entries : `clear`
+### Deleting an event : `edelete`
 
-Clears all entries from the address book.
+Deletes the event from the event list.
 
-Format: `clear`
+Format: `edelete EVENT_ID`
+
+* Deletes the event at the specified `id`.
+* The id refers to the index number shown in the displayed event list.
+* The id **must be a positive integer** 1, 2, 3, …​
+
+Examples:
+* `elist` followed by `edelete 2` deletes the 2nd event in the event list.
+* `efind Beach cleaning` followed by `edelete 1` deletes the 1st event in the results of the `find` command (tentative feature)
+
+### Removing a volunteer in an event: `eremovev` [COMING SOON]
+
+Removes the specified volunteer from an event by name or id.
+
+Format: `eremovev vid/VOLUNTEER_ID eid/EVENT_ID` or `eremovev vn/VOLUNTEER_NAME en/EVENT_NAME`
+
+Parameters:
+* vn/ - Volunteer name
+* vid/ - Volunteer id
+* en/ - Event name
+* eid/ - Event id
+
+Restrictions:
+* The maximum number of characters of the event is 50.
+* The event and volunteer name entered must exist.
+* The maximum number of characters of a volunteer name is 30.
+* The id must not exceed the number of volunteers in the event and greater or equal to 0.
+
+Examples:
+* `eremovev vid/1 eid/1`
+* `eremovev vn/John en/fundraising`
+
+### Clearing all volunteers : `vclear`
+
+Clears all volunteers from the volunteer list.
+
+Format: `vclear`
+
+### Clearing all entries : `eclear`
+
+Clears all entries from the event list.
+
+Format: `eclear`
 
 ### Creating an event [coming soon]
 
@@ -175,11 +256,29 @@ Parameters:
 
 Restrictions:
 * All parameters must be separated by a single space.
-* The date and time format must be exactly `DD-MM-YYYY TTTT`
+* The date and time format must be exactly `DD/MM/YYYY TTTT`
 * The budget argument must be a floating point number with 2 decimal places.
 
 Examples:
-* `ecreate n/food donation r/chef r/packer d/23-9-2023 1500 dsc/help food distribution m/50 potatoes b/50` creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
+* `ecreate n/food donation r/chef r/packer d/23/9/2023 1500 dsc/help food distribution m/50 potatoes b/50` creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
+
+### Listing all events : `elist` [coming soon]
+Volunteer coordinators can see all the events they are organising. For each event, only the most important information will be shown: name, date and time, location.
+
+Format: `elist`
+
+### Reading an individual event : `eshow` [coming soon]
+Volunteer coordinators can read up more about an individual event, to familiarize themselves with its requirements while planning for it.
+
+Format: `eshow EVENT_ID`
+
+Restrictions:
+* First part must be `eshow`
+* Second part must be an integer that represents a valid `EVENT_ID`: If the list of events is 10 events long, the acceptable values will be from 1-10.
+* First and second parts must be separated by a single space.
+
+Examples:
+* `eshow 7` will result in a pop-up window appearing, listing all details of the event at id `7`. This includes its name, date and time, location, roles needed, logistics needed (if any), budget (if any), and a description.
 
 ### Exiting the program : `exit`
 

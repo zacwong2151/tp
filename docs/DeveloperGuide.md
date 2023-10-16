@@ -103,7 +103,7 @@ How the `Logic` component works:
 
 1. When `Logic` is called upon to execute a command, it is passed to an `AddressBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
 1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteCommand`) which is executed by the `LogicManager`.
-1. The command can communicate with the `Model` when it is executed (e.g. to delete a person).
+1. The command can communicate with the `Model` when it is executed (e.g. to delete a volunteer).
 1. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
 
 Here are the other classes in `Logic` (omitted from the class diagram above) that are used for parsing a user command:
@@ -175,11 +175,11 @@ Step 1. The user launches the application for the first time. The `VersionedAddr
 
 <puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
 
-Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+Step 2. The user executes `delete 5` command to delete the 5th volunteer in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
 
 <puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
 
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
+Step 3. The user executes `add n/David …​` to add a new volunteer. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
 
 <puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
 
@@ -189,7 +189,7 @@ Step 3. The user executes `add n/David …​` to add a new person. The `add` co
 
 </box>
 
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
+Step 4. The user now decides that adding the volunteer was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
 
 <puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
 
@@ -241,7 +241,7 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 * **Alternative 2:** Individual command knows how to undo/redo by
   itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
+  * Pros: Will use less memory (e.g. for `delete`, just save the volunteer being deleted).
   * Cons: We must ensure that the implementation of each individual command are correct.
 
 _{more aspects and alternatives to be added}_
@@ -282,14 +282,40 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
-|----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person             |                                                                        |
-| `* * *`  | user                                       | delete a person              | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name         | locate a person easily                                                 |
+| Priority | As a …​                | I want to …​                                                                          | So that I can…​                                                 |
+|----------|------------------------|---------------------------------------------------------------------------------------|-----------------------------------------------------------------|
+| `* * *`  | volunteer coordinator  | create new events by specifying the name of the event                                 | refer to it in the future                                       |
+| `* * *`  | volunteer coordinator  | create new events by specifying the date and time of the event                        | check the date and time of an event in the future               |
+| `* * *`  | volunteer coordinator  | change the name of the event                                                          | update an event with the correct name                           |
+| `* * *`  | volunteer coordinator  | change the date and time of an event                                                  | update an event with the correct date and time                  |
+| `* * *`  | volunteer coordinator  | check the list of events through the app                                              | view all upcoming events                                        |
+| `* * *`  | volunteer coordinator  | check the date and time of an event                                                   | know when and what time an event will occur                     |
+| `* * *`  | volunteer coordinator  | delete events                                                                         | remove them when they are no longer needed                      |
+| `* *`    | volunteer coordinator  | create new events by specifying the roles needed                                      | check what roles are needed for an event in the future          |
+| `* *`    | volunteer coordinator  | create new events by setting the location and approximate area of the event           | check where an event will be held  in the future                |
+| `* *`    | volunteer coordinator  | create new events by specifying the logistics and other materials needed for an event | check what other logistics I require for an event in the future |
+| `* *`    | volunteer coordinator  | create new events by providing a brief description of the event                       | refer to it in the future                                       |
+| `* *`    | volunteer coordinator  | create new events by setting and allocating the budget for the event                  | check the estimated cost required for an event in the future    |
+| `* *`    | volunteer coordinator  | change the roles needed for an event                                                  | update an event with the correct roles                          |
+| `* *`    | volunteer coordinator  | be able to change the location and approximate area of the event                      | update an event with the correct location                       |
+| `* *`    | volunteer coordinator  | change the logistics and other materials needed for an event                          | update the event with the correct logistics required            |
+| `* *`    | volunteer coordinator  | change the description of the event                                                   | update the event with the correct description                   |
+| `* *`    | volunteer coordinator  | change the budget for the volunteering event                                          | update the event with the correct budget                        |
+| `* *`    | volunteer coordinator  | be able to check the roles needed for an event                                        | know what roles are required for an event                       |
+| `* *`    | volunteer coordinator  | be able to check the location and approximate area of the event                       | know where an event will be held                                |
+| `* *`    | volunteer coordinator  | be able to check the logistics and other materials needed for an event                | know what other materials are required                          |
+| `* *`    | volunteer coordinator  | check the description of an event                                                     | have a better idea of the details of the event                  |
+| `* *`    | volunteer coordinator  | be able to check the budget for an event                                              | know the budget assigned for the event                          |
+| `* *`    | volunteer coordinator  | check how many volunteers are in a certain event                                      | have an estimate on the current manpower for an event           |
+| `* *`    | volunteer coordinator  | check which volunteers are assigned to a certain event                                | so I can easily tell who is participating in the event          |
+| `* *`    | volunteer coordinator  | check how many events a volunteer has participated in                                 | keep track of their contributions                               |
+| `* *`    | volunteer coordinator  | check the information and contacts of a volunteer                                     | easily obtain information from any volunteer                    |
+| `* *`    | volunteer coordinator  | be able to check a volunteer’s volunteer history                                      | keep track of the number of hours they have volunteered         |
+| `* *`    | volunteer coordinator  | check the items a volunteer needs to bring(if applicable) for an event                | know who is responsible for bringing specific items             |
+| `* *`    | volunteer coordinator  | know, given a volunteer, the specific tasks they are assigned to within the event     | know who is responsible for a specific task                     |
+| `* *`    | volunteer coordinator  | be able to allocate volunteers into events quickly                                    | save time on the volunteer allocation process                   |
+| `* *`    | volunteer coordinator  | be able to remove volunteers from events quickly                                      | save time on the volunteer removal process                      |
+| `* *`    | volunteer coordinator  | be able to filter through the event list                                              | quickly find the event I am interested in                       |
 
 *{More to be added}*
 
@@ -297,6 +323,37 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `iVolunteer` and the **Actor** is the `Volunteer Coordinator`, unless specified otherwise)
 
+**Use case UCE01: Create an event**
+
+**MSS**
+
+1.  Volunteer Coordinator creates an event.
+2.  iVolunteer shows the event created.
+
+    Use case ends.
+
+**Extensions**
+* 1a. Invalid Command Word.
+    * 1a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
+
+  Use case resumes from step 1.
+* 1b. Missing arguments for mandatory fields.
+    * 1b1. System prompts Volunteer Coordinator to provide arguments for all mandatory fields.
+
+  Use case resumes from step 1.
+* 1c. Parameters are not separated by a single space.
+    * 1c1. System prompts Volunteer Coordinator to separate parameters with a single space.
+
+  Use case resumes from step 1.
+* 1d. Invalid Date and Time.
+    * 1d1. System prompts Volunteer Coordinator to use the correct date and time format.
+
+  Use case resumes from step 1.
+* 1e. Invalid Budget Argument
+    * 1e1. System prompts Volunteer Coordinator to use the correct budget format.
+
+  Use case resumes from step 1.
+  
 **Use case UCE02: List all volunteering events**
 
 **MSS**
@@ -322,7 +379,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User </u>lists all volunteering events (UC02)</u>.
+1.  User </u>lists all volunteering events (UCE02)</u>.
 2.  User requests to read an individual event.
 3.  iVolunteer shows a detailed description about that particular event.
 
@@ -352,14 +409,120 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     * 2d1. System prompts user to separate parameters with a single space.
 
-      Use case resumes at step 2.
+
+**Use case UCE04: Delete an event**
+
+**MSS**
+
+1.  User requests to list all events
+2.  iVolunteer shows a list of events
+3.  User requests to delete a specific event in the list
+4.  iVolunteer deletes the event
+
+Use case ends.
+
+**Extensions**
+
+* 1a. The list is empty.
+
+  Use case ends.
+
+* 1b. Invalid command word.
+
+    * 1b1. iVolunteer requests for the correct command.
+    * 1b2. User enters correct command <br>
+    Steps 1b1-1b2 are repeated until the data entered is correct <br>
+    Use case resumes at step 2.
+
+* 3a. Invalid event id
+    * 3a1. iVolunteer requests for the correct command with valid event id
+    * 3a2. User enters correct command <br>
+    Steps 3a1-3a2 are repeated until the data entered is correct <br>
+    Use case resumes at step 4.
+
+**Use case UCV01: Create a volunteer**
+
+**MSS**
+
+1.  User requests to create a volunteer.
+2.  iVolunteer shows the volunteer created and appends the volunteer to the end of the volunteer list.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. Invalid Command Word.
+    * 1a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
+
+    Use case resumes from step 1.
+* 1b. Missing arguments for mandatory fields.
+    * 1b1. System prompts Volunteer Coordinator to provide arguments for all mandatory fields.
+
+  Use case resumes from step 1.
+* 1c. Parameters are not separated by a single space.
+    * 1c1. System prompts Volunteer Coordinator to separate parameters with a single space.
+
+  Use case resumes from step 1.
+* 1d. Invalid email.
+    * 1d1. System prompts Volunteer Coordinator to use the correct email format.
+
+    Use case resumes from step 1.
+* 1e. Invalid phone number.
+    * 1e1. System prompts Volunteer Coordinator to use a valid 8-digit phone number.
+
+    Use case resumes from step 1.
+* 1f. Name exceeds 30 characters, or name is empty.
+    * 1f1. System prompts Volunteer Coordinator to use a volunteer name between 1-30 characters.
+
+    Use case resumes from step 1.
+
+**Use case UCV02: List all volunteers**
+
+**MSS**
+
+1.  User requests to list all volunteers.
+2.  iVolunteer shows a list of all volunteers.
+
+    Use case ends.
+
+**Use case UCV03: Delete a volunteer**
+
+**MSS**
+
+1.  User <u>lists all volunteers (UCV02)</u>.
+2.  User requests to delete a specific volunteer in the volunteer list.
+3.  iVolunteer removes the volunteer from all events he/she is in.
+4.  iVolunteer deletes the volunteer.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The list is empty.
+
+  Use case ends.
+
+* 2a. The given index is invalid.
+
+    * 2a1. iVolunteer shows an error message that there is no such volunteer in the given index.
+
+      Use case resumes from step 2.
+
+**Use case UCV04: Clear all volunteers in volunteer list**
+
+**MSS**
+
+1. User clears all volunteers in volunteer list.
+2. The volunteer list becomes empty.
+
+    Use case ends.
 
 *{More to be added}*
 
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+2.  Should be able to hold up to 1000 volunteers without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 
 *{More to be added}*
@@ -399,17 +562,17 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
-### Deleting a person
+### Deleting a volunteer
 
-1. Deleting a person while all persons are being shown
+1. Deleting a volunteer while all volunteers are being shown
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+   1. Prerequisites: List all volunteers using the `list` command. Multiple volunteers in the list.
 
    1. Test case: `delete 1`<br>
       Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 
    1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+      Expected: No volunteer is deleted. Error details shown in the status message. Status bar remains the same.
 
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
