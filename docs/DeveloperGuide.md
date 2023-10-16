@@ -321,30 +321,37 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `iVolunteer` app and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+**Use case 1: Delete an event**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to list all events
+2.  iVolunteer shows a list of events
+3.  User requests to delete a specific event in the list
+4.  iVolunteer deletes the event
 
     Use case ends.
 
 **Extensions**
 
-* 2a. The list is empty.
+* 1a. The list is empty.
 
   Use case ends.
 
-* 3a. The given index is invalid.
+* 1b. Invalid command word.
 
-    * 3a1. AddressBook shows an error message.
+    * 1b1. iVolunteer requests for the correct command.
+    * 1b2. User enters correct command <br>
+    Steps 1b1-1b2 are repeated until the data entered is correct <br>
+    Use case resumes at step 2.
 
-      Use case resumes at step 2.
+* 3a. Invalid event id
+    * 3a1. iVolunteer requests for the correct command with valid event id
+    * 3a2. User enters correct command <br>
+    Steps 3a1-3a2 are repeated until the data entered is correct <br>
+    Use case resumes at step 4.
 
 **Use case UCV01: Create a volunteer**
 
