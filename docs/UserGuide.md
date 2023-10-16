@@ -37,7 +37,7 @@ iVolunteer is your dedicated application for volunteer coordination, designed wi
    
    * `vlist` : Lists all volunteers.
 
-   * `vcreate n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a volunteer named `John Doe` to the list of volunteers.
+   * `vcreate n/John Doe p/98765432 e/johnd@example.com` : Adds a volunteer named `John Doe` to the list of volunteers.
 
    * `vdelete 3` : Deletes the 3rd volunteer in the current volunteer list.
 
@@ -85,14 +85,14 @@ Format: `help`
 
 Creates a volunteer in the volunteer list.
 
-Format: `vcreate n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+Format: `vcreate n/NAME p/PHONE_NUMBER e/EMAIL [s/SKILL]…​`
 
 **Tip:** A volunteer can have any number of tags (including 0)
 </box>
 
 Examples:
-* `ecreate n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `ecreate n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `vcreate n/John Doe p/98765432 e/johnd@example.com`
+* `vcreate n/Betsy Crowe t/friend e/betsycrowe@example.com p/1234567 s/chef`
 
 
 ### Adding a volunteer into an event: `eaddv` [COMING SOON]
@@ -241,6 +241,24 @@ Restrictions:
 
 Examples:
 * `ecreate n/food donation r/chef r/packer d/23/9/2023 1500 dsc/help food distribution m/50 potatoes b/50` creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
+
+### Listing all events : `elist` [coming soon]
+Volunteer coordinators can see all the events they are organising. For each event, only the most important information will be shown: name, date and time, location.
+
+Format: `elist`
+
+### Reading an individual event : `eshow` [coming soon]
+Volunteer coordinators can read up more about an individual event, to familiarize themselves with its requirements while planning for it.
+
+Format: `eshow EVENT_ID`
+
+Restrictions:
+* First part must be `eshow`
+* Second part must be an integer that represents a valid `EVENT_ID`: If the list of events is 10 events long, the acceptable values will be from 1-10.
+* First and second parts must be separated by a single space.
+
+Examples:
+* `eshow 7` will result in a pop-up window appearing, listing all details of the event at id `7`. This includes its name, date and time, location, roles needed, logistics needed (if any), budget (if any), and a description.
 
 ### Exiting the program : `exit`
 

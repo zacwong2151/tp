@@ -282,14 +282,40 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
-|----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person             |                                                                        |
-| `* * *`  | user                                       | delete a person              | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name         | locate a person easily                                                 |
+| Priority | As a …​                | I want to …​                                                                          | So that I can…​                                                 |
+|----------|------------------------|---------------------------------------------------------------------------------------|-----------------------------------------------------------------|
+| `* * *`  | volunteer coordinator  | create new events by specifying the name of the event                                 | refer to it in the future                                       |
+| `* * *`  | volunteer coordinator  | create new events by specifying the date and time of the event                        | check the date and time of an event in the future               |
+| `* * *`  | volunteer coordinator  | change the name of the event                                                          | update an event with the correct name                           |
+| `* * *`  | volunteer coordinator  | change the date and time of an event                                                  | update an event with the correct date and time                  |
+| `* * *`  | volunteer coordinator  | check the list of events through the app                                              | view all upcoming events                                        |
+| `* * *`  | volunteer coordinator  | check the date and time of an event                                                   | know when and what time an event will occur                     |
+| `* * *`  | volunteer coordinator  | delete events                                                                         | remove them when they are no longer needed                      |
+| `* *`    | volunteer coordinator  | create new events by specifying the roles needed                                      | check what roles are needed for an event in the future          |
+| `* *`    | volunteer coordinator  | create new events by setting the location and approximate area of the event           | check where an event will be held  in the future                |
+| `* *`    | volunteer coordinator  | create new events by specifying the logistics and other materials needed for an event | check what other logistics I require for an event in the future |
+| `* *`    | volunteer coordinator  | create new events by providing a brief description of the event                       | refer to it in the future                                       |
+| `* *`    | volunteer coordinator  | create new events by setting and allocating the budget for the event                  | check the estimated cost required for an event in the future    |
+| `* *`    | volunteer coordinator  | change the roles needed for an event                                                  | update an event with the correct roles                          |
+| `* *`    | volunteer coordinator  | be able to change the location and approximate area of the event                      | update an event with the correct location                       |
+| `* *`    | volunteer coordinator  | change the logistics and other materials needed for an event                          | update the event with the correct logistics required            |
+| `* *`    | volunteer coordinator  | change the description of the event                                                   | update the event with the correct description                   |
+| `* *`    | volunteer coordinator  | change the budget for the volunteering event                                          | update the event with the correct budget                        |
+| `* *`    | volunteer coordinator  | be able to check the roles needed for an event                                        | know what roles are required for an event                       | 
+| `* *`    | volunteer coordinator  | be able to check the location and approximate area of the event                       | know where an event will be held                                |
+| `* *`    | volunteer coordinator  | be able to check the logistics and other materials needed for an event                | know what other materials are required                          | 
+| `* *`    | volunteer coordinator  | check the description of an event                                                     | have a better idea of the details of the event                  |
+| `* *`    | volunteer coordinator  | be able to check the budget for an event                                              | know the budget assigned for the event                          |
+| `* *`    | volunteer coordinator  | check how many volunteers are in a certain event                                      | have an estimate on the current manpower for an event           |
+| `* *`    | volunteer coordinator  | check which volunteers are assigned to a certain event                                | so I can easily tell who is participating in the event          |
+| `* *`    | volunteer coordinator  | check how many events a volunteer has participated in                                 | keep track of their contributions                               |
+| `* *`    | volunteer coordinator  | check the information and contacts of a volunteer                                     | easily obtain information from any volunteer                    |
+| `* *`    | volunteer coordinator  | be able to check a volunteer’s volunteer history                                      | keep track of the number of hours they have volunteered         |
+| `* *`    | volunteer coordinator  | check the items a volunteer needs to bring(if applicable) for an event                | know who is responsible for bringing specific items             |
+| `* *`    | volunteer coordinator  | know, given a volunteer, the specific tasks they are assigned to within the event     | know who is responsible for a specific task                     |
+| `* *`    | volunteer coordinator  | be able to allocate volunteers into events quickly                                    | save time on the volunteer allocation process                   |
+| `* *`    | volunteer coordinator  | be able to remove volunteers from events quickly                                      | save time on the volunteer removal process                      |
+| `* *`    | volunteer coordinator  | be able to filter through the event list                                              | quickly find the event I am interested in                       |
 
 *{More to be added}*
 
@@ -320,7 +346,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 
-**Use case: Add an event**
+**Use case UCE01: Create an event**
 
 **MSS**
 
@@ -329,25 +355,103 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 * 1a. Invalid Command Word.
-    * 1a1. iVolunteer prompts Volunteer Coordinator to provide a valid command. 
-  
+    * 1a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
+
+  Use case resumes from step 1.
+* 1b. Missing arguments for mandatory fields.
+    * 1b1. System prompts Volunteer Coordinator to provide arguments for all mandatory fields.
+
+  Use case resumes from step 1.
+* 1c. Parameters are not separated by a single space.
+    * 1c1. System prompts Volunteer Coordinator to separate parameters with a single space.
+
+  Use case resumes from step 1.
+* 1d. Invalid Date and Time.
+    * 1d1. System prompts Volunteer Coordinator to use the correct date and time format.
+
+  Use case resumes from step 1.
+* 1e. Invalid Budget Argument
+    * 1e1. System prompts Volunteer Coordinator to use the correct budget format.
+
+  Use case resumes from step 1.
+
+
+**Use case UCV01: Create a volunteer**
+
+**MSS**
+
+1.  User requests to create a volunteer.
+2.  iVolunteer shows the volunteer created and appends the volunteer to the end of the volunteer list.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. Invalid Command Word.
+    * 1a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
+
     Use case resumes from step 1.
 * 1b. Missing arguments for mandatory fields.
     * 1b1. System prompts Volunteer Coordinator to provide arguments for all mandatory fields.
 
-    Use case resumes from step 1.
+  Use case resumes from step 1.
 * 1c. Parameters are not separated by a single space.
     * 1c1. System prompts Volunteer Coordinator to separate parameters with a single space.
-   
+
+  Use case resumes from step 1.
+* 1d. Invalid email.
+    * 1d1. System prompts Volunteer Coordinator to use the correct email format.
+
     Use case resumes from step 1.
-* 1d. Invalid Date and Time.
-    * 1d1. System prompts Volunteer Coordinator to use the correct date and time format.
-    
+* 1e. Invalid phone number.
+    * 1e1. System prompts Volunteer Coordinator to use a valid 8-digit phone number.
+
     Use case resumes from step 1.
-* 1e. Invalid Budget Argument
-    * 1e1. System prompts Volunteer Coordinator to use the correct budget format.
-    
+* 1f. Name exceeds 30 characters, or name is empty.
+    * 1f1. System prompts Volunteer Coordinator to use a volunteer name between 1-30 characters.
+
     Use case resumes from step 1.
+
+**Use case UCV02: List all volunteers**
+
+**MSS**
+
+1.  User requests to list all volunteers.
+2.  iVolunteer shows a list of all volunteers.
+
+    Use case ends.
+
+**Use case UCV03: Delete a volunteer**
+
+**MSS**
+
+1.  User <u>lists all volunteers (UCV02)</u>.
+2.  User requests to delete a specific volunteer in the volunteer list.
+3.  iVolunteer removes the volunteer from all events he/she is in.
+4.  iVolunteer deletes the volunteer.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The list is empty.
+
+  Use case ends.
+
+* 2a. The given index is invalid.
+
+    * 2a1. iVolunteer shows an error message that there is no such volunteer in the given index.
+
+      Use case resumes from step 2.
+
+**Use case UCV04: Clear all volunteers in volunteer list**
+
+**MSS**
+
+1. User clears all volunteers in volunteer list.
+2. The volunteer list becomes empty.
+
+    Use case ends.
 
 *{More to be added}*
 
