@@ -191,6 +191,20 @@ Examples:
 * `vlist` followed by `vdelete 2` deletes the 2nd volunteer in the volunteer list.
 * `vfind Betsy` followed by `vdelete 1` deletes the 1st volunteer in the results of the `vfind` command.
 
+### Deleting an event : `edelete`
+
+Deletes the event from the event list.
+
+Format: `edelete EVENT_ID`
+
+* Deletes the event at the specified `id`.
+* The id refers to the index number shown in the displayed event list.
+* The id **must be a positive integer** 1, 2, 3, …​
+
+Examples:
+* `elist` followed by `edelete 2` deletes the 2nd event in the event list.
+* `efind Beach cleaning` followed by `edelete 1` deletes the 1st event in the results of the `find` command (tentative feature)
+
 ### Removing a volunteer in an event: `eremovev` [COMING SOON]
 
 Removes the specified volunteer from an event by name or id.
@@ -218,6 +232,12 @@ Examples:
 Clears all volunteers from the volunteer list.
 
 Format: `vclear`
+
+### Clearing all entries : `eclear`
+
+Clears all entries from the event list.
+
+Format: `eclear`
 
 ### Creating an event [coming soon]
 
