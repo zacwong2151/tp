@@ -57,7 +57,6 @@ public class Event {
         return location;
     }
     public Description getDescription() { return description; }
-    
     /**
      * Returns an immutable Material set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
