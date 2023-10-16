@@ -297,7 +297,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `iVolunteer` and the **Actor** is the `Volunteer Coordinator`, unless specified otherwise)
 
-**Use case 2: List all volunteering events**
+**Use case UCE02: List all volunteering events**
 
 **MSS**
 
@@ -314,11 +314,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       
       Use case resumes from step 1.
 
-* 2a. The list is empty.
+* 1b. There are no events to list.
 
   Use case ends.
 
-**Use case 3: Read an individual event**
+**Use case UCE03: Read an individual event**
 
 **MSS**
 
