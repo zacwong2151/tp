@@ -353,6 +353,36 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     Steps 3a1-3a2 are repeated until the data entered is correct <br>
     Use case resumes at step 4.
 
+**Use case UCE01: Create an event**
+
+**MSS**
+
+1.  Volunteer Coordinator creates an event.
+2.  iVolunteer shows the event created.
+
+**Extensions**
+* 1a. Invalid Command Word.
+    * 1a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
+
+  Use case resumes from step 1.
+* 1b. Missing arguments for mandatory fields.
+    * 1b1. System prompts Volunteer Coordinator to provide arguments for all mandatory fields.
+
+  Use case resumes from step 1.
+* 1c. Parameters are not separated by a single space.
+    * 1c1. System prompts Volunteer Coordinator to separate parameters with a single space.
+
+  Use case resumes from step 1.
+* 1d. Invalid Date and Time.
+    * 1d1. System prompts Volunteer Coordinator to use the correct date and time format.
+
+  Use case resumes from step 1.
+* 1e. Invalid Budget Argument
+    * 1e1. System prompts Volunteer Coordinator to use the correct budget format.
+
+  Use case resumes from step 1.
+
+
 **Use case UCV01: Create a volunteer**
 
 **MSS**
@@ -365,17 +395,17 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 1a. Invalid Command Word.
-    * 1a1. iVolunteer prompts Volunteer Coordinator to provide a valid command. 
+    * 1a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
 
     Use case resumes from step 1.
 * 1b. Missing arguments for mandatory fields.
     * 1b1. System prompts Volunteer Coordinator to provide arguments for all mandatory fields.
 
-    Use case resumes from step 1.
+  Use case resumes from step 1.
 * 1c. Parameters are not separated by a single space.
     * 1c1. System prompts Volunteer Coordinator to separate parameters with a single space.
 
-    Use case resumes from step 1.
+  Use case resumes from step 1.
 * 1d. Invalid email.
     * 1d1. System prompts Volunteer Coordinator to use the correct email format.
 
