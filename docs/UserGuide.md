@@ -158,6 +158,20 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
+### Deleting an event : `edelete`
+
+Deletes the event from the event list.
+
+Format: `edelete EVENT_ID`
+
+* Deletes the event at the specified `id`.
+* The id refers to the index number shown in the displayed event list.
+* The id **must be a positive integer** 1, 2, 3, …​
+
+Examples:
+* `elist` followed by `edelete 2` deletes the 2nd event in the event list.
+* `efind Beach cleaning` followed by `edelete 1` deletes the 1st event in the results of the `find` command (tentative feature)
+
 ### Removing a volunteer in an event: `eremovev` [COMING SOON]
 
 Removes the specified volunteer from an event by name or id.
@@ -180,11 +194,11 @@ Examples:
 * `eremovev vid/1 eid/1`
 * `eremovev vn/John en/fundraising`
 
-### Clearing all entries : `clear`
+### Clearing all entries : `eclear`
 
-Clears all entries from the address book.
+Clears all entries from the event list.
 
-Format: `clear`
+Format: `eclear`
 
 ### Creating an event [coming soon]
 
