@@ -14,7 +14,7 @@ import java.util.List;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.commands.volunteerCommands.VolunteerEditCommand;
+import seedu.address.logic.commands.volunteercommands.VolunteerEditCommand;
 import seedu.address.model.Model;
 import seedu.address.model.VolunteerStorage;
 import seedu.address.model.volunteer.NameContainsKeywordsPredicate;

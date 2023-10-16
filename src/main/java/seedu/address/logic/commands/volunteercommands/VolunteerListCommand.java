@@ -1,4 +1,4 @@
-package seedu.address.logic.commands.volunteerCommands;
+package seedu.address.logic.commands.volunteercommands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_VOLUNTEERS;
