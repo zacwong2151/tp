@@ -59,7 +59,8 @@ public class CommandTestUtil {
         DESC_AMY = new EditVolunteerDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withSkills(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditVolunteerDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withSkills(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
+                .withSkills(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }
 
     /**

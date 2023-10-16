@@ -78,7 +78,8 @@ public class VolunteerCreateCommandParserTest {
 
         // multiple fields repeated
         assertParseFailure(parser,
-                validExpectedVolunteerString + PHONE_DESC_AMY + EMAIL_DESC_AMY + NAME_DESC_AMY + validExpectedVolunteerString,
+                validExpectedVolunteerString + PHONE_DESC_AMY + EMAIL_DESC_AMY
+                        + NAME_DESC_AMY + validExpectedVolunteerString,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME, PREFIX_EMAIL, PREFIX_PHONE));
 
         // invalid value followed by valid value
