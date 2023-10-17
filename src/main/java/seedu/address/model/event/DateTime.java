@@ -3,6 +3,7 @@ package seedu.address.model.event;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.time.DateTimeException;
 import java.time.LocalDateTime;
 
 /**
@@ -38,7 +39,11 @@ public class DateTime {
      * Returns true if a given string is a valid budget.
      */
     public static boolean isValidDateTime(String dateAndTime) {
-        String trimmedDateAndTime = dateAndTime.trim();
+        // inputs shouldn't be null
+        if (dateAndTime == null) {
+            return false;
+        }
+
         String[] parts = dateAndTime.split(" ");
 
         // If there isn't exactly two components in the dateAndTime, return false
@@ -55,20 +60,24 @@ public class DateTime {
             return false;
         }
 
-        int day = Integer.parseInt(dateParts[0]);
-        int month = Integer.parseInt(dateParts[1]);
-        int year = Integer.parseInt(dateParts[2]);
+        try {
+            int day = Integer.parseInt(dateParts[0]);
+            int month = Integer.parseInt(dateParts[1]);
+            int year = Integer.parseInt(dateParts[2]);
 
-        // If time is not a four-digit number, return false
-        if (time.length() != 4) {
-            return false;
-        }
+            // If time is not a four-digit number, return false
+            if (time.length() != 4) {
+                return false;
+            }
 
-        int hour = Integer.parseInt(time.substring(0, 2));
-        int min = Integer.parseInt(time.substring(2, 4));
-        LocalDateTime dateTime = LocalDateTime.of(year, month, day, hour, min);
+            int hour = Integer.parseInt(time.substring(0, 2));
+            int min = Integer.parseInt(time.substring(2, 4));
+            LocalDateTime dateTime = LocalDateTime.of(year, month, day, hour, min);
 
-        if (dateTime == null) {
+            if (dateTime == null) {
+                return false;
+            }
+        } catch (NumberFormatException | DateTimeException e) {
             return false;
         }
         return true;
