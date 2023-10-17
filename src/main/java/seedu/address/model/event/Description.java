@@ -16,7 +16,7 @@ public class Description {
      * otherwise " " (a blank string) becomes a valid input.
      * The expression allows for multiple words to be inputted.
      */
-    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String VALIDATION_REGEX = "[A-Za-z0-9 _.,!\"'/$]*";
 
     public final String description;
 
