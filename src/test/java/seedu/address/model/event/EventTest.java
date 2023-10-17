@@ -24,7 +24,7 @@ public class EventTest {
         materials.add(cloth);
         materials.add(soap);
 
-        Budget b = new Budget("$1000");
+        Budget b = new Budget("1000.00");
         Event e = new Event(
                 name,
                 roles,
