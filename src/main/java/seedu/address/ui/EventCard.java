@@ -7,14 +7,14 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import seedu.address.model.volunteer.Volunteer;
+import seedu.address.model.event.Event;
 
 /**
  * An UI component that displays information of a {@code Person}.
  */
-public class VolunteerCard extends UiPart<Region> {
+public class EventCard extends UiPart<Region> {
 
-    private static final String FXML = "VolunteerListCard.fxml";
+    private static final String FXML = "EventListCard.fxml";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -24,36 +24,36 @@ public class VolunteerCard extends UiPart<Region> {
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
 
-    public final Volunteer volunteer;
+    public final Event event;
 
     @FXML
     private HBox cardPane;
     @FXML
-    private Label name;
+    private Label eventName;
     @FXML
     private Label id;
     @FXML
-    private Label phone;
+    private Label dateAndTime;
     @FXML
-    private Label address;
+    private Label loc;
     @FXML
-    private Label email;
+    private Label description;
     @FXML
-    private FlowPane skills;
+    private FlowPane materials;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
      */
-    public VolunteerCard(Volunteer volunteer, int displayedIndex) {
+    public EventCard(Event event, int displayedIndex) {
         super(FXML);
-        this.volunteer = volunteer;
+        this.event = event;
         id.setText(displayedIndex + ". ");
-        name.setText(volunteer.getName().fullName);
-        phone.setText(volunteer.getPhone().value);
-        address.setText(volunteer.getAddress().value);
-        email.setText(volunteer.getEmail().value);
-        volunteer.getSkills().stream()
-                .sorted(Comparator.comparing(skill -> skill.skillName))
-                .forEach(skill -> skills.getChildren().add(new Label(skill.skillName)));
+        eventName.setText(event.getEventName().name);
+        dateAndTime.setText(event.getDateAndTime().dateTime.toString());
+        loc.setText(event.getLocation().location);
+        description.setText(event.getDescription().description);
+        event.getMaterials().stream()
+                .sorted(Comparator.comparing(material -> material.material))
+                .forEach(material -> materials.getChildren().add(new Label(material.material)));
     }
 }
