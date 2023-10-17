@@ -14,13 +14,14 @@ public class Description {
     /*
      * The first character of the description must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
+     * The expression allows for multiple words to be inputted.
      */
-    public static final String VALIDATION_REGEX = "[^\\s].*";
+    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
     public final String description;
 
     /**
-     * Constructs an {@code Event}.
+     * Constructs a {@code Description}.
      *
      * @param description A valid description.
      */

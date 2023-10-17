@@ -5,12 +5,18 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents a Role in an event.
- * Guarantees: immutable; name is valid as declared in {@link #isValidRoleName(String)}
+ * Guarantees: immutable; role is valid as declared in {@link #isValidRoleName(String)}
  */
 public class Role {
 
-    public static final String MESSAGE_CONSTRAINTS = "Role names should be alphanumeric";
-    public static final String VALIDATION_REGEX = "\\p{Alnum}+";
+    public static final String MESSAGE_CONSTRAINTS = "Roles should only contain alphanumeric characters and spaces, "
+                                                        + "and it should not be blank\"";
+    /*
+     * The first character of the name must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
+     * The expression allows for multiple words to be inputted.
+     */
+    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
     public final String roleName;
 

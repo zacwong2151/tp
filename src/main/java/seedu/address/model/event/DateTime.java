@@ -3,6 +3,7 @@ package seedu.address.model.event;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.time.DateTimeException;
 import java.time.LocalDateTime;
 
 /**
@@ -15,13 +16,13 @@ public class DateTime {
                                                         + "and it should not be blank";
 
     /*
-     * To be changed
-     * The first character of the location must not be a whitespace,
+     * The first character of the dateTime must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
+     * dateTime must also be in the format "DD/MM/YYYY TTTT"
      */
-    public static final String VALIDATION_REGEX = "[^\\s].*";
+    public static final String VALIDATION_REGEX = "\\d{2}/\\d{2}/\\d{4} \\d{4}";
 
-    public final LocalDateTime dateTime;
+    public final LocalDateTime dateAndTime;
 
     /**
      * Constructs a {@code DateTime}.
@@ -31,7 +32,7 @@ public class DateTime {
     public DateTime(String dateTime) {
         requireNonNull(dateTime);
         checkArgument(isValidDateTime(dateTime), MESSAGE_CONSTRAINTS);
-        this.dateTime = setDateTime(dateTime);
+        this.dateAndTime = setDateTime(dateTime);
     }
 
     /**
@@ -66,36 +67,37 @@ public class DateTime {
 
         int hour = Integer.parseInt(time.substring(0, 2));
         int min = Integer.parseInt(time.substring(2, 4));
-        LocalDateTime dateTime = LocalDateTime.of(year, month, day, hour, min);
 
-        if (dateTime == null) {
+        try {
+            LocalDateTime dateTime = LocalDateTime.of(year, month, day, hour, min);
+        } catch (DateTimeException e) {
             return false;
         }
         return true;
     }
 
     public static LocalDateTime setDateTime(String dateTime) {
-        String trimmedDateTime = dateTime.trim();
-        if (isValidDateTime(dateTime)) {
-            String[] parts = dateTime.split(" ");
-            String date = parts[0];
-            String time = parts[1];
+        // Split the string into date and time components
+        String[] parts = dateTime.split(" ");
+        String date = parts[0];
+        String time = parts[1];
 
-            String[] dateParts = date.split("/");
-            int day = Integer.parseInt(dateParts[0]);
-            int month = Integer.parseInt(dateParts[1]);
-            int year = Integer.parseInt(dateParts[2]);
+        // Get the arguments for day, month and year
+        String[] dateParts = date.split("/");
+        int day = Integer.parseInt(dateParts[0]);
+        int month = Integer.parseInt(dateParts[1]);
+        int year = Integer.parseInt(dateParts[2]);
 
-            int hour = Integer.parseInt(time.substring(0, 2));
-            int min = Integer.parseInt(time.substring(2, 4));
-            return LocalDateTime.of(year, month, day, hour, min);
-        }
-        return null;
+        // Get the arguments for time
+        int hour = Integer.parseInt(time.substring(0, 2));
+        int min = Integer.parseInt(time.substring(2, 4));
+
+        return LocalDateTime.of(year, month, day, hour, min);
     }
 
     @Override
     public String toString() {
-        return dateTime.toString();
+        return dateAndTime.toString();
     }
 
     @Override
@@ -110,12 +112,12 @@ public class DateTime {
         }
 
         DateTime otherDateTime = (DateTime) other;
-        return dateTime.equals(otherDateTime.dateTime);
+        return dateAndTime.equals(otherDateTime.dateAndTime);
     }
 
     @Override
     public int hashCode() {
-        return dateTime.hashCode();
+        return dateAndTime.hashCode();
     }
 
 }

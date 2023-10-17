@@ -45,14 +45,14 @@ public class EventCreateCommandParser implements Parser<EventCreateCommand> {
                         PREFIX_LOCATION, PREFIX_DESCRIPTION, PREFIX_MATERIALS, PREFIX_BUDGET);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ROLE, PREFIX_DATE_AND_TIME,
-                PREFIX_LOCATION, PREFIX_DESCRIPTION, PREFIX_MATERIALS, PREFIX_BUDGET)
+                PREFIX_LOCATION, PREFIX_DESCRIPTION)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     EventCreateCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_ROLE, PREFIX_DATE_AND_TIME,
-                PREFIX_LOCATION, PREFIX_DESCRIPTION, PREFIX_MATERIALS, PREFIX_BUDGET);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_DATE_AND_TIME,
+                PREFIX_LOCATION, PREFIX_DESCRIPTION, PREFIX_BUDGET);
         EventName eventName = ParserUtil.parseEventName(argMultimap.getValue(PREFIX_NAME).get());
         Set<Role> roleList = ParserUtil.parseRoles(argMultimap.getAllValues(PREFIX_ROLE));
         DateTime dateTime = ParserUtil.parseDateAndTime(argMultimap.getValue(PREFIX_DATE_AND_TIME).get());
