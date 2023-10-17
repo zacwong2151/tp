@@ -3,7 +3,6 @@ package seedu.address.model.volunteer;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
@@ -34,7 +33,7 @@ public class VolunteerTest {
 
         // same name, all other attributes different -> returns true
         Volunteer editedAlice = new VolunteerBuilder(ALICE).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
-                .withAddress(VALID_ADDRESS_BOB).withSkills(VALID_TAG_HUSBAND).build();
+                .withSkills(VALID_TAG_HUSBAND).build();
         assertTrue(ALICE.isSameVolunteer(editedAlice));
 
         // different name, all other attributes same -> returns false
@@ -81,10 +80,6 @@ public class VolunteerTest {
         editedAlice = new VolunteerBuilder(ALICE).withEmail(VALID_EMAIL_BOB).build();
         assertFalse(ALICE.equals(editedAlice));
 
-        // different address -> returns false
-        editedAlice = new VolunteerBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).build();
-        assertFalse(ALICE.equals(editedAlice));
-
         // different tags -> returns false
         editedAlice = new VolunteerBuilder(ALICE).withSkills(VALID_TAG_HUSBAND).build();
         assertFalse(ALICE.equals(editedAlice));
@@ -93,8 +88,20 @@ public class VolunteerTest {
     @Test
     public void toStringMethod() {
         String expected = Volunteer.class.getCanonicalName() + "{name=" + ALICE.getName()
-                            + ", phone=" + ALICE.getPhone() + ", email=" + ALICE.getEmail() + ", address="
-                            + ALICE.getAddress() + ", skills=" + ALICE.getSkills() + "}";
+                            + ", phone=" + ALICE.getPhone() + ", email=" + ALICE.getEmail()
+                            + ", skills=" + ALICE.getSkills() + "}";
         assertEquals(expected, ALICE.toString());
     }
+
+    @Test
+    public void hashCodeMethod() {
+        /*
+        test case created by zac: I created this cos codecov CI was giving problems,
+        hopefully this doesn't create problems down the line
+        */
+        Volunteer volunteer = new VolunteerBuilder(ALICE).build();
+        int expected = volunteer.hashCode();
+        assertEquals(expected, -1784892035);
+    }
+
 }

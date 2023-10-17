@@ -95,7 +95,14 @@ public class DateTime {
 
     @Override
     public String toString() {
-        return dateTime.toString();
+        int day = dateTime.getDayOfMonth();
+        int month = dateTime.getMonthValue();
+        int year = dateTime.getYear();
+
+        int hour = dateTime.getHour();
+        int min = dateTime.getMinute();
+        return day + "/" + month + "/" + year + " "
+                + hour + min;
     }
 
     @Override
