@@ -8,8 +8,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_SKILL;
 
 import java.util.Set;
 
-import seedu.address.logic.commands.volunteerCommands.VolunteerCreateCommand;
-import seedu.address.logic.commands.volunteerCommands.VolunteerEditCommand.EditVolunteerDescriptor;
+import seedu.address.logic.commands.volunteercommands.VolunteerCreateCommand;
+import seedu.address.logic.commands.volunteercommands.VolunteerEditCommand.EditVolunteerDescriptor;
 import seedu.address.model.skill.Skill;
 import seedu.address.model.volunteer.Volunteer;
 

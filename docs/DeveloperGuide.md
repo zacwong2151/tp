@@ -321,30 +321,144 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `iVolunteer` app and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a volunteer**
+**Use case 1: Delete an event**
 
 **MSS**
 
-1.  User requests to list volunteers
-2.  AddressBook shows a list of volunteers
-3.  User requests to delete a specific volunteer in the list
-4.  AddressBook deletes the volunteer
+1.  User requests to list all events
+2.  iVolunteer shows a list of events
+3.  User requests to delete a specific event in the list
+4.  iVolunteer deletes the event
 
     Use case ends.
 
 **Extensions**
 
-* 2a. The list is empty.
+* 1a. The list is empty.
 
   Use case ends.
 
-* 3a. The given index is invalid.
+* 1b. Invalid command word.
 
-    * 3a1. AddressBook shows an error message.
+    * 1b1. iVolunteer requests for the correct command.
+    * 1b2. User enters correct command <br>
+    Steps 1b1-1b2 are repeated until the data entered is correct <br>
+    Use case resumes at step 2.
 
-      Use case resumes at step 2.
+* 3a. Invalid event id
+    * 3a1. iVolunteer requests for the correct command with valid event id
+    * 3a2. User enters correct command <br>
+    Steps 3a1-3a2 are repeated until the data entered is correct <br>
+    Use case resumes at step 4.
+
+**Use case UCE01: Create an event**
+
+**MSS**
+
+1.  Volunteer Coordinator creates an event.
+2.  iVolunteer shows the event created.
+
+**Extensions**
+* 1a. Invalid Command Word.
+    * 1a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
+
+  Use case resumes from step 1.
+* 1b. Missing arguments for mandatory fields.
+    * 1b1. System prompts Volunteer Coordinator to provide arguments for all mandatory fields.
+
+  Use case resumes from step 1.
+* 1c. Parameters are not separated by a single space.
+    * 1c1. System prompts Volunteer Coordinator to separate parameters with a single space.
+
+  Use case resumes from step 1.
+* 1d. Invalid Date and Time.
+    * 1d1. System prompts Volunteer Coordinator to use the correct date and time format.
+
+  Use case resumes from step 1.
+* 1e. Invalid Budget Argument
+    * 1e1. System prompts Volunteer Coordinator to use the correct budget format.
+
+  Use case resumes from step 1.
+
+
+**Use case UCV01: Create a volunteer**
+
+**MSS**
+
+1.  User requests to create a volunteer.
+2.  iVolunteer shows the volunteer created and appends the volunteer to the end of the volunteer list.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. Invalid Command Word.
+    * 1a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
+
+    Use case resumes from step 1.
+* 1b. Missing arguments for mandatory fields.
+    * 1b1. System prompts Volunteer Coordinator to provide arguments for all mandatory fields.
+
+  Use case resumes from step 1.
+* 1c. Parameters are not separated by a single space.
+    * 1c1. System prompts Volunteer Coordinator to separate parameters with a single space.
+
+  Use case resumes from step 1.
+* 1d. Invalid email.
+    * 1d1. System prompts Volunteer Coordinator to use the correct email format.
+
+    Use case resumes from step 1.
+* 1e. Invalid phone number.
+    * 1e1. System prompts Volunteer Coordinator to use a valid 8-digit phone number.
+
+    Use case resumes from step 1.
+* 1f. Name exceeds 30 characters, or name is empty.
+    * 1f1. System prompts Volunteer Coordinator to use a volunteer name between 1-30 characters.
+
+    Use case resumes from step 1.
+
+**Use case UCV02: List all volunteers**
+
+**MSS**
+
+1.  User requests to list all volunteers.
+2.  iVolunteer shows a list of all volunteers.
+
+    Use case ends.
+
+**Use case UCV03: Delete a volunteer**
+
+**MSS**
+
+1.  User <u>lists all volunteers (UCV02)</u>.
+2.  User requests to delete a specific volunteer in the volunteer list.
+3.  iVolunteer removes the volunteer from all events he/she is in.
+4.  iVolunteer deletes the volunteer.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The list is empty.
+
+  Use case ends.
+
+* 2a. The given index is invalid.
+
+    * 2a1. iVolunteer shows an error message that there is no such volunteer in the given index.
+
+      Use case resumes from step 2.
+
+**Use case UCV04: Clear all volunteers in volunteer list**
+
+**MSS**
+
+1. User clears all volunteers in volunteer list.
+2. The volunteer list becomes empty.
+
+    Use case ends.
 
 *{More to be added}*
 

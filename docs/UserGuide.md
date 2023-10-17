@@ -31,13 +31,13 @@ iVolunteer is your dedicated application for volunteer coordination, designed wi
 
    * `elist` : Lists all events
 
-   * `eadd n/food donation r/chef r/packer d/23-9-2023 1500 dsc/help food distribution m/50 potatoes b/50` : Creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
+   * `ecreate n/food donation r/chef r/packer d/23/9/2023 1500 dsc/help food distribution m/50 potatoes b/50` : Creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
 
    * `edelete 3` : Deletes the 3rd event in the current event list
 
    * `vlist` : Lists all volunteers.
 
-   * `vadd n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a volunteer named `John Doe` to the list of volunteers.
+   * `vcreate n/John Doe p/98765432 e/johnd@example.com` : Adds a volunteer named `John Doe` to the list of volunteers.
 
    * `vdelete 3` : Deletes the 3rd volunteer in the current volunteer list.
 
@@ -81,6 +81,20 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
+### Creating a volunteer: `vcreate`
+
+Creates a volunteer in the volunteer list.
+
+Format: `vcreate n/NAME p/PHONE_NUMBER e/EMAIL [s/SKILL]…​`
+
+**Tip:** A volunteer can have any number of tags (including 0)
+</box>
+
+Examples:
+* `vcreate n/John Doe p/98765432 e/johnd@example.com`
+* `vcreate n/Betsy Crowe t/friend e/betsycrowe@example.com p/1234567 s/chef`
+
+
 ### Adding a volunteer into an event: `eaddv` [COMING SOON]
 
 Adds a volunteer to an event by id or name.
@@ -103,6 +117,12 @@ Examples:
 * `eaddv vid/1 eid/1`
 * `eaddv vn/Betsy Crowe en/fundraising`
 
+### Listing all volunteers : `vlist`
+
+Shows a list of all volunteers in the volunteer list.
+
+Format: `vlist`
+
 ### Listing all volunteers in an event: `elistv` [COMING SOON]
 
 Shows a list of all volunteers in an event.
@@ -122,11 +142,11 @@ Examples:
 * `elistv eid/1`
 * `elistv en/fundraising`
 
-### Editing a volunteer : `edit`
+### Editing a volunteer : `vedit`
 
-Edits an existing volunteer in the address book.
+Edits an existing volunteer in the volunteer list.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+Format: `vedit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 
 * Edits the volunteer at the specified `INDEX`. The index refers to the index number shown in the displayed volunteer list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -139,23 +159,51 @@ Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st volunteer to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd volunteer to be `Betsy Crower` and clears all existing skills.
 
-### Locating volunteers by name: `find`
+### Locating volunteers by name: `vfind`
 
 Finds volunteers whose names contain any of the given keywords.
 
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `vfind KEYWORD [MORE_KEYWORDS]`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
+* Volunteers matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
+* `vfind John` returns `john` and `John Doe`
+* `vfind alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
+
+### Deleting a volunteer : `vdelete`
+
+Deletes the specified volunteer from the volunteer list.
+
+Format: `vdelete INDEX`
+
+* Deletes the volunteer at the specified `INDEX`.
+* The index refers to the index number shown in the displayed volunteer list.
+* The index **must be a positive integer** 1, 2, 3, …​
+
+Examples:
+* `vlist` followed by `vdelete 2` deletes the 2nd volunteer in the volunteer list.
+* `vfind Betsy` followed by `vdelete 1` deletes the 1st volunteer in the results of the `vfind` command.
+
+### Deleting an event : `edelete`
+
+Deletes the event from the event list.
+
+Format: `edelete EVENT_ID`
+
+* Deletes the event at the specified `id`.
+* The id refers to the index number shown in the displayed event list.
+* The id **must be a positive integer** 1, 2, 3, …​
+
+Examples:
+* `elist` followed by `edelete 2` deletes the 2nd event in the event list.
+* `efind Beach cleaning` followed by `edelete 1` deletes the 1st event in the results of the `find` command (tentative feature)
 
 ### Removing a volunteer in an event: `eremovev` [COMING SOON]
 
@@ -179,11 +227,17 @@ Examples:
 * `eremovev vid/1 eid/1`
 * `eremovev vn/John en/fundraising`
 
-### Clearing all entries : `clear`
+### Clearing all volunteers : `vclear`
 
-Clears all entries from the address book.
+Clears all volunteers from the volunteer list.
 
-Format: `clear`
+Format: `vclear`
+
+### Clearing all entries : `eclear`
+
+Clears all entries from the event list.
+
+Format: `eclear`
 
 ### Creating an event [coming soon]
 
@@ -202,11 +256,11 @@ Parameters:
 
 Restrictions:
 * All parameters must be separated by a single space.
-* The date and time format must be exactly `DD-MM-YYYY TTTT`
+* The date and time format must be exactly `DD/MM/YYYY TTTT`
 * The budget argument must be a floating point number with 2 decimal places.
 
 Examples:
-* `ecreate n/food donation r/chef r/packer d/23-9-2023 1500 dsc/help food distribution m/50 potatoes b/50` creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
+* `ecreate n/food donation r/chef r/packer d/23/9/2023 1500 dsc/help food distribution m/50 potatoes b/50` creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
 
 ### Listing all events : `elist` [coming soon]
 Volunteer coordinators can see all the events they are organising. For each event, only the most important information will be shown: name, date and time, location.
@@ -254,25 +308,36 @@ _Details coming soon ..._
 
 ## FAQ
 
-**Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
+**Q**: As a Windows 11 user, how do I open a command terminal?<br>
+**A**: On your Windows 11 computer, do the following:
+1. Select the Start Menu (the Windows icon) in the taskbar, or press the Windows key.
+2. Type `cmd` in the search bar.
+3. Select Command Prompt from the list.
+
+**Q**: As a Mac user, how do I open a command terminal?<br>
+**A**: On your Mac, do one of the following:
+1. Click the Launchpad icon in the Dock, type Terminal in the search field, then click Terminal. 
+2. In the Finder, open the `/Applications/Utilities` folder, then double-click Terminal.
 
 --------------------------------------------------------------------------------------------------------------------
 
 ## Known issues
 
-1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
+coming soon
 
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command summary
 
-Action     | Format, Examples
------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-**Clear**  | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**List**   | `list`
-**Help**   | `help`
+| Action                                        | Format, Examples                                                                                                                                                                                                                                                                       |
+|-----------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Create a new event**                        | `ecreate n/EVENT_NAME r/ROLES_NEEDED… d/DATE_AND_TIME l/LOCATION dsc/DESCRIPTION [m/MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET]` <br> e.g., `ecreate n/Fundraising at Orchard r/logistics leader d/23-09-2023 1500 dsc/station at locations to ask for donations m/50 tin cans b/50` |
+| **List all events**                           | `elist`                                                                                                                                                                                                                                                                                |
+| **Read an individual event**                  | `eshow EVENT_ID` <br> e.g., `eshow 8`                                                                                                                                                                                                                                                  |
+| **Delete an event**                           | `edelete EVENT_ID` <br> e.g., `edelete 3`                                                                                                                                                                                                                                              |
+| **Create a new volunteer profile**            | `vcreate vn/VOLUNTEER_NAME hp/PHONE_NUMBER e/EMAIL [s/SKILLS]...`<br> e.g.,`vcreate vn/John Lim hp/81234567 e/john123@gmail.com s/Cooking`                                                                                                                                             |
+| **List all volunteer profiles**               | `vlist`                                                                                                                                                                                                                                                                                |
+| **Delete a volunteer profile**                | `vdelete VOLUNTEER_ID` <br> e.g., `vdelete 4`                                                                                                                                                                                                                                          |
+| **Add a volunteer to an event**               | `eaddv vid/VOLUNTEER_ID eid/EVENT_ID`<br> e.g., `eaddv vid/1 eid/3` <br> Alternatively, `eaddv vn/VOLUNTEER_NAME en/EVENT_NAME` <br> e.g., `eaddv vn/Betsy Crowe en/Fundraising for needy families`                                                                                    |
+| **Check for volunteers assigned to an event** | `elistv eid/EVENT_ID` <br> e.g. `elistv eid/8` <br> Alternatively, `elistv en/EVENT_NAME` <br> e.g., `elistv en/October beach clean up`                                                                                                                                                |
+| **Remove a volunteer from an event**          | `eremovev vid/VOLUNTEER_ID eid/EVENT_ID`<br> e.g., `eremovev vid/3 eid/4` <br> Alternatively, `eremovev vn/VOLUNTEER_NAME en/EVENT_NAME` <br> e.g., `eremovev vn/John Lim en/October beach clean up`                                                                                   |

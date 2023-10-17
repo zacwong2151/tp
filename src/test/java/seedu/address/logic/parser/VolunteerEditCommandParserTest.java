@@ -36,9 +36,9 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
-import seedu.address.logic.commands.volunteerCommands.VolunteerEditCommand;
-import seedu.address.logic.commands.volunteerCommands.VolunteerEditCommand.EditVolunteerDescriptor;
-import seedu.address.logic.parser.volunteerCommandParsers.VolunteerEditCommandParser;
+import seedu.address.logic.commands.volunteercommands.VolunteerEditCommand;
+import seedu.address.logic.commands.volunteercommands.VolunteerEditCommand.EditVolunteerDescriptor;
+import seedu.address.logic.parser.volunteercommandparsers.VolunteerEditCommandParser;
 import seedu.address.model.skill.Skill;
 import seedu.address.model.volunteer.Address;
 import seedu.address.model.volunteer.Email;
