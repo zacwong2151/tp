@@ -1,5 +1,6 @@
 package seedu.address.model.event;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -62,5 +63,25 @@ public class DateTimeTest {
         assertTrue(DateTime.isValidDateTime("31/12/2023 2359"));
         assertTrue(DateTime.isValidDateTime("31/1/2023 1100"));
         assertTrue(DateTime.isValidDateTime("1/11/2023 1100"));
+    }
+
+    @Test
+    public void toString_validParams_success() {
+
+        // array of { expected, actual }
+        String[][] testDates = {
+                {"1/1/2023 2359", "1/1/2023 2359"},
+                {"31/12/2023 2359", "31/12/2023 2359"},
+                {"31/1/2023 1100", "31/1/2023 1100"},
+                {"1/11/2023 1100", "1/11/2023 1100"},
+                {"01/01/2023 2359", "1/1/2023 2359"},
+                {"31/01/2023 1100", "31/1/2023 1100"},
+                {"01/11/2023 1100", "1/11/2023 1100"}
+        };
+
+        for (String[] testDate : testDates) {
+            DateTime d = new DateTime(testDate[0]);
+            assertEquals(d.toString(), testDate[1]);
+        }
     }
 }

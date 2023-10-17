@@ -110,8 +110,7 @@ public class DateTime {
 
         int hour = dateTime.getHour();
         int min = dateTime.getMinute();
-        return day + "/" + month + "/" + year + " "
-                + hour + min;
+        return String.format("%d/%d/%d %02d%02d", day, month, year, hour, min);
     }
 
     @Override
