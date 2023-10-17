@@ -35,8 +35,6 @@ public class VolunteerCard extends UiPart<Region> {
     @FXML
     private Label phone;
     @FXML
-    private Label address;
-    @FXML
     private Label email;
     @FXML
     private FlowPane skills;
@@ -50,7 +48,6 @@ public class VolunteerCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         name.setText(volunteer.getName().fullName);
         phone.setText(volunteer.getPhone().value);
-        address.setText(volunteer.getAddress().value);
         email.setText(volunteer.getEmail().value);
         volunteer.getSkills().stream()
                 .sorted(Comparator.comparing(skill -> skill.skillName))
