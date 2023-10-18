@@ -73,7 +73,7 @@ iVolunteer is your dedicated application for volunteer coordination, designed wi
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
 
-### Viewing help : `help`
+### Viewing help: `help`
 
 Shows a message explaining how to access the help page.
 
@@ -81,19 +81,156 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
-### Creating a volunteer: `vcreate`
+### Creating a new volunteer's profile: `vcreate`
 
-Creates a volunteer in the volunteer list.
+Volunteer Coordinators can create new volunteer profiles, and add the volunteer into the volunteer list.
 
-Format: `vcreate n/NAME p/PHONE_NUMBER e/EMAIL [s/SKILL]…​`
+Format: `vcreate n/VOLUNTEER_NAME p/PHONE_NUMBER e/EMAIL [s/SKILLS]…`
 
-**Tip:** A volunteer can have any number of tags (including 0)
+Parameters:
+* n/ - Volunteer name
+* p/ - Phone number of the volunteer
+* e/ - Email address of the volunteer
+* s/ - Skills a volunteer may have
+
+<box type="tip" seamless>
+
+**Tip:** A volunteer can have any number of skills (including 0).
 </box>
 
-Examples:
-* `vcreate n/John Doe p/98765432 e/johnd@example.com`
-* `vcreate n/Betsy Crowe t/friend e/betsycrowe@example.com p/1234567 s/chef`
+Restrictions:
+* The maximum number of characters of a volunteer name is 30.
+* The email must be in a valid format.
+* The phone number must be a valid 8-digit Singapore phone number.
 
+Examples:
+* `vcreate n/John p/91234567 e/john123@gmail.com` creates a volunteer named `John` with a phone number of `91234567` and an email address of `john123@gmail.com`, with no specific skills. The volunteer profile will be appended to the bottom of the volunteer list.
+* `vcreate n/Mary p/92345678 e/mary123@gmail.com s/Cooking s/Carrying heavy goods` creates a volunteer named `Mary` with a phone number of `92345678` and an email address of `mary123@gmail.com`, with two skills: `Cooking` and `Carrying heavy goods`. The volunteer profile will be appended to the bottom of the volunteer list.
+
+### Listing all volunteers: `vlist`
+
+Shows a list of all volunteers in the volunteer list.
+
+Format: `vlist`
+
+### Locating volunteers by name: `vfind` [COMING SOON]
+
+Finds volunteers whose names contain any of the given keywords.
+
+Format: `vfind KEYWORD [MORE_KEYWORDS]`
+
+* The search is case-insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Only the name is searched.
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Volunteers matching at least one keyword will be returned (i.e. `OR` search).
+  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+
+Examples:
+* `vfind John` returns `john` and `John Doe`
+* `vfind alex david` returns `Alex Yeoh`, `David Li`<br>
+  ![result for 'find alex david'](images/findAlexDavidResult.png)
+
+### Editing a volunteer: `vedit` [COMING SOON]
+
+Edits an existing volunteer in the volunteer list.
+
+Format: `vedit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+
+* Edits the volunteer at the specified `INDEX`. The index refers to the index number shown in the displayed volunteer list. The index **must be a positive integer** 1, 2, 3, …​
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* When editing skills, the existing skills of the volunteer will be removed i.e adding of skills is not cumulative.
+* You can remove all the volunteer’s skills by typing `t/` without
+  specifying any skills after it.
+
+Examples:
+*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st volunteer to be `91234567` and `johndoe@example.com` respectively.
+*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd volunteer to be `Betsy Crower` and clears all existing skills.
+
+### Deleting a volunteer from the volunteer list: `vdelete`
+
+Volunteer coordinators can delete volunteers and remove them from the volunteer list if they no longer wish to volunteer anymore.
+
+Format: `vdelete VOLUNTEER_ID`
+
+* Deletes the volunteer at the specified `INDEX`.
+* The index refers to the index number shown in the displayed volunteer list.
+* The index **must be a positive integer** 1, 2, 3, …
+
+Restrictions:
+* The volunteer ID must be an integer that represents a valid volunteer number in the volunteer list. If there are 30 volunteers in the volunteer list, the acceptable values will be from 1-30.
+
+Examples:
+* `vlist`, followed by `vdelete 6` will remove the 6th volunteer displayed in the volunteer list.
+* `vfind Betsy` followed by `vdelete 1` deletes the 1st volunteer in the results of the `vfind` command.
+
+### Clearing all volunteer entries: `vclear`
+
+Clears all volunteers from the volunteer list.
+
+Format: `vclear`
+
+### Creating an event: `ecreate`
+
+Volunteer Coordinators can create new events.
+
+Format: `ecreate n/EVENT_NAME r/ROLES_NEEDED… d/DATE_AND_TIME l/LOCATION dsc/DESCRIPTION [m/MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET]`
+
+Parameters:
+* n/ - Event name
+* r/ - Roles needed for the event
+* d/ - Date and time of the event
+* l/ - Location of the event
+* dsc/ - Description of the event
+* m/ - Materials needed for the event
+* b/ - Budget for the event
+
+Restrictions:
+* All parameters must be separated by a single space.
+* The date and time format must be exactly `DD/MM/YYYY TTTT`
+* The budget argument must be a floating point number with 2 decimal places.
+
+Examples:
+* `ecreate n/food donation r/chef r/packer d/23/9/2023 1500 dsc/help food distribution m/50 potatoes b/50` creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
+
+### Listing all events: `elist`
+Volunteer coordinators can see all the events they are organising. For each event, only the most important information will be shown: name, date and time, location.
+
+Format: `elist`
+
+### Reading an individual event: `eshow`
+Volunteer coordinators can read up more about an individual event, to familiarize themselves with its requirements while planning for it.
+
+Format: `eshow EVENT_ID`
+
+Restrictions:
+* First part must be `eshow`
+* Second part must be an integer that represents a valid `EVENT_ID`: If the list of events is 10 events long, the acceptable values will be from 1-10.
+* First and second parts must be separated by a single space.
+
+Examples:
+* `eshow 7` will result in a pop-up window appearing, listing all details of the event at id `7`. This includes its name, date and time, location, roles needed, logistics needed (if any), budget (if any), and a description.
+
+### Deleting an event: `edelete`
+
+Deletes the event from the event list.
+
+Format: `edelete EVENT_ID`
+
+* Deletes the event at the specified `id`.
+* The id refers to the index number shown in the displayed event list.
+* The id **must be a positive integer** 1, 2, 3, …​
+
+Examples:
+* `elist` followed by `edelete 2` deletes the 2nd event in the event list.
+* `efind Beach cleaning` followed by `edelete 1` deletes the 1st event in the results of the `find` command (tentative feature)
+
+### Clearing all event entries: `eclear`
+
+Clears all entries from the event list.
+
+Format: `eclear`
 
 ### Adding a volunteer into an event: `eaddv` [COMING SOON]
 
@@ -117,12 +254,6 @@ Examples:
 * `eaddv vid/1 eid/1`
 * `eaddv vn/Betsy Crowe en/fundraising`
 
-### Listing all volunteers : `vlist`
-
-Shows a list of all volunteers in the volunteer list.
-
-Format: `vlist`
-
 ### Listing all volunteers in an event: `elistv` [COMING SOON]
 
 Shows a list of all volunteers in an event.
@@ -141,69 +272,6 @@ Restrictions:
 Examples:
 * `elistv eid/1`
 * `elistv en/fundraising`
-
-### Editing a volunteer : `vedit`
-
-Edits an existing volunteer in the volunteer list.
-
-Format: `vedit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
-
-* Edits the volunteer at the specified `INDEX`. The index refers to the index number shown in the displayed volunteer list. The index **must be a positive integer** 1, 2, 3, …​
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing skills, the existing skills of the volunteer will be removed i.e adding of skills is not cumulative.
-* You can remove all the volunteer’s skills by typing `t/` without
-    specifying any skills after it.
-
-Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st volunteer to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd volunteer to be `Betsy Crower` and clears all existing skills.
-
-### Locating volunteers by name: `vfind`
-
-Finds volunteers whose names contain any of the given keywords.
-
-Format: `vfind KEYWORD [MORE_KEYWORDS]`
-
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Volunteers matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-
-Examples:
-* `vfind John` returns `john` and `John Doe`
-* `vfind alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
-
-### Deleting a volunteer : `vdelete`
-
-Deletes the specified volunteer from the volunteer list.
-
-Format: `vdelete INDEX`
-
-* Deletes the volunteer at the specified `INDEX`.
-* The index refers to the index number shown in the displayed volunteer list.
-* The index **must be a positive integer** 1, 2, 3, …​
-
-Examples:
-* `vlist` followed by `vdelete 2` deletes the 2nd volunteer in the volunteer list.
-* `vfind Betsy` followed by `vdelete 1` deletes the 1st volunteer in the results of the `vfind` command.
-
-### Deleting an event : `edelete`
-
-Deletes the event from the event list.
-
-Format: `edelete EVENT_ID`
-
-* Deletes the event at the specified `id`.
-* The id refers to the index number shown in the displayed event list.
-* The id **must be a positive integer** 1, 2, 3, …​
-
-Examples:
-* `elist` followed by `edelete 2` deletes the 2nd event in the event list.
-* `efind Beach cleaning` followed by `edelete 1` deletes the 1st event in the results of the `find` command (tentative feature)
 
 ### Removing a volunteer in an event: `eremovev` [COMING SOON]
 
@@ -227,110 +295,6 @@ Examples:
 * `eremovev vid/1 eid/1`
 * `eremovev vn/John en/fundraising`
 
-### Clearing all volunteers : `vclear`
-
-Clears all volunteers from the volunteer list.
-
-Format: `vclear`
-
-### Clearing all entries : `eclear`
-
-Clears all entries from the event list.
-
-Format: `eclear`
-
-
-### Creating a new volunteer's profile : `vcreate` [coming soon]
-
-Volunteer Coordinators can create new volunteer profiles, and add the volunteer into the volunteer list.
-
-Format: `vcreate n/VOLUNTEER_NAME p/PHONE_NUMBER e/EMAIL [s/SKILLS]…`
-
-Parameters:
- * n/ - Volunteer name
- * p/ - Phone number of the volunteer
- * e/ - Email address of the volunteer
- * s/ - Skills a volunteer may have
-
-<box type="tip" seamless>
-
-**Tip:** A volunteer can have any number of skills (including 0).
-</box>
-
-Restrictions:
-* The maximum number of characters of a volunteer name is 30.
-* The email must be in a valid format.
-* The phone number must be a valid 8-digit Singapore phone number.
-
-Examples:
-* `vcreate n/John p/91234567 e/john123@gmail.com` creates a volunteer named `John` with a phone number of `91234567` and an email address of `john123@gmail.com`, with no specific skills. The volunteer profile will be appended to the bottom of the volunteer list.
-* `vcreate n/Mary p/92345678 e/mary123@gmail.com s/Cooking s/Carrying heavy goods` creates a volunteer named `Mary` with a phone number of `92345678` and an email address of `mary123@gmail.com`, with two skills: `Cooking` and `Carrying heavy goods`. The volunteer profile will be appended to the bottom of the volunteer list.
-
-### Listing all volunteers : `vlist` [coming soon]
-
-Shows a list of all volunteers in the volunteer list.
-
-Format: `vlist`
-
-### Deleting a volunteer from the volunteer list: `vdelete` [coming soon]
-
-Volunteer coordinators can delete volunteers and remove them from the volunteer list if they no longer wish to volunteer anymore.
-
-Format: `vdelete VOLUNTEER_ID`
-
-Restrictions:
-* The volunteer ID must be an integer that represents a valid volunteer number in the volunteer list. If there are 30 volunteers in the volunteer list, the acceptable values will be from 1-30.
-
-Examples:
-* `vlist`, followed by `vdelete 6` will remove the 6th volunteer displayed in the volunteer list.
-
-### Clearing all entries : `vclear` [coming soon]
-
-Clears all volunteers from the volunteer list.
-
-Format: `vclear`
-
-### Creating an event [coming soon]
-
-Volunteer Coordinators can create new events.
-
-Format: `ecreate add n/EVENT_NAME r/ROLES_NEEDED… d/DATE_AND_TIME l/LOCATION dsc/DESCRIPTION [m/MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET]`
-
-Parameters:
- * n/ - Event name
- * r/ - Roles needed for the event
- * d/ - Date and time of the event
- * l/ - Location of the event
- * dsc/ - Description of the event
- * m/ - Materials needed for the event
- * b/ - Budget for the event
-
-Restrictions:
-* All parameters must be separated by a single space.
-* The date and time format must be exactly `DD/MM/YYYY TTTT`
-* The budget argument must be a floating point number with 2 decimal places.
-
-Examples:
-* `ecreate n/food donation r/chef r/packer d/23/9/2023 1500 dsc/help food distribution m/50 potatoes b/50` creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
-
-### Listing all events : `elist` [coming soon]
-Volunteer coordinators can see all the events they are organising. For each event, only the most important information will be shown: name, date and time, location.
-
-Format: `elist`
-
-### Reading an individual event : `eshow` [coming soon]
-Volunteer coordinators can read up more about an individual event, to familiarize themselves with its requirements while planning for it.
-
-Format: `eshow EVENT_ID`
-
-Restrictions:
-* First part must be `eshow`
-* Second part must be an integer that represents a valid `EVENT_ID`: If the list of events is 10 events long, the acceptable values will be from 1-10.
-* First and second parts must be separated by a single space.
-
-Examples:
-* `eshow 7` will result in a pop-up window appearing, listing all details of the event at id `7`. This includes its name, date and time, location, roles needed, logistics needed (if any), budget (if any), and a description.
-
 ### Exiting the program : `exit`
 
 Exits the program.
@@ -339,16 +303,18 @@ Format: `exit`
 
 ### Saving the data
 
-AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+iVolunteer data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ### Editing the data file
 
-AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+iVolunteer data are saved automatically as two JSON files, `[JAR file location]/data/volunteerStorage.json` (volunteer storage) and `[JAR file location]/data/eventStorage.json` (event storage and _event-volunteer interactions_). Advanced users are welcome to update data directly by editing both data files.
+
+_**Note:** Event-volunteer interactions through `eaddv`, `elistv`, `eremovev` coming in v1.3!_
 
 <box type="warning" seamless>
 
 **Caution:**
-If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.
+If your changes to any data file makes its format invalid, iVolunteer will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.
 </box>
 
 ### Archiving data files `[coming in v2.0]`
