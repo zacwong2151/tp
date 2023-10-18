@@ -8,7 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SKILL_HUSBAND;
 
 import org.junit.jupiter.api.Test;
 
@@ -48,8 +48,8 @@ public class EditVolunteerDescriptorTest {
         editedAmy = new EditVolunteerDescriptorBuilder(DESC_AMY).withEmail(VALID_EMAIL_BOB).build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
-        // different tags -> returns false
-        editedAmy = new EditVolunteerDescriptorBuilder(DESC_AMY).withSkills(VALID_TAG_HUSBAND).build();
+        // different skills -> returns false
+        editedAmy = new EditVolunteerDescriptorBuilder(DESC_AMY).withSkills(VALID_SKILL_HUSBAND).build();
         assertFalse(DESC_AMY.equals(editedAmy));
     }
 
