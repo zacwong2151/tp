@@ -49,11 +49,8 @@ public class EventCard extends UiPart<Region> {
         this.event = event;
         id.setText(displayedIndex + ". ");
         eventName.setText(event.getEventName().name);
-        dateAndTime.setText(event.getDateAndTime().dateTime.toString());
-        loc.setText(event.getLocation().location);
-        description.setText(event.getDescription().description);
-        event.getMaterials().stream()
-                .sorted(Comparator.comparing(material -> material.material))
-                .forEach(material -> materials.getChildren().add(new Label(material.material)));
+        dateAndTime.setText("Date and time: " + event.getDateAndTime().dateTime.toString());
+        loc.setText("Location: " + event.getLocation().location);
+        description.setText("Description: " + event.getDescription().description);
     }
 }

@@ -52,7 +52,7 @@
                 <padding>
                   <Insets bottom="10" left="10" right="10" top="10" />
                 </padding>
-                     <Text fx:id="volunteerListLabel" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Volunteers">
+                     <Text fx:id="volunteerListLabel" fill="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="Volunteers">
                         <font>
                            <Font size="18.0" />
                         </font>
@@ -67,7 +67,7 @@
                         <Insets bottom="10" left="10" right="10" top="10" />
                      </padding>
                      <children>
-                        <Text fx:id="eventListLabel" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Events">
+                        <Text fx:id="eventListLabel" fill="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="Events">
                            <font>
                               <Font size="18.0" />
                            </font>
