@@ -3,7 +3,7 @@ package seedu.address.model.volunteer;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SKILL_HUSBAND;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalVolunteers.ALICE;
 import static seedu.address.testutil.TypicalVolunteers.BOB;
@@ -41,7 +41,7 @@ public class UniqueVolunteerListTest {
     @Test
     public void contains_volunteerWithSameIdentityFieldsInList_returnsTrue() {
         uniqueVolunteerList.add(ALICE);
-        Volunteer editedAlice = new VolunteerBuilder(ALICE).withSkills(VALID_TAG_HUSBAND)
+        Volunteer editedAlice = new VolunteerBuilder(ALICE).withSkills(VALID_SKILL_HUSBAND)
                 .build();
         assertTrue(uniqueVolunteerList.contains(editedAlice));
     }
@@ -84,7 +84,7 @@ public class UniqueVolunteerListTest {
     @Test
     public void setVolunteer_editedVolunteerHasSameIdentity_success() {
         uniqueVolunteerList.add(ALICE);
-        Volunteer editedAlice = new VolunteerBuilder(ALICE).withSkills(VALID_TAG_HUSBAND)
+        Volunteer editedAlice = new VolunteerBuilder(ALICE).withSkills(VALID_SKILL_HUSBAND)
                 .build();
         uniqueVolunteerList.setVolunteer(ALICE, editedAlice);
         UniqueVolunteerList expectedUniqueVolunteerList = new UniqueVolunteerList();

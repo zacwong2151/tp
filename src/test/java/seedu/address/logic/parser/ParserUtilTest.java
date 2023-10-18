@@ -23,13 +23,13 @@ public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_EMAIL = "example.com";
-    private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_SKILL = "#friend";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_EMAIL = "rachel@example.com";
-    private static final String VALID_TAG_1 = "friend";
-    private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_SKILL_1 = "friend";
+    private static final String VALID_SKILL_2 = "neighbour";
 
     private static final String WHITESPACE = " \t\r\n";
 
@@ -134,15 +134,15 @@ public class ParserUtilTest {
     //    }
 
     @Test
-    public void parseSkill_validValueWithoutWhitespace_returnsTag() throws Exception {
-        Skill expectedSkill = new Skill(VALID_TAG_1);
-        assertEquals(expectedSkill, ParserUtil.parseSkill(VALID_TAG_1));
+    public void parseSkill_validValueWithoutWhitespace_returnsSkill() throws Exception {
+        Skill expectedSkill = new Skill(VALID_SKILL_1);
+        assertEquals(expectedSkill, ParserUtil.parseSkill(VALID_SKILL_1));
     }
 
     @Test
-    public void parseSkill_validValueWithWhitespace_returnsTrimmedTag() throws Exception {
-        String skillWithWhitespace = WHITESPACE + VALID_TAG_1 + WHITESPACE;
-        Skill expectedSkill = new Skill(VALID_TAG_1);
+    public void parseSkill_validValueWithWhitespace_returnsTrimmedSkill() throws Exception {
+        String skillWithWhitespace = WHITESPACE + VALID_SKILL_1 + WHITESPACE;
+        Skill expectedSkill = new Skill(VALID_SKILL_1);
         assertEquals(expectedSkill, ParserUtil.parseSkill(skillWithWhitespace));
     }
 
@@ -152,19 +152,19 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseSkills_collectionWithInvalidTags_throwsParseException() {
-        assertThrows(ParseException.class, () -> ParserUtil.parseSkills(Arrays.asList(VALID_TAG_1, INVALID_TAG)));
+    public void parseSkills_collectionWithInvalidSkills_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseSkills(Arrays.asList(VALID_SKILL_1, INVALID_SKILL)));
     }
 
     @Test
-    public void parseTags_emptyCollection_returnsEmptySet() throws Exception {
+    public void parseSkills_emptyCollection_returnsEmptySet() throws Exception {
         assertTrue(ParserUtil.parseSkills(Collections.emptyList()).isEmpty());
     }
 
     @Test
     public void parseSkills_collectionWithValidSkills_returnsSkillSet() throws Exception {
-        Set<Skill> actualSkillSet = ParserUtil.parseSkills(Arrays.asList(VALID_TAG_1, VALID_TAG_2));
-        Set<Skill> expectedSkillSet = new HashSet<Skill>(Arrays.asList(new Skill(VALID_TAG_1), new Skill(VALID_TAG_2)));
+        Set<Skill> actualSkillSet = ParserUtil.parseSkills(Arrays.asList(VALID_SKILL_1, VALID_SKILL_2));
+        Set<Skill> expectedSkillSet = new HashSet<Skill>(Arrays.asList(new Skill(VALID_SKILL_1), new Skill(VALID_SKILL_2)));
 
         assertEquals(expectedSkillSet, actualSkillSet);
     }
