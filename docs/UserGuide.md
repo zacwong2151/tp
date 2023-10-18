@@ -159,7 +159,7 @@ Format: `vdelete VOLUNTEER_ID`
 * The index **must be a positive integer** 1, 2, 3, …
 
 Restrictions:
-* The volunteer ID must be an integer that represents a valid volunteer number in the volunteer list. If there are 30 volunteers in the volunteer list, the acceptable values will be from 1-30.
+* The volunteer ID must be an integer that represents a valid volunteer number in the displayed volunteer list. If there are 30 volunteers in the volunteer list currently displayed to the user, the acceptable values will be from 1-30.
 
 Examples:
 * `vlist`, followed by `vdelete 6` will remove the 6th volunteer displayed in the volunteer list.
@@ -192,10 +192,10 @@ Restrictions:
 * The budget argument must be a floating point number with 2 decimal places.
 
 Examples:
-* `ecreate n/food donation r/chef r/packer d/23/9/2023 1500 dsc/help food distribution m/50 potatoes b/50` creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
+* `ecreate n/food donation r/chef r/packer d/23/9/2023 1500 dsc/help food distribution m/50 potatoes b/50.00` creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50.00`
 
 ### Listing all events: `elist`
-Volunteer coordinators can see all the events they are organising. For each event, only the most important information will be shown: name, date and time, location.
+Volunteer coordinators can see all the events they are organising. For each event, only the most important information will be shown: name, date and time, location, and description.
 
 Format: `elist`
 
@@ -206,7 +206,7 @@ Format: `eshow EVENT_ID`
 
 Restrictions:
 * First part must be `eshow`
-* Second part must be an integer that represents a valid `EVENT_ID`: If the list of events is 10 events long, the acceptable values will be from 1-10.
+* Second part must be an integer that represents a valid `EVENT_ID`: If the list of events displayed is 10 events long, the acceptable values will be from 1-10.
 * First and second parts must be separated by a single space.
 
 Examples:
@@ -303,7 +303,7 @@ Format: `exit`
 
 ### Saving the data
 
-iVolunteer data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+iVolunteer data are saved in the hard disk automatically after any command executed. There is no need to save manually.
 
 ### Editing the data file
 
