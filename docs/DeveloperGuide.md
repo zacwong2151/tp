@@ -379,7 +379,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User </u>lists all volunteering events (UCE02)</u>.
+1.  User <u>lists all volunteering events (UCE02)</u>.
 2.  User requests to read an individual event.
 3.  iVolunteer shows a detailed description about that particular event.
 
@@ -414,31 +414,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to list all events
-2.  iVolunteer shows a list of events
-3.  User requests to delete a specific event in the list
-4.  iVolunteer deletes the event
+1.  User <u>lists all volunteering events (UCE02)</u>.
+2.  User requests to delete a specific event in the list.
+3.  iVolunteer deletes the event.
 
-Use case ends.
+    Use case ends.
 
 **Extensions**
 
-* 1a. The list is empty.
-
-  Use case ends.
-
-* 1b. Invalid command word.
-
-    * 1b1. iVolunteer requests for the correct command.
-    * 1b2. User enters correct command <br>
-    Steps 1b1-1b2 are repeated until the data entered is correct <br>
-    Use case resumes at step 2.
-
-* 3a. Invalid event id
-    * 3a1. iVolunteer requests for the correct command with valid event id
-    * 3a2. User enters correct command <br>
-    Steps 3a1-3a2 are repeated until the data entered is correct <br>
-    Use case resumes at step 4.
+* 2a. Invalid event id.
+    * 2a1. iVolunteer requests for the correct command with valid event id.
+    * 2a2. User enters correct command. 
+    Steps 2a1-2a2 are repeated until the data entered is correct.
+    Use case resumes at step 3.
 
 **Use case UCV01: Create a volunteer**
 
