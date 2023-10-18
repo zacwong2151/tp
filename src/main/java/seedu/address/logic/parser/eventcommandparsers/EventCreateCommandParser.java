@@ -59,7 +59,11 @@ public class EventCreateCommandParser implements Parser<EventCreateCommand> {
         Location location = ParserUtil.parseLocation(argMultimap.getValue(PREFIX_LOCATION).get());
         Description description = ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION).get());
         Set<Material> materialList = ParserUtil.parseMaterials(argMultimap.getAllValues(PREFIX_MATERIALS));
-        Budget budget = ParserUtil.parseBudget(argMultimap.getValue(PREFIX_BUDGET).get());
+        // Check if the command contains the optional budget field
+        Budget budget = new Budget("");
+        if (args.contains(PREFIX_BUDGET.getPrefix())) {
+            budget = ParserUtil.parseBudget(argMultimap.getValue(PREFIX_BUDGET).get());
+        }
 
         Event event = new Event(eventName, roleList, dateTime, location, description, materialList, budget);
 
