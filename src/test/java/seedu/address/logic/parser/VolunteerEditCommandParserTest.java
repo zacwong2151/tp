@@ -88,12 +88,12 @@ public class VolunteerEditCommandParserTest {
 
         // while parsing {@code PREFIX_SKILL} alone will reset the skills of the {@code Volunteer} being edited,
         // parsing it together with a valid skill results in error
-        assertParseFailure(parser, "1" + SKILL_DESC_FRIEND + SKILL_DESC_HUSBAND + SKILL_EMPTY
-                , Skill.MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, "1" + SKILL_DESC_FRIEND + SKILL_EMPTY + SKILL_DESC_HUSBAND
-                , Skill.MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, "1" + SKILL_EMPTY + SKILL_DESC_FRIEND + SKILL_DESC_HUSBAND
-                , Skill.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "1" + SKILL_DESC_FRIEND + SKILL_DESC_HUSBAND + SKILL_EMPTY,
+                Skill.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "1" + SKILL_DESC_FRIEND + SKILL_EMPTY + SKILL_DESC_HUSBAND,
+                Skill.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "1" + SKILL_EMPTY + SKILL_DESC_FRIEND + SKILL_DESC_HUSBAND,
+                Skill.MESSAGE_CONSTRAINTS);
 
         // multiple invalid values, but only the first invalid value is captured
         assertParseFailure(parser, "1" + INVALID_NAME_DESC + INVALID_EMAIL_DESC + VALID_PHONE_AMY,
