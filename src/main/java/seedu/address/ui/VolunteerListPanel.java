@@ -13,26 +13,26 @@ import seedu.address.model.volunteer.Volunteer;
 /**
  * Panel containing the list of persons.
  */
-public class PersonListPanel extends UiPart<Region> {
-    private static final String FXML = "PersonListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
+public class VolunteerListPanel extends UiPart<Region> {
+    private static final String FXML = "VolunteerListPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(VolunteerListPanel.class);
 
     @FXML
-    private ListView<Volunteer> personListView;
+    private ListView<Volunteer> volunteerListView;
 
     /**
-     * Creates a {@code PersonListPanel} with the given {@code ObservableList}.
+     * Creates a {@code VolunteerListPanel} with the given {@code ObservableList}.
      */
-    public PersonListPanel(ObservableList<Volunteer> volunteerList) {
+    public VolunteerListPanel(ObservableList<Volunteer> volunteerList) {
         super(FXML);
-        personListView.setItems(volunteerList);
-        personListView.setCellFactory(listView -> new PersonListViewCell());
+        volunteerListView.setItems(volunteerList);
+        volunteerListView.setCellFactory(listView -> new VolunteerListViewCell());
     }
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code Person} using a {@code PersonCard}.
      */
-    class PersonListViewCell extends ListCell<Volunteer> {
+    class VolunteerListViewCell extends ListCell<Volunteer> {
         @Override
         protected void updateItem(Volunteer volunteer, boolean empty) {
             super.updateItem(volunteer, empty);

@@ -69,9 +69,7 @@ public class Messages {
                 .append(volunteer.getPhone())
                 .append("; Email: ")
                 .append(volunteer.getEmail())
-                .append("; Address: ")
-                .append(volunteer.getAddress())
-                .append("; Tags: ");
+                .append("; Skills: ");
         volunteer.getSkills().forEach(builder::append);
         return builder.toString();
     }
