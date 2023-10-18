@@ -239,6 +239,57 @@ Clears all entries from the event list.
 
 Format: `eclear`
 
+
+### Creating a new volunteer's profile : `vcreate` [coming soon]
+
+Volunteer Coordinators can create new volunteer profiles, and add the volunteer into the volunteer list.
+
+Format: `vcreate n/VOLUNTEER_NAME p/PHONE_NUMBER e/EMAIL [s/SKILLS]…`
+
+Parameters:
+ * n/ - Volunteer name
+ * p/ - Phone number of the volunteer
+ * e/ - Email address of the volunteer
+ * s/ - Skills a volunteer may have
+
+<box type="tip" seamless>
+
+**Tip:** A volunteer can have any number of skills (including 0).
+</box>
+
+Restrictions:
+* The maximum number of characters of a volunteer name is 30.
+* The email must be in a valid format.
+* The phone number must be a valid 8-digit Singapore phone number.
+
+Examples:
+* `vcreate n/John p/91234567 e/john123@gmail.com` creates a volunteer named `John` with a phone number of `91234567` and an email address of `john123@gmail.com`, with no specific skills. The volunteer profile will be appended to the bottom of the volunteer list.
+* `vcreate n/Mary p/92345678 e/mary123@gmail.com s/Cooking s/Carrying heavy goods` creates a volunteer named `Mary` with a phone number of `92345678` and an email address of `mary123@gmail.com`, with two skills: `Cooking` and `Carrying heavy goods`. The volunteer profile will be appended to the bottom of the volunteer list.
+
+### Listing all volunteers : `vlist` [coming soon]
+
+Shows a list of all volunteers in the volunteer list.
+
+Format: `vlist`
+
+### Deleting a volunteer from the volunteer list: `vdelete` [coming soon]
+
+Volunteer coordinators can delete volunteers and remove them from the volunteer list if they no longer wish to volunteer anymore.
+
+Format: `vdelete VOLUNTEER_ID`
+
+Restrictions:
+* The volunteer ID must be an integer that represents a valid volunteer number in the volunteer list. If there are 30 volunteers in the volunteer list, the acceptable values will be from 1-30.
+
+Examples:
+* `vlist`, followed by `vdelete 6` will remove the 6th volunteer displayed in the volunteer list.
+
+### Clearing all entries : `vclear` [coming soon]
+
+Clears all volunteers from the volunteer list.
+
+Format: `vclear`
+
 ### Creating an event [coming soon]
 
 Volunteer Coordinators can create new events.

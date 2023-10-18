@@ -1,7 +1,6 @@
 package seedu.address.logic.commands.volunteercommands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -24,7 +23,6 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.skill.Skill;
-import seedu.address.model.volunteer.Address;
 import seedu.address.model.volunteer.Email;
 import seedu.address.model.volunteer.Name;
 import seedu.address.model.volunteer.Phone;
@@ -44,7 +42,6 @@ public class VolunteerEditCommand extends Command {
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
-            + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_SKILL + "SKILL]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
@@ -101,10 +98,9 @@ public class VolunteerEditCommand extends Command {
         Name updatedName = editVolunteerDescriptor.getName().orElse(volunteerToEdit.getName());
         Phone updatedPhone = editVolunteerDescriptor.getPhone().orElse(volunteerToEdit.getPhone());
         Email updatedEmail = editVolunteerDescriptor.getEmail().orElse(volunteerToEdit.getEmail());
-        Address updatedAddress = editVolunteerDescriptor.getAddress().orElse(volunteerToEdit.getAddress());
         Set<Skill> updatedSkills = editVolunteerDescriptor.getSkills().orElse(volunteerToEdit.getSkills());
 
-        return new Volunteer(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedSkills);
+        return new Volunteer(updatedName, updatedPhone, updatedEmail, updatedSkills);
     }
 
     @Override
@@ -139,7 +135,6 @@ public class VolunteerEditCommand extends Command {
         private Name name;
         private Phone phone;
         private Email email;
-        private Address address;
         private Set<Skill> skills;
 
         public EditVolunteerDescriptor() {}
@@ -152,7 +147,6 @@ public class VolunteerEditCommand extends Command {
             setName(toCopy.name);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
-            setAddress(toCopy.address);
             setSkills(toCopy.skills);
         }
 
@@ -160,7 +154,7 @@ public class VolunteerEditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, skills);
+            return CollectionUtil.isAnyNonNull(name, phone, email, skills);
         }
 
         public void setName(Name name) {
@@ -185,14 +179,6 @@ public class VolunteerEditCommand extends Command {
 
         public Optional<Email> getEmail() {
             return Optional.ofNullable(email);
-        }
-
-        public void setAddress(Address address) {
-            this.address = address;
-        }
-
-        public Optional<Address> getAddress() {
-            return Optional.ofNullable(address);
         }
 
         /**
@@ -227,7 +213,6 @@ public class VolunteerEditCommand extends Command {
             return Objects.equals(name, otherEditVolunteerDescriptor.name)
                     && Objects.equals(phone, otherEditVolunteerDescriptor.phone)
                     && Objects.equals(email, otherEditVolunteerDescriptor.email)
-                    && Objects.equals(address, otherEditVolunteerDescriptor.address)
                     && Objects.equals(skills, otherEditVolunteerDescriptor.skills);
         }
 
@@ -237,7 +222,6 @@ public class VolunteerEditCommand extends Command {
                     .add("name", name)
                     .add("phone", phone)
                     .add("email", email)
-                    .add("address", address)
                     .add("skills", skills)
                     .toString();
         }

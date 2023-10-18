@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.skill.Skill;
-import seedu.address.model.volunteer.Address;
 import seedu.address.model.volunteer.Email;
 import seedu.address.model.volunteer.Name;
 import seedu.address.model.volunteer.Phone;
@@ -27,7 +26,6 @@ public class JsonAdaptedVolunteer {
     private final String name;
     private final String phone;
     private final String email;
-    private final String address;
     private final List<JsonAdaptedSkill> tags = new ArrayList<>();
 
     /**
@@ -35,12 +33,11 @@ public class JsonAdaptedVolunteer {
      */
     @JsonCreator
     public JsonAdaptedVolunteer(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
-                                @JsonProperty("email") String email, @JsonProperty("address") String address,
+                                @JsonProperty("email") String email,
                                 @JsonProperty("tags") List<JsonAdaptedSkill> tags) {
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.address = address;
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -53,7 +50,6 @@ public class JsonAdaptedVolunteer {
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
-        address = source.getAddress().value;
         tags.addAll(source.getSkills().stream()
                 .map(JsonAdaptedSkill::new)
                 .collect(Collectors.toList()));
@@ -94,16 +90,8 @@ public class JsonAdaptedVolunteer {
         }
         final Email modelEmail = new Email(email);
 
-        if (address == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
-        }
-        if (!Address.isValidAddress(address)) {
-            throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
-        }
-        final Address modelAddress = new Address(address);
-
         final Set<Skill> modelSkills = new HashSet<>(volunteerSkills);
-        return new Volunteer(modelName, modelPhone, modelEmail, modelAddress, modelSkills);
+        return new Volunteer(modelName, modelPhone, modelEmail, modelSkills);
     }
 
 }

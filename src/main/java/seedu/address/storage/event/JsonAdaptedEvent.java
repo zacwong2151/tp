@@ -97,7 +97,7 @@ public class JsonAdaptedEvent {
                                                 DateTime.class.getSimpleName()));
         }
         if (!DateTime.isValidDateTime(dateAndTime)) {
-            throw new IllegalValueException(EventName.MESSAGE_CONSTRAINTS);
+            throw new IllegalValueException(DateTime.MESSAGE_CONSTRAINTS);
         }
         final DateTime modelDateTime = new DateTime(dateAndTime);
 

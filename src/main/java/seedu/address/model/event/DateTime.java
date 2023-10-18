@@ -3,7 +3,6 @@ package seedu.address.model.event;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-import java.text.NumberFormat;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 
@@ -99,7 +98,13 @@ public class DateTime {
 
     @Override
     public String toString() {
-        return dateAndTime.toString();
+        int day = dateAndTime.getDayOfMonth();
+        int month = dateAndTime.getMonthValue();
+        int year = dateAndTime.getYear();
+
+        int hour = dateAndTime.getHour();
+        int min = dateAndTime.getMinute();
+        return String.format("%d/%d/%d %02d%02d", day, month, year, hour, min);
     }
 
     @Override

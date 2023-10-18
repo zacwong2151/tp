@@ -20,7 +20,7 @@ import seedu.address.storage.event.JsonSerializableEventStorage;
  */
 public class JsonEventStorage implements EventStorage {
 
-    private static final Logger logger = LogsCenter.getLogger(JsonVolunteerStorage.class);
+    private static final Logger logger = LogsCenter.getLogger(JsonEventStorage.class);
 
     private Path filePath;
 
