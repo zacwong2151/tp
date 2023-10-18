@@ -3,6 +3,7 @@ package seedu.address.model.event;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.text.NumberFormat;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 
@@ -39,38 +40,39 @@ public class DateTime {
      * Returns true if a given string is a valid budget.
      */
     public static boolean isValidDateTime(String dateAndTime) {
-        String trimmedDateAndTime = dateAndTime.trim();
-        String[] parts = dateAndTime.split(" ");
-
-        // If there isn't exactly two components in the dateAndTime, return false
-        if (parts.length != 2) {
-            return false;
-        }
-
-        String date = parts[0];
-        String time = parts[1];
-
-        String[] dateParts = date.split("/");
-        // If the date does not have three components, return false
-        if (dateParts.length != 3) {
-            return false;
-        }
-
-        int day = Integer.parseInt(dateParts[0]);
-        int month = Integer.parseInt(dateParts[1]);
-        int year = Integer.parseInt(dateParts[2]);
-
-        // If time is not a four-digit number, return false
-        if (time.length() != 4) {
-            return false;
-        }
-
-        int hour = Integer.parseInt(time.substring(0, 2));
-        int min = Integer.parseInt(time.substring(2, 4));
-
         try {
+            String trimmedDateAndTime = dateAndTime.trim();
+            String[] parts = dateAndTime.split(" ");
+
+            // If there isn't exactly two components in the dateAndTime, return false
+            if (parts.length != 2) {
+                return false;
+            }
+
+            String date = parts[0];
+            String time = parts[1];
+
+            String[] dateParts = date.split("/");
+            // If the date does not have three components, return false
+            if (dateParts.length != 3) {
+                return false;
+            }
+
+            int day = Integer.parseInt(dateParts[0]);
+            int month = Integer.parseInt(dateParts[1]);
+            int year = Integer.parseInt(dateParts[2]);
+
+            // If time is not a four-digit number, return false
+            if (time.length() != 4) {
+                return false;
+            }
+
+            int hour = Integer.parseInt(time.substring(0, 2));
+            int min = Integer.parseInt(time.substring(2, 4));
             LocalDateTime dateTime = LocalDateTime.of(year, month, day, hour, min);
-        } catch (DateTimeException e) {
+        } catch (NumberFormatException e) { // If date and time values are not integers
+            return false;
+        } catch (DateTimeException e) { // If the date and time inputted are not valid
             return false;
         }
         return true;
