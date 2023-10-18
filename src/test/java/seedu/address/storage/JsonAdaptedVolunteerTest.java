@@ -45,7 +45,7 @@ public class JsonAdaptedVolunteerTest {
 
     @Test
     public void toModelType_nullName_throwsIllegalValueException() {
-        JsonAdaptedVolunteer volunteer = new JsonAdaptedVolunteer(null, VALID_PHONE, VALID_EMAIL,                                                        VALID_TAGS);
+        JsonAdaptedVolunteer volunteer = new JsonAdaptedVolunteer(null, VALID_PHONE, VALID_EMAIL, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, volunteer::toModelType);
     }

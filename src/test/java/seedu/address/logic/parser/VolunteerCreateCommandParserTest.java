@@ -31,8 +31,8 @@ import static seedu.address.testutil.TypicalVolunteers.BOB;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.Messages;
-import seedu.address.logic.commands.volunteerCommands.VolunteerCreateCommand;
-import seedu.address.logic.parser.volunteerCommandParsers.VolunteerCreateCommandParser;
+import seedu.address.logic.commands.volunteercommands.VolunteerCreateCommand;
+import seedu.address.logic.parser.volunteercommandparsers.VolunteerCreateCommandParser;
 import seedu.address.model.skill.Skill;
 import seedu.address.model.volunteer.Email;
 import seedu.address.model.volunteer.Name;
@@ -78,7 +78,8 @@ public class VolunteerCreateCommandParserTest {
 
         // multiple fields repeated
         assertParseFailure(parser,
-                validExpectedVolunteerString + PHONE_DESC_AMY + EMAIL_DESC_AMY + NAME_DESC_AMY + validExpectedVolunteerString,
+                validExpectedVolunteerString + PHONE_DESC_AMY + EMAIL_DESC_AMY
+                        + NAME_DESC_AMY + validExpectedVolunteerString,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME, PREFIX_EMAIL, PREFIX_PHONE));
 
         // invalid value followed by valid value

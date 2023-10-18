@@ -1,10 +1,10 @@
-package seedu.address.logic.parser.volunteerCommandParsers;
+package seedu.address.logic.parser.volunteercommandparsers;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.Arrays;
 
-import seedu.address.logic.commands.volunteerCommands.VolunteerFindCommand;
+import seedu.address.logic.commands.volunteercommands.VolunteerFindCommand;
 import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.volunteer.NameContainsKeywordsPredicate;

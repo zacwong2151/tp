@@ -11,19 +11,19 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.eventCommands.EventCreateCommand;
-import seedu.address.logic.commands.volunteerCommands.VolunteerClearCommand;
-import seedu.address.logic.commands.volunteerCommands.VolunteerCreateCommand;
-import seedu.address.logic.commands.volunteerCommands.VolunteerDeleteCommand;
-import seedu.address.logic.commands.volunteerCommands.VolunteerEditCommand;
-import seedu.address.logic.commands.volunteerCommands.VolunteerFindCommand;
-import seedu.address.logic.commands.volunteerCommands.VolunteerListCommand;
-import seedu.address.logic.parser.eventCommandParsers.EventCreateCommandParser;
+import seedu.address.logic.commands.eventcommands.EventCreateCommand;
+import seedu.address.logic.commands.volunteercommands.VolunteerClearCommand;
+import seedu.address.logic.commands.volunteercommands.VolunteerCreateCommand;
+import seedu.address.logic.commands.volunteercommands.VolunteerDeleteCommand;
+import seedu.address.logic.commands.volunteercommands.VolunteerEditCommand;
+import seedu.address.logic.commands.volunteercommands.VolunteerFindCommand;
+import seedu.address.logic.commands.volunteercommands.VolunteerListCommand;
+import seedu.address.logic.parser.eventcommandparsers.EventCreateCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.logic.parser.volunteerCommandParsers.VolunteerCreateCommandParser;
-import seedu.address.logic.parser.volunteerCommandParsers.VolunteerDeleteCommandParser;
-import seedu.address.logic.parser.volunteerCommandParsers.VolunteerEditCommandParser;
-import seedu.address.logic.parser.volunteerCommandParsers.VolunteerFindCommandParser;
+import seedu.address.logic.parser.volunteercommandparsers.VolunteerCreateCommandParser;
+import seedu.address.logic.parser.volunteercommandparsers.VolunteerDeleteCommandParser;
+import seedu.address.logic.parser.volunteercommandparsers.VolunteerEditCommandParser;
+import seedu.address.logic.parser.volunteercommandparsers.VolunteerFindCommandParser;
 
 /**
  * Parses user input.
