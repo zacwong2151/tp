@@ -5,7 +5,6 @@ import java.util.Set;
 
 import seedu.address.model.skill.Skill;
 import seedu.address.model.util.SampleDataUtil;
-import seedu.address.model.volunteer.Address;
 import seedu.address.model.volunteer.Email;
 import seedu.address.model.volunteer.Name;
 import seedu.address.model.volunteer.Phone;
@@ -19,12 +18,10 @@ public class VolunteerBuilder {
     public static final String DEFAULT_NAME = "Amy Bee";
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
-    public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
 
     private Name name;
     private Phone phone;
     private Email email;
-    private Address address;
     private Set<Skill> skills;
 
     /**
@@ -34,7 +31,6 @@ public class VolunteerBuilder {
         name = new Name(DEFAULT_NAME);
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
-        address = new Address(DEFAULT_ADDRESS);
         skills = new HashSet<>();
     }
 
@@ -45,7 +41,6 @@ public class VolunteerBuilder {
         name = volunteerToCopy.getName();
         phone = volunteerToCopy.getPhone();
         email = volunteerToCopy.getEmail();
-        address = volunteerToCopy.getAddress();
         skills = new HashSet<>(volunteerToCopy.getSkills());
     }
 
@@ -66,14 +61,6 @@ public class VolunteerBuilder {
     }
 
     /**
-     * Sets the {@code Address} of the {@code Volunteer} that we are building.
-     */
-    public VolunteerBuilder withAddress(String address) {
-        this.address = new Address(address);
-        return this;
-    }
-
-    /**
      * Sets the {@code Phone} of the {@code Volunteer} that we are building.
      */
     public VolunteerBuilder withPhone(String phone) {
@@ -90,7 +77,7 @@ public class VolunteerBuilder {
     }
 
     public Volunteer build() {
-        return new Volunteer(name, phone, email, address, skills);
+        return new Volunteer(name, phone, email, skills);
     }
 
 }

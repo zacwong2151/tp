@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
@@ -49,10 +48,6 @@ public class EditVolunteerDescriptorTest {
         editedAmy = new EditVolunteerDescriptorBuilder(DESC_AMY).withEmail(VALID_EMAIL_BOB).build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
-        // different address -> returns false
-        editedAmy = new EditVolunteerDescriptorBuilder(DESC_AMY).withAddress(VALID_ADDRESS_BOB).build();
-        assertFalse(DESC_AMY.equals(editedAmy));
-
         // different tags -> returns false
         editedAmy = new EditVolunteerDescriptorBuilder(DESC_AMY).withSkills(VALID_TAG_HUSBAND).build();
         assertFalse(DESC_AMY.equals(editedAmy));
@@ -60,13 +55,12 @@ public class EditVolunteerDescriptorTest {
 
     @Test
     public void toStringMethod() {
-        EditVolunteerDescriptor editPersonDescriptor = new EditVolunteerDescriptor();
+        EditVolunteerDescriptor editVolunteerDescriptor = new EditVolunteerDescriptor();
         String expected = EditVolunteerDescriptor.class.getCanonicalName() + "{name="
-                + editPersonDescriptor.getName().orElse(null) + ", phone="
-                + editPersonDescriptor.getPhone().orElse(null) + ", email="
-                + editPersonDescriptor.getEmail().orElse(null) + ", address="
-                + editPersonDescriptor.getAddress().orElse(null) + ", skills="
-                + editPersonDescriptor.getSkills().orElse(null) + "}";
-        assertEquals(expected, editPersonDescriptor.toString());
+                + editVolunteerDescriptor.getName().orElse(null) + ", phone="
+                + editVolunteerDescriptor.getPhone().orElse(null) + ", email="
+                + editVolunteerDescriptor.getEmail().orElse(null) + ", skills="
+                + editVolunteerDescriptor.getSkills().orElse(null) + "}";
+        assertEquals(expected, editVolunteerDescriptor.toString());
     }
 }

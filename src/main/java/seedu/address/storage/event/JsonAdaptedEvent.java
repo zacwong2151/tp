@@ -1,4 +1,4 @@
-package seedu.address.storage;
+package seedu.address.storage.event;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -19,11 +19,10 @@ import seedu.address.model.event.Location;
 import seedu.address.model.event.Material;
 import seedu.address.model.event.Role;
 
-
 /**
  * Jackson-friendly version of {@link Event}.
  */
-class JsonAdaptedEvent {
+public class JsonAdaptedEvent {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Event's %s field is missing!";
     private final String eventName;
     private final List<JsonAdaptedRole> roles = new ArrayList<>();
@@ -60,7 +59,7 @@ class JsonAdaptedEvent {
      * Converts a given {@code Event} into this class for Jackson use.
      */
     public JsonAdaptedEvent(Event source) {
-        eventName = source.getEventName().name;
+        eventName = source.getEventName().eventName;
         roles.addAll(source.getRoles().stream()
                 .map(JsonAdaptedRole::new)
                 .collect(Collectors.toList()));
@@ -83,7 +82,7 @@ class JsonAdaptedEvent {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                                                             EventName.class.getSimpleName()));
         }
-        if (!EventName.isValidName(eventName)) {
+        if (!EventName.isValidEventName(eventName)) {
             throw new IllegalValueException(EventName.MESSAGE_CONSTRAINTS);
         }
         final EventName modelName = new EventName(eventName);
@@ -98,7 +97,7 @@ class JsonAdaptedEvent {
                                                 DateTime.class.getSimpleName()));
         }
         if (!DateTime.isValidDateTime(dateAndTime)) {
-            throw new IllegalValueException(EventName.MESSAGE_CONSTRAINTS);
+            throw new IllegalValueException(DateTime.MESSAGE_CONSTRAINTS);
         }
         final DateTime modelDateTime = new DateTime(dateAndTime);
 

@@ -31,7 +31,7 @@ iVolunteer is your dedicated application for volunteer coordination, designed wi
 
    * `elist` : Lists all events
 
-   * `ecreate n/food donation r/chef r/packer d/23/9/2023 1500 dsc/help food distribution m/50 potatoes b/50` : Creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
+   * `ecreate n/food donation r/chef r/packer d/23/9/2023 1500 l/hougang dsc/help food distribution m/50 potatoes b/50.00` : Creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
 
    * `edelete 3` : Deletes the 3rd event in the current event list
 
@@ -239,11 +239,62 @@ Clears all entries from the event list.
 
 Format: `eclear`
 
+
+### Creating a new volunteer's profile : `vcreate` [coming soon]
+
+Volunteer Coordinators can create new volunteer profiles, and add the volunteer into the volunteer list.
+
+Format: `vcreate n/VOLUNTEER_NAME p/PHONE_NUMBER e/EMAIL [s/SKILLS]…`
+
+Parameters:
+ * n/ - Volunteer name
+ * p/ - Phone number of the volunteer
+ * e/ - Email address of the volunteer
+ * s/ - Skills a volunteer may have
+
+<box type="tip" seamless>
+
+**Tip:** A volunteer can have any number of skills (including 0).
+</box>
+
+Restrictions:
+* The maximum number of characters of a volunteer name is 30.
+* The email must be in a valid format.
+* The phone number must be a valid 8-digit Singapore phone number.
+
+Examples:
+* `vcreate n/John p/91234567 e/john123@gmail.com` creates a volunteer named `John` with a phone number of `91234567` and an email address of `john123@gmail.com`, with no specific skills. The volunteer profile will be appended to the bottom of the volunteer list.
+* `vcreate n/Mary p/92345678 e/mary123@gmail.com s/Cooking s/Carrying heavy goods` creates a volunteer named `Mary` with a phone number of `92345678` and an email address of `mary123@gmail.com`, with two skills: `Cooking` and `Carrying heavy goods`. The volunteer profile will be appended to the bottom of the volunteer list.
+
+### Listing all volunteers : `vlist` [coming soon]
+
+Shows a list of all volunteers in the volunteer list.
+
+Format: `vlist`
+
+### Deleting a volunteer from the volunteer list: `vdelete` [coming soon]
+
+Volunteer coordinators can delete volunteers and remove them from the volunteer list if they no longer wish to volunteer anymore.
+
+Format: `vdelete VOLUNTEER_ID`
+
+Restrictions:
+* The volunteer ID must be an integer that represents a valid volunteer number in the volunteer list. If there are 30 volunteers in the volunteer list, the acceptable values will be from 1-30.
+
+Examples:
+* `vlist`, followed by `vdelete 6` will remove the 6th volunteer displayed in the volunteer list.
+
+### Clearing all entries : `vclear` [coming soon]
+
+Clears all volunteers from the volunteer list.
+
+Format: `vclear`
+
 ### Creating an event [coming soon]
 
 Volunteer Coordinators can create new events.
 
-Format: `ecreate add n/EVENT_NAME r/ROLES_NEEDED… d/DATE_AND_TIME l/LOCATION dsc/DESCRIPTION [m/MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET]`
+Format: `ecreate n/EVENT_NAME r/ROLES_NEEDED… d/DATE_AND_TIME l/LOCATION dsc/DESCRIPTION [m/MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET]`
 
 Parameters:
  * n/ - Event name
@@ -256,11 +307,12 @@ Parameters:
 
 Restrictions:
 * All parameters must be separated by a single space.
+* All arguments cannot be blank.
 * The date and time format must be exactly `DD/MM/YYYY TTTT`
 * The budget argument must be a floating point number with 2 decimal places.
 
 Examples:
-* `ecreate n/food donation r/chef r/packer d/23/9/2023 1500 dsc/help food distribution m/50 potatoes b/50` creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
+* `ecreate n/food donation r/chef r/packer d/23/9/2023 1500 l/hougang dsc/help food distribution m/50 potatoes b/50` creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
 
 ### Listing all events : `elist` [coming soon]
 Volunteer coordinators can see all the events they are organising. For each event, only the most important information will be shown: name, date and time, location.

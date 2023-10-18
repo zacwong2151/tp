@@ -13,13 +13,14 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.JsonUtil;
 import seedu.address.model.ReadOnlyEventStorage;
+import seedu.address.storage.event.JsonSerializableEventStorage;
 
 /**
  * A class to access EventStorage data stored as a json file on the hard disk.
  */
 public class JsonEventStorage implements EventStorage {
 
-    private static final Logger logger = LogsCenter.getLogger(JsonVolunteerStorage.class);
+    private static final Logger logger = LogsCenter.getLogger(JsonEventStorage.class);
 
     private Path filePath;
 
