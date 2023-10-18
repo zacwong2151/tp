@@ -40,6 +40,7 @@ public class DateTime {
      */
     public static boolean isValidDateTime(String dateAndTime) {
         try {
+            requireNonNull(dateAndTime);
             String trimmedDateAndTime = dateAndTime.trim();
             String[] parts = dateAndTime.split(" ");
 
@@ -69,6 +70,8 @@ public class DateTime {
             int hour = Integer.parseInt(time.substring(0, 2));
             int min = Integer.parseInt(time.substring(2, 4));
             LocalDateTime dateTime = LocalDateTime.of(year, month, day, hour, min);
+        } catch (NullPointerException e) { // If the argument is null
+            return false;
         } catch (NumberFormatException e) { // If date and time values are not integers
             return false;
         } catch (DateTimeException e) { // If the date and time inputted are not valid
