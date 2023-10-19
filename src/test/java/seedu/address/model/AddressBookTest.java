@@ -3,7 +3,7 @@ package seedu.address.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SKILL_HUSBAND;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalVolunteers.ALICE;
 import static seedu.address.testutil.TypicalVolunteers.getTypicalVolunteerStorage;
@@ -45,7 +45,7 @@ public class AddressBookTest {
     @Test
     public void resetData_withDuplicateVolunteers_throwsDuplicateVolunteerException() {
         // Two volunteers with the same identity fields
-        Volunteer editedAlice = new VolunteerBuilder(ALICE).withSkills(VALID_TAG_HUSBAND)
+        Volunteer editedAlice = new VolunteerBuilder(ALICE).withSkills(VALID_SKILL_HUSBAND)
                 .build();
         List<Volunteer> newVolunteers = Arrays.asList(ALICE, editedAlice);
         VolunteerStorageStub newData = new VolunteerStorageStub(newVolunteers);
@@ -72,7 +72,7 @@ public class AddressBookTest {
     @Test
     public void hasVolunteer_volunteerWithSameIdentityFieldsInAddressBook_returnsTrue() {
         volunteerStorage.addVolunteer(ALICE);
-        Volunteer editedAlice = new VolunteerBuilder(ALICE).withSkills(VALID_TAG_HUSBAND)
+        Volunteer editedAlice = new VolunteerBuilder(ALICE).withSkills(VALID_SKILL_HUSBAND)
                 .build();
         assertTrue(volunteerStorage.hasVolunteer(editedAlice));
     }
