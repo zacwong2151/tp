@@ -10,14 +10,11 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.eventcommands.EventCreateCommand;
-import seedu.address.logic.commands.volunteercommands.VolunteerCreateCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.event.Event;
-import seedu.address.model.volunteer.Volunteer;
 import seedu.address.testutil.EventBuilder;
-import seedu.address.testutil.VolunteerBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code AddCommand}.
