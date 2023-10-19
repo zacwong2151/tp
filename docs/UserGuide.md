@@ -188,6 +188,7 @@ Parameters:
 
 Restrictions:
 * All parameters must be separated by a single space.
+* All arguments cannot be blank.
 * The date and time format must be exactly `DD/MM/YYYY TTTT`
 * The budget argument must be a floating point number with 2 decimal places.
 
