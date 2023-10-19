@@ -5,7 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_BUDGET;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_AND_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MATERIALS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MATERIAL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 
@@ -31,7 +31,7 @@ public class EventCreateCommand extends Command {
             + PREFIX_DATE_AND_TIME + "DATE AND TIME "
             + PREFIX_LOCATION + "LOCATION "
             + PREFIX_DESCRIPTION + "DESCRIPTION "
-            + "[" + PREFIX_MATERIALS + "MATERIALS]...\n"
+            + "[" + PREFIX_MATERIAL + "MATERIALS]...\n"
             + "[" + PREFIX_BUDGET + "BUDGET]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "Clean up at Orchard "
@@ -40,8 +40,8 @@ public class EventCreateCommand extends Command {
             + PREFIX_DATE_AND_TIME + "23/10/2023 1500 "
             + PREFIX_LOCATION + "Orchard Road "
             + PREFIX_DESCRIPTION + "Cleaning up Orchard Road! "
-            + PREFIX_MATERIALS + "Trash bag "
-            + PREFIX_MATERIALS + "TONGS "
+            + PREFIX_MATERIAL + "Trash bag "
+            + PREFIX_MATERIAL + "TONGS "
             + PREFIX_BUDGET + "50.00";
     public static final String MESSAGE_SUCCESS = "New EVENT added: %1$s";
     public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists in the event list";

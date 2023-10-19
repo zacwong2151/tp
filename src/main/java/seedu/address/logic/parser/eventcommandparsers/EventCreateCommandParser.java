@@ -5,7 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_BUDGET;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_AND_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MATERIALS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MATERIAL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 
@@ -42,7 +42,7 @@ public class EventCreateCommandParser implements Parser<EventCreateCommand> {
     public EventCreateCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_ROLE, PREFIX_DATE_AND_TIME,
-                        PREFIX_LOCATION, PREFIX_DESCRIPTION, PREFIX_MATERIALS, PREFIX_BUDGET);
+                        PREFIX_LOCATION, PREFIX_DESCRIPTION, PREFIX_MATERIAL, PREFIX_BUDGET);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ROLE, PREFIX_DATE_AND_TIME,
                 PREFIX_LOCATION, PREFIX_DESCRIPTION)
@@ -58,8 +58,12 @@ public class EventCreateCommandParser implements Parser<EventCreateCommand> {
         DateTime dateTime = ParserUtil.parseDateAndTime(argMultimap.getValue(PREFIX_DATE_AND_TIME).get());
         Location location = ParserUtil.parseLocation(argMultimap.getValue(PREFIX_LOCATION).get());
         Description description = ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION).get());
-        Set<Material> materialList = ParserUtil.parseMaterials(argMultimap.getAllValues(PREFIX_MATERIALS));
-        Budget budget = ParserUtil.parseBudget(argMultimap.getValue(PREFIX_BUDGET).get());
+        Set<Material> materialList = ParserUtil.parseMaterials(argMultimap.getAllValues(PREFIX_MATERIAL));
+        // Check if the command contains the optional budget field
+        Budget budget = new Budget("");
+        if (args.contains(PREFIX_BUDGET.getPrefix())) {
+            budget = ParserUtil.parseBudget(argMultimap.getValue(PREFIX_BUDGET).get());
+        }
 
         Event event = new Event(eventName, roleList, dateTime, location, description, materialList, budget);
 
