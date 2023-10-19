@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SKILL_HUSBAND;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalVolunteers.ALICE;
 import static seedu.address.testutil.TypicalVolunteers.BOB;
@@ -33,7 +33,7 @@ public class VolunteerTest {
 
         // same name, all other attributes different -> returns true
         Volunteer editedAlice = new VolunteerBuilder(ALICE).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
-                .withSkills(VALID_TAG_HUSBAND).build();
+                .withSkills(VALID_SKILL_HUSBAND).build();
         assertTrue(ALICE.isSameVolunteer(editedAlice));
 
         // different name, all other attributes same -> returns false
@@ -80,8 +80,8 @@ public class VolunteerTest {
         editedAlice = new VolunteerBuilder(ALICE).withEmail(VALID_EMAIL_BOB).build();
         assertFalse(ALICE.equals(editedAlice));
 
-        // different tags -> returns false
-        editedAlice = new VolunteerBuilder(ALICE).withSkills(VALID_TAG_HUSBAND).build();
+        // different skills -> returns false
+        editedAlice = new VolunteerBuilder(ALICE).withSkills(VALID_SKILL_HUSBAND).build();
         assertFalse(ALICE.equals(editedAlice));
     }
 

@@ -79,8 +79,8 @@ public class VolunteerEditCommandParser implements Parser<VolunteerEditCommand> 
         if (skills.isEmpty()) {
             return Optional.empty();
         }
-        Collection<String> tagSet = skills.size() == 1 && skills.contains("") ? Collections.emptySet() : skills;
-        return Optional.of(ParserUtil.parseSkills(tagSet));
+        Collection<String> skillSet = skills.size() == 1 && skills.contains("") ? Collections.emptySet() : skills;
+        return Optional.of(ParserUtil.parseSkills(skillSet));
     }
 
 }
