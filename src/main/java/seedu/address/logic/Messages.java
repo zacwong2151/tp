@@ -65,11 +65,11 @@ public class Messages {
     public static String format(Volunteer volunteer) {
         final StringBuilder builder = new StringBuilder();
         builder.append(volunteer.getName())
-                .append("; Phone: ")
+                .append("\nPhone: ")
                 .append(volunteer.getPhone())
-                .append("; Email: ")
+                .append("\nEmail: ")
                 .append(volunteer.getEmail())
-                .append("; Skills: ");
+                .append("\nSkills: ");
         volunteer.getSkills().forEach(builder::append);
         return builder.toString();
     }

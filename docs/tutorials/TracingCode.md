@@ -89,7 +89,7 @@ Now let’s set the breakpoint. First, double-click the item to reach the corres
 
 ## Tracing the execution path
 
-Recall from the User Guide that the `edit` command has the format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​` For this tutorial we will be issuing the command `edit 1 n/Alice Yeoh`.
+Recall from the User Guide that the `edit` command has the format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SKILL]…​` For this tutorial we will be issuing the command `edit 1 n/Alice Yeoh`.
 
 <box type="tip" seamless>
 
@@ -293,7 +293,7 @@ Here are some quick questions you can try to answer based on your execution path
 
     5.  `edit 1 n/アリス ユー`
 
-    6.  `edit 1 t/one t/two t/three t/one`
+    6.  `edit 1 s/one s/two s/three s/one`
 
 2.  What components will you have to modify to perform the following
     enhancements to the application?

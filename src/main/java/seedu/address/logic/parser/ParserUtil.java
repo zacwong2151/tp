@@ -50,7 +50,7 @@ public class ParserUtil {
     public static EventName parseEventName(String name) throws ParseException {
         requireNonNull(name);
         String trimmedName = name.trim();
-        if (!EventName.isValidName(trimmedName)) {
+        if (!EventName.isValidEventName(trimmedName)) {
             throw new ParseException(EventName.MESSAGE_CONSTRAINTS);
         }
         return new EventName(trimmedName);
@@ -66,7 +66,7 @@ public class ParserUtil {
         requireNonNull(role);
         String trimmedRole = role.trim();
         if (!Role.isValidRoleName(trimmedRole)) {
-            throw new ParseException(Skill.MESSAGE_CONSTRAINTS);
+            throw new ParseException(Role.MESSAGE_CONSTRAINTS);
         }
         return new Role(trimmedRole);
     }
@@ -179,7 +179,7 @@ public class ParserUtil {
     public static Name parseName(String name) throws ParseException {
         requireNonNull(name);
         String trimmedName = name.trim();
-        if (!EventName.isValidName(trimmedName)) {
+        if (!EventName.isValidEventName(trimmedName)) {
             throw new ParseException(EventName.MESSAGE_CONSTRAINTS);
         }
         return new Name(trimmedName);

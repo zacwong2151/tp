@@ -14,8 +14,9 @@ public class Material {
     /*
      * The first character of the material must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
+     * The expression allows for multiple words to be inputted.
      */
-    public static final String VALIDATION_REGEX = "[^\\s].*";
+    public static final String VALIDATION_REGEX = "[A-Za-z0-9 _.,!\"'/$]*";
 
     public final String material;
 

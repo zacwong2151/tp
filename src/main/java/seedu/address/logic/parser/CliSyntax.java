@@ -10,10 +10,10 @@ public class CliSyntax {
     public static final Prefix PREFIX_DATE_AND_TIME = new Prefix("d/");
     public static final Prefix PREFIX_LOCATION = new Prefix("l/");
     public static final Prefix PREFIX_DESCRIPTION = new Prefix("dsc/");
-    public static final Prefix PREFIX_MATERIALS = new Prefix("m/");
+    public static final Prefix PREFIX_MATERIAL = new Prefix("m/");
     public static final Prefix PREFIX_BUDGET = new Prefix("b/");
     public static final Prefix PREFIX_PHONE = new Prefix("p/");
     public static final Prefix PREFIX_EMAIL = new Prefix("e/");
-    public static final Prefix PREFIX_SKILL = new Prefix("t/");
+    public static final Prefix PREFIX_SKILL = new Prefix("s/");
 
 }
