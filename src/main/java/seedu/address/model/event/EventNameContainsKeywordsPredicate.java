@@ -33,7 +33,8 @@ public class EventNameContainsKeywordsPredicate implements Predicate<Event> {
             return false;
         }
 
-        EventNameContainsKeywordsPredicate otherNameContainsKeywordsPredicate = (EventNameContainsKeywordsPredicate) other;
+        EventNameContainsKeywordsPredicate otherNameContainsKeywordsPredicate = (EventNameContainsKeywordsPredicate)
+                                                                                    other;
         return keywords.equals(otherNameContainsKeywordsPredicate.keywords);
     }
 
