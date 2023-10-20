@@ -25,9 +25,13 @@ public class Budget {
      * @param budget A valid budget.
      */
     public Budget(String budget) {
-        requireNonNull(budget);
-        checkArgument(isValidBudget(budget), MESSAGE_CONSTRAINTS);
-        this.budget = budget;
+        if (budget.isEmpty()) { // This condition is needed in case the budget parameter is not given
+            this.budget = "";
+        } else {
+            requireNonNull(budget);
+            checkArgument(isValidBudget(budget), MESSAGE_CONSTRAINTS);
+            this.budget = budget;
+        }
     }
 
     /**

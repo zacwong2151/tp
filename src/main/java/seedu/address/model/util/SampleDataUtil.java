@@ -10,6 +10,8 @@ import seedu.address.model.ReadOnlyEventStorage;
 import seedu.address.model.ReadOnlyVolunteerStorage;
 import seedu.address.model.VolunteerStorage;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.Material;
+import seedu.address.model.event.Role;
 import seedu.address.model.skill.Skill;
 import seedu.address.model.volunteer.Email;
 import seedu.address.model.volunteer.Name;
@@ -52,6 +54,24 @@ public class SampleDataUtil {
             sampleAb.addEvent(sampleEvent);
         }
         return sampleAb;
+    }
+
+    /**
+     * Returns a role set containing the list of strings given.
+     */
+    public static Set<Role> getRoleSet(String... strings) {
+        return Arrays.stream(strings)
+                .map(Role::new)
+                .collect(Collectors.toSet());
+    }
+
+    /**
+     * Returns a material set containing the list of strings given.
+     */
+    public static Set<Material> getMaterialSet(String... strings) {
+        return Arrays.stream(strings)
+                .map(Material::new)
+                .collect(Collectors.toSet());
     }
     public static Volunteer[] getSampleVolunteers() {
         return new Volunteer[] {
