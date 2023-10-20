@@ -1,4 +1,4 @@
-package seedu.address.storage;
+package seedu.address.storage.volunteer;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -9,7 +9,7 @@ import seedu.address.model.skill.Skill;
 /**
  * Jackson-friendly version of {@link Skill}.
  */
-class JsonAdaptedSkill {
+public class JsonAdaptedSkill {
 
     private final String skillName;
 

@@ -12,23 +12,26 @@ public class Budget {
     public static final String MESSAGE_CONSTRAINTS = "Budget must be in two decimal places, and it should not be blank";
 
     /*
-     * To be changed
      * The first character of the location must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "[^\\s].*";
+    public static final String VALIDATION_REGEX = "^\\d+\\.\\d{2}$";
 
     public final String budget;
 
     /**
-     * Constructs a {@code Location}.
+     * Constructs a {@code Budget}.
      *
      * @param budget A valid budget.
      */
     public Budget(String budget) {
-        requireNonNull(budget);
-        checkArgument(isValidBudget(budget), MESSAGE_CONSTRAINTS);
-        this.budget = budget;
+        if (budget.isEmpty()) { // This condition is needed in case the budget parameter is not given
+            this.budget = "";
+        } else {
+            requireNonNull(budget);
+            checkArgument(isValidBudget(budget), MESSAGE_CONSTRAINTS);
+            this.budget = budget;
+        }
     }
 
     /**

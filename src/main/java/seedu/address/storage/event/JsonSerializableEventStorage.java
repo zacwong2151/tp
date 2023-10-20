@@ -1,4 +1,4 @@
-package seedu.address.storage;
+package seedu.address.storage.event;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import seedu.address.model.event.Event;
  * An Immutable Event Storage that is serializable to JSON format.
  */
 @JsonRootName(value = "eventStorage")
-class JsonSerializableEventStorage {
+public class JsonSerializableEventStorage {
 
     public static final String MESSAGE_DUPLICATE_EVENT = "Events list contains duplicate event(s).";
 
