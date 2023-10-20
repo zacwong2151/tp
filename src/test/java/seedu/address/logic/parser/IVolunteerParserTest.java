@@ -54,13 +54,9 @@ public class IVolunteerParserTest {
     @Test
     public void parseCommand_delete() throws Exception {
 
-        Command command = parser.parseCommand(
+        VolunteerDeleteCommand command =  (VolunteerDeleteCommand) parser.parseCommand(
                 VolunteerDeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_VOLUNTEER.getOneBased());
-        if (command instanceof EventDeleteCommand) {
-            assertEquals(new EventDeleteCommand(INDEX_FIRST_EVENT), command);
-        } else {
-            assertEquals(new VolunteerDeleteCommand(INDEX_FIRST_VOLUNTEER), command);
-        }
+        assertEquals(new VolunteerDeleteCommand(INDEX_FIRST_VOLUNTEER), command);
     }
 
     @Test
