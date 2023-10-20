@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.volunteer.Volunteer;
 
 /**
  * Represents an Event in the Event list.
@@ -23,13 +24,14 @@ public class Event {
     private final Description description;
     private final Set<Material> materials;
     private final Budget budget;
+    private final Set<Volunteer> assignedVolunteers;
 
     /**
      * Every field must be present and not null.
      */
     public Event(EventName eventName, Set<Role> roles, DateTime dateAndTime, Location location, Description description,
-                 Set<Material> materials, Budget budget) {
-        requireAllNonNull(eventName, roles, dateAndTime, location, description, materials, budget);
+                 Set<Material> materials, Budget budget, Set<Volunteer> assignedVolunteers) {
+        requireAllNonNull(eventName, roles, dateAndTime, location, description, materials, budget, assignedVolunteers);
         this.eventName = eventName;
         this.roles = roles;
         this.dateAndTime = dateAndTime;
@@ -37,6 +39,7 @@ public class Event {
         this.description = description;
         this.materials = materials;
         this.budget = budget;
+        this.assignedVolunteers = assignedVolunteers;
     }
 
     public EventName getEventName() {
@@ -69,6 +72,21 @@ public class Event {
     public Budget getBudget() {
         return budget;
     }
+    /**
+     * Returns an immutable Volunteer set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Set<Volunteer> getAssignedVolunteers() { return Collections.unmodifiableSet(assignedVolunteers); }
+    /**
+     * Adds a volunteer to the {@code assignedVolunteers}.
+     * @param volunteer The volunteer to be added.
+     */
+    public void addVolunteer(Volunteer volunteer) { assignedVolunteers.add(volunteer); }
+    /**
+     * Checks if a volunteer is already in {@code assignedVolunteers}.
+     * @param volunteer The volunteer to check.
+     */
+    public boolean hasVolunteer(Volunteer volunteer) { return assignedVolunteers.contains(volunteer); }
     /**
      * Returns true if both events have the same name.
      * This defines a weaker notion of equality between two volunteers.
@@ -104,13 +122,15 @@ public class Event {
                 && location.equals(otherEvent.location)
                 && description.equals(otherEvent.description)
                 && materials.equals(otherEvent.materials)
-                && budget.equals(otherEvent.budget);
+                && budget.equals(otherEvent.budget)
+                && assignedVolunteers.equals(otherEvent.assignedVolunteers);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(eventName, roles, dateAndTime, location, description, materials, budget);
+        return Objects.hash(eventName, roles, dateAndTime, location, description, materials, budget,
+                assignedVolunteers);
     }
 
     @Override
@@ -123,6 +143,7 @@ public class Event {
                 .add("description", description)
                 .add("materials", materials)
                 .add("budget", budget)
+                .add("assigned volunteers", assignedVolunteers)
                 .toString();
     }
 

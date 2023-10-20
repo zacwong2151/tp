@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.event.Event;
 import seedu.address.model.skill.Skill;
 
 /**
@@ -23,16 +24,18 @@ public class Volunteer {
 
     // Data fields
     private final Set<Skill> skills = new HashSet<>();
+    private final Set<Event> assignedEvents = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Volunteer(Name name, Phone phone, Email email, Set<Skill> skills) {
+    public Volunteer(Name name, Phone phone, Email email, Set<Skill> skills, Set<Event> assignedEvents) {
         requireAllNonNull(name, phone, email, skills);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.skills.addAll(skills);
+        this.assignedEvents.addAll(assignedEvents);
     }
 
     public Name getName() {
@@ -54,7 +57,26 @@ public class Volunteer {
     public Set<Skill> getSkills() {
         return Collections.unmodifiableSet(skills);
     }
+    /**
+     * Returns an immutable assigned events set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Set<Event> getAssignedEvents() {
+        return Collections.unmodifiableSet(assignedEvents);
+    }
+    /**
+     * Returns an immutable skill set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public boolean hasEvent(Event event) {
+        return assignedEvents.contains(event);
+    }
 
+    /**
+     * Adds an event to the {@code assignedEvents}.
+     * @param event The event to be added.
+     */
+    public void addEvent(Event event) { assignedEvents.add(event); }
     /**
      * Returns true if both volunteers have the same name.
      * This defines a weaker notion of equality between two volunteers.

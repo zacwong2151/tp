@@ -1,6 +1,7 @@
 package seedu.address.model.util;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -55,17 +56,17 @@ public class SampleDataUtil {
     public static Volunteer[] getSampleVolunteers() {
         return new Volunteer[] {
             new Volunteer(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
-                getSkillSet("friends")),
+                getSkillSet("friends"), new HashSet<Event>()),
             new Volunteer(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
-                getSkillSet("colleagues", "friends")),
+                getSkillSet("colleagues", "friends"), new HashSet<Event>()),
             new Volunteer(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
-                getSkillSet("neighbours")),
+                getSkillSet("neighbours"), new HashSet<Event>()),
             new Volunteer(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
-                getSkillSet("family")),
+                getSkillSet("family"), new HashSet<Event>()),
             new Volunteer(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
-                getSkillSet("classmates")),
+                getSkillSet("classmates"), new HashSet<Event>()),
             new Volunteer(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
-                getSkillSet("colleagues"))
+                getSkillSet("colleagues"), new HashSet<Event>())
         };
     }
 
