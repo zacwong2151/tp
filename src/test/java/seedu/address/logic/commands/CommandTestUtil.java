@@ -17,6 +17,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.volunteercommands.VolunteerEditCommand;
 import seedu.address.model.Model;
 import seedu.address.model.VolunteerStorage;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.EventNameContainsKeywordsPredicate;
 import seedu.address.model.volunteer.NameContainsKeywordsPredicate;
 import seedu.address.model.volunteer.Volunteer;
 import seedu.address.testutil.EditVolunteerDescriptorBuilder;
@@ -110,6 +112,7 @@ public class CommandTestUtil {
      * {@code model}'s address book.
      */
     public static void showVolunteerAtIndex(Model model, Index targetIndex) {
+        System.out.println("yoooooooooooooooooooo" + model.getFilteredVolunteerList().size());
         assertTrue(targetIndex.getZeroBased() < model.getFilteredVolunteerList().size());
 
         Volunteer volunteer = model.getFilteredVolunteerList().get(targetIndex.getZeroBased());
@@ -119,4 +122,18 @@ public class CommandTestUtil {
         assertEquals(1, model.getFilteredVolunteerList().size());
     }
 
+    /**
+     * Updates {@code model}'s filtered list to show only the event at the given {@code targetIndex} in the
+     * {@code model}'s address book.
+     */
+    public static void showEventAtIndex(Model model, Index targetIndex) {
+        System.out.println("yoooooooooooooooooooo" + model.getFilteredEventList().size());
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredEventList().size());
+
+        Event event = model.getFilteredEventList().get(targetIndex.getZeroBased());
+        final String[] splitName = event.getEventName().name.split("\\s+");
+        model.updateFilteredEventList(new EventNameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+
+        assertEquals(1, model.getFilteredEventList().size());
+    }
 }

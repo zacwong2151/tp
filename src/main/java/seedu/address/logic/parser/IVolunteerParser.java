@@ -23,7 +23,6 @@ import seedu.address.logic.parser.eventcommandparsers.EventCreateCommandParser;
 import seedu.address.logic.parser.eventcommandparsers.EventDeleteCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.parser.volunteercommandparsers.VolunteerCreateCommandParser;
-import seedu.address.logic.parser.volunteercommandparsers.VolunteerDeleteCommandParser;
 import seedu.address.logic.parser.volunteercommandparsers.VolunteerEditCommandParser;
 import seedu.address.logic.parser.volunteercommandparsers.VolunteerFindCommandParser;
 
@@ -64,7 +63,7 @@ public class IVolunteerParser {
             return new EventCreateCommandParser().parse(arguments);
 
         case EventDeleteCommand.COMMAND_WORD:
-            return new EventDeleteCommandParser().parse(arguments);
+            return new seedu.address.logic.parser.eventcommandparsers.EventDeleteCommandParser().parse(arguments);
 
         case VolunteerCreateCommand.COMMAND_WORD:
             return new VolunteerCreateCommandParser().parse(arguments);
@@ -73,7 +72,7 @@ public class IVolunteerParser {
             return new VolunteerEditCommandParser().parse(arguments);
 
         case VolunteerDeleteCommand.COMMAND_WORD:
-            return new VolunteerDeleteCommandParser().parse(arguments);
+            return new EventDeleteCommandParser().parse(arguments);
 
         case VolunteerClearCommand.COMMAND_WORD:
             return new VolunteerClearCommand();

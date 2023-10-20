@@ -20,9 +20,7 @@ public class EventDeleteCommandParser implements Parser<EventDeleteCommand> {
      */
     public EventDeleteCommand parse(String args) throws ParseException {
         try {
-            System.out.println("args: " + args);
             Index index = ParserUtil.parseIndex(args);
-            System.out.println("index: " + index);
             return new EventDeleteCommand(index);
         } catch (ParseException pe) {
             throw new ParseException(
