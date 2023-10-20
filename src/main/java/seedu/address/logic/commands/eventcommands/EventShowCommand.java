@@ -47,7 +47,7 @@ public class EventShowCommand extends Command {
         Predicate<Event> predicateShowEvent = e -> e.equals(eventToShow);
 
         model.updateEventToShowList(predicateShowEvent);
-        return new CommandResult(String.format(MESSAGE_SHOW_EVENT_SUCCESS, eventToShow.getEventName().name),
+        return new CommandResult(String.format(MESSAGE_SHOW_EVENT_SUCCESS, eventToShow.getEventName().eventName),
                 false,
                 false,
                 true);

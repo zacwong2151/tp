@@ -53,7 +53,7 @@ public class EventWindowCard extends UiPart<Region> {
     public EventWindowCard(Event event, int displayedIndex) {
         super(FXML);
         this.event = event;
-        eventName.setText("Name of event: " + event.getEventName().name);
+        eventName.setText("Name of event: " + event.getEventName().eventName);
         dateAndTime.setText("Date and time: " + event.getDateAndTime().toString());
         loc.setText("Location: " + event.getLocation().location);
         event.getRoles().stream()
