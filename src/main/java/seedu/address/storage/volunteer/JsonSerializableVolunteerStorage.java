@@ -1,4 +1,4 @@
-package seedu.address.storage;
+package seedu.address.storage.volunteer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import seedu.address.model.volunteer.Volunteer;
  * An Immutable Volunteer Storage that is serializable to JSON format.
  */
 @JsonRootName(value = "volunteerStorage")
-class JsonSerializableVolunteerStorage {
+public class JsonSerializableVolunteerStorage {
 
     public static final String MESSAGE_DUPLICATE_VOLUNTEER = "Volunteers list contains duplicate volunteer(s).";
 

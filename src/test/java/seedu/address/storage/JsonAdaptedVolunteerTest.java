@@ -1,7 +1,7 @@
 package seedu.address.storage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static seedu.address.storage.JsonAdaptedVolunteer.MISSING_FIELD_MESSAGE_FORMAT;
+import static seedu.address.storage.volunteer.JsonAdaptedVolunteer.MISSING_FIELD_MESSAGE_FORMAT;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalVolunteers.BENSON;
 
@@ -15,6 +15,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.volunteer.Email;
 import seedu.address.model.volunteer.Name;
 import seedu.address.model.volunteer.Phone;
+import seedu.address.storage.volunteer.JsonAdaptedSkill;
+import seedu.address.storage.volunteer.JsonAdaptedVolunteer;
 
 public class JsonAdaptedVolunteerTest {
     private static final String INVALID_NAME = "R@chel";

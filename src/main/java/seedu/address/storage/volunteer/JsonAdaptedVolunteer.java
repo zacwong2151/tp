@@ -1,4 +1,4 @@
-package seedu.address.storage;
+package seedu.address.storage.volunteer;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -19,7 +19,7 @@ import seedu.address.model.volunteer.Volunteer;
 /**
  * Jackson-friendly version of {@link Volunteer}.
  */
-class JsonAdaptedVolunteer {
+public class JsonAdaptedVolunteer {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Volunteer's %s field is missing!";
 
