@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.eventcommands.EventListCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerClearCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerCreateCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerDeleteCommand;
@@ -89,10 +90,17 @@ public class IVolunteerParserTest {
     }
 
     @Test
-    public void parseCommand_list() throws Exception {
+    public void parseCommand_volunteerList() throws Exception {
         assertTrue(parser.parseCommand(VolunteerListCommand.COMMAND_WORD) instanceof VolunteerListCommand);
         assertTrue(parser.parseCommand(
                 VolunteerListCommand.COMMAND_WORD + " 3") instanceof VolunteerListCommand);
+    }
+
+    @Test
+    public void parseCommand_eventList() throws Exception {
+        assertTrue(parser.parseCommand(EventListCommand.COMMAND_WORD) instanceof EventListCommand);
+        assertTrue(parser.parseCommand(
+                EventListCommand.COMMAND_WORD + " 3") instanceof EventListCommand);
     }
 
     @Test
