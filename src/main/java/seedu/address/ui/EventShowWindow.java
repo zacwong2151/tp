@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.util.logging.Logger;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
@@ -8,17 +10,23 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.event.Event;
 
-import java.util.logging.Logger;
-
+/**
+ * Pop-up window showing all information of a particular event.
+ */
 public class EventShowWindow extends UiPart<Stage> {
     private static final Logger logger = LogsCenter.getLogger(EventShowWindow.class);
     private static final String FXML = "EventShowWindow.fxml";
-
     @FXML
     private ListView<Event> eventShowView;
 
+    /**
+     * Creates an EventShowWindow object.
+     * @param root Stage to use as the root of the EventShowWindow.
+     * @param eventToShow List containing the event to show.
+     */
     public EventShowWindow(Stage root, ObservableList<Event> eventToShow) {
         super(FXML, root);
+        eventShowView.setSelectionModel(new EventWindowSelectionModel<>());
         eventShowView.setItems(eventToShow);
         eventShowView.setCellFactory(listView -> new EventWindowViewCell());
     }
@@ -75,7 +83,7 @@ public class EventShowWindow extends UiPart<Stage> {
     /**
      * Custom {@code ListCell} that displays the graphics of an {@code Event} using a {@code EventWindowCard}.
      */
-    class  EventWindowViewCell extends ListCell<Event> {
+    class EventWindowViewCell extends ListCell<Event> {
         @Override
         protected void updateItem(Event event, boolean empty) {
             super.updateItem(event, empty);

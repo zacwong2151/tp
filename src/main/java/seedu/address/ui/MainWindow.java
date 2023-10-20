@@ -1,11 +1,8 @@
 package seedu.address.ui;
 
-import java.util.List;
 import java.util.logging.Logger;
 
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
@@ -160,6 +157,9 @@ public class MainWindow extends UiPart<Stage> {
         }
     }
 
+    /**
+     * Opens the EventShowWindow or focuses on it if it's already opened.
+     */
     @FXML
     public void handleShowEvent() {
         if (!eventShowWindow.isShowing()) {

@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.Separator?>
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
@@ -18,21 +19,22 @@
       <padding>
         <Insets top="5" right="5" bottom="5" left="15" />
       </padding>
-      <HBox spacing="5" alignment="CENTER_LEFT">
-        <Label fx:id="id" styleClass="cell_big_label">
-          <minWidth>
-            <!-- Ensures that the label text is never truncated -->
-            <Region fx:constant="USE_PREF_SIZE" />
-          </minWidth>
-        </Label>
-        <Label fx:id="eventName" text="\$first" styleClass="cell_big_label" />
-      </HBox>
-      <FlowPane fx:id="materials" />
+
+      <Label fx:id="eventName" text="\$eventName" styleClass="cell_big_label" wrapText="true"/>
+      <Separator />
       <Label fx:id="dateAndTime" styleClass="cell_small_label" text="\$dateAndTime" />
-      <Label fx:id="loc" styleClass="cell_small_label" text="\$loc" />
-      <Label fx:id="description" styleClass="cell_small_label" text="\$description" wrapText="true"/>
+      <Separator />
+      <Label fx:id="loc" styleClass="cell_small_label" text="\$loc" wrapText="true"/>
+      <Separator />
+      <Label text="Roles needed: "/>
       <FlowPane fx:id="roles" />
+      <Separator />
       <Label fx:id="budget" styleClass="cell_small_label" text="\$budget" />
+      <Separator />
+      <Label text="Materials needed: "/>
+      <FlowPane fx:id="materials" />
+      <Separator />
+      <Label fx:id="description" styleClass="cell_small_label" text="\$description" wrapText="true"/>
     </VBox>
   </GridPane>
 </HBox>
