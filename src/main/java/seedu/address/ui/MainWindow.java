@@ -1,8 +1,11 @@
 package seedu.address.ui;
 
+import java.util.List;
 import java.util.logging.Logger;
 
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
@@ -35,6 +38,7 @@ public class MainWindow extends UiPart<Stage> {
     private EventListPanel eventListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
+    private EventShowWindow eventShowWindow;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -70,6 +74,8 @@ public class MainWindow extends UiPart<Stage> {
         setAccelerators();
 
         helpWindow = new HelpWindow();
+        logger.info("eventToShow list: " + logic.getEventToShowList().toString());
+        eventShowWindow = new EventShowWindow(logic.getEventToShowList());
     }
 
     public Stage getPrimaryStage() {
@@ -154,6 +160,15 @@ public class MainWindow extends UiPart<Stage> {
         }
     }
 
+    @FXML
+    public void handleShowEvent() {
+        if (!eventShowWindow.isShowing()) {
+            eventShowWindow.show();
+        } else {
+            eventShowWindow.focus();
+        }
+    }
+
     void show() {
         primaryStage.show();
     }
@@ -191,6 +206,10 @@ public class MainWindow extends UiPart<Stage> {
 
             if (commandResult.isExit()) {
                 handleExit();
+            }
+
+            if (commandResult.isShowEvent()) {
+                handleShowEvent();
             }
 
             return commandResult;

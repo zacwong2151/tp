@@ -1,7 +1,5 @@
 package seedu.address.ui;
 
-import java.util.Comparator;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
@@ -9,12 +7,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.event.Event;
 
+import java.util.Comparator;
+
 /**
  * An UI component that displays information of a {@code Event}.
  */
-public class EventCard extends UiPart<Region> {
+public class EventWindowCard extends UiPart<Region> {
 
-    private static final String FXML = "EventListCard.fxml";
+    private static final String FXML = "EventWindowCard.fxml";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -41,19 +41,29 @@ public class EventCard extends UiPart<Region> {
     @FXML
     private FlowPane materials;
 
+    @FXML
+    private Label budget;
+
+    @FXML
+    private FlowPane roles;
+
     /**
      * Creates a {@code EventCode} with the given {@code Event} and index to display.
      */
-    public EventCard(Event event, int displayedIndex) {
+    public EventWindowCard(Event event, int displayedIndex) {
         super(FXML);
         this.event = event;
         id.setText(displayedIndex + ". ");
         eventName.setText(event.getEventName().name);
         dateAndTime.setText(event.getDateAndTime().toString());
         loc.setText(event.getLocation().location);
-        description.setText(event.getDescription().description);
+        budget.setText(event.getBudget().budget);
         event.getMaterials().stream()
                 .sorted(Comparator.comparing(material -> material.material))
                 .forEach(material -> materials.getChildren().add(new Label(material.material)));
+        event.getRoles().stream()
+                .sorted(Comparator.comparing(role -> role.roleName))
+                .forEach(role -> roles.getChildren().add(new Label(role.roleName)));
+        description.setText(event.getDescription().description);
     }
 }

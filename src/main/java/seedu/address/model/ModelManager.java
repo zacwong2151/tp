@@ -4,9 +4,15 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import javafx.beans.InvalidationListener;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
@@ -26,6 +32,8 @@ public class ModelManager implements Model {
     private final FilteredList<Volunteer> filteredVolunteers;
     private final FilteredList<Event> filteredEvents;
 
+    private final FilteredList<Event> eventToShowList;
+
     /**
      * Initializes a ModelManager with the given eventStorage, volunteerStorage and userPrefs.
      */
@@ -41,6 +49,7 @@ public class ModelManager implements Model {
         this.userPrefs = new UserPrefs(userPrefs);
         filteredEvents = new FilteredList<>(this.eventStorage.getEventList());
         filteredVolunteers = new FilteredList<>(this.volunteerStorage.getVolunteerList());
+        eventToShowList = new FilteredList<>(this.eventStorage.getEventList());
     }
 
     public ModelManager() {
@@ -178,6 +187,21 @@ public class ModelManager implements Model {
     public void updateFilteredEventList(Predicate<Event> predicate) {
         requireNonNull(predicate);
         filteredEvents.setPredicate(predicate);
+    }
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Event} backed by the internal list of
+     * {@code versionedEventStorage}
+     */
+    @Override
+    public FilteredList<Event> getEventToShowList() {
+        return eventToShowList;
+    }
+
+    @Override
+    public void updateEventToShowList(Predicate<Event> eventPredicate) {
+        requireNonNull(eventPredicate);
+        eventToShowList.setPredicate(eventPredicate);
     }
 
     //=========== Filtered Volunteer Storage Accessors =============================================================
