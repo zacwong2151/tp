@@ -12,6 +12,7 @@ import seedu.address.model.event.Location;
 import seedu.address.model.event.Material;
 import seedu.address.model.event.Role;
 import seedu.address.model.util.SampleDataUtil;
+import seedu.address.model.volunteer.Volunteer;
 
 /**
  * A utility class to help with building Volunteer objects.
@@ -30,6 +31,7 @@ public class EventBuilder {
     private Description description;
     private Set<Material> materials;
     private Budget budget;
+    private Set<Volunteer> assignedVolunteers = new HashSet<>();
 
     /**
      * Creates a {@code EventBuilder} with the default details.
@@ -114,7 +116,7 @@ public class EventBuilder {
     }
 
     public Event build() {
-        return new Event(eventName, roles, dateAndTime, location, description, materials, budget);
+        return new Event(eventName, roles, dateAndTime, location, description, materials, budget, assignedVolunteers);
     }
 
 }

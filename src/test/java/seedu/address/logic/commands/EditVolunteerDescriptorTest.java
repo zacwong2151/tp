@@ -60,7 +60,8 @@ public class EditVolunteerDescriptorTest {
                 + editVolunteerDescriptor.getName().orElse(null) + ", phone="
                 + editVolunteerDescriptor.getPhone().orElse(null) + ", email="
                 + editVolunteerDescriptor.getEmail().orElse(null) + ", skills="
-                + editVolunteerDescriptor.getSkills().orElse(null) + "}";
+                + editVolunteerDescriptor.getSkills().orElse(null) + ", assigned events="
+                + editVolunteerDescriptor.getAssignedEvents().orElse(null) + "}";
         assertEquals(expected, editVolunteerDescriptor.toString());
     }
 }

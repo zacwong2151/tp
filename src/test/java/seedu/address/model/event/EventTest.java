@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
+
 import seedu.address.model.volunteer.Volunteer;
 
 public class EventTest {
@@ -26,7 +27,7 @@ public class EventTest {
         materials.add(soap);
 
         Budget b = new Budget("1000.00");
-        Set<Volunteer>  vlist = new HashSet<>();
+        Set<Volunteer> vList = new HashSet<>();
         Event e = new Event(
                 name,
                 roles,
@@ -35,7 +36,7 @@ public class EventTest {
                 new Description("No description."),
                 materials,
                 b,
-                vlist);
+                vList);
 
         assertTrue(e.getEventName().equals(new EventName("Clean home")));
         assertTrue(e.getRoles().contains(clean));
