@@ -1,4 +1,4 @@
-package seedu.address.storage;
+package seedu.address.storage.event;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -9,7 +9,7 @@ import seedu.address.model.event.Role;
 /**
  * Jackson-friendly version of {@link Role}.
  */
-class JsonAdaptedRole {
+public class JsonAdaptedRole {
 
     private final String roleName;
 

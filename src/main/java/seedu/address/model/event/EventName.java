@@ -4,8 +4,8 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Volunteer's name in the volunteer storage.
- * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
+ * Represents a Event's name in the event storage.
+ * Guarantees: immutable; is valid as declared in {@link #isValidEventName(String)}
  */
 public class EventName {
 
@@ -13,35 +13,36 @@ public class EventName {
             "Names should only contain alphanumeric characters and spaces, and it should not be blank";
 
     /*
-     * The first character of the address must not be a whitespace,
+     * The first character of the name must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
+     * The expression allows for multiple words to be inputted.
      */
-    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String VALIDATION_REGEX = "[A-Za-z0-9 _.,!\"'/$]*";
 
-    public final String name;
+    public final String eventName;
 
     /**
-     * Constructs a {@code Name}.
+     * Constructs a {@code EventName}.
      *
-     * @param name A valid name.
+     * @param eventName A valid event name.
      */
-    public EventName(String name) {
-        requireNonNull(name);
-        checkArgument(isValidName(name), MESSAGE_CONSTRAINTS);
-        this.name = name;
+    public EventName(String eventName) {
+        requireNonNull(eventName);
+        checkArgument(isValidEventName(eventName), MESSAGE_CONSTRAINTS);
+        this.eventName = eventName;
     }
 
     /**
-     * Returns true if a given string is a valid name.
+     * Returns true if a given string is a valid event name.
      */
-    public static boolean isValidName(String test) {
+    public static boolean isValidEventName(String test) {
         return test.matches(VALIDATION_REGEX);
     }
 
 
     @Override
     public String toString() {
-        return name;
+        return eventName;
     }
 
     @Override
@@ -56,12 +57,12 @@ public class EventName {
         }
 
         EventName otherEventName = (EventName) other;
-        return name.equals(otherEventName.name);
+        return eventName.equals(otherEventName.eventName);
     }
 
     @Override
     public int hashCode() {
-        return name.hashCode();
+        return eventName.hashCode();
     }
 
 }
