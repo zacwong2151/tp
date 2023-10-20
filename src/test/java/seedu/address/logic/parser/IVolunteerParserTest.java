@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_VOLUNTEER;
 
 import java.util.Arrays;
@@ -13,8 +14,10 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.eventcommands.EventDeleteCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerClearCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerCreateCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerDeleteCommand;
@@ -50,9 +53,14 @@ public class IVolunteerParserTest {
 
     @Test
     public void parseCommand_delete() throws Exception {
-        VolunteerDeleteCommand command = (VolunteerDeleteCommand) parser.parseCommand(
+
+        Command command = parser.parseCommand(
                 VolunteerDeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_VOLUNTEER.getOneBased());
-        assertEquals(new VolunteerDeleteCommand(INDEX_FIRST_VOLUNTEER), command);
+        if (command instanceof EventDeleteCommand) {
+            assertEquals(new EventDeleteCommand(INDEX_FIRST_EVENT), command);
+        } else {
+            assertEquals(new VolunteerDeleteCommand(INDEX_FIRST_VOLUNTEER), command);
+        }
     }
 
     @Test

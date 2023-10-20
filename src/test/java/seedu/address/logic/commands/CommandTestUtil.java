@@ -24,7 +24,6 @@ import seedu.address.logic.commands.volunteercommands.VolunteerEditCommand;
 import seedu.address.model.Model;
 import seedu.address.model.VolunteerStorage;
 import seedu.address.model.event.Event;
-import seedu.address.model.event.EventNameContainsKeywordsPredicate;
 import seedu.address.model.volunteer.NameContainsKeywordsPredicate;
 import seedu.address.model.volunteer.Volunteer;
 import seedu.address.testutil.EditVolunteerDescriptorBuilder;
