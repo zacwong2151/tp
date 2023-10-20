@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_VOLUNTEER;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_VOLUNTEER_OR_EVENT;
 
 import java.util.Arrays;
 import java.util.List;
@@ -51,8 +51,8 @@ public class IVolunteerParserTest {
     @Test
     public void parseCommand_delete() throws Exception {
         VolunteerDeleteCommand command = (VolunteerDeleteCommand) parser.parseCommand(
-                VolunteerDeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_VOLUNTEER.getOneBased());
-        assertEquals(new VolunteerDeleteCommand(INDEX_FIRST_VOLUNTEER), command);
+                VolunteerDeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_VOLUNTEER_OR_EVENT.getOneBased());
+        assertEquals(new VolunteerDeleteCommand(INDEX_FIRST_VOLUNTEER_OR_EVENT), command);
     }
 
     @Test
@@ -60,9 +60,9 @@ public class IVolunteerParserTest {
         Volunteer volunteer = new VolunteerBuilder().build();
         EditVolunteerDescriptor descriptor = new EditVolunteerDescriptorBuilder(volunteer).build();
         VolunteerEditCommand command = (VolunteerEditCommand) parser.parseCommand(
-                                    VolunteerEditCommand.COMMAND_WORD + " " + INDEX_FIRST_VOLUNTEER.getOneBased()
+                                    VolunteerEditCommand.COMMAND_WORD + " " + INDEX_FIRST_VOLUNTEER_OR_EVENT.getOneBased()
                                             + " " + VolunteerUtil.getEditVolunteerDescriptorDetails(descriptor));
-        assertEquals(new VolunteerEditCommand(INDEX_FIRST_VOLUNTEER, descriptor), command);
+        assertEquals(new VolunteerEditCommand(INDEX_FIRST_VOLUNTEER_OR_EVENT, descriptor), command);
     }
 
     @Test
