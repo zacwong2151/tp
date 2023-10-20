@@ -17,7 +17,6 @@ import static seedu.address.testutil.Assert.assertThrows;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Predicate;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -167,12 +166,19 @@ public class CommandTestUtil {
         assertEquals(1, model.getFilteredVolunteerList().size());
     }
 
+    /**
+     * Updates {@code model}'s filtered list to show only the event at the given {@code targetIndex} in the
+     * {@code model}'s iVolunteer.
+     */
     public static void showEventAtIndex(Model model, Index targetIndex) {
         assertTrue(targetIndex.getZeroBased() < model.getFilteredEventList().size());
 
         Event event = model.getFilteredEventList().get(targetIndex.getZeroBased());
-        final String[] splitName = event.getEventName().name.split("\\s+");
-        model.updateFilteredEventList(new EventNameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+        final String[] splitName = event.getEventName().eventName.split("\\s+");
+
+        for (String s : splitName) {
+            model.updateFilteredEventList(new EventNameContainsKeywordsPredicate(Arrays.asList(s)));
+        }
 
         assertEquals(1, model.getFilteredEventList().size());
     }

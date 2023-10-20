@@ -43,7 +43,8 @@ public class VolunteerEditCommandTest {
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
         Volunteer editedVolunteer = new VolunteerBuilder().build();
         EditVolunteerDescriptor descriptor = new EditVolunteerDescriptorBuilder(editedVolunteer).build();
-        VolunteerEditCommand volunteerEditCommand = new VolunteerEditCommand(INDEX_FIRST_VOLUNTEER_OR_EVENT, descriptor);
+        VolunteerEditCommand volunteerEditCommand =
+                new VolunteerEditCommand(INDEX_FIRST_VOLUNTEER_OR_EVENT, descriptor);
 
         String expectedMessage = String.format(VolunteerEditCommand.MESSAGE_EDIT_VOLUNTEER_SUCCESS,
                                                                         Messages.format(editedVolunteer));
@@ -97,7 +98,9 @@ public class VolunteerEditCommandTest {
     public void execute_filteredList_success() {
         showVolunteerAtIndex(model, INDEX_FIRST_VOLUNTEER_OR_EVENT);
 
-        Volunteer volunteerInFilteredList = model.getFilteredVolunteerList().get(INDEX_FIRST_VOLUNTEER_OR_EVENT.getZeroBased());
+        Volunteer volunteerInFilteredList = model
+                .getFilteredVolunteerList()
+                .get(INDEX_FIRST_VOLUNTEER_OR_EVENT.getZeroBased());
         Volunteer editedVolunteer = new VolunteerBuilder(volunteerInFilteredList).withName(VALID_NAME_BOB).build();
         VolunteerEditCommand volunteerEditCommand = new VolunteerEditCommand(INDEX_FIRST_VOLUNTEER_OR_EVENT,
                 new EditVolunteerDescriptorBuilder().withName(VALID_NAME_BOB).build());
@@ -116,7 +119,8 @@ public class VolunteerEditCommandTest {
     public void execute_duplicateVolunteerUnfilteredList_failure() {
         Volunteer firstVolunteer = model.getFilteredVolunteerList().get(INDEX_FIRST_VOLUNTEER_OR_EVENT.getZeroBased());
         EditVolunteerDescriptor descriptor = new EditVolunteerDescriptorBuilder(firstVolunteer).build();
-        VolunteerEditCommand volunteerEditCommand = new VolunteerEditCommand(INDEX_SECOND_VOLUNTEER_OR_EVENT, descriptor);
+        VolunteerEditCommand volunteerEditCommand =
+                new VolunteerEditCommand(INDEX_SECOND_VOLUNTEER_OR_EVENT, descriptor);
 
         assertCommandFailure(volunteerEditCommand, model, VolunteerEditCommand.MESSAGE_DUPLICATE_VOLUNTEER);
     }
@@ -166,7 +170,8 @@ public class VolunteerEditCommandTest {
 
         // same values -> returns true
         EditVolunteerDescriptor copyDescriptor = new EditVolunteerDescriptor(DESC_AMY);
-        VolunteerEditCommand commandWithSameValues = new VolunteerEditCommand(INDEX_FIRST_VOLUNTEER_OR_EVENT, copyDescriptor);
+        VolunteerEditCommand commandWithSameValues =
+                new VolunteerEditCommand(INDEX_FIRST_VOLUNTEER_OR_EVENT, copyDescriptor);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
