@@ -72,7 +72,7 @@ public class EventDeleteCommandTest {
     public void execute_invalidIndexFilteredList_throwsCommandException() {
         showEventAtIndex(model, INDEX_FIRST_EVENT);
 
-        Index outOfBoundIndex = INDEX_FIRST_EVENT;
+        Index outOfBoundIndex = INDEX_SECOND_EVENT;
         // ensures that outOfBoundIndex is still in bounds of event list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getEventStorage().getEventList().size());
 

@@ -157,7 +157,6 @@ public class CommandTestUtil {
      * {@code model}'s address book.
      */
     public static void showVolunteerAtIndex(Model model, Index targetIndex) {
-        System.out.println("yoooooooooooooooooooo" + model.getFilteredVolunteerList().size());
         assertTrue(targetIndex.getZeroBased() < model.getFilteredVolunteerList().size());
 
         Volunteer volunteer = model.getFilteredVolunteerList().get(targetIndex.getZeroBased());
@@ -172,13 +171,10 @@ public class CommandTestUtil {
      * {@code model}'s address book.
      */
     public static void showEventAtIndex(Model model, Index targetIndex) {
-        System.out.println("yoooooooooooooooooooo" + model.getFilteredEventList().size());
         assertTrue(targetIndex.getZeroBased() < model.getFilteredEventList().size());
 
         Event event = model.getFilteredEventList().get(targetIndex.getZeroBased());
-        final String[] splitName = event.getEventName().name.split("\\s+");
-        model.updateFilteredEventList(new EventNameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
-
+        model.updateFilteredEventList(e -> e.equals(event));
         assertEquals(1, model.getFilteredEventList().size());
     }
 }
