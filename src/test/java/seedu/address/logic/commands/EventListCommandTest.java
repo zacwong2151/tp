@@ -1,8 +1,7 @@
 package seedu.address.logic.commands;
 
-
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.showVolunteerAtIndex;
+import static seedu.address.logic.commands.CommandTestUtil.showEventAtIndex;
 import static seedu.address.testutil.TypicalEvents.getTypicalEventStorage;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalVolunteers.getTypicalVolunteerStorage;
@@ -10,16 +9,12 @@ import static seedu.address.testutil.TypicalVolunteers.getTypicalVolunteerStorag
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.commands.volunteercommands.VolunteerListCommand;
+import seedu.address.logic.commands.eventcommands.EventListCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
-/**
- * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
- */
-public class VolunteerListCommandTest {
-
+public class EventListCommandTest {
     private Model model;
     private Model expectedModel;
 
@@ -31,12 +26,12 @@ public class VolunteerListCommandTest {
 
     @Test
     public void execute_listIsNotFiltered_showsSameList() {
-        assertCommandSuccess(new VolunteerListCommand(), model, VolunteerListCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new EventListCommand(), model, EventListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
     public void execute_listIsFiltered_showsEverything() {
-        showVolunteerAtIndex(model, INDEX_FIRST);
-        assertCommandSuccess(new VolunteerListCommand(), model, VolunteerListCommand.MESSAGE_SUCCESS, expectedModel);
+        showEventAtIndex(model, INDEX_FIRST);
+        assertCommandSuccess(new EventListCommand(), model, EventListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 }
