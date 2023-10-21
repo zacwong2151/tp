@@ -37,7 +37,7 @@ public class EventNameContainsKeywordsPredicateTest {
         // null -> returns false
         assertFalse(firstPredicate.equals(null));
 
-        // different volunteer -> returns false
+        // different event -> returns false
         assertFalse(firstPredicate.equals(secondPredicate));
     }
 
@@ -71,7 +71,7 @@ public class EventNameContainsKeywordsPredicateTest {
         predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("Food"));
         assertFalse(predicate.test(new EventBuilder().withEventName("Clean up").build()));
 
-        // Keywords match phone, and email, but does not match name
+        // Keywords match date, time, location and description, but does not match name
         predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("23/9/2023", "1800", "East", "dinnertime"));
         assertFalse(predicate.test(new EventBuilder().withEventName("Clean up beach").withDateAndTime("23/9/2023 1800")
                 .withDescription("Clean very clean").withLocation("East").build()));
