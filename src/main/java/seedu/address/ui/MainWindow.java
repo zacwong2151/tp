@@ -124,6 +124,7 @@ public class MainWindow extends UiPart<Stage> {
         eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
+        resultDisplay.setFeedbackToUser("Waiting for your inputs! :)");
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getVolunteerStorageFilePath());

@@ -1,7 +1,5 @@
 package seedu.address.ui;
 
-import java.util.Comparator;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
@@ -49,11 +47,8 @@ public class EventCard extends UiPart<Region> {
         this.event = event;
         id.setText(displayedIndex + ". ");
         eventName.setText(event.getEventName().eventName);
-        dateAndTime.setText(event.getDateAndTime().toString());
-        loc.setText(event.getLocation().location);
-        description.setText(event.getDescription().description);
-        event.getMaterials().stream()
-                .sorted(Comparator.comparing(material -> material.material))
-                .forEach(material -> materials.getChildren().add(new Label(material.material)));
+        dateAndTime.setText("Date and time: " + event.getDateAndTime().toString());
+        loc.setText("Location: " + event.getLocation().location);
+        description.setText("Description: " + event.getDescription().description);
     }
 }
