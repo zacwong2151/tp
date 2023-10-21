@@ -25,7 +25,6 @@ public class ModelManager implements Model {
     private final UserPrefs userPrefs;
     private final FilteredList<Volunteer> filteredVolunteers;
     private final FilteredList<Event> filteredEvents;
-
     private final FilteredList<Event> eventToShowList;
 
     /**
@@ -181,6 +180,7 @@ public class ModelManager implements Model {
     public void updateFilteredEventList(Predicate<Event> predicate) {
         requireNonNull(predicate);
         filteredEvents.setPredicate(predicate);
+        eventToShowList.setPredicate(predicate);
     }
 
     /**
@@ -231,7 +231,8 @@ public class ModelManager implements Model {
                 && eventStorage.equals(otherModelManager.eventStorage)
                 && userPrefs.equals(otherModelManager.userPrefs)
                 && filteredVolunteers.equals(otherModelManager.filteredVolunteers)
-                && filteredEvents.equals(otherModelManager.filteredEvents);
+                && filteredEvents.equals(otherModelManager.filteredEvents)
+                && eventToShowList.equals(otherModelManager.eventToShowList);
     }
 
 }

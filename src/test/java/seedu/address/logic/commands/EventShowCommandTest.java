@@ -1,26 +1,27 @@
 package seedu.address.logic.commands;
 
-import org.junit.jupiter.api.Test;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.Messages;
-import seedu.address.logic.commands.eventcommands.EventShowCommand;
-import seedu.address.logic.commands.volunteercommands.VolunteerDeleteCommand;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-import seedu.address.model.event.Event;
-import seedu.address.model.volunteer.Volunteer;
-
-import java.util.function.Predicate;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.*;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.showEventAtIndex;
 import static seedu.address.testutil.TypicalEvents.getTypicalEventStorage;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 import static seedu.address.testutil.TypicalVolunteers.getTypicalVolunteerStorage;
+
+import java.util.function.Predicate;
+
+import org.junit.jupiter.api.Test;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.Messages;
+import seedu.address.logic.commands.eventcommands.EventShowCommand;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.event.Event;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for
@@ -35,8 +36,11 @@ public class EventShowCommandTest {
         Event eventToShow = model.getFilteredEventList().get(INDEX_FIRST.getZeroBased());
         EventShowCommand eventShowCommand = new EventShowCommand(INDEX_FIRST);
 
-        String expectedMessage = String.format(EventShowCommand.MESSAGE_SHOW_EVENT_SUCCESS,
-                eventToShow.getEventName().eventName);
+        CommandResult expectedCommandResult =
+                new CommandResult(
+                        String.format(EventShowCommand.MESSAGE_SHOW_EVENT_SUCCESS,
+                                eventToShow.getEventName().eventName),
+                        false, false, true);
 
         ModelManager expectedModel = new ModelManager(model.getEventStorage(), model.getVolunteerStorage(),
                 new UserPrefs());
@@ -44,7 +48,7 @@ public class EventShowCommandTest {
         Predicate<Event> predicateShowEvent = e -> e.equals(eventToShow);
         expectedModel.updateEventToShowList(predicateShowEvent);
 
-        assertCommandSuccess(eventShowCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(eventShowCommand, model, expectedCommandResult, expectedModel);
     }
 
     @Test
@@ -57,71 +61,76 @@ public class EventShowCommandTest {
 
     @Test
     public void execute_validIndexFilteredList_success() {
-        showVolunteerAtIndex(model, INDEX_FIRST);
+        showEventAtIndex(model, INDEX_FIRST);
 
-        Volunteer volunteerToDelete = model.getFilteredVolunteerList().get(INDEX_FIRST.getZeroBased());
-        VolunteerDeleteCommand volunteerDeleteCommand = new VolunteerDeleteCommand(INDEX_FIRST);
+        Event eventToShow = model.getFilteredEventList().get(INDEX_FIRST.getZeroBased());
+        EventShowCommand eventShowCommand = new EventShowCommand(INDEX_FIRST);
 
-        String expectedMessage = String.format(VolunteerDeleteCommand.MESSAGE_DELETE_VOLUNTEER_SUCCESS,
-                Messages.format(volunteerToDelete));
+        CommandResult expectedCommandResult = new CommandResult(
+                String.format(EventShowCommand.MESSAGE_SHOW_EVENT_SUCCESS,
+                    eventToShow.getEventName().eventName),
+                false, false, true);
 
         Model expectedModel = new ModelManager(model.getEventStorage(), model.getVolunteerStorage(), new UserPrefs());
-        expectedModel.deleteVolunteer(volunteerToDelete);
-        showNoVolunteer(expectedModel);
 
-        assertCommandSuccess(volunteerDeleteCommand, model, expectedMessage, expectedModel);
+        Predicate<Event> predicateShowEvent = e -> e.equals(eventToShow);
+        expectedModel.updateEventToShowList(predicateShowEvent);
+
+        showEventAtIndex(expectedModel, INDEX_FIRST);
+
+        assertCommandSuccess(eventShowCommand, model, expectedCommandResult, expectedModel);
     }
 
     @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
-        showVolunteerAtIndex(model, INDEX_FIRST);
+        showEventAtIndex(model, INDEX_FIRST);
 
         Index outOfBoundIndex = INDEX_SECOND;
-        // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getVolunteerStorage().getVolunteerList().size());
+        // ensures that outOfBoundIndex is still in bounds of iVolunteer list
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getEventStorage().getEventList().size());
 
-        VolunteerDeleteCommand volunteerDeleteCommand = new VolunteerDeleteCommand(outOfBoundIndex);
+        EventShowCommand eventShowCommand = new EventShowCommand(outOfBoundIndex);
 
-        assertCommandFailure(volunteerDeleteCommand, model, Messages.MESSAGE_INVALID_VOLUNTEER_DISPLAYED_INDEX);
+        assertCommandFailure(eventShowCommand, model, Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
     }
 
     @Test
     public void equals() {
-        VolunteerDeleteCommand deleteFirstCommand = new VolunteerDeleteCommand(INDEX_FIRST);
-        VolunteerDeleteCommand deleteSecondCommand = new VolunteerDeleteCommand(INDEX_SECOND);
+        EventShowCommand showFirstEventCommand = new EventShowCommand(INDEX_FIRST);
+        EventShowCommand showSecondEventCommand = new EventShowCommand(INDEX_SECOND);
 
         // same object -> returns true
-        assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
+        assertTrue(showFirstEventCommand.equals(showFirstEventCommand));
 
         // same values -> returns true
-        VolunteerDeleteCommand deleteFirstCommandCopy = new VolunteerDeleteCommand(INDEX_FIRST);
-        assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
+        EventShowCommand showFirstEventCommandCopy = new EventShowCommand(INDEX_FIRST);
+        assertTrue(showFirstEventCommand.equals(showFirstEventCommandCopy));
 
         // different types -> returns false
-        assertFalse(deleteFirstCommand.equals(1));
+        assertFalse(showFirstEventCommand.equals(1));
 
         // null -> returns false
-        assertFalse(deleteFirstCommand.equals(null));
+        assertFalse(showFirstEventCommand.equals(null));
 
         // different volunteer -> returns false
-        assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
+        assertFalse(showFirstEventCommand.equals(showSecondEventCommand));
     }
 
     @Test
     public void toStringMethod() {
         Index targetIndex = Index.fromOneBased(1);
-        VolunteerDeleteCommand volunteerDeleteCommand = new VolunteerDeleteCommand(targetIndex);
-        String expected = VolunteerDeleteCommand.class.getCanonicalName() + "{targetIndex=" + targetIndex + "}";
-        assertEquals(expected, volunteerDeleteCommand.toString());
+        EventShowCommand eventShowCommand = new EventShowCommand(targetIndex);
+        String expected = EventShowCommand.class.getCanonicalName() + "{targetIndex=" + targetIndex + "}";
+        assertEquals(expected, eventShowCommand.toString());
     }
 
     /**
      * Updates {@code model}'s filtered list to show no one.
      */
-    private void showNoVolunteer(Model model) {
-        model.updateFilteredVolunteerList(p -> false);
+    private void showNoEvent(Model model) {
+        model.updateFilteredEventList(p -> false);
 
-        assertTrue(model.getFilteredVolunteerList().isEmpty());
+        assertTrue(model.getFilteredEventList().isEmpty());
     }
 
 }

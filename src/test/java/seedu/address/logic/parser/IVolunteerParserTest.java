@@ -92,8 +92,9 @@ public class IVolunteerParserTest {
 
     @Test
     public void parseCommand_eventShow() throws Exception {
-        assertTrue(parser.parseCommand(EventShowCommand.COMMAND_WORD) instanceof EventShowCommand);
-        assertTrue(parser.parseCommand(EventShowCommand.COMMAND_WORD + " 3") instanceof EventShowCommand);
+        EventShowCommand command = (EventShowCommand) parser.parseCommand(
+                EventShowCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased());
+        assertEquals(new EventShowCommand(INDEX_FIRST), command);
     }
 
     @Test
