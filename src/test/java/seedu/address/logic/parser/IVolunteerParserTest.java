@@ -50,7 +50,7 @@ public class IVolunteerParserTest {
     }
 
     @Test
-    public void parseCommand_delete() throws Exception {
+    public void parseCommand_volunteerDelete() throws Exception {
 
         VolunteerDeleteCommand command = (VolunteerDeleteCommand) parser.parseCommand(
                 VolunteerDeleteCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased());
