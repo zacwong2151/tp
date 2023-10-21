@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.eventcommands.EventDeleteCommand;
+import seedu.address.logic.commands.eventcommands.EventListCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerClearCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerCreateCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerDeleteCommand;
@@ -69,9 +70,11 @@ public class IVolunteerParserTest {
     public void parseCommand_edit() throws Exception {
         Volunteer volunteer = new VolunteerBuilder().build();
         EditVolunteerDescriptor descriptor = new EditVolunteerDescriptorBuilder(volunteer).build();
-        VolunteerEditCommand command = (VolunteerEditCommand) parser.parseCommand(
-                                    VolunteerEditCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased()
-                                            + " " + VolunteerUtil.getEditVolunteerDescriptorDetails(descriptor));
+        VolunteerEditCommand command = (VolunteerEditCommand) parser
+                .parseCommand(VolunteerEditCommand.COMMAND_WORD + " "
+                        + INDEX_FIRST.getOneBased() + " "
+                        + VolunteerUtil.getEditVolunteerDescriptorDetails(descriptor)
+                );
         assertEquals(new VolunteerEditCommand(INDEX_FIRST, descriptor), command);
     }
 
@@ -97,10 +100,17 @@ public class IVolunteerParserTest {
     }
 
     @Test
-    public void parseCommand_list() throws Exception {
+    public void parseCommand_volunteerList() throws Exception {
         assertTrue(parser.parseCommand(VolunteerListCommand.COMMAND_WORD) instanceof VolunteerListCommand);
         assertTrue(parser.parseCommand(
                 VolunteerListCommand.COMMAND_WORD + " 3") instanceof VolunteerListCommand);
+    }
+
+    @Test
+    public void parseCommand_eventList() throws Exception {
+        assertTrue(parser.parseCommand(EventListCommand.COMMAND_WORD) instanceof EventListCommand);
+        assertTrue(parser.parseCommand(
+                EventListCommand.COMMAND_WORD + " 3") instanceof EventListCommand);
     }
 
     @Test

@@ -24,6 +24,7 @@ import seedu.address.logic.commands.volunteercommands.VolunteerEditCommand;
 import seedu.address.model.Model;
 import seedu.address.model.VolunteerStorage;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.EventNameContainsKeywordsPredicate;
 import seedu.address.model.volunteer.NameContainsKeywordsPredicate;
 import seedu.address.model.volunteer.Volunteer;
 import seedu.address.testutil.EditVolunteerDescriptorBuilder;
@@ -167,13 +168,19 @@ public class CommandTestUtil {
 
     /**
      * Updates {@code model}'s filtered list to show only the event at the given {@code targetIndex} in the
-     * {@code model}'s address book.
+     * {@code model}'s iVolunteer.
      */
     public static void showEventAtIndex(Model model, Index targetIndex) {
         assertTrue(targetIndex.getZeroBased() < model.getFilteredEventList().size());
 
         Event event = model.getFilteredEventList().get(targetIndex.getZeroBased());
-        model.updateFilteredEventList(e -> e.equals(event));
+        final String[] splitName = event.getEventName().eventName.split("\\s+");
+
+        for (String s : splitName) {
+            model.updateFilteredEventList(new EventNameContainsKeywordsPredicate(Arrays.asList(s)));
+        }
+
         assertEquals(1, model.getFilteredEventList().size());
     }
+
 }

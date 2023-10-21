@@ -7,7 +7,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
 
 /**
- * Tests that a {@code Volunteer}'s {@code Name} matches any of the keywords given.
+ * Tests that an {@code Event}'s {@code EventName} matches any of the keywords given.
  */
 public class EventNameContainsKeywordsPredicate implements Predicate<Event> {
     private final List<String> keywords;
@@ -33,9 +33,9 @@ public class EventNameContainsKeywordsPredicate implements Predicate<Event> {
             return false;
         }
 
-        EventNameContainsKeywordsPredicate otherNameContainsKeywordsPredicate = (EventNameContainsKeywordsPredicate)
-                                                                                    other;
-        return keywords.equals(otherNameContainsKeywordsPredicate.keywords);
+        EventNameContainsKeywordsPredicate otherEventNameContainsKeywordsPredicate =
+                (EventNameContainsKeywordsPredicate) other;
+        return keywords.equals(otherEventNameContainsKeywordsPredicate.keywords);
     }
 
     @Override
@@ -43,4 +43,3 @@ public class EventNameContainsKeywordsPredicate implements Predicate<Event> {
         return new ToStringBuilder(this).add("keywords", keywords).toString();
     }
 }
-

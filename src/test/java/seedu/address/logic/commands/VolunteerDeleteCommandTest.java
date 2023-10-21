@@ -31,7 +31,9 @@ public class VolunteerDeleteCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
-        Volunteer volunteerToDelete = model.getFilteredVolunteerList().get(INDEX_FIRST.getZeroBased());
+        Volunteer volunteerToDelete = model
+                .getFilteredVolunteerList()
+                .get(INDEX_FIRST.getZeroBased());
         VolunteerDeleteCommand volunteerDeleteCommand = new VolunteerDeleteCommand(INDEX_FIRST);
 
         String expectedMessage = String.format(VolunteerDeleteCommand.MESSAGE_DELETE_VOLUNTEER_SUCCESS,
@@ -56,7 +58,9 @@ public class VolunteerDeleteCommandTest {
     public void execute_validIndexFilteredList_success() {
         showVolunteerAtIndex(model, INDEX_FIRST);
 
-        Volunteer volunteerToDelete = model.getFilteredVolunteerList().get(INDEX_FIRST.getZeroBased());
+        Volunteer volunteerToDelete = model
+                .getFilteredVolunteerList()
+                .get(INDEX_FIRST.getZeroBased());
         VolunteerDeleteCommand volunteerDeleteCommand = new VolunteerDeleteCommand(INDEX_FIRST);
 
         String expectedMessage = String.format(VolunteerDeleteCommand.MESSAGE_DELETE_VOLUNTEER_SUCCESS,

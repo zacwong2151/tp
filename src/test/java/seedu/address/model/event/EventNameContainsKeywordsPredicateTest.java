@@ -19,17 +19,17 @@ public class EventNameContainsKeywordsPredicateTest {
         List<String> firstPredicateKeywordList = Collections.singletonList("first");
         List<String> secondPredicateKeywordList = Arrays.asList("first", "second");
 
-        EventNameContainsKeywordsPredicate firstPredicate = new EventNameContainsKeywordsPredicate(
-                                                                    firstPredicateKeywordList);
-        EventNameContainsKeywordsPredicate secondPredicate = new EventNameContainsKeywordsPredicate(
-                                                                    secondPredicateKeywordList);
+        EventNameContainsKeywordsPredicate firstPredicate =
+                new EventNameContainsKeywordsPredicate(firstPredicateKeywordList);
+        EventNameContainsKeywordsPredicate secondPredicate =
+                new EventNameContainsKeywordsPredicate(secondPredicateKeywordList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        EventNameContainsKeywordsPredicate firstPredicateCopy = new EventNameContainsKeywordsPredicate(
-                                                                        firstPredicateKeywordList);
+        EventNameContainsKeywordsPredicate firstPredicateCopy =
+                new EventNameContainsKeywordsPredicate(firstPredicateKeywordList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -38,32 +38,32 @@ public class EventNameContainsKeywordsPredicateTest {
         // null -> returns false
         assertFalse(firstPredicate.equals(null));
 
-        // different volunteer -> returns false
+        // different event -> returns false
         assertFalse(firstPredicate.equals(secondPredicate));
     }
 
     @Test
-    public void test_eventNameContainsKeywords_returnsTrue() {
+    public void test_nameContainsKeywords_returnsTrue() {
         // One keyword
-        EventNameContainsKeywordsPredicate predicate = new EventNameContainsKeywordsPredicate(
-                                                                    Collections.singletonList("Clean"));
-        assertTrue(predicate.test(new EventBuilder().withEventName("Clean 1").build()));
+        EventNameContainsKeywordsPredicate predicate =
+                new EventNameContainsKeywordsPredicate(Collections.singletonList("Clean"));
+        assertTrue(predicate.test(new EventBuilder().withEventName("Clean up").build()));
 
         // Multiple keywords
-        predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("Clean", "2"));
-        assertTrue(predicate.test(new EventBuilder().withEventName("Clean 2").build()));
+        predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("Clean", "up"));
+        assertTrue(predicate.test(new EventBuilder().withEventName("Clean up").build()));
 
         // Only one matching keyword
-        predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("Clean", "3"));
-        assertTrue(predicate.test(new EventBuilder().withEventName("Clean 3").build()));
+        predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("Sweep", "up"));
+        assertTrue(predicate.test(new EventBuilder().withEventName("Clean up").build()));
 
         // Mixed-case keywords
-        predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("cLEan", "scHOol"));
-        assertTrue(predicate.test(new EventBuilder().withEventName("Clean School").build()));
+        predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("cLeAn", "uP"));
+        assertTrue(predicate.test(new EventBuilder().withEventName("Clean up").build()));
     }
 
     @Test
-    public void test_eventNameDoesNotContainKeywords_returnsFalse() {
+    public void test_nameDoesNotContainKeywords_returnsFalse() {
         // Zero keywords
         EventNameContainsKeywordsPredicate predicate = new EventNameContainsKeywordsPredicate(Collections.emptyList());
         assertFalse(predicate.test(new EventBuilder().withEventName("Clean").build()));
@@ -77,6 +77,13 @@ public class EventNameContainsKeywordsPredicateTest {
                 "admiralty"));
         assertFalse(predicate.test(new EventBuilder().withEventName("Clean").withRoles("Event Leader")
                 .withLocation("admiralty").withDescription("help out la").build()));
+        predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("Food"));
+        assertFalse(predicate.test(new EventBuilder().withEventName("Clean up").build()));
+
+        // Keywords match date, time, location and description, but does not match name
+        predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("23/9/2023", "1800", "East", "dinnertime"));
+        assertFalse(predicate.test(new EventBuilder().withEventName("Clean up beach").withDateAndTime("23/9/2023 1800")
+                .withDescription("Clean very clean").withLocation("East").build()));
     }
 
     @Test
