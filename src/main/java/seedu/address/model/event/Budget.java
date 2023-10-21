@@ -1,5 +1,6 @@
 package seedu.address.model.event;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
@@ -27,6 +28,7 @@ public class Budget {
         if (budget.isEmpty()) { // This condition is needed in case the budget parameter is not given
             this.budget = "";
         } else {
+            requireNonNull(budget);
             checkArgument(isValidBudget(budget), MESSAGE_CONSTRAINTS);
             this.budget = budget;
         }
