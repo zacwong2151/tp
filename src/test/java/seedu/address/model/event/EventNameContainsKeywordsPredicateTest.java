@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.testutil.EventBuilder;
 
 public class EventNameContainsKeywordsPredicateTest {
+
     @Test
     public void equals() {
         List<String> firstPredicateKeywordList = Collections.singletonList("first");
@@ -68,6 +69,14 @@ public class EventNameContainsKeywordsPredicateTest {
         assertFalse(predicate.test(new EventBuilder().withEventName("Clean").build()));
 
         // Non-matching keyword
+        predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("Donation"));
+        assertFalse(predicate.test(new EventBuilder().withEventName("Clean 1").build()));
+
+        // Keywords match role, and location, but does not match name
+        predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("DoNothing", "Event", "leader",
+                "admiralty"));
+        assertFalse(predicate.test(new EventBuilder().withEventName("Clean").withRoles("Event Leader")
+                .withLocation("admiralty").withDescription("help out la").build()));
         predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("Food"));
         assertFalse(predicate.test(new EventBuilder().withEventName("Clean up").build()));
 

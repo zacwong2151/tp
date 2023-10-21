@@ -23,7 +23,7 @@ import seedu.address.model.volunteer.Volunteer;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for
- * {@code DeleteCommand}.
+ * {@code VolunterDeleteCommand}.
  */
 public class VolunteerDeleteCommandTest {
 
