@@ -7,7 +7,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
 
 /**
- * Tests that a {@code Volunteer}'s {@code Name} matches any of the keywords given.
+ * Tests that an {@code Event}'s {@code EventName} matches any of the keywords given.
  */
 public class EventNameContainsKeywordsPredicate implements Predicate<Event> {
     private final List<String> keywords;

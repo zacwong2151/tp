@@ -7,8 +7,8 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showVolunteerAtIndex;
 import static seedu.address.testutil.TypicalEvents.getTypicalEventStorage;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_VOLUNTEER_OR_EVENT;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_VOLUNTEER_OR_EVENT;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 import static seedu.address.testutil.TypicalVolunteers.getTypicalVolunteerStorage;
 
 import org.junit.jupiter.api.Test;
@@ -33,8 +33,8 @@ public class VolunteerDeleteCommandTest {
     public void execute_validIndexUnfilteredList_success() {
         Volunteer volunteerToDelete = model
                 .getFilteredVolunteerList()
-                .get(INDEX_FIRST_VOLUNTEER_OR_EVENT.getZeroBased());
-        VolunteerDeleteCommand volunteerDeleteCommand = new VolunteerDeleteCommand(INDEX_FIRST_VOLUNTEER_OR_EVENT);
+                .get(INDEX_FIRST.getZeroBased());
+        VolunteerDeleteCommand volunteerDeleteCommand = new VolunteerDeleteCommand(INDEX_FIRST);
 
         String expectedMessage = String.format(VolunteerDeleteCommand.MESSAGE_DELETE_VOLUNTEER_SUCCESS,
                 Messages.format(volunteerToDelete));
@@ -56,12 +56,12 @@ public class VolunteerDeleteCommandTest {
 
     @Test
     public void execute_validIndexFilteredList_success() {
-        showVolunteerAtIndex(model, INDEX_FIRST_VOLUNTEER_OR_EVENT);
+        showVolunteerAtIndex(model, INDEX_FIRST);
 
         Volunteer volunteerToDelete = model
                 .getFilteredVolunteerList()
-                .get(INDEX_FIRST_VOLUNTEER_OR_EVENT.getZeroBased());
-        VolunteerDeleteCommand volunteerDeleteCommand = new VolunteerDeleteCommand(INDEX_FIRST_VOLUNTEER_OR_EVENT);
+                .get(INDEX_FIRST.getZeroBased());
+        VolunteerDeleteCommand volunteerDeleteCommand = new VolunteerDeleteCommand(INDEX_FIRST);
 
         String expectedMessage = String.format(VolunteerDeleteCommand.MESSAGE_DELETE_VOLUNTEER_SUCCESS,
                 Messages.format(volunteerToDelete));
@@ -75,9 +75,9 @@ public class VolunteerDeleteCommandTest {
 
     @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
-        showVolunteerAtIndex(model, INDEX_FIRST_VOLUNTEER_OR_EVENT);
+        showVolunteerAtIndex(model, INDEX_FIRST);
 
-        Index outOfBoundIndex = INDEX_SECOND_VOLUNTEER_OR_EVENT;
+        Index outOfBoundIndex = INDEX_SECOND;
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getVolunteerStorage().getVolunteerList().size());
 
@@ -88,14 +88,14 @@ public class VolunteerDeleteCommandTest {
 
     @Test
     public void equals() {
-        VolunteerDeleteCommand deleteFirstCommand = new VolunteerDeleteCommand(INDEX_FIRST_VOLUNTEER_OR_EVENT);
-        VolunteerDeleteCommand deleteSecondCommand = new VolunteerDeleteCommand(INDEX_SECOND_VOLUNTEER_OR_EVENT);
+        VolunteerDeleteCommand deleteFirstCommand = new VolunteerDeleteCommand(INDEX_FIRST);
+        VolunteerDeleteCommand deleteSecondCommand = new VolunteerDeleteCommand(INDEX_SECOND);
 
         // same object -> returns true
         assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
 
         // same values -> returns true
-        VolunteerDeleteCommand deleteFirstCommandCopy = new VolunteerDeleteCommand(INDEX_FIRST_VOLUNTEER_OR_EVENT);
+        VolunteerDeleteCommand deleteFirstCommandCopy = new VolunteerDeleteCommand(INDEX_FIRST);
         assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
 
         // different types -> returns false
