@@ -8,7 +8,7 @@ import javafx.scene.layout.Region;
 import seedu.address.model.event.Event;
 
 /**
- * An UI component that displays information of a {@code Person}.
+ * An UI component that displays information of an {@code Event}.
  */
 public class EventCard extends UiPart<Region> {
 
@@ -40,14 +40,14 @@ public class EventCard extends UiPart<Region> {
     private FlowPane materials;
 
     /**
-     * Creates a {@code PersonCode} with the given {@code Person} and index to display.
+     * Creates a {@code EventCard} with the given {@code Event} and index to display.
      */
     public EventCard(Event event, int displayedIndex) {
         super(FXML);
         this.event = event;
         id.setText(displayedIndex + ". ");
         eventName.setText(event.getEventName().eventName);
-        dateAndTime.setText("Date and time: " + event.getDateAndTime().toString());
+        dateAndTime.setText(event.getStartDate().toString() + " to " + event.getEndDate().toString());
         loc.setText("Location: " + event.getLocation().location);
         description.setText("Description: " + event.getDescription().description);
     }

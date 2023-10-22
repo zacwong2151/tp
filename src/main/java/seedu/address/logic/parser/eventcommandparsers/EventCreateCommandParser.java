@@ -1,13 +1,15 @@
 package seedu.address.logic.parser.eventcommandparsers;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_DATE_PARAMS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BUDGET;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_AND_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATETIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MATERIAL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATETIME;
 
 import java.util.Set;
 import java.util.stream.Stream;
@@ -41,32 +43,45 @@ public class EventCreateCommandParser implements Parser<EventCreateCommand> {
      */
     public EventCreateCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_ROLE, PREFIX_DATE_AND_TIME,
-                        PREFIX_LOCATION, PREFIX_DESCRIPTION, PREFIX_MATERIAL, PREFIX_BUDGET);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_ROLE, PREFIX_START_DATETIME,
+                        PREFIX_END_DATETIME, PREFIX_LOCATION, PREFIX_DESCRIPTION, PREFIX_MATERIAL, PREFIX_BUDGET);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ROLE, PREFIX_DATE_AND_TIME,
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ROLE, PREFIX_START_DATETIME,
                 PREFIX_LOCATION, PREFIX_DESCRIPTION)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     EventCreateCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_DATE_AND_TIME,
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_START_DATETIME, PREFIX_END_DATETIME,
                 PREFIX_LOCATION, PREFIX_DESCRIPTION, PREFIX_BUDGET);
         EventName eventName = ParserUtil.parseEventName(argMultimap.getValue(PREFIX_NAME).get());
         Set<Role> roleList = ParserUtil.parseRoles(argMultimap.getAllValues(PREFIX_ROLE));
-        DateTime dateTime = ParserUtil.parseDateAndTime(argMultimap.getValue(PREFIX_DATE_AND_TIME).get());
+        DateTime startDate = ParserUtil.parseDateAndTime(argMultimap.getValue(PREFIX_START_DATETIME).get());
         Location location = ParserUtil.parseLocation(argMultimap.getValue(PREFIX_LOCATION).get());
         Description description = ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION).get());
 
         Set<Material> materialList = ParserUtil.parseMaterials(argMultimap.getAllValues(PREFIX_MATERIAL));
+
+        // Check if the command contains the optional end datetime field
+        // default value is 3 hours after the start datetime
+        DateTime endDate = new DateTime(startDate.dateAndTime.plusHours(3));
+        if (args.contains(PREFIX_END_DATETIME.getPrefix())) {
+            endDate = ParserUtil.parseDateAndTime(argMultimap.getValue(PREFIX_END_DATETIME).get());
+        }
+
+        // compare end datetime to ensure it is after/same as start datetime
+        if (endDate.dateAndTime.isBefore(startDate.dateAndTime)) {
+            throw new ParseException(MESSAGE_INVALID_DATE_PARAMS);
+        }
+
         // Check if the command contains the optional budget field
         Budget budget = new Budget("");
         if (args.contains(PREFIX_BUDGET.getPrefix())) {
             budget = ParserUtil.parseBudget(argMultimap.getValue(PREFIX_BUDGET).get());
         }
 
-        Event event = new Event(eventName, roleList, dateTime, location, description, materialList, budget);
+        Event event = new Event(eventName, roleList, startDate, endDate, location, description, materialList, budget);
 
         return new EventCreateCommand(event);
     }
