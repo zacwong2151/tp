@@ -225,6 +225,16 @@ public class EventCreateCommandTest {
         public void updateEventToShowList(Predicate<Event> eventPredicate) {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public FilteredList<Volunteer> getVolunteersToShowList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateVolunteersToShowList(Predicate<Volunteer> volunteerPredicate) {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
     /**

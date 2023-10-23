@@ -102,6 +102,12 @@ public class Event {
         assignedVolunteers.remove(volunteer.getName());
     }
     /**
+     * Returns a set of volunteers from the {@code assignedVolunteers}.
+     */
+    public Set<Name> getVolunteerNames() {
+        return assignedVolunteers;
+    }
+    /**
      * Returns true if both events have the same name.
      * This defines a weaker notion of equality between two volunteers.
      */

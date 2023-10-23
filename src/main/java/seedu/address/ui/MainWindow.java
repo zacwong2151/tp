@@ -36,6 +36,7 @@ public class MainWindow extends UiPart<Stage> {
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
     private EventShowWindow eventShowWindow;
+    private VolunteerShowWindow volunteerShowWindow;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -73,6 +74,7 @@ public class MainWindow extends UiPart<Stage> {
         helpWindow = new HelpWindow();
         logger.info("eventToShow list: " + logic.getEventToShowList().toString());
         eventShowWindow = new EventShowWindow(logic.getEventToShowList());
+        volunteerShowWindow = new VolunteerShowWindow(logic.getVolunteersToShowList());
     }
 
     public Stage getPrimaryStage() {
@@ -167,6 +169,18 @@ public class MainWindow extends UiPart<Stage> {
             eventShowWindow.show();
         } else {
             eventShowWindow.focus();
+        }
+    }
+
+    /**
+     * Opens the VolunteerShowWindow or focuses on it if it's already opened.
+     */
+    @FXML
+    public void handleShowVolunteers() {
+        if (!volunteerShowWindow.isShowing()) {
+            volunteerShowWindow.show();
+        } else {
+            volunteerShowWindow.focus();
         }
     }
 

@@ -1,10 +1,9 @@
 package seedu.address.logic.commands.eventvolunteercommands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_ID;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_VOLUNTEER_ID;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
@@ -25,7 +24,7 @@ public class EventListVolunteerCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lists all volunteer assigned to an event. "
             + "Example: " + COMMAND_WORD + " 1";
-    public static final String MESSAGE_SUCCESS = "Listed all volutneers FROM EVENT: %1$s";
+    public static final String MESSAGE_SUCCESS = "Listed all volunteers FROM EVENT: %1$s";
     private final Index eventIndex;
 
     /**
@@ -44,9 +43,11 @@ public class EventListVolunteerCommand extends Command {
         }
 
         Event event = lastShownEventList.get(eventIndex.getZeroBased());
-        // Get all volunteer names, map them to the actual volunteer objects
-        // Make
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(eventToAssign)));
+        Predicate<Volunteer> predicateShowVolunteers = v
+                -> event.getAssignedVolunteers().stream().anyMatch(y -> y.equals(v.getName()));
+        model.updateVolunteersToShowList(predicateShowVolunteers);
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(event)));
     }
     @Override
     public boolean equals(Object other) {
@@ -55,20 +56,18 @@ public class EventListVolunteerCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof EventRemoveVolunteerCommand)) {
+        if (!(other instanceof EventListVolunteerCommand)) {
             return false;
         }
 
-        EventRemoveVolunteerCommand otherEventRemoveVolunteerCommand = (EventRemoveVolunteerCommand) other;
-        return assignedEventIndex.equals(otherEventRemoveVolunteerCommand.assignedEventIndex)
-                && assignedVolunteerIndex.equals(otherEventRemoveVolunteerCommand.assignedVolunteerIndex);
+        EventListVolunteerCommand otherEventListVolunteerCommand = (EventListVolunteerCommand) other;
+        return eventIndex.equals(otherEventListVolunteerCommand.eventIndex);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("assignedEventIndex", assignedEventIndex)
-                .add("assignedVolunteerIndex", assignedVolunteerIndex)
+                .add("eventIndex", eventIndex)
                 .toString();
     }
 }
