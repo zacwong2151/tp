@@ -105,7 +105,6 @@ public class TypicalEvents {
     }
 
     public static List<Event> getTypicalEvents() {
-
         return new ArrayList<>(Arrays.asList(FIRST, SECOND, THIRD, FOURTH, FIFTH, SIXTH, SEVENTH));
     }
 }
