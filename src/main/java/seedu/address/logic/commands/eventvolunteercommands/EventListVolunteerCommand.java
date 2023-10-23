@@ -28,7 +28,7 @@ public class EventListVolunteerCommand extends Command {
     private final Index eventIndex;
 
     /**
-     * Creates an EventAddVolunteerCommand to add the specified {@code Volunteer} to the {@code Event}
+     * Creates an EventListVolunteerCommand to add the specified {@code Volunteer} to the {@code Event}
      */
     public EventListVolunteerCommand(Index eventIndex) {
         this.eventIndex = eventIndex;
@@ -47,7 +47,11 @@ public class EventListVolunteerCommand extends Command {
                 -> event.getAssignedVolunteers().stream().anyMatch(y -> y.equals(v.getName()));
         model.updateVolunteersToShowList(predicateShowVolunteers);
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(event)));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, event.getEventName().eventName),
+                false,
+                false,
+                false,
+                true);
     }
     @Override
     public boolean equals(Object other) {

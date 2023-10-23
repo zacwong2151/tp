@@ -227,6 +227,10 @@ public class MainWindow extends UiPart<Stage> {
                 handleShowEvent();
             }
 
+            if (commandResult.isShowVolunteers()) {
+                handleShowVolunteers();
+            }
+
             return commandResult;
         } catch (CommandException | ParseException e) {
             logger.info("An error occurred while executing command: " + commandText);

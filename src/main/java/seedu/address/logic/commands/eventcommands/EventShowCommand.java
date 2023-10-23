@@ -50,7 +50,8 @@ public class EventShowCommand extends Command {
         return new CommandResult(String.format(MESSAGE_SHOW_EVENT_SUCCESS, eventToShow.getEventName().eventName),
                 false,
                 false,
-                true);
+                true,
+                false);
     }
 
     @Override
