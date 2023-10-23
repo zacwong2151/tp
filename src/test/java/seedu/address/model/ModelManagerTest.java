@@ -3,6 +3,7 @@ package seedu.address.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.logic.commands.VolunteerFindCommandTest.preparePredicate;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_VOLUNTEERS;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalVolunteers.ALICE;
@@ -15,7 +16,8 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.GuiSettings;
-import seedu.address.model.volunteer.NameContainsKeywordsPredicate;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.volunteer.SkillNameContainsKeywordsPredicate;
 import seedu.address.testutil.VolunteerStorageBuilder;
 
 public class ModelManagerTest {
@@ -94,7 +96,7 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void equals() {
+    public void equals() throws ParseException {
         // Need to change
         EventStorage eventStorage = new EventStorage();
         EventStorage differentEventStorage = new EventStorage();
@@ -122,8 +124,9 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(new ModelManager(differentEventStorage, differentVolunteerStorage, userPrefs)));
 
         // different filteredList -> returns false
-        String[] keywords = ALICE.getName().fullName.split("\\s+");
-        modelManager.updateFilteredVolunteerList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
+        String name = ALICE.getName().fullName.split("\\s+")[0];
+        SkillNameContainsKeywordsPredicate predicate = preparePredicate(" n/" + name);
+        modelManager.updateFilteredVolunteerList(predicate);
         assertFalse(modelManager.equals(new ModelManager(eventStorage, volunteerStorage, userPrefs)));
 
         // resets modelManager to initial state for upcoming tests

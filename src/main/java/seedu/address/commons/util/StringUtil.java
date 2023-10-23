@@ -1,11 +1,14 @@
 package seedu.address.commons.util;
 
+import seedu.address.model.skill.Skill;
+
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Arrays;
+import java.util.Set;
 import java.util.stream.Stream;
 
 /**
@@ -37,6 +40,20 @@ public class StringUtil {
 
         return Arrays.stream(wordsInPreppedSentence)
                 .anyMatch(s -> s.contains(preppedWord));
+    }
+
+    public static boolean containsSkillIgnoreCase(Set<Skill> skills, Skill skill) {
+        requireNonNull(skills);
+        requireNonNull(skill);
+
+        Stream<String> preppedSkills = skills.stream().map(s -> s.skillName.toLowerCase());
+        // might be flatmap
+        String preppedSkill = skill.skillName.toLowerCase();
+
+        checkArgument(!preppedSkill.equals(""), "Skill cannot be empty string");
+        checkArgument(preppedSkill.split("\\s+").length == 1, "String parameter should be a single word");
+
+        return preppedSkills.anyMatch(s -> s.contains(preppedSkill));
     }
 
     /**
