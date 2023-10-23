@@ -15,11 +15,20 @@ public class SkillNameContainsKeywordsPredicate implements Predicate<Volunteer> 
     private final List<Name> names;
     private final List<Skill> skills;
 
+    /**
+     * Constructor that takes in names and skills
+     * @param names list of names
+     * @param skills list of skills
+     */
     public SkillNameContainsKeywordsPredicate(List<Name> names, List<Skill> skills) {
         this.names = names;
         this.skills = skills;
     }
 
+    /**
+     * Constructor that only takes in names
+     * @param names list of names
+     */
     public SkillNameContainsKeywordsPredicate(List<Name> names) {
         this.names = names;
         this.skills = new ArrayList<>();
@@ -28,8 +37,8 @@ public class SkillNameContainsKeywordsPredicate implements Predicate<Volunteer> 
     @Override
     public boolean test(Volunteer volunteer) {
         if (names.isEmpty()) {
-            assert !skills.isEmpty() : "the check for both skills and names not being empty is done in" +
-                    " parse method of VolunteerFindCommandParser class";
+            assert !skills.isEmpty() : "the check for both skills and names not being empty is done in"
+                    + " parse method of VolunteerFindCommandParser class";
             return skills.stream()
                     .allMatch(skill ->
                             StringUtil.containsSkillIgnoreCase(volunteer.getSkills(), skill));
@@ -62,9 +71,10 @@ public class SkillNameContainsKeywordsPredicate implements Predicate<Volunteer> 
             return false;
         }
 
-        SkillNameContainsKeywordsPredicate otherNameContainsKeywordsPredicate = (SkillNameContainsKeywordsPredicate) other;
-        return names.equals(otherNameContainsKeywordsPredicate.names) &&
-                skills.equals(otherNameContainsKeywordsPredicate.skills);
+        SkillNameContainsKeywordsPredicate otherNameContainsKeywordsPredicate =
+                (SkillNameContainsKeywordsPredicate) other;
+        return names.equals(otherNameContainsKeywordsPredicate.names)
+                && skills.equals(otherNameContainsKeywordsPredicate.skills);
     }
 
     @Override

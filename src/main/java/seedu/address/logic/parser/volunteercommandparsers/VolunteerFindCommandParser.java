@@ -2,20 +2,14 @@ package seedu.address.logic.parser.volunteercommandparsers;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SKILL;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.volunteercommands.VolunteerCreateCommand;
-import seedu.address.logic.commands.volunteercommands.VolunteerEditCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerFindCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
@@ -47,8 +41,8 @@ public class VolunteerFindCommandParser implements Parser<VolunteerFindCommand> 
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, VolunteerFindCommand.MESSAGE_USAGE));
         }
 
-        assert argMultimap.getValue(PREFIX_NAME).isPresent() || argMultimap.getValue(PREFIX_SKILL).isPresent() :
-                "At least one PREFIX_NAME or PREFIX_SKILL should be present";
+        assert argMultimap.getValue(PREFIX_NAME).isPresent() || argMultimap.getValue(PREFIX_SKILL).isPresent()
+                : "At least one PREFIX_NAME or PREFIX_SKILL should be present";
 
         Set<Name> nameKeywords = ParserUtil.parseNames(argMultimap.getAllValues(PREFIX_NAME));
         List<Name> names = new ArrayList<>(nameKeywords);
