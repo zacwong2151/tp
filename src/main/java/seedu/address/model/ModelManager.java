@@ -25,6 +25,7 @@ public class ModelManager implements Model {
     private final UserPrefs userPrefs;
     private final FilteredList<Volunteer> filteredVolunteers;
     private final FilteredList<Event> filteredEvents;
+    private final FilteredList<Event> eventToShowList;
 
     /**
      * Initializes a ModelManager with the given eventStorage, volunteerStorage and userPrefs.
@@ -41,6 +42,7 @@ public class ModelManager implements Model {
         this.userPrefs = new UserPrefs(userPrefs);
         filteredEvents = new FilteredList<>(this.eventStorage.getEventList());
         filteredVolunteers = new FilteredList<>(this.volunteerStorage.getVolunteerList());
+        eventToShowList = new FilteredList<>(this.eventStorage.getEventList());
     }
 
     public ModelManager() {
@@ -178,6 +180,22 @@ public class ModelManager implements Model {
     public void updateFilteredEventList(Predicate<Event> predicate) {
         requireNonNull(predicate);
         filteredEvents.setPredicate(predicate);
+        eventToShowList.setPredicate(predicate);
+    }
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Event} backed by the internal list of
+     * {@code versionedEventStorage}
+     */
+    @Override
+    public FilteredList<Event> getEventToShowList() {
+        return eventToShowList;
+    }
+
+    @Override
+    public void updateEventToShowList(Predicate<Event> eventPredicate) {
+        requireNonNull(eventPredicate);
+        eventToShowList.setPredicate(eventPredicate);
     }
 
     //=========== Filtered Volunteer Storage Accessors =============================================================
@@ -213,7 +231,8 @@ public class ModelManager implements Model {
                 && eventStorage.equals(otherModelManager.eventStorage)
                 && userPrefs.equals(otherModelManager.userPrefs)
                 && filteredVolunteers.equals(otherModelManager.filteredVolunteers)
-                && filteredEvents.equals(otherModelManager.filteredEvents);
+                && filteredEvents.equals(otherModelManager.filteredEvents)
+                && eventToShowList.equals(otherModelManager.eventToShowList);
     }
 
 }
