@@ -74,6 +74,18 @@ public class SkillNameContainsKeywordsPredicateTest {
     }
 
     @Test
+    public void test_skillDoesNotContainKeyword_returnsFalse() throws ParseException {
+        SkillNameContainsKeywordsPredicate predicate2 = preparePredicate(" s/chef");
+        assertFalse(predicate2.test(new VolunteerBuilder().withSkills("builder", "cook").build()));
+    }
+
+    @Test
+    public void test_skillContainsKeyword_returnsTrue() throws ParseException {
+        SkillNameContainsKeywordsPredicate predicate2 = preparePredicate(" s/chef");
+        assertTrue(predicate2.test(new VolunteerBuilder().withSkills("chef", "waiter").build()));
+    }
+
+    @Test
     public void toStringMethod() throws ParseException {
         SkillNameContainsKeywordsPredicate predicate = preparePredicate(" n/keyword1 s/keyword2");
 
