@@ -1,13 +1,12 @@
 package seedu.address.model.volunteer;
 
-import static seedu.address.logic.commands.VolunteerFindCommandTest.preparePredicate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.logic.commands.VolunteerFindCommandTest.preparePredicate;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import java.util.Collections;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -49,11 +48,11 @@ public class SkillNameContainsKeywordsPredicateTest {
         assertTrue(predicate.test(new VolunteerBuilder().withName("Alice Bob").build()));
 
         // Only one matching keyword
-        predicate =  preparePredicate(" n/Bob n/Carol");
+        predicate = preparePredicate(" n/Bob n/Carol");
         assertTrue(predicate.test(new VolunteerBuilder().withName("Alice Carol").build()));
 
         // Mixed-case keywords
-        predicate =  preparePredicate(" n/aLIce n/bOB");
+        predicate = preparePredicate(" n/aLIce n/bOB");
         assertTrue(predicate.test(new VolunteerBuilder().withName("Alice Bob").build()));
     }
 
@@ -78,8 +77,8 @@ public class SkillNameContainsKeywordsPredicateTest {
     public void toStringMethod() throws ParseException {
         SkillNameContainsKeywordsPredicate predicate = preparePredicate(" n/keyword1 s/keyword2");
 
-        String expected = SkillNameContainsKeywordsPredicate.class.getCanonicalName() + "{names=[keyword1], " +
-                "skills=[keyword2]}";
+        String expected = SkillNameContainsKeywordsPredicate.class.getCanonicalName() + "{names=[keyword1], "
+                + "skills=[keyword2]}";
         assertEquals(expected, predicate.toString());
     }
 }

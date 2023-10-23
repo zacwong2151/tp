@@ -14,16 +14,15 @@ import static seedu.address.testutil.TypicalVolunteers.BENSON;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.GuiSettings;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.volunteer.SkillNameContainsKeywordsPredicate;
 import seedu.address.logic.commands.CommandTestUtil;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Event;
+import seedu.address.model.volunteer.SkillNameContainsKeywordsPredicate;
 import seedu.address.testutil.TypicalEvents;
 import seedu.address.testutil.VolunteerStorageBuilder;
 
