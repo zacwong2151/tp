@@ -4,10 +4,8 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.event.Event;
@@ -68,13 +66,6 @@ public class Volunteer {
         return Collections.unmodifiableSet(assignedEvents);
     }
     /**
-     * Returns a JSON assigned events list.
-     */
-    public List<EventName> getJsonEvents() {
-        return assignedEvents.stream()
-                .collect(Collectors.toList());
-    }
-    /**
      * Returns an immutable skill set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
@@ -86,7 +77,16 @@ public class Volunteer {
      * Adds an event to the {@code assignedEvents}.
      * @param event The event to be added.
      */
-    public void addEvent(Event event) { assignedEvents.add(event.getEventName()); }
+    public void addEvent(Event event) {
+        assignedEvents.add(event.getEventName());
+    }
+    /**
+     * Removes an event from the {@code assignedEvents}.
+     * @param event The event to be removed.
+     */
+    public void removeEvent(Event event) {
+        assignedEvents.remove(event.getEventName());
+    }
     /**
      * Returns true if both volunteers have the same name.
      * This defines a weaker notion of equality between two volunteers.

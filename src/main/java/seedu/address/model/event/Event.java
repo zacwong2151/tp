@@ -77,17 +77,30 @@ public class Event {
      * Returns an immutable Volunteer set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
-    public Set<Name> getAssignedVolunteers() { return Collections.unmodifiableSet(assignedVolunteers); }
+    public Set<Name> getAssignedVolunteers() {
+        return Collections.unmodifiableSet(assignedVolunteers);
+    }
     /**
      * Adds a volunteer to the {@code assignedVolunteers}.
      * @param volunteer The volunteer to be added.
      */
-    public void addVolunteer(Volunteer volunteer) { assignedVolunteers.add(volunteer.getName()); }
+    public void addVolunteer(Volunteer volunteer) {
+        assignedVolunteers.add(volunteer.getName());
+    }
     /**
      * Checks if a volunteer is already in {@code assignedVolunteers}.
      * @param volunteer The volunteer to check.
      */
-    public boolean hasVolunteer(Volunteer volunteer) { return assignedVolunteers.contains(volunteer.getName()); }
+    public boolean hasVolunteer(Volunteer volunteer) {
+        return assignedVolunteers.contains(volunteer.getName());
+    }
+    /**
+     * Removes a volunteer from the {@code assignedVolunteers}.
+     * @param volunteer The volunteer to be removed.
+     */
+    public void removeVolunteer(Volunteer volunteer) {
+        assignedVolunteers.remove(volunteer.getName());
+    }
     /**
      * Returns true if both events have the same name.
      * This defines a weaker notion of equality between two volunteers.
