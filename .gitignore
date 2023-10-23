@@ -25,3 +25,5 @@ docs/_markbind/logs/
 
 # Binaries
 /bin/
+
+.gitmessage.txt
