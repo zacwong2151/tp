@@ -2,14 +2,14 @@ package seedu.address.model.volunteer;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.EventName;
 import seedu.address.model.skill.Skill;
+import seedu.address.storage.event.JsonAdaptedEvent;
 
 /**
  * Represents a Volnuteer in the VolunteerStorage.
@@ -24,12 +24,12 @@ public class Volunteer {
 
     // Data fields
     private final Set<Skill> skills = new HashSet<>();
-    private final Set<Event> assignedEvents = new HashSet<>();
+    private final Set<EventName> assignedEvents = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Volunteer(Name name, Phone phone, Email email, Set<Skill> skills, Set<Event> assignedEvents) {
+    public Volunteer(Name name, Phone phone, Email email, Set<Skill> skills, Set<EventName> assignedEvents) {
         requireAllNonNull(name, phone, email, skills);
         this.name = name;
         this.phone = phone;
@@ -61,22 +61,29 @@ public class Volunteer {
      * Returns an immutable assigned events set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
-    public Set<Event> getAssignedEvents() {
+    public Set<EventName> getAssignedEvents() {
         return Collections.unmodifiableSet(assignedEvents);
+    }
+    /**
+     * Returns a JSON assigned events list.
+     */
+    public List<EventName> getJsonEvents() {
+        return assignedEvents.stream()
+                .collect(Collectors.toList());
     }
     /**
      * Returns an immutable skill set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
     public boolean hasEvent(Event event) {
-        return assignedEvents.contains(event);
+        return assignedEvents.contains(event.getEventName());
     }
 
     /**
      * Adds an event to the {@code assignedEvents}.
      * @param event The event to be added.
      */
-    public void addEvent(Event event) { assignedEvents.add(event); }
+    public void addEvent(Event event) { assignedEvents.add(event.getEventName()); }
     /**
      * Returns true if both volunteers have the same name.
      * This defines a weaker notion of equality between two volunteers.

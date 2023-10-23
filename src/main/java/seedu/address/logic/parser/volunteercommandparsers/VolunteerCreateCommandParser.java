@@ -18,6 +18,7 @@ import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.EventName;
 import seedu.address.model.skill.Skill;
 import seedu.address.model.volunteer.Email;
 import seedu.address.model.volunteer.Name;
@@ -50,7 +51,7 @@ public class VolunteerCreateCommandParser implements Parser<VolunteerCreateComma
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Set<Skill> skillList = ParserUtil.parseSkills(argMultimap.getAllValues(PREFIX_SKILL));
 
-        Volunteer volunteer = new Volunteer(name, phone, email, skillList, new HashSet<Event>());
+        Volunteer volunteer = new Volunteer(name, phone, email, skillList, new HashSet<EventName>());
         return new VolunteerCreateCommand(volunteer);
     }
 

@@ -10,13 +10,12 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.event.Event;
+import seedu.address.model.event.EventName;
 import seedu.address.model.skill.Skill;
 import seedu.address.model.volunteer.Email;
 import seedu.address.model.volunteer.Name;
 import seedu.address.model.volunteer.Phone;
 import seedu.address.model.volunteer.Volunteer;
-import seedu.address.storage.event.JsonAdaptedEvent;
 
 /**
  * Jackson-friendly version of {@link Volunteer}.
@@ -29,7 +28,7 @@ public class JsonAdaptedVolunteer {
     private final String phone;
     private final String email;
     private final List<JsonAdaptedSkill> skills = new ArrayList<>();
-    private final List<JsonAdaptedEvent> assignedEvents = new ArrayList<>();
+    private final List<JsonAdaptedEventName> assignedEvents = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedVolunteer} with the given volunteer details.
@@ -38,7 +37,7 @@ public class JsonAdaptedVolunteer {
     public JsonAdaptedVolunteer(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
                                 @JsonProperty("email") String email,
                                 @JsonProperty("skills") List<JsonAdaptedSkill> skills,
-                                @JsonProperty("events") List<JsonAdaptedEvent> assignedEvents) {
+                                @JsonProperty("events") List<JsonAdaptedEventName> assignedEvents) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -61,7 +60,7 @@ public class JsonAdaptedVolunteer {
                 .map(JsonAdaptedSkill::new)
                 .collect(Collectors.toList()));
         assignedEvents.addAll(source.getAssignedEvents().stream()
-                .map(JsonAdaptedEvent::new)
+                .map(JsonAdaptedEventName::new)
                 .collect(Collectors.toList()));
     }
 
@@ -76,8 +75,8 @@ public class JsonAdaptedVolunteer {
             volunteerSkills.add(skill.toModelType());
         }
 
-        final List<Event> volunteerEvents = new ArrayList<>();
-        for (JsonAdaptedEvent event : assignedEvents) {
+        final List<EventName> volunteerEvents = new ArrayList<>();
+        for (JsonAdaptedEventName event : assignedEvents) {
             volunteerEvents.add(event.toModelType());
         }
 
@@ -106,7 +105,7 @@ public class JsonAdaptedVolunteer {
         final Email modelEmail = new Email(email);
 
         final Set<Skill> modelSkills = new HashSet<>(volunteerSkills);
-        final Set<Event> modelEvents = new HashSet<>(volunteerEvents);
+        final Set<EventName> modelEvents = new HashSet<>(volunteerEvents);
         return new Volunteer(modelName, modelPhone, modelEmail, modelSkills, modelEvents);
     }
 

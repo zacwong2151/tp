@@ -10,6 +10,7 @@ import seedu.address.model.ReadOnlyEventStorage;
 import seedu.address.model.ReadOnlyVolunteerStorage;
 import seedu.address.model.VolunteerStorage;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.EventName;
 import seedu.address.model.event.Material;
 import seedu.address.model.event.Role;
 import seedu.address.model.skill.Skill;
@@ -76,17 +77,17 @@ public class SampleDataUtil {
     public static Volunteer[] getSampleVolunteers() {
         return new Volunteer[] {
             new Volunteer(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
-                getSkillSet("friends"), new HashSet<Event>()),
+                getSkillSet("friends"), new HashSet<EventName>()),
             new Volunteer(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
-                getSkillSet("colleagues", "friends"), new HashSet<Event>()),
+                getSkillSet("colleagues", "friends"), new HashSet<EventName>()),
             new Volunteer(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
-                getSkillSet("neighbours"), new HashSet<Event>()),
+                getSkillSet("neighbours"), new HashSet<EventName>()),
             new Volunteer(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
-                getSkillSet("family"), new HashSet<Event>()),
+                getSkillSet("family"), new HashSet<EventName>()),
             new Volunteer(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
-                getSkillSet("classmates"), new HashSet<Event>()),
+                getSkillSet("classmates"), new HashSet<EventName>()),
             new Volunteer(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
-                getSkillSet("colleagues"), new HashSet<Event>())
+                getSkillSet("colleagues"), new HashSet<EventName>())
         };
     }
 

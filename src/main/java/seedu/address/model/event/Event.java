@@ -3,11 +3,15 @@ package seedu.address.model.event;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.volunteer.Name;
 import seedu.address.model.volunteer.Volunteer;
+import seedu.address.storage.volunteer.JsonAdaptedVolunteer;
 
 /**
  * Represents an Event in the Event list.
@@ -24,13 +28,13 @@ public class Event {
     private final Description description;
     private final Set<Material> materials;
     private final Budget budget;
-    private final Set<Volunteer> assignedVolunteers;
+    private final Set<Name> assignedVolunteers;
 
     /**
      * Every field must be present and not null.
      */
     public Event(EventName eventName, Set<Role> roles, DateTime dateAndTime, Location location, Description description,
-                 Set<Material> materials, Budget budget, Set<Volunteer> assignedVolunteers) {
+                 Set<Material> materials, Budget budget, Set<Name> assignedVolunteers) {
         requireAllNonNull(eventName, roles, dateAndTime, location, description, materials, budget, assignedVolunteers);
         this.eventName = eventName;
         this.roles = roles;
@@ -76,17 +80,17 @@ public class Event {
      * Returns an immutable Volunteer set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
-    public Set<Volunteer> getAssignedVolunteers() { return Collections.unmodifiableSet(assignedVolunteers); }
+    public Set<Name> getAssignedVolunteers() { return Collections.unmodifiableSet(assignedVolunteers); }
     /**
      * Adds a volunteer to the {@code assignedVolunteers}.
      * @param volunteer The volunteer to be added.
      */
-    public void addVolunteer(Volunteer volunteer) { assignedVolunteers.add(volunteer); }
+    public void addVolunteer(Volunteer volunteer) { assignedVolunteers.add(volunteer.getName()); }
     /**
      * Checks if a volunteer is already in {@code assignedVolunteers}.
      * @param volunteer The volunteer to check.
      */
-    public boolean hasVolunteer(Volunteer volunteer) { return assignedVolunteers.contains(volunteer); }
+    public boolean hasVolunteer(Volunteer volunteer) { return assignedVolunteers.contains(volunteer.getName()); }
     /**
      * Returns true if both events have the same name.
      * This defines a weaker notion of equality between two volunteers.

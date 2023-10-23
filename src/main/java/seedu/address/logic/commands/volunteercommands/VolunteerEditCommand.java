@@ -23,6 +23,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.EventName;
 import seedu.address.model.skill.Skill;
 import seedu.address.model.volunteer.Email;
 import seedu.address.model.volunteer.Name;
@@ -100,7 +101,7 @@ public class VolunteerEditCommand extends Command {
         Phone updatedPhone = editVolunteerDescriptor.getPhone().orElse(volunteerToEdit.getPhone());
         Email updatedEmail = editVolunteerDescriptor.getEmail().orElse(volunteerToEdit.getEmail());
         Set<Skill> updatedSkills = editVolunteerDescriptor.getSkills().orElse(volunteerToEdit.getSkills());
-        Set<Event> updatedAssignedEvents = editVolunteerDescriptor.getAssignedEvents()
+        Set<EventName> updatedAssignedEvents = editVolunteerDescriptor.getAssignedEvents()
                 .orElse(volunteerToEdit.getAssignedEvents());
 
         return new Volunteer(updatedName, updatedPhone, updatedEmail, updatedSkills, updatedAssignedEvents);
@@ -139,7 +140,7 @@ public class VolunteerEditCommand extends Command {
         private Phone phone;
         private Email email;
         private Set<Skill> skills;
-        private Set<Event> assignedEvents;
+        private Set<EventName> assignedEvents;
 
         public EditVolunteerDescriptor() {}
 
@@ -208,7 +209,7 @@ public class VolunteerEditCommand extends Command {
          * if modification is attempted.
          * Returns {@code Optional#empty()} if {@code assignedEvents} is null.
          */
-        public Optional<Set<Event>> getAssignedEvents() {
+        public Optional<Set<EventName>> getAssignedEvents() {
             return (assignedEvents != null) ? Optional.of(Collections.unmodifiableSet(assignedEvents))
                     : Optional.empty();
         }
@@ -217,7 +218,7 @@ public class VolunteerEditCommand extends Command {
          * Sets {@code assignedEvents} to this object's {@code assignedEvents}.
          * A defensive copy of {@code assignedEvents} is used internally.
          */
-        public void setAssignedEvents(Set<Event> assignedEvents) {
+        public void setAssignedEvents(Set<EventName> assignedEvents) {
             this.assignedEvents = (assignedEvents != null) ? new HashSet<>(assignedEvents) : null;
         }
 

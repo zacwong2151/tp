@@ -28,6 +28,7 @@ import seedu.address.model.event.EventName;
 import seedu.address.model.event.Location;
 import seedu.address.model.event.Material;
 import seedu.address.model.event.Role;
+import seedu.address.model.volunteer.Name;
 import seedu.address.model.volunteer.Volunteer;
 
 
@@ -68,7 +69,7 @@ public class EventCreateCommandParser implements Parser<EventCreateCommand> {
         }
 
         Event event = new Event(eventName, roleList, dateTime, location, description, materialList, budget,
-                new HashSet<Volunteer>());
+                new HashSet<Name>());
 
         return new EventCreateCommand(event);
     }
