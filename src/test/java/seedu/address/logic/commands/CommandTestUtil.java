@@ -161,9 +161,7 @@ public class CommandTestUtil {
         assertTrue(targetIndex.getZeroBased() < model.getFilteredVolunteerList().size());
 
         Volunteer volunteer = model.getFilteredVolunteerList().get(targetIndex.getZeroBased());
-        // final String[] splitName = volunteer.getName().fullName.split("\\s+");
         final Name volunteerName = volunteer.getName();
-        // model.updateFilteredVolunteerList(new SkillNameContainsKeywordsPredicate(Arrays.asList(splitName[0]), new ArrayList<>()));
         Name preppedName = new Name(volunteerName.fullName.split("\\s+")[0]);
         model.updateFilteredVolunteerList(new SkillNameContainsKeywordsPredicate(Arrays.asList(preppedName)));
 

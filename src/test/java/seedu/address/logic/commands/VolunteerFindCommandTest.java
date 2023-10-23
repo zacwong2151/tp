@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_VOLUNTEERS_LISTED_OVERVIEW;
@@ -49,9 +48,11 @@ public class VolunteerFindCommandTest {
     @Test
     public void equals() {
         SkillNameContainsKeywordsPredicate firstPredicate =
-                new SkillNameContainsKeywordsPredicate(Collections.singletonList(new Name("first")), new ArrayList<>());
+                new SkillNameContainsKeywordsPredicate(Collections.singletonList(new Name("first")),
+                        new ArrayList<>());
         SkillNameContainsKeywordsPredicate secondPredicate =
-                new SkillNameContainsKeywordsPredicate(Collections.singletonList(new Name("second")), new ArrayList<>());
+                new SkillNameContainsKeywordsPredicate(Collections.singletonList(new Name("second")),
+                        new ArrayList<>());
 
         VolunteerFindCommand findFirstCommand = new VolunteerFindCommand(firstPredicate);
         VolunteerFindCommand findSecondCommand = new VolunteerFindCommand(secondPredicate);
@@ -105,8 +106,8 @@ public class VolunteerFindCommandTest {
     @Test
     public void preparePredicateTest() throws ParseException {
         SkillNameContainsKeywordsPredicate predicate = preparePredicate(" n/Alice n/Bob");
-        assertEquals("seedu.address.model.volunteer.SkillNameContainsKeywordsPredicate" +
-                "{names=[Alice, Bob], skills=[]}", predicate.toString());
+        assertEquals("seedu.address.model.volunteer.SkillNameContainsKeywordsPredicate"
+                + "{names=[Alice, Bob], skills=[]}", predicate.toString());
     }
 
 
