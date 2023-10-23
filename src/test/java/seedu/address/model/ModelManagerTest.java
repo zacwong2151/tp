@@ -101,6 +101,16 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void getFilteredEventList_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredEventList().remove(0));
+    }
+
+    @Test
+    public void getEventToShowList_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> modelManager.getEventToShowList().remove(0));
+    }
+
+    @Test
     public void equals() {
         // Need to change
         EventStorage eventStorage = TypicalEvents.getTypicalEventStorage();
