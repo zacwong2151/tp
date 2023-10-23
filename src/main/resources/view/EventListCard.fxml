@@ -27,7 +27,6 @@
         </Label>
         <Label fx:id="eventName" text="\$first" styleClass="cell_big_label" />
       </HBox>
-      <FlowPane fx:id="materials" />
       <Label fx:id="dateAndTime" styleClass="cell_small_label" text="\$dateAndTime" />
       <Label fx:id="loc" styleClass="cell_small_label" text="\$loc" />
       <Label fx:id="description" styleClass="cell_small_label" text="\$description" />

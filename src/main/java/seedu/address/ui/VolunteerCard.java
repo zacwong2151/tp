@@ -47,8 +47,8 @@ public class VolunteerCard extends UiPart<Region> {
         this.volunteer = volunteer;
         id.setText(displayedIndex + ". ");
         name.setText(volunteer.getName().fullName);
-        phone.setText(volunteer.getPhone().value);
-        email.setText(volunteer.getEmail().value);
+        phone.setText("Phone number: " + volunteer.getPhone().value);
+        email.setText("Email: " + volunteer.getEmail().value);
         volunteer.getSkills().stream()
                 .sorted(Comparator.comparing(skill -> skill.skillName))
                 .forEach(skill -> skills.getChildren().add(new Label(skill.skillName)));
