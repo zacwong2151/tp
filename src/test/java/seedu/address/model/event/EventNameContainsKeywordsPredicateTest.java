@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.testutil.EventBuilder;
 
 public class EventNameContainsKeywordsPredicateTest {
+
     @Test
     public void equals() {
         List<String> firstPredicateKeywordList = Collections.singletonList("first");
@@ -37,7 +38,7 @@ public class EventNameContainsKeywordsPredicateTest {
         // null -> returns false
         assertFalse(firstPredicate.equals(null));
 
-        // different volunteer -> returns false
+        // different event -> returns false
         assertFalse(firstPredicate.equals(secondPredicate));
     }
 
@@ -68,10 +69,18 @@ public class EventNameContainsKeywordsPredicateTest {
         assertFalse(predicate.test(new EventBuilder().withEventName("Clean").build()));
 
         // Non-matching keyword
+        predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("Donation"));
+        assertFalse(predicate.test(new EventBuilder().withEventName("Clean 1").build()));
+
+        // Keywords match role, and location, but does not match name
+        predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("DoNothing", "Event", "leader",
+                "admiralty"));
+        assertFalse(predicate.test(new EventBuilder().withEventName("Clean").withRoles("Event Leader")
+                .withLocation("admiralty").withDescription("help out la").build()));
         predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("Food"));
         assertFalse(predicate.test(new EventBuilder().withEventName("Clean up").build()));
 
-        // Keywords match phone, and email, but does not match name
+        // Keywords match date, time, location and description, but does not match name
         predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("23/9/2023", "1800", "East", "dinnertime"));
         assertFalse(predicate.test(new EventBuilder().withEventName("Clean up beach").withDateAndTime("23/9/2023 1800")
                 .withDescription("Clean very clean").withLocation("East").build()));
