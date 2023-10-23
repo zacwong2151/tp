@@ -35,6 +35,9 @@ public interface Logic {
     /** Returns an unmodifiable view of the filtered list of events */
     ObservableList<Event> getFilteredEventList();
 
+    /** Returns an unmodifiable view of the event to display in event window */
+    ObservableList<Event> getEventToShowList();
+
     /**
      * Returns the user prefs' event storage file path.
      */

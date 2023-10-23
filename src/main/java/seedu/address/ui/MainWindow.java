@@ -35,6 +35,7 @@ public class MainWindow extends UiPart<Stage> {
     private EventListPanel eventListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
+    private EventShowWindow eventShowWindow;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -70,6 +71,8 @@ public class MainWindow extends UiPart<Stage> {
         setAccelerators();
 
         helpWindow = new HelpWindow();
+        logger.info("eventToShow list: " + logic.getEventToShowList().toString());
+        eventShowWindow = new EventShowWindow(logic.getEventToShowList());
     }
 
     public Stage getPrimaryStage() {
@@ -155,6 +158,18 @@ public class MainWindow extends UiPart<Stage> {
         }
     }
 
+    /**
+     * Opens the EventShowWindow or focuses on it if it's already opened.
+     */
+    @FXML
+    public void handleShowEvent() {
+        if (!eventShowWindow.isShowing()) {
+            eventShowWindow.show();
+        } else {
+            eventShowWindow.focus();
+        }
+    }
+
     void show() {
         primaryStage.show();
     }
@@ -192,6 +207,10 @@ public class MainWindow extends UiPart<Stage> {
 
             if (commandResult.isExit()) {
                 handleExit();
+            }
+
+            if (commandResult.isShowEvent()) {
+                handleShowEvent();
             }
 
             return commandResult;

@@ -4,20 +4,27 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.VolunteerFindCommandTest.preparePredicate;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_VOLUNTEERS;
 import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.TypicalEvents.FIRST;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalVolunteers.ALICE;
 import static seedu.address.testutil.TypicalVolunteers.BENSON;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.volunteer.SkillNameContainsKeywordsPredicate;
+import seedu.address.logic.commands.CommandTestUtil;
+import seedu.address.model.event.Event;
+import seedu.address.testutil.TypicalEvents;
 import seedu.address.testutil.VolunteerStorageBuilder;
 
 public class ModelManagerTest {
@@ -96,9 +103,19 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void getFilteredEventList_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredEventList().remove(0));
+    }
+
+    @Test
+    public void getEventToShowList_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> modelManager.getEventToShowList().remove(0));
+    }
+
+    @Test
     public void equals() throws ParseException {
         // Need to change
-        EventStorage eventStorage = new EventStorage();
+        EventStorage eventStorage = TypicalEvents.getTypicalEventStorage();
         EventStorage differentEventStorage = new EventStorage();
 
         VolunteerStorage volunteerStorage = new VolunteerStorageBuilder().withVolunteer(ALICE).withVolunteer(BENSON)
@@ -136,5 +153,20 @@ public class ModelManagerTest {
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setVolunteerStorageFilePath(Paths.get("differentFilePath"));
         assertFalse(modelManager.equals(new ModelManager(eventStorage, volunteerStorage, differentUserPrefs)));
+
+        // different filteredEventList -> returns false
+        CommandTestUtil.showEventAtIndex(modelManager, INDEX_FIRST);
+        assertFalse(modelManager.equals(new ModelManager(eventStorage, volunteerStorage, userPrefs)));
+
+        // resets modelManager to initial state for upcoming tests
+        modelManager.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+
+        // different eventToShowList -> returns false
+        Predicate<Event> predicateShowEvent = e -> e.equals(FIRST);
+        modelManager.updateEventToShowList(predicateShowEvent);
+        assertFalse(modelManager.equals(new ModelManager(eventStorage, volunteerStorage, userPrefs)));
+
+        // resets modelManager to initial state for upcoming tests
+        modelManager.updateEventToShowList(PREDICATE_SHOW_ALL_EVENTS);
     }
 }

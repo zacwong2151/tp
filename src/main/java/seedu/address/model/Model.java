@@ -90,6 +90,15 @@ public interface Model {
      */
     void updateFilteredEventList(Predicate<Event> predicate);
 
+    /** Returns an unmodifiable view of the event to display in the event window */
+    ObservableList<Event> getEventToShowList();
+
+    /**
+     * Updates the filter of the eventToShow list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateEventToShowList(Predicate<Event> eventPredicate);
+
     //=========== Volunteer Storage ================================================================================
     /**
      * Returns the user prefs' volunteer storage file path.
