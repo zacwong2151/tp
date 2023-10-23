@@ -3,7 +3,7 @@ package seedu.address.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
-import seedu.address.model.event.Event;
+import seedu.address.model.event.EventName;
 import seedu.address.model.skill.Skill;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.model.volunteer.Email;
@@ -24,7 +24,7 @@ public class VolunteerBuilder {
     private Phone phone;
     private Email email;
     private Set<Skill> skills;
-    private Set<Event> assignedEvents = new HashSet<>();
+    private Set<EventName> assignedEvents = new HashSet<>();
 
     /**
      * Creates a {@code VolunteerBuilder} with the default details.

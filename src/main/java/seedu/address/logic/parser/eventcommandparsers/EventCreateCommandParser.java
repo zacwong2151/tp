@@ -29,7 +29,6 @@ import seedu.address.model.event.Location;
 import seedu.address.model.event.Material;
 import seedu.address.model.event.Role;
 import seedu.address.model.volunteer.Name;
-import seedu.address.model.volunteer.Volunteer;
 
 
 /**

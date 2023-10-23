@@ -7,7 +7,7 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.model.volunteer.Volunteer;
+import seedu.address.model.volunteer.Name;
 
 public class EventTest {
 
@@ -27,7 +27,7 @@ public class EventTest {
         materials.add(soap);
 
         Budget b = new Budget("1000.00");
-        Set<Volunteer> vList = new HashSet<>();
+        Set<Name> vList = new HashSet<>();
         Event e = new Event(
                 name,
                 roles,

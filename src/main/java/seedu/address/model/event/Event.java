@@ -3,15 +3,12 @@ package seedu.address.model.event;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.volunteer.Name;
 import seedu.address.model.volunteer.Volunteer;
-import seedu.address.storage.volunteer.JsonAdaptedVolunteer;
 
 /**
  * Represents an Event in the Event list.

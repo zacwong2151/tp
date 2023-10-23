@@ -15,7 +15,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.volunteer.Email;
 import seedu.address.model.volunteer.Name;
 import seedu.address.model.volunteer.Phone;
-import seedu.address.storage.event.JsonAdaptedEvent;
+import seedu.address.storage.volunteer.JsonAdaptedEventName;
 import seedu.address.storage.volunteer.JsonAdaptedSkill;
 import seedu.address.storage.volunteer.JsonAdaptedVolunteer;
 
@@ -28,7 +28,7 @@ public class JsonAdaptedVolunteerTest {
     private static final String VALID_NAME = BENSON.getName().toString();
     private static final String VALID_PHONE = BENSON.getPhone().toString();
     private static final String VALID_EMAIL = BENSON.getEmail().toString();
-    private static final List<JsonAdaptedEvent> VALID_ASSIGNED_EVENTS = new ArrayList<>();
+    private static final List<JsonAdaptedEventName> VALID_ASSIGNED_EVENTS = new ArrayList<>();
 
     private static final List<JsonAdaptedSkill> VALID_SKILLS = BENSON.getSkills().stream()
             .map(JsonAdaptedSkill::new)
