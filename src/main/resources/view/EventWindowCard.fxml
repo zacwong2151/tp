@@ -23,7 +23,6 @@
       <Label fx:id="eventName" text="\$eventName" styleClass="cell_big_label" wrapText="true"/>
       <Separator />
       <Label fx:id="startDate" styleClass="cell_small_label" text="\$startDate" />
-      <Separator />
       <Label fx:id="endDate" styleClass="cell_small_label" text="\$endDate" />
       <Separator />
       <Label fx:id="loc" styleClass="cell_small_label" text="\$loc" wrapText="true"/>

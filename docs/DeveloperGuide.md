@@ -350,8 +350,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 1d1. System prompts Volunteer Coordinator to use the correct date and time format.
 
   Use case resumes from step 1.
-* 1e. Invalid Budget Argument
-    * 1e1. System prompts Volunteer Coordinator to use the correct budget format.
+* 1e. Start date/time is after end date/time.
+    * 1e1. System prompts Volunteer Coordinator to ensure that start date/time is before end date/time.
+
+  Use case resumes from step 1.
+* 1f. Invalid Budget Argument
+    * 1f1. System prompts Volunteer Coordinator to use the correct budget format.
 
   Use case resumes from step 1.
   
