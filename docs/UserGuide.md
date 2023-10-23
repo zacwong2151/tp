@@ -117,14 +117,16 @@ Format: `vlist`
 
 Finds volunteers whose names contain any of the given keywords.
 
-Format: `vfind KEYWORD [MORE_KEYWORDS]`
+Format: `vfind [n/NAME]…​ [s/SKILL]…​`
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Volunteers matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The search is case-insensitive. e.g `n/hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `n/Hans n/Bo` will match `Bo Hans`
+* Both the volunteer name and corresponding skills can be searched.
+* Allows partial matching of keywords e.g. `n/Han` will match `Hans`
+* Volunteers matching **at least one** NAME keyword will be returned (i.e. `OR` search).
+  e.g. `n/Hans n/Bo` will return `Hans Gruber`, `Bo Yang`
+* Volunteers matching **both** SKILL keywords will be returned (i.e. `AND` search).
+  e.g. `s/chef s/boxer` will return volunteers that have skills `chef` and `boxer`
 
 Examples:
 * `vfind John` returns `john` and `John Doe`

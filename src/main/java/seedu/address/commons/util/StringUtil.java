@@ -33,13 +33,13 @@ public class StringUtil {
 
         String preppedWord = word.trim().toLowerCase();
         checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
-        checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
+        // word parameter can be multiple words, e.g. vfind n/Alexis Yeoh
 
         String preppedSentence = sentence.toLowerCase();
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
 
         return Arrays.stream(wordsInPreppedSentence)
-                .anyMatch(s -> s.contains(preppedWord));
+                .anyMatch(s -> s.contains(preppedWord)) || preppedSentence.contains(preppedWord);
     }
 
     /**
