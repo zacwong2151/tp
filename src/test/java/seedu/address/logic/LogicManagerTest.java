@@ -1,6 +1,7 @@
 package seedu.address.logic;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_VOLUNTEER_DISPLAYED_INDEX;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
@@ -18,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.eventcommands.EventListCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.volunteercommands.VolunteerCreateCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerListCommand;
@@ -65,12 +67,18 @@ public class LogicManagerTest {
     public void execute_commandExecutionError_throwsCommandException() {
         String deleteCommand = "vdelete 9";
         assertCommandException(deleteCommand, MESSAGE_INVALID_VOLUNTEER_DISPLAYED_INDEX);
+
+        String eventShowCommand = "eshow 100";
+        assertCommandException(eventShowCommand, MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
     }
 
     @Test
     public void execute_validCommand_success() throws Exception {
-        String listCommand = VolunteerListCommand.COMMAND_WORD;
-        assertCommandSuccess(listCommand, VolunteerListCommand.MESSAGE_SUCCESS, model);
+        String volunteerListCommand = VolunteerListCommand.COMMAND_WORD;
+        assertCommandSuccess(volunteerListCommand, VolunteerListCommand.MESSAGE_SUCCESS, model);
+
+        String eventListCommand = EventListCommand.COMMAND_WORD;
+        assertCommandSuccess(eventListCommand, EventListCommand.MESSAGE_SUCCESS, model);
     }
 
     @Test
@@ -88,6 +96,16 @@ public class LogicManagerTest {
     @Test
     public void getFilteredVolunteerList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> logic.getFilteredVolunteerList().remove(0));
+    }
+
+    @Test
+    public void getFilteredEventList_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> logic.getFilteredEventList().remove(0));
+    }
+
+    @Test
+    public void getEventToShowList_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> logic.getEventToShowList().remove(0));
     }
 
     /**

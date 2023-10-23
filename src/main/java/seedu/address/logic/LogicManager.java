@@ -75,6 +75,11 @@ public class LogicManager implements Logic {
     }
 
     @Override
+    public ObservableList<Event> getEventToShowList() {
+        return model.getEventToShowList();
+    }
+
+    @Override
     public Path getEventStorageFilePath() {
         return model.getEventStorageFilePath();
     }
