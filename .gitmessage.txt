@@ -9,5 +9,3 @@ Subject line (try to keep under 50 characters)
 {why it is done that way}
 
 {any other relevant info}
-
-note*: wrap each line at maximum 72 characters
