@@ -193,7 +193,7 @@ Restrictions:
 * The budget argument must be a floating point number with 2 decimal places.
 
 Examples:
-* `ecreate n/food donation r/chef r/packer d/23/9/2023 1500 dsc/help food distribution m/50 potatoes b/50.00` creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50.00`
+* `ecreate n/food donation r/chef r/packer d/23/9/2023 1500 l/bukit timah dsc/help food distribution m/50 potatoes b/50.00` creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50.00`
 
 ### Listing all events: `elist`
 Volunteer coordinators can see all the events they are organising. For each event, only the most important information will be shown: name, date and time, location, and description.

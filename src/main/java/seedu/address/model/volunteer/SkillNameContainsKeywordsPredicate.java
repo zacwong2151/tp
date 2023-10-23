@@ -39,6 +39,12 @@ public class SkillNameContainsKeywordsPredicate implements Predicate<Volunteer> 
         if (names.isEmpty()) {
             assert !skills.isEmpty() : "the check for both skills and names not being empty is done in"
                     + " parse method of VolunteerFindCommandParser class";
+            /*
+             why allMatch here compared to anyMatch below?
+              if you have a command e.g. vfind s/chef s/boxer, then you want to find volunteers that are both chef
+              *and* boxer. Whereas if you have command e.g. vfind n/alice n/bob, you want to find volunteers whose names
+               are *either* alice or bob
+             */
             return skills.stream()
                     .allMatch(skill ->
                             StringUtil.containsSkillIgnoreCase(volunteer.getSkills(), skill));
