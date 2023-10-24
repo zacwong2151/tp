@@ -32,6 +32,7 @@ public class EventRemoveVolunteerCommand extends Command {
             + PREFIX_VOLUNTEER_ID + "2 ";
     public static final String MESSAGE_SUCCESS = "VOLUNTEER removed FROM EVENT: %1$s %1$s\n"
             + "Event currently has %2$d volunteers";
+    public static final String MESSAGE_VOLUNTEER_NOT_IN_EVENT = "VOLUNTEER is not assigned TO EVENT";
     private final Index assignedEventIndex;
 
     private final Index assignedVolunteerIndex;
@@ -59,6 +60,9 @@ public class EventRemoveVolunteerCommand extends Command {
 
         Event eventToAssign = lastShownEventList.get(assignedEventIndex.getZeroBased());
         Volunteer volunteerToAssign = lastShownVolunteerList.get(assignedVolunteerIndex.getZeroBased());
+        if (!eventToAssign.hasVolunteer(volunteerToAssign)) {
+            throw new CommandException(MESSAGE_VOLUNTEER_NOT_IN_EVENT);
+        }
         volunteerToAssign.removeEvent(eventToAssign);
         eventToAssign.removeVolunteer(volunteerToAssign);
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(eventToAssign),
