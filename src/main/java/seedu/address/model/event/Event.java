@@ -18,7 +18,8 @@ public class Event {
 
     // Data fields
     private final Set<Role> roles;
-    private final DateTime dateAndTime;
+    private final DateTime startDate;
+    private final DateTime endDate;
     private final Location location;
     private final Description description;
     private final Set<Material> materials;
@@ -27,12 +28,13 @@ public class Event {
     /**
      * Every field must be present and not null.
      */
-    public Event(EventName eventName, Set<Role> roles, DateTime dateAndTime, Location location, Description description,
-                 Set<Material> materials, Budget budget) {
-        requireAllNonNull(eventName, roles, dateAndTime, location, description, materials, budget);
+    public Event(EventName eventName, Set<Role> roles, DateTime startDate, DateTime endDate, Location location,
+                 Description description, Set<Material> materials, Budget budget) {
+        requireAllNonNull(eventName, roles, startDate, endDate, location, description, materials, budget);
         this.eventName = eventName;
         this.roles = roles;
-        this.dateAndTime = dateAndTime;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.location = location;
         this.description = description;
         this.materials = materials;
@@ -49,8 +51,11 @@ public class Event {
     public Set<Role> getRoles() {
         return Collections.unmodifiableSet(roles);
     }
-    public DateTime getDateAndTime() {
-        return dateAndTime;
+    public DateTime getStartDate() {
+        return startDate;
+    }
+    public DateTime getEndDate() {
+        return endDate;
     }
 
     public Location getLocation() {
@@ -71,7 +76,7 @@ public class Event {
     }
     /**
      * Returns true if both events have the same name.
-     * This defines a weaker notion of equality between two volunteers.
+     * This defines a weaker notion of equality between two events.
      */
     public boolean isSameEvent(Event otherEvent) {
         if (otherEvent == this) {
@@ -84,7 +89,7 @@ public class Event {
 
     /**
      * Returns true if both events have the same identity and data fields.
-     * This defines a stronger notion of equality between two volunteers.
+     * This defines a stronger notion of equality between two events.
      */
     @Override
     public boolean equals(Object other) {
@@ -100,7 +105,8 @@ public class Event {
         Event otherEvent = (Event) other;
         return eventName.equals(otherEvent.eventName)
                 && roles.equals(otherEvent.roles)
-                && dateAndTime.equals(otherEvent.dateAndTime)
+                && startDate.equals(otherEvent.startDate)
+                && endDate.equals(otherEvent.endDate)
                 && location.equals(otherEvent.location)
                 && description.equals(otherEvent.description)
                 && materials.equals(otherEvent.materials)
@@ -110,7 +116,7 @@ public class Event {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(eventName, roles, dateAndTime, location, description, materials, budget);
+        return Objects.hash(eventName, roles, startDate, endDate, location, description, materials, budget);
     }
 
     @Override
@@ -118,7 +124,8 @@ public class Event {
         return new ToStringBuilder(this)
                 .add("name", eventName)
                 .add("roles", roles)
-                .add("dateAndTime", dateAndTime)
+                .add("startDate", startDate)
+                .add("endDate", endDate)
                 .add("location", location)
                 .add("description", description)
                 .add("materials", materials)

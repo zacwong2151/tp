@@ -297,6 +297,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* *`    | volunteer coordinator  | create new events by specifying the logistics and other materials needed for an event | check what other logistics I require for an event in the future |
 | `* *`    | volunteer coordinator  | create new events by providing a brief description of the event                       | refer to it in the future                                       |
 | `* *`    | volunteer coordinator  | create new events by setting and allocating the budget for the event                  | check the estimated cost required for an event in the future    |
+| `* *`    | volunteer coordinator  | set the end time for an event                                                         | so that I can know how long the event lasts                     |
 | `* *`    | volunteer coordinator  | change the roles needed for an event                                                  | update an event with the correct roles                          |
 | `* *`    | volunteer coordinator  | be able to change the location and approximate area of the event                      | update an event with the correct location                       |
 | `* *`    | volunteer coordinator  | change the logistics and other materials needed for an event                          | update the event with the correct logistics required            |
@@ -350,8 +351,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 1d1. System prompts Volunteer Coordinator to use the correct date and time format.
 
   Use case resumes from step 1.
-* 1e. Invalid Budget Argument
-    * 1e1. System prompts Volunteer Coordinator to use the correct budget format.
+* 1e. Start date/time is after end date/time.
+    * 1e1. System prompts Volunteer Coordinator to ensure that start date/time is before end date/time.
+
+  Use case resumes from step 1.
+* 1f. Invalid Budget Argument
+    * 1f1. System prompts Volunteer Coordinator to use the correct budget format.
 
   Use case resumes from step 1.
   
