@@ -33,7 +33,9 @@ public class EventWindowCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
-    private Label dateAndTime;
+    private Label startDate;
+    @FXML
+    private Label endDate;
     @FXML
     private Label loc;
     @FXML
@@ -48,13 +50,14 @@ public class EventWindowCard extends UiPart<Region> {
     private FlowPane roles;
 
     /**
-     * Creates a {@code EventCode} with the given {@code Event} and index to display.
+     * Creates a {@code EventWindowCard} with the given {@code Event} and index to display.
      */
     public EventWindowCard(Event event, int displayedIndex) {
         super(FXML);
         this.event = event;
         eventName.setText("Name of event: " + event.getEventName().eventName);
-        dateAndTime.setText("Date and time: " + event.getDateAndTime().toString());
+        startDate.setText("Start date: " + event.getStartDate().toString());
+        endDate.setText("End date: " + event.getEndDate().toString());
         loc.setText("Location: " + event.getLocation().location);
         event.getRoles().stream()
                 .sorted(Comparator.comparing(role -> role.roleName))

@@ -2,12 +2,13 @@ package seedu.address.logic.commands.eventcommands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BUDGET;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_AND_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATETIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MATERIAL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATETIME;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
@@ -28,7 +29,8 @@ public class EventCreateCommand extends Command {
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_ROLE + "ROLE "
-            + PREFIX_DATE_AND_TIME + "DATE AND TIME "
+            + PREFIX_START_DATETIME + "START DATE AND TIME "
+            + "[" + PREFIX_END_DATETIME + "END DATE AND TIME] "
             + PREFIX_LOCATION + "LOCATION "
             + PREFIX_DESCRIPTION + "DESCRIPTION "
             + "[" + PREFIX_MATERIAL + "MATERIALS]...\n"
@@ -37,7 +39,8 @@ public class EventCreateCommand extends Command {
             + PREFIX_NAME + "Clean up at Orchard "
             + PREFIX_ROLE + "Cleaner "
             + PREFIX_ROLE + "Manager "
-            + PREFIX_DATE_AND_TIME + "23/10/2023 1500 "
+            + PREFIX_START_DATETIME + "23/10/2023 1500 "
+            + PREFIX_END_DATETIME + "23/10/2023 1900 "
             + PREFIX_LOCATION + "Orchard Road "
             + PREFIX_DESCRIPTION + "Cleaning up Orchard Road! "
             + PREFIX_MATERIAL + "Trash bag "

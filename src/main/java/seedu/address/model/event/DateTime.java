@@ -36,6 +36,16 @@ public class DateTime {
     }
 
     /**
+     * Constructs a {@code DateTime} from an existing LocalDateTime object.
+     *
+     * @param dateTime A valid LocalDateTime object.
+     */
+    public DateTime(LocalDateTime dateTime) {
+        requireNonNull(dateTime);
+        this.dateAndTime = dateTime;
+    }
+
+    /**
      * Returns true if a given string is a valid budget.
      */
     public static boolean isValidDateTime(String dateAndTime) {

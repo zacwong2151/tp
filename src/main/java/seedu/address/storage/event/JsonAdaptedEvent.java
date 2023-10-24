@@ -1,5 +1,7 @@
 package seedu.address.storage.event;
 
+import static seedu.address.logic.Messages.MESSAGE_INVALID_DATE_PARAMS;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -27,7 +29,8 @@ public class JsonAdaptedEvent {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Event's %s field is missing!";
     private final String eventName;
     private final List<JsonAdaptedRole> roles = new ArrayList<>();
-    private final String dateAndTime;
+    private final String startDate;
+    private final String endDate;
     private final String location;
     private final String description;
     private final List<JsonAdaptedMaterial> materials = new ArrayList<>();
@@ -40,8 +43,10 @@ public class JsonAdaptedEvent {
     @JsonCreator
     public JsonAdaptedEvent(@JsonProperty("eventName") String eventName,
                             @JsonProperty("roles") List<JsonAdaptedRole> roles,
-                             @JsonProperty("dateAndTime") String dateAndTime, @JsonProperty("location") String location,
-                             @JsonProperty("description") String description,
+                            @JsonProperty("startDate") String startDate,
+                            @JsonProperty("endDate") String endDate,
+                            @JsonProperty("location") String location,
+                            @JsonProperty("description") String description,
                             @JsonProperty("materials") List<JsonAdaptedMaterial> materials,
                             @JsonProperty("budget") String budget,
                             @JsonProperty("assignedVolunteers") List<JsonAdaptedName> assignedVolunteers) {
@@ -49,7 +54,8 @@ public class JsonAdaptedEvent {
         if (roles != null) {
             this.roles.addAll(roles);
         }
-        this.dateAndTime = dateAndTime;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.location = location;
         this.description = description;
         if (materials != null) {
@@ -69,7 +75,8 @@ public class JsonAdaptedEvent {
         roles.addAll(source.getRoles().stream()
                 .map(JsonAdaptedRole::new)
                 .collect(Collectors.toList()));
-        dateAndTime = source.getDateAndTime().toString();
+        startDate = source.getStartDate().toString();
+        endDate = source.getEndDate().toString();
         location = source.getLocation().location;
         description = source.getDescription().description;
         materials.addAll(source.getMaterials().stream()
@@ -101,14 +108,28 @@ public class JsonAdaptedEvent {
             eventRoles.add(role.toModelType());
         }
 
-        if (dateAndTime == null) {
+        if (startDate == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                                                 DateTime.class.getSimpleName()));
         }
-        if (!DateTime.isValidDateTime(dateAndTime)) {
+        if (!DateTime.isValidDateTime(startDate)) {
             throw new IllegalValueException(DateTime.MESSAGE_CONSTRAINTS);
         }
-        final DateTime modelDateTime = new DateTime(dateAndTime);
+        final DateTime modelStartDate = new DateTime(startDate);
+
+        if (endDate == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    DateTime.class.getSimpleName()));
+        }
+        if (!DateTime.isValidDateTime(endDate)) {
+            throw new IllegalValueException(DateTime.MESSAGE_CONSTRAINTS);
+        }
+        final DateTime modelEndDate = new DateTime(endDate);
+
+        // compare end datetime to ensure it is after/same as start datetime
+        if (modelEndDate.dateAndTime.isBefore(modelStartDate.dateAndTime)) {
+            throw new IllegalValueException(MESSAGE_INVALID_DATE_PARAMS);
+        }
 
         if (location == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
@@ -149,8 +170,8 @@ public class JsonAdaptedEvent {
         final Set<Role> modelRoles = new HashSet<>(eventRoles);
         final Set<Material> modelMaterials = new HashSet<>(eventMaterials);
         final Set<Name> modelAssignedVolunteers = new HashSet<>(eventVolunteers);
-        return new Event(modelName, modelRoles, modelDateTime, modelLocation, modelDescription, modelMaterials,
-                            modelBudget, modelAssignedVolunteers);
+        return new Event(modelName, modelRoles, modelStartDate, modelEndDate, modelLocation, modelDescription,
+                modelMaterials, modelBudget, modelAssignedVolunteers);
     }
 
 }

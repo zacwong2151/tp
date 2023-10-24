@@ -7,7 +7,8 @@ public class CliSyntax {
     /* Prefix definitions */
     public static final Prefix PREFIX_NAME = new Prefix("n/");
     public static final Prefix PREFIX_ROLE = new Prefix("r/");
-    public static final Prefix PREFIX_DATE_AND_TIME = new Prefix("d/");
+    public static final Prefix PREFIX_START_DATETIME = new Prefix("sd/");
+    public static final Prefix PREFIX_END_DATETIME = new Prefix("ed/");
     public static final Prefix PREFIX_LOCATION = new Prefix("l/");
     public static final Prefix PREFIX_DESCRIPTION = new Prefix("dsc/");
     public static final Prefix PREFIX_MATERIAL = new Prefix("m/");
