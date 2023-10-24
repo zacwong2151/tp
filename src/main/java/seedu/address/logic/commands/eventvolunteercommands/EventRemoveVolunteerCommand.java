@@ -30,7 +30,8 @@ public class EventRemoveVolunteerCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_EVENT_ID + "1 "
             + PREFIX_VOLUNTEER_ID + "2 ";
-    public static final String MESSAGE_SUCCESS = "VOLUNTEER removed FROM EVENT: %1$s %1$s";
+    public static final String MESSAGE_SUCCESS = "VOLUNTEER removed FROM EVENT: %1$s %1$s\n"
+            + "Event currently has %2$d volunteers";
     private final Index assignedEventIndex;
 
     private final Index assignedVolunteerIndex;
@@ -60,7 +61,8 @@ public class EventRemoveVolunteerCommand extends Command {
         Volunteer volunteerToAssign = lastShownVolunteerList.get(assignedVolunteerIndex.getZeroBased());
         volunteerToAssign.removeEvent(eventToAssign);
         eventToAssign.removeVolunteer(volunteerToAssign);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(eventToAssign)));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(eventToAssign),
+                eventToAssign.getAssignedVolunteers().size()));
     }
     @Override
     public boolean equals(Object other) {

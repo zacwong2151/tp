@@ -26,7 +26,6 @@ public class ModelManager implements Model {
     private final FilteredList<Volunteer> filteredVolunteers;
     private final FilteredList<Event> filteredEvents;
     private final FilteredList<Event> eventToShowList;
-    private final FilteredList<Volunteer> volunteersToShowList;
 
     /**
      * Initializes a ModelManager with the given eventStorage, volunteerStorage and userPrefs.
@@ -44,7 +43,6 @@ public class ModelManager implements Model {
         filteredEvents = new FilteredList<>(this.eventStorage.getEventList());
         filteredVolunteers = new FilteredList<>(this.volunteerStorage.getVolunteerList());
         eventToShowList = new FilteredList<>(this.eventStorage.getEventList());
-        volunteersToShowList = new FilteredList<>(this.volunteerStorage.getVolunteerList());
     }
 
     public ModelManager() {
@@ -216,22 +214,6 @@ public class ModelManager implements Model {
         requireNonNull(predicate);
         filteredVolunteers.setPredicate(predicate);
     }
-
-    /**
-     * Returns an unmodifiable view of the list of {@code Volunteer} backed by the internal list of
-     * {@code versionedVolunteerStorage}
-     */
-    @Override
-    public FilteredList<Volunteer> getVolunteersToShowList() {
-        return volunteersToShowList;
-    }
-
-    @Override
-    public void updateVolunteersToShowList(Predicate<Volunteer> volunteerPredicate) {
-        requireNonNull(volunteerPredicate);
-        volunteersToShowList.setPredicate(volunteerPredicate);
-    }
-
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -249,8 +231,7 @@ public class ModelManager implements Model {
                 && userPrefs.equals(otherModelManager.userPrefs)
                 && filteredVolunteers.equals(otherModelManager.filteredVolunteers)
                 && filteredEvents.equals(otherModelManager.filteredEvents)
-                && eventToShowList.equals(otherModelManager.eventToShowList)
-                && volunteersToShowList.equals(otherModelManager.volunteersToShowList);
+                && eventToShowList.equals(otherModelManager.eventToShowList);
     }
 
 }

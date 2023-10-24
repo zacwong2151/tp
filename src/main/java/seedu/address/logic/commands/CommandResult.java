@@ -20,18 +20,15 @@ public class CommandResult {
     private final boolean exit;
 
     private final boolean isShowEvent;
-    private final boolean isShowVolunteers;
 
     /**
      * Constructs a {@code CommandResult} with the specified fields.
      */
-    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit, boolean isShowEvent,
-                         boolean isShowVolunteers) {
+    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit, boolean isShowEvent) {
         this.feedbackToUser = requireNonNull(feedbackToUser);
         this.showHelp = showHelp;
         this.exit = exit;
         this.isShowEvent = isShowEvent;
-        this.isShowVolunteers = isShowVolunteers;
     }
 
     /**
@@ -39,7 +36,7 @@ public class CommandResult {
      * and other fields set to their default value.
      */
     public CommandResult(String feedbackToUser) {
-        this(feedbackToUser, false, false, false, false);
+        this(feedbackToUser, false, false, false);
     }
 
     public String getFeedbackToUser() {
@@ -57,9 +54,6 @@ public class CommandResult {
     public boolean isShowEvent() {
         return isShowEvent;
     }
-    public boolean isShowVolunteers() {
-        return isShowVolunteers;
-    }
 
     @Override
     public boolean equals(Object other) {
@@ -76,13 +70,12 @@ public class CommandResult {
         return feedbackToUser.equals(otherCommandResult.feedbackToUser)
                 && showHelp == otherCommandResult.showHelp
                 && exit == otherCommandResult.exit
-                && isShowEvent == otherCommandResult.isShowEvent
-                && isShowVolunteers == otherCommandResult.isShowVolunteers;
+                && isShowEvent == otherCommandResult.isShowEvent;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(feedbackToUser, showHelp, exit, isShowEvent, isShowVolunteers);
+        return Objects.hash(feedbackToUser, showHelp, exit, isShowEvent);
     }
 
     @Override
@@ -92,7 +85,6 @@ public class CommandResult {
                 .add("showHelp", showHelp)
                 .add("exit", exit)
                 .add("showEvent", isShowEvent)
-                .add("showVolunteers", isShowVolunteers)
                 .toString();
     }
 

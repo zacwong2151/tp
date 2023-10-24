@@ -93,10 +93,6 @@ public class LogicManager implements Logic {
     public ObservableList<Volunteer> getFilteredVolunteerList() {
         return model.getFilteredVolunteerList();
     }
-    @Override
-    public ObservableList<Volunteer> getVolunteersToShowList() {
-        return model.getVolunteersToShowList();
-    }
 
     @Override
     public Path getVolunteerStorageFilePath() {

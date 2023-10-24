@@ -24,7 +24,7 @@ public class EventListVolunteerCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lists all volunteer assigned to an event. "
             + "Example: " + COMMAND_WORD + " 1";
-    public static final String MESSAGE_SUCCESS = "Listed all volunteers FROM EVENT: %1$s";
+    public static final String MESSAGE_SUCCESS = "Listed all %2$d volunteers FROM EVENT: %1$s";
     private final Index eventIndex;
 
     /**
@@ -45,13 +45,13 @@ public class EventListVolunteerCommand extends Command {
         Event event = lastShownEventList.get(eventIndex.getZeroBased());
         Predicate<Volunteer> predicateShowVolunteers = v
                 -> event.getAssignedVolunteers().stream().anyMatch(y -> y.equals(v.getName()));
-        model.updateVolunteersToShowList(predicateShowVolunteers);
+        model.updateFilteredVolunteerList(predicateShowVolunteers);
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, event.getEventName().eventName),
+        return new CommandResult(String.format(MESSAGE_SUCCESS, event.getEventName().eventName,
+                event.getAssignedVolunteers().size()),
                 false,
                 false,
-                false,
-                true);
+                false);
     }
     @Override
     public boolean equals(Object other) {

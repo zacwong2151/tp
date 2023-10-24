@@ -30,7 +30,8 @@ public class EventAddVolunteerCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_EVENT_ID + "1 "
             + PREFIX_VOLUNTEER_ID + "2 ";
-    public static final String MESSAGE_SUCCESS = "New VOLUNTEER added TO EVENT: %1$s %1$s";
+    public static final String MESSAGE_SUCCESS = "New VOLUNTEER added TO EVENT: %1$s\n"
+            + "Event currently has %2$d volunteers";
     public static final String MESSAGE_DUPLICATE_VOLUNTEER = "This volunteer already exists in the volunteer list";
     private final Index assignedEventIndex;
 
@@ -61,7 +62,8 @@ public class EventAddVolunteerCommand extends Command {
         Volunteer volunteerToAssign = lastShownVolunteerList.get(assignedVolunteerIndex.getZeroBased());
         volunteerToAssign.addEvent(eventToAssign);
         eventToAssign.addVolunteer(volunteerToAssign);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(eventToAssign)));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(eventToAssign),
+                eventToAssign.getAssignedVolunteers().size()));
     }
     @Override
     public boolean equals(Object other) {

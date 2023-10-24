@@ -4,7 +4,6 @@ import java.nio.file.Path;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.event.Event;
 import seedu.address.model.volunteer.Volunteer;
@@ -152,11 +151,4 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredVolunteerList(Predicate<Volunteer> predicate);
-    /** Returns an unmodifiable view of the volunteers to display in the volunteer window */
-    public FilteredList<Volunteer> getVolunteersToShowList();
-    /**
-     * Updates the filter of the volunteerToShow list to filter by the given {@code predicate}.
-     * @throws NullPointerException if {@code predicate} is null.
-     */
-    void updateVolunteersToShowList(Predicate<Volunteer> volunteerPredicate);
 }
