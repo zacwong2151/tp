@@ -140,6 +140,7 @@ public class ParserUtil {
         if (!Material.isValidMaterial(trimmedMaterial)) {
             throw new ParseException(Material.MESSAGE_CONSTRAINTS);
         }
+
         return new Material(trimmedMaterial);
     }
 

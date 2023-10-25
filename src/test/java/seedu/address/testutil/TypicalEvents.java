@@ -23,7 +23,7 @@ public class TypicalEvents {
             .withEndDate("23/10/2023 2100")
             .withLocation("Sembawang")
             .withDescription("Clean up la")
-            .withMaterials("trash bag", "gloves")
+            .withMaterials("12 trash bags", "80 gloves")
             .withBudget("50.00").build();
 
     public static final Event SECOND = new EventBuilder().withEventName("Clean 2")
@@ -32,7 +32,7 @@ public class TypicalEvents {
             .withEndDate("24/10/2023 1900")
             .withLocation("Sembawang")
             .withDescription("Clean up la")
-            .withMaterials("trash bag", "gloves")
+            .withMaterials("3 trash bags", "12 gloves")
             .withBudget("50.00").build();
 
     public static final Event THIRD = new EventBuilder().withEventName("Clean 3")
@@ -41,7 +41,7 @@ public class TypicalEvents {
             .withEndDate("1/1/2024 2000")
             .withLocation("Sembawang")
             .withDescription("Clean up la")
-            .withMaterials("trash bag", "gloves")
+            .withMaterials("1 trash bag", "10 gloves")
             .withBudget("50.00").build();
 
     public static final Event FOURTH = new EventBuilder().withEventName("Clean 4")
@@ -50,7 +50,7 @@ public class TypicalEvents {
             .withEndDate("27/10/2023 1800")
             .withLocation("Sembawang")
             .withDescription("Clean up la")
-            .withMaterials("trash bag", "gloves")
+            .withMaterials("4 trash bags", "60 gloves")
             .withBudget("50.00").build();
 
     public static final Event FIFTH = new EventBuilder().withEventName("Clean 5")
@@ -59,7 +59,7 @@ public class TypicalEvents {
             .withEndDate("23/10/2023 2100")
             .withLocation("Sembawang")
             .withDescription("Clean up la")
-            .withMaterials("trash bag", "gloves")
+            .withMaterials("3 trash bags", "12 gloves")
             .withBudget("50.00").build();
 
     public static final Event SIXTH = new EventBuilder().withEventName("Clean 6")
@@ -68,7 +68,7 @@ public class TypicalEvents {
             .withEndDate("23/10/2023 2100")
             .withLocation("Sembawang")
             .withDescription("Clean up la")
-            .withMaterials("trash bag", "gloves")
+            .withMaterials("12 trash bags", "100 gloves")
             .withBudget("50.00").build();
 
     public static final Event SEVENTH = new EventBuilder().withEventName("Clean 7")
@@ -77,7 +77,7 @@ public class TypicalEvents {
             .withEndDate("23/10/2023 2100")
             .withLocation("Sembawang")
             .withDescription("Clean up la")
-            .withMaterials("trash bag", "gloves")
+            .withMaterials("12 trash bags", "100 gloves")
             .withBudget("50.00").build();
 
     // Manually added - Event's details found in {@code CommandTestUtil}
@@ -87,7 +87,7 @@ public class TypicalEvents {
             .withEndDate("23/9/2023 2100")
             .withLocation("serangoon")
             .withDescription("clean it up")
-            .withMaterials("trash bag")
+            .withMaterials("24 trash bags")
             .withBudget("80.00").build();
     public static final Event HELPOUT = new EventBuilder().withEventName("Help out")
             .withRoles("brain")
@@ -95,7 +95,7 @@ public class TypicalEvents {
             .withEndDate("25/10/2023 2100")
             .withLocation("admiralty")
             .withDescription("help out la")
-            .withMaterials("hands")
+            .withMaterials("30 hands")
             .withBudget("100.00").build();
     public static final Volunteer AMY = new VolunteerBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
             .withEmail(VALID_EMAIL_AMY).withSkills(VALID_SKILL_FRIEND).build();

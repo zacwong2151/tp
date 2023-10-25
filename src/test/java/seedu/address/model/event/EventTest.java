@@ -20,8 +20,8 @@ public class EventTest {
         roles.add(clean);
 
         Set<Material> materials = new HashSet<>();
-        Material cloth = new Material("cloth");
-        Material soap = new Material("soap");
+        Material cloth = new Material("23 cloths");
+        Material soap = new Material("10 bottles of soap");
         materials.add(cloth);
         materials.add(soap);
 

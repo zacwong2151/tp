@@ -17,8 +17,8 @@
         <URL value="@EventShowWindow.css" />
       </stylesheets>
 
-      <VBox maxHeight="125" minWidth="500" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
-        <ListView fx:id="eventShowView" VBox.vgrow="ALWAYS" focusTraversable="false"/>
+      <VBox minHeight="240" minWidth="500" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+        <ListView minHeight="240" fx:id="eventShowView" VBox.vgrow="ALWAYS" focusTraversable="false"/>
       </VBox>
     </Scene>
   </scene>
