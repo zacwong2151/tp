@@ -155,7 +155,9 @@ public class JsonAdaptedEvent {
         }
 
         Budget modelBudget;
-        if (budget.isEmpty()) {
+        if (budget == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Budget.class.getSimpleName()));
+        } else if (budget.isEmpty()) {
             modelBudget = new Budget("");
         } else if (!Budget.isValidBudget(budget)) {
             throw new IllegalValueException(Budget.MESSAGE_CONSTRAINTS);
