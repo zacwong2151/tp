@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.util.Comparator;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
@@ -8,8 +10,6 @@ import javafx.scene.layout.Region;
 import seedu.address.model.event.Event;
 import seedu.address.ui.labels.MaterialLabel;
 import seedu.address.ui.labels.RoleLabel;
-
-import java.util.Comparator;
 
 /**
  * An UI component that displays information of an {@code Event}.
