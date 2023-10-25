@@ -154,13 +154,13 @@ public class JsonAdaptedEvent {
             eventMaterials.add(material.toModelType());
         }
 
-        if (budget == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Budget.class.getSimpleName()));
-        }
-        if (!Budget.isValidBudget(budget)) {
+        Budget modelBudget;
+        if (budget.isEmpty()) {
+            modelBudget = new Budget("");
+        } else if (!Budget.isValidBudget(budget)) {
             throw new IllegalValueException(Budget.MESSAGE_CONSTRAINTS);
         }
-        final Budget modelBudget = new Budget(budget);
+        modelBudget = new Budget(budget);
 
         final List<Name> eventVolunteers = new ArrayList<>();
         for (JsonAdaptedName name : assignedVolunteers) {
