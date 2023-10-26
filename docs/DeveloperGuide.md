@@ -247,6 +247,90 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{more aspects and alternatives to be added}_
 
+### \[In progress\] Tracking amount of roles and materials
+
+#### Implementation
+
+The mechanism to track the amount of roles and materials within the `Event` class is handled by the `Quantity` interface's 
+`currentQuantity` and `requiredQuantity` fields. Both fields are positive integers. `Role` and `Material` classes thereby
+implement this `Quantity` interface. In addition, for each class, operations to track, access and update the amount of
+each role/material have been added into the `Quantity` interface as follows:
+
+- `Quantity#isValidQuantity(int test)` — Checks if `test` is a valid quantity.
+- `Quantity#addToQuantity(int addedQuantity)` — Adds `addedQuantity` to the current quantity.
+- `Quantity#hasEnough()` — Checks if the current quantity ≥ the required quantity.
+- `Quantity#toUiString()` — Returns the string representation to be shown to users in the UI.
+
+To reflect the `currentQuantity` and `requiredQuantity` fields as required in the `Quantity` interface in `EventStorage`,
+every `Role` and `Material` instance will be expressed as a JSON object with the following format:
+
+**Material:**
+
+```json
+{
+  "material" : "potatoes",
+  "currentQuantity" : "20",
+  "requiredQuantity" : "75"
+}
+```
+
+**Role:**
+
+```json
+{
+  "role" : "chef",
+  "currentQuantity" : "1",
+  "requiredQuantity" : "4"
+}
+```
+
+This class diagram shows the interface relationship between `Role`, `Material` and `Quantity`:
+
+<puml src="diagrams/QuantityClassDiagram.puml" width="400" />
+
+#### Process
+
+This is the process in which a user might track the amount of roles and materials as needed:
+
+Step 1. The user runs the command `ecreate n/cook for people r/5 chef m/50 potato ...`. Here, a new `Event` object will be created with
+a `Set<Role>` that contains a `Role` object that corresponds to `5 chef` and `Set<Material>` that corresponds to `50 potato`.
+In the constructor to `Role` and `Material` respectively, the `requiredAmount` for the `:Role` object is **5** and the 
+`requiredAmount` for the `:Material` object is **50**, while the `currentAmount` are both set to **0**.
+
+**Tracking roles**
+
+Step 2. The user creates a new volunteer using the command `vcreate n/John s/chef...`. This creates a new `Volunteer` object
+with name `John` that contains a skill with name `chef`.
+
+Step 3. Assuming both the `Event` and `Volunteer` objects are at the top of their respective lists, the user runs the
+command `eaddv eid/1 vid/1` to add the volunteer named `John` to the event named `cook for people`. Given that the `cook for people`
+event has a role `chef` and the volunteer `John` has a skill `chef`, iVolunteer will notice and **increment** the current quantity
+within the `Role` object using `Quantity#addToQuantity()`.
+
+Step 4. As a result, the `Role` object will be updated as follows (in the JSON-serialised format):
+```json
+{
+  "role" : "chef",
+  "currentQuantity" : "1",
+  "requiredQuantity" : "5"
+}
+```
+
+**Tracking materials**
+
+Step 5. Assuming the `Event` object is at the top of the event list, the user runs command `eaddm eid/1 m/20 potato`. This
+results in a `EventAddMaterialCommand` created and then executed, which triggers the change in current quantity within the
+`Material` object using `Quantity#addToQuantity()`.
+
+Step 6. As a result, the `Material` object will be updated as follows (in the JSON-serialised format):
+```json
+{
+  "material" : "potato",
+  "currentQuantity" : "20",
+  "requiredQuantity" : "50"
+}
+```
+
 ### \[Proposed\] Data archiving
 
 _{Explain here how the data archiving feature will be implemented}_
