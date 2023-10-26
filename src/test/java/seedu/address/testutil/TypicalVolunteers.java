@@ -20,7 +20,6 @@ import seedu.address.model.volunteer.Volunteer;
  * A utility class containing a list of {@code Volunteer} objects to be used in tests.
  */
 public class TypicalVolunteers {
-
     public static final Volunteer ALICE = new VolunteerBuilder().withName("Alice Pauline")
             .withEmail("alice@example.com")
             .withPhone("94351253")
