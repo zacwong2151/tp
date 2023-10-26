@@ -4,12 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.commands.VolunteerFindCommandTest.preparePredicate;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +26,7 @@ import seedu.address.logic.commands.volunteercommands.VolunteerEditCommand.EditV
 import seedu.address.logic.commands.volunteercommands.VolunteerFindCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.volunteer.NameContainsKeywordsPredicate;
+import seedu.address.model.volunteer.SkillNameContainsKeywordsPredicate;
 import seedu.address.model.volunteer.Volunteer;
 import seedu.address.testutil.EditVolunteerDescriptorBuilder;
 import seedu.address.testutil.VolunteerBuilder;
@@ -87,11 +87,12 @@ public class IVolunteerParserTest {
 
     @Test
     public void parseCommand_find() throws Exception {
-        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        String input = " n/foo n/bar n/baz";
+        SkillNameContainsKeywordsPredicate predicate = preparePredicate(input);
+        List<String> keywords = Arrays.asList(input);
         VolunteerFindCommand command = (VolunteerFindCommand) parser.parseCommand(
-                VolunteerFindCommand.COMMAND_WORD + " " + keywords.stream()
-                        .collect(Collectors.joining(" ")));
-        assertEquals(new VolunteerFindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+                VolunteerFindCommand.COMMAND_WORD + input);
+        assertEquals(new VolunteerFindCommand(predicate), command);
     }
 
     @Test
