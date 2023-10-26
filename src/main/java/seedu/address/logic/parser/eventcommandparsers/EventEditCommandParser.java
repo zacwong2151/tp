@@ -88,7 +88,7 @@ public class EventEditCommandParser implements Parser<EventEditCommand> {
             endDate = null;
         }
 
-         //compare end datetime from user to ensure it is after/same as start datetime from user
+        //compare end datetime from user to ensure it is after/same as start datetime from user
         if (startDate != null && endDate != null && endDate.dateAndTime.isBefore(startDate.dateAndTime)) {
             throw new ParseException(MESSAGE_INVALID_DATE_PARAMS);
         }

@@ -22,7 +22,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.Model;
 import seedu.address.model.event.Budget;
 import seedu.address.model.event.DateTime;
 import seedu.address.model.event.Description;
@@ -31,7 +31,7 @@ import seedu.address.model.event.EventName;
 import seedu.address.model.event.Location;
 import seedu.address.model.event.Material;
 import seedu.address.model.event.Role;
-import seedu.address.model.Model;
+
 
 /**
  * Edits the details of an existing event in the address book.
@@ -96,7 +96,8 @@ public class EventEditCommand extends Command {
      * Creates and returns a {@code Event} with the details of {@code eventToEdit}
      * edited with {@code editEventDescriptor}.
      */
-    private static Event createEditedEvent(Event eventToEdit, EditEventDescriptor editEventDescriptor) throws CommandException {
+    private static Event createEditedEvent(Event eventToEdit, EditEventDescriptor editEventDescriptor)
+                                                                                    throws CommandException {
         assert eventToEdit != null;
 
         EventName updatedEventName = editEventDescriptor.getEventName().orElse(eventToEdit.getEventName());
@@ -177,7 +178,8 @@ public class EventEditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(eventName, roles, startDate, endDate, location, description, materials, budget);
+            return CollectionUtil.isAnyNonNull(eventName, roles, startDate, endDate, location, description, materials,
+                                                budget);
         }
         public void setEventName(EventName eventName) {
             this.eventName = eventName;
