@@ -19,13 +19,15 @@ import seedu.address.model.util.SampleDataUtil;
 public class EventBuilder {
     public static final String DEFAULT_EVENTNAME = "Cleaning the park";
     public static final String DEFAULT_DATE_AND_TIME = "23/9/2023 1900";
+    public static final String DEFAULT_DATE_AND_TIME_2 = "23/9/2023 2300";
     public static final String DEFAULT_LOCATION = "Hougang";
     public static final String DEFAULT_DESCRIPTION = "Clean very clean";
     public static final String DEFAULT_BUDGET = "50.00";
 
     private EventName eventName;
     private Set<Role> roles;
-    private DateTime dateAndTime;
+    private DateTime startDate;
+    private DateTime endDate;
     private Location location;
     private Description description;
     private Set<Material> materials;
@@ -37,7 +39,8 @@ public class EventBuilder {
     public EventBuilder() {
         eventName = new EventName(DEFAULT_EVENTNAME);
         roles = new HashSet<>();
-        dateAndTime = new DateTime(DEFAULT_DATE_AND_TIME);
+        startDate = new DateTime(DEFAULT_DATE_AND_TIME);
+        endDate = new DateTime(DEFAULT_DATE_AND_TIME_2);
         location = new Location(DEFAULT_LOCATION);
         description = new Description(DEFAULT_DESCRIPTION);
         materials = new HashSet<>();
@@ -50,7 +53,8 @@ public class EventBuilder {
     public EventBuilder(Event eventToCopy) {
         eventName = eventToCopy.getEventName();
         roles = new HashSet<>(eventToCopy.getRoles());
-        dateAndTime = eventToCopy.getDateAndTime();
+        startDate = eventToCopy.getStartDate();
+        endDate = eventToCopy.getEndDate();
         location = eventToCopy.getLocation();
         description = eventToCopy.getDescription();
         materials = new HashSet<>(eventToCopy.getMaterials());
@@ -74,10 +78,18 @@ public class EventBuilder {
     }
 
     /**
-     * Sets the {@code DateTime} of the {@code Event} that we are building.
+     * Sets the start {@code DateTime} of the {@code Event} that we are building.
      */
-    public EventBuilder withDateAndTime(String dateAndTime) {
-        this.dateAndTime = new DateTime(dateAndTime);
+    public EventBuilder withStartDate(String startDate) {
+        this.startDate = new DateTime(startDate);
+        return this;
+    }
+
+    /**
+     * Sets the end {@code DateTime} of the {@code Event} that we are building.
+     */
+    public EventBuilder withEndDate(String endDate) {
+        this.endDate = new DateTime(endDate);
         return this;
     }
 
@@ -114,7 +126,7 @@ public class EventBuilder {
     }
 
     public Event build() {
-        return new Event(eventName, roles, dateAndTime, location, description, materials, budget);
+        return new Event(eventName, roles, startDate, endDate, location, description, materials, budget);
     }
 
 }

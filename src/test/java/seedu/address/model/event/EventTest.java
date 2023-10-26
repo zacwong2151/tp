@@ -2,6 +2,7 @@ package seedu.address.model.event;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,6 +30,7 @@ public class EventTest {
                 name,
                 roles,
                 new DateTime("10/10/2023 1234"),
+                new DateTime(LocalDateTime.of(2024, 1, 1, 12, 34)),
                 new Location("NUS"),
                 new Description("No description."),
                 materials,
@@ -38,7 +40,8 @@ public class EventTest {
         assertTrue(e.getRoles().contains(clean));
         assertTrue(e.getMaterials().contains(cloth));
         assertTrue(e.getMaterials().contains(soap));
-        assertTrue(e.getDateAndTime().equals(new DateTime("10/10/2023 1234")));
+        assertTrue(e.getStartDate().equals(new DateTime("10/10/2023 1234")));
+        assertTrue(e.getEndDate().equals(new DateTime("1/1/2024 1234")));
         assertTrue(e.getLocation().equals(new Location("NUS")));
         assertTrue(e.getDescription().equals(new Description("No description.")));
         assertTrue(e.getBudget().equals(b));

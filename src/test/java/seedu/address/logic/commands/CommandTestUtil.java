@@ -3,15 +3,16 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BUDGET;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_AND_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATETIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MATERIAL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SKILL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATETIME;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import java.util.ArrayList;
@@ -39,8 +40,11 @@ public class CommandTestUtil {
     public static final String VALID_EVENTNAME_HELPOUT = "Help out";
     public static final String VALID_ROLE_CLEANER = "cleaner";
     public static final String VALID_ROLE_BRAIN = "brain";
-    public static final String VALID_DATEANDTIME_CLEANUP = "23/9/2023 1800";
-    public static final String VALID_DATEANDTIME_HELPOUT = "25/10/2023 2000";
+    public static final String VALID_START_DATETIME_CLEANUP = "23/9/2023 1800";
+    public static final String VALID_END_DATETIME_CLEANUP = "23/9/2023 2100";
+    public static final String VALID_END_DATETIME_CLEANUP_BEFORE_START = "23/9/2023 1700";
+    public static final String VALID_START_DATETIME_HELPOUT = "25/10/2023 2000";
+    public static final String VALID_END_DATETIME_HELPOUT = "25/10/2023 2200";
     public static final String VALID_LOCATION_CLEANUP = "serangoon";
     public static final String VALID_LOCATION_HELPOUT = "admiralty";
     public static final String VALID_DESCRIPTION_CLEANUP = "clean it up";
@@ -53,8 +57,10 @@ public class CommandTestUtil {
     public static final String EVENTNAME_DESC_HELPOUT = " " + PREFIX_NAME + VALID_EVENTNAME_HELPOUT;
     public static final String ROLE_DESC_CLEANER = " " + PREFIX_ROLE + VALID_ROLE_CLEANER;
     public static final String ROLE_DESC_BRAIN = " " + PREFIX_ROLE + VALID_ROLE_BRAIN;
-    public static final String DATEANDTIME_DESC_CLEANUP = " " + PREFIX_DATE_AND_TIME + VALID_DATEANDTIME_CLEANUP;
-    public static final String DATEANDTIME_DESC_HELPOUT = " " + PREFIX_DATE_AND_TIME + VALID_DATEANDTIME_HELPOUT;
+    public static final String START_DATETIME_DESC_CLEANUP = " " + PREFIX_START_DATETIME + VALID_START_DATETIME_CLEANUP;
+    public static final String END_DATETIME_DESC_CLEANUP = " " + PREFIX_END_DATETIME + VALID_END_DATETIME_CLEANUP;
+    public static final String START_DATETIME_DESC_HELPOUT = " " + PREFIX_START_DATETIME + VALID_START_DATETIME_HELPOUT;
+    public static final String END_DATETIME_DESC_HELPOUT = " " + PREFIX_END_DATETIME + VALID_END_DATETIME_HELPOUT;
     public static final String LOCATION_DESC_CLEANUP = " " + PREFIX_LOCATION + VALID_LOCATION_CLEANUP;
     public static final String LOCATION_DESC_HELPOUT = " " + PREFIX_LOCATION + VALID_LOCATION_HELPOUT;
     public static final String DESCRIPTION_DESC_CLEANUP = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_CLEANUP;
@@ -63,11 +69,14 @@ public class CommandTestUtil {
     public static final String MATERIAL_DESC_HANDS = " " + PREFIX_MATERIAL + VALID_MATERIAL_HANDS;
     public static final String BUDGET_DESC_CLEANUP = " " + PREFIX_BUDGET + VALID_BUDGET_CLEANUP;
     public static final String BUDGET_DESC_HELPOUT = " " + PREFIX_BUDGET + VALID_BUDGET_HELPOUT;
+    public static final String END_DATETIME_DESC_CLEANUP_BEFORE_START =
+            " " + PREFIX_END_DATETIME + VALID_END_DATETIME_CLEANUP_BEFORE_START;
 
 
     public static final String INVALID_EVENTNAME_DESC = " " + PREFIX_NAME + "Clean&";
     public static final String INVALID_ROLE_DESC = " " + PREFIX_ROLE + "cleaner&";
-    public static final String INVALID_DATEANDTIME_DESC = " " + PREFIX_DATE_AND_TIME + "23-9-2023 1800";
+    public static final String INVALID_START_DATETIME_DESC = " " + PREFIX_START_DATETIME + "23-9-2023 1800";
+    public static final String INVALID_END_DATETIME_DESC = " " + PREFIX_END_DATETIME + "23-9-2023 1800";
     public static final String INVALID_LOCATION_DESC = " " + PREFIX_LOCATION + "sembawang&";
     public static final String INVALID_DESCRIPTION_DESC = " " + PREFIX_DESCRIPTION + "clean&";
     public static final String INVALID_MATERIAL_DESC = " " + PREFIX_MATERIAL + "trash bag&";

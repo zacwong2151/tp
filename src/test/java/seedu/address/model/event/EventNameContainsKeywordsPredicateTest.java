@@ -81,9 +81,10 @@ public class EventNameContainsKeywordsPredicateTest {
         assertFalse(predicate.test(new EventBuilder().withEventName("Clean up").build()));
 
         // Keywords match date, time, location and description, but does not match name
-        predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("23/9/2023", "1800", "East", "dinnertime"));
-        assertFalse(predicate.test(new EventBuilder().withEventName("Clean up beach").withDateAndTime("23/9/2023 1800")
-                .withDescription("Clean very clean").withLocation("East").build()));
+        predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("23/9/2023", "1800", "24/9/2023", "2100",
+                "East", "dinnertime"));
+        assertFalse(predicate.test(new EventBuilder().withEventName("Clean up beach").withStartDate("23/9/2023 1800")
+                .withEndDate("24/9/2023 2100").withDescription("Clean very clean").withLocation("East").build()));
     }
 
     @Test
