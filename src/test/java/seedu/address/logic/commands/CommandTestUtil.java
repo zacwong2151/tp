@@ -26,7 +26,8 @@ import seedu.address.model.Model;
 import seedu.address.model.VolunteerStorage;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.EventNameContainsKeywordsPredicate;
-import seedu.address.model.volunteer.NameContainsKeywordsPredicate;
+import seedu.address.model.volunteer.Name;
+import seedu.address.model.volunteer.SkillNameContainsKeywordsPredicate;
 import seedu.address.model.volunteer.Volunteer;
 import seedu.address.testutil.EditVolunteerDescriptorBuilder;
 
@@ -169,8 +170,9 @@ public class CommandTestUtil {
         assertTrue(targetIndex.getZeroBased() < model.getFilteredVolunteerList().size());
 
         Volunteer volunteer = model.getFilteredVolunteerList().get(targetIndex.getZeroBased());
-        final String[] splitName = volunteer.getName().fullName.split("\\s+");
-        model.updateFilteredVolunteerList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+        final Name volunteerName = volunteer.getName();
+        Name preppedName = new Name(volunteerName.fullName.split("\\s+")[0]);
+        model.updateFilteredVolunteerList(new SkillNameContainsKeywordsPredicate(Arrays.asList(preppedName)));
 
         assertEquals(1, model.getFilteredVolunteerList().size());
     }

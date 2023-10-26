@@ -113,23 +113,27 @@ Shows a list of all volunteers in the volunteer list.
 
 Format: `vlist`
 
-### Locating volunteers by name: `vfind` [COMING SOON]
+### Locating volunteers by name: `vfind`
 
 Finds volunteers whose names contain any of the given keywords.
 
-Format: `vfind KEYWORD [MORE_KEYWORDS]`
+Format: `vfind [n/NAME]…​ [s/SKILL]…​`
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Volunteers matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* At least one of the optional fields must be provided.
+* The search is case-insensitive. e.g `n/hans` will match `Hans`.
+* Both the volunteer name and corresponding skills can be searched.
+* The order of the keywords does not matter. e.g. `s/chef n/Hans` and `n/Hans s/chef` are valid inputs.
+* Allows partial matching of keywords e.g. `n/Han` will match `Hans`.
+* Volunteers matching **at least one** NAME keyword will be returned (i.e. `OR` search).
+  e.g. `n/Hans n/Bo` will return `Hans Gruber`, `Bo Yang`.
+* Volunteers matching **both** SKILL keywords will be returned (i.e. `AND` search).
+  e.g. `s/chef s/boxer` will return volunteers that have skills `chef` and `boxer`.
 
 Examples:
-* `vfind John` returns `john` and `John Doe`
-* `vfind alex david` returns `Alex Yeoh`, `David Li`<br>
+* `vfind n/John` returns `john` and `John Doe`
+* `vfind n/alex n/david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
+* `vfind s/chef` returns volunteers who are chefs
 
 ### Editing a volunteer: `vedit`
 
@@ -328,7 +332,7 @@ _Details coming soon ..._
 
 **Q**: As a Mac user, how do I open a command terminal?<br>
 **A**: On your Mac, do one of the following:
-1. Click the Launchpad icon in the Dock, type Terminal in the search field, then click Terminal. 
+1. Click the Launchpad icon in the Dock, type Terminal in the search field, then click Terminal.
 2. In the Finder, open the `/Applications/Utilities` folder, then double-click Terminal.
 
 --------------------------------------------------------------------------------------------------------------------
