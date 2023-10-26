@@ -258,24 +258,23 @@ _{Explain here how the data archiving feature will be implemented}_
 
 #### Proposed Implementation
 
-The proposed undo/redo mechanism is facilitated by `VolunteerFindCommand`. It extends the abstract class `Command`, and it implements the following operations:
+The proposed undo/redo mechanism is facilitated by `VolunteerFindCommand`, `VolunteerFindCommandParser` and `SkillNameContainsKeywordsPredicate`. `VolunteerFindCommandParser` extends the interface `Parser`, and it implements the following operation:
 
-* `VolunteerFindCommand#execute()` — Executes the vfind command.
-* `VolunteerFindCommand#toString()` — Displays the command as a string.
+* `VolunteerFindCommandParser#parse()` — Processes the user input's arguments.
 
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
+Meanwhile, `VolunteerFindCommand` extends the abstract class `Command`, and implements the following operation:
 
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
+* `VolunteerFindCommand#execute()` — Displays the filtered volunteer list.
 
-<puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
+Lastly, `SkillNameContainsKeywordsPredicate` implements the interface `Predicate`, and implements the following operation:
 
-Step 2. The user executes `delete 5` command to delete the 5th volunteer in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+* `SkillNameContainsKeywordsPredicate#test` — Checks if any `skill` or `name` matches the user input.
 
-<puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
+Given below is an example usage scenario and how the vfind command behaves at each step.
 
-Step 3. The user executes `add n/David …​` to add a new volunteer. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
+Step 2. The user launches the application. The user executes `vfind n/Alex` command to find any volunteers named 'Alex' in the volunteer list. The `vfind` command calls `LogicManager#execute`, which attempts to execute the command. 
 
-<puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
+Step 3. This creates a `VolunteerFindCommandParser` object, which processes the user input's arguments, namely 'Alex'. This creates a `VolunteerFindCommand` object, with its predicate encapsulating a list of `names` and a list of `skills`.
 
 <box type="info" seamless>
 
@@ -283,7 +282,8 @@ Step 3. The user executes `add n/David …​` to add a new volunteer. The `add`
 
 </box>
 
-Step 4. The user now decides that adding the volunteer was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
+Step 4.  
+The user now decides that adding the volunteer was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
 
 <puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
 
