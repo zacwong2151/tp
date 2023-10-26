@@ -31,7 +31,7 @@ iVolunteer is your dedicated application for volunteer coordination, designed wi
 
    * `elist` : Lists all events
 
-   * `ecreate n/food donation r/chef r/packer d/23/9/2023 1500 dsc/help food distribution m/50 potatoes b/50.00` : Creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
+   * `ecreate n/food donation r/chef r/packer sd/23/9/2023 1500 l/hougang dsc/help food distribution m/50 potatoes b/50.00` : Creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, location `hougang`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
 
    * `edelete 3` : Deletes the 3rd event in the current event list
 
@@ -113,23 +113,27 @@ Shows a list of all volunteers in the volunteer list.
 
 Format: `vlist`
 
-### Locating volunteers by name: `vfind` [COMING SOON]
+### Locating volunteers by name: `vfind`
 
 Finds volunteers whose names contain any of the given keywords.
 
-Format: `vfind KEYWORD [MORE_KEYWORDS]`
+Format: `vfind [n/NAME]…​ [s/SKILL]…​`
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Volunteers matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* At least one of the optional fields must be provided.
+* The search is case-insensitive. e.g `n/hans` will match `Hans`.
+* Both the volunteer name and corresponding skills can be searched.
+* The order of the keywords does not matter. e.g. `s/chef n/Hans` and `n/Hans s/chef` are valid inputs.
+* Allows partial matching of keywords e.g. `n/Han` will match `Hans`.
+* Volunteers matching **at least one** NAME keyword will be returned (i.e. `OR` search).
+  e.g. `n/Hans n/Bo` will return `Hans Gruber`, `Bo Yang`.
+* Volunteers matching **both** SKILL keywords will be returned (i.e. `AND` search).
+  e.g. `s/chef s/boxer` will return volunteers that have skills `chef` and `boxer`.
 
 Examples:
-* `vfind John` returns `john` and `John Doe`
-* `vfind alex david` returns `Alex Yeoh`, `David Li`<br>
+* `vfind n/John` returns `john` and `John Doe`
+* `vfind n/alex n/david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
+* `vfind s/chef` returns volunteers who are chefs
 
 ### Editing a volunteer: `vedit` [COMING SOON]
 
@@ -192,7 +196,8 @@ Restrictions:
 * All arguments cannot be blank.
 * The date and time formats must be exactly `DD/MM/YYYY TTTT`.
 * If the end date and time is specified, it must be the _same time_ or _after_ the start date and time of the event.
-* The budget argument must be a floating point number with 2 decimal places.
+* The material argument must be an integer, followed by a space, and then the material required.
+* The budget argument must be a number in 2 decimal places.
 
 <box type="tip" seamless>
 
@@ -201,7 +206,7 @@ Restrictions:
 
 Examples:
 * `ecreate n/food donation r/chef r/packer sd/23/9/2023 1500 l/nus dsc/help food distribution m/50 potatoes b/50.00` creates an event with name `food donation`, roles needed `chef` and `packer`, event date from `23rd September 2023, 3pm` to `23rd September 2023, 6pm`, location `nus`, description `help food distribution`, materials needed `50 potatoes` and budget `$50.00`
-* `ecreate n/clean beach r/cleaner sd/30/11/2023 1200 ed/30/11/2023 1800 l/east coast park dsc/help clean east coast park m/cleaning supplies m/trash bags b/50.00` creates an event with name `clean beach`, roles needed `cleaner`, event date from `30th November 2023, 12pm` to `30th November 2023, 6pm`, location `east coast park`, description `help clean east coast park`, materials needed `cleaning supplies` and `trash bags` and budget `$50.00`
+* `ecreate n/clean beach r/cleaner sd/30/11/2023 1200 ed/30/11/2023 1800 l/east coast park dsc/help clean east coast park m/10 pairs of gloves m/10 trash bags b/50.00` creates an event with name `clean beach`, roles needed `cleaner`, event date from `30th November 2023, 12pm` to `30th November 2023, 6pm`, location `east coast park`, description `help clean east coast park`, materials needed `10 pairs of gloves` and `10 trash bags` and budget `$50.00`
 
 ### Listing all events: `elist`
 Volunteer coordinators can see all the events they are organising. For each event, only the most important information will be shown: name, start date and time, end date and time, location, and description.
@@ -241,68 +246,53 @@ Clears all entries from the event list.
 
 Format: `eclear`
 
-### Adding a volunteer into an event: `eaddv` [COMING SOON]
+### Adding a volunteer into an event: `eaddv`
 
-Adds a volunteer to an event by id or name.
+Adds a volunteer to an event.
 
-Format: `eaddv vid/VOLUNTEER_ID eid/EVENT_ID` or `eaddv vn/VOLUNTEER_NAME en/EVENT_NAME`
+Format: `eaddv vid/VOLUNTEER_ID eid/EVENT_ID`
 
 Parameters:
-* vn/ - Volunteer name
 * vid/ - Volunteer id
 * eid/ - Event id
-* en/ - Event name
 
 Restrictions:
-* The maximum number of characters of the event and volunteer is 50.
-* The event and volunteer name entered must exist.
-* The event id must be greater than or equal to 0 and lesser than the number of events existed.
-* The volunteer id must be greater than or equal to 0 and lesser than the number of volunteers existed.
+* The event id must be positive and must correspond to exactly one of the ids of the events currently listed.
+* The volunteer id must be positive and must correspond to exactly one of the ids of the volunteers currently listed.
+* The volunteer must not already be added to the event.
 
 Examples:
-* `eaddv vid/1 eid/1`
-* `eaddv vn/Betsy Crowe en/fundraising`
+* `eaddv vid/1 eid/1` adds the volunteer with id 1 to the event with id 1.
 
-### Listing all volunteers in an event: `elistv` [COMING SOON]
+### Listing all volunteers in an event: `elistv`
 
 Shows a list of all volunteers in an event.
 
-Format: `elistv eid/EVENT_ID` or `elistv en/EVENT_NAME`
-
-Parameters:
-* eid/ - Event id
-* en/ - Event name
+Format: `elistv EVENT_ID`
 
 Restrictions:
-* The maximum number of characters of the event is 50.
-* The event name entered must exist.
-* The event id must be greater than or equal to 0 and lesser than the number of events existed.
+* The event id must be positive and must correspond to exactly one of the ids of the events currently listed.
 
 Examples:
-* `elistv eid/1`
-* `elistv en/fundraising`
+* `elistv eid/1` lists the volunteers added to the event with id 1.
 
-### Removing a volunteer in an event: `eremovev` [COMING SOON]
+### Removing a volunteer from an event: `eremovev`
 
-Removes the specified volunteer from an event by name or id.
+Removes a volunteer from an event.
 
-Format: `eremovev vid/VOLUNTEER_ID eid/EVENT_ID` or `eremovev vn/VOLUNTEER_NAME en/EVENT_NAME`
+Format: `eremovev vid/VOLUNTEER_ID eid/EVENT_ID`
 
 Parameters:
-* vn/ - Volunteer name
 * vid/ - Volunteer id
-* en/ - Event name
 * eid/ - Event id
 
 Restrictions:
-* The maximum number of characters of the event is 50.
-* The event and volunteer name entered must exist.
-* The maximum number of characters of a volunteer name is 30.
-* The id must not exceed the number of volunteers in the event and greater or equal to 0.
+* The event id must be positive and must correspond to exactly one of the ids of the events currently listed.
+* The volunteer id must be positive and must correspond to exactly one of the ids of the volunteers currently listed.
+* The volunteer should already be added to the event.
 
 Examples:
-* `eremovev vid/1 eid/1`
-* `eremovev vn/John en/fundraising`
+* `eremovev vid/1 eid/1` removes the volunteer with id 1 from the event with id 1.
 
 ### Exiting the program : `exit`
 
@@ -342,7 +332,7 @@ _Details coming soon ..._
 
 **Q**: As a Mac user, how do I open a command terminal?<br>
 **A**: On your Mac, do one of the following:
-1. Click the Launchpad icon in the Dock, type Terminal in the search field, then click Terminal. 
+1. Click the Launchpad icon in the Dock, type Terminal in the search field, then click Terminal.
 2. In the Finder, open the `/Applications/Utilities` folder, then double-click Terminal.
 
 --------------------------------------------------------------------------------------------------------------------

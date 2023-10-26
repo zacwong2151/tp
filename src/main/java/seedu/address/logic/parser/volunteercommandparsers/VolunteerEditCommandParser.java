@@ -51,7 +51,7 @@ public class VolunteerEditCommandParser implements Parser<VolunteerEditCommand> 
         EditVolunteerDescriptor editVolunteerDescriptor = new EditVolunteerDescriptor();
 
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-            editVolunteerDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
+            editVolunteerDescriptor.setName(ParserUtil.parseVolunteerName(argMultimap.getValue(PREFIX_NAME).get()));
         }
         if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
             editVolunteerDescriptor.setPhone(ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get()));
