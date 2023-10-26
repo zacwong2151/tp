@@ -1,10 +1,19 @@
 package seedu.address.logic.commands.eventcommands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_DATE_PARAMS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATETIME;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
@@ -13,22 +22,29 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.event.Budget;
+import seedu.address.model.event.DateTime;
+import seedu.address.model.event.Description;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.EventName;
+import seedu.address.model.event.Location;
+import seedu.address.model.event.Material;
+import seedu.address.model.event.Role;
 import seedu.address.model.Model;
-import seedu.address.model.event.;
-
 
 /**
  * Edits the details of an existing event in the address book.
  */
 public class EventEditCommand extends Command {
 
-    public static final String COMMAND_WORD = "vedit";
+    public static final String COMMAND_WORD = "eedit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the edit identified "
             + "by the index number used in the displayed event list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_NAME + "NAME] "
+            + "[" + PREFIX_NAME + "EVENT NAME] "
             + "[" + PREFIX_ROLE + "ROLES] "
             + "[" + PREFIX_START_DATETIME + "START DATE] "
             + "[" + PREFIX_LOCATION + "LOCATION] ...\n"
@@ -80,20 +96,24 @@ public class EventEditCommand extends Command {
      * Creates and returns a {@code Event} with the details of {@code eventToEdit}
      * edited with {@code editEventDescriptor}.
      */
-    private static Event createEditedEvent(Event eventToEdit, EditEventDescriptor editEventDescriptor) {
+    private static Event createEditedEvent(Event eventToEdit, EditEventDescriptor editEventDescriptor) throws CommandException {
         assert eventToEdit != null;
 
         EventName updatedEventName = editEventDescriptor.getEventName().orElse(eventToEdit.getEventName());
         Set<Role> updatedRoles = editEventDescriptor.getRoles().orElse(eventToEdit.getRoles());
-        DateTime updatedStartTime = editEventDescriptor.getStartDate().orElse(eventToEdit.getStartDate());
-        DateTime updatedEndTime = editEventDescriptor.getEndDate().orElse(eventToEdit.getEndDate());
         Location updatedLocation = editEventDescriptor.getLocation().orElse(eventToEdit.getLocation());
         Description updatedDescription = editEventDescriptor.getDescription().orElse(eventToEdit.getDescription());
-        Material updatedMaterial = editEventDescriptor.getMaterial().orElse(eventToEdit.getMaterial());
-        Budget updatedBudget =
+        Set<Material> updatedMaterial = editEventDescriptor.getMaterials().orElse(eventToEdit.getMaterials());
+        Budget updatedBudget = editEventDescriptor.getBudget().orElse(eventToEdit.getBudget());
+        DateTime updatedStartTime = editEventDescriptor.getStartDate().orElse(eventToEdit.getStartDate());
+        DateTime updatedEndTime = editEventDescriptor.getEndDate().orElse(eventToEdit.getEndDate());
 
-
-        return new Event(updatedName, updatedPhone, updatedEmail, updatedSkills);
+        if (updatedEndTime.dateAndTime.isBefore(updatedStartTime.dateAndTime)
+                || updatedStartTime.equals(updatedEndTime)) {
+            throw new CommandException(MESSAGE_INVALID_DATE_PARAMS);
+        }
+        return new Event(updatedEventName, updatedRoles, updatedStartTime, updatedEndTime, updatedLocation,
+                updatedDescription, updatedMaterial, updatedBudget);
     }
 
     @Override
@@ -132,7 +152,7 @@ public class EventEditCommand extends Command {
 
         private Location location;
         private Description description;
-        private Material material;
+        private Set<Material> materials;
         private Budget budget;
 
         public EditEventDescriptor() {}
@@ -143,13 +163,13 @@ public class EventEditCommand extends Command {
          */
         public EditEventDescriptor(EditEventDescriptor toCopy) {
 
-            setName(toCopy.eventName);
+            setEventName(toCopy.eventName);
             setRoles(toCopy.roles);
             setStartDate(toCopy.startDate);
             setEndDate(toCopy.endDate);
             setLocation(toCopy.location);
             setDescription(toCopy.description);
-            setMaterial(toCopy.material);
+            setMaterials(toCopy.materials);
             setBudget(toCopy.budget);
         }
 
@@ -157,7 +177,7 @@ public class EventEditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(eventName, roles, startDate, endDate, location, description, material, budget);
+            return CollectionUtil.isAnyNonNull(eventName, roles, startDate, endDate, location, description, materials, budget);
         }
         public void setEventName(EventName eventName) {
             this.eventName = eventName;
@@ -216,12 +236,21 @@ public class EventEditCommand extends Command {
             return Optional.ofNullable(description);
         }
 
-        public void setMaterial(Material material) {
-            this.material = material;
+        /**
+         * Sets {@code materials} to this object's {@code materials}.
+         * A defensive copy of {@code materials} is used internally.
+         */
+        public void setMaterials(Set<Material> materials) {
+            this.materials = (materials != null) ? new HashSet<>(materials) : null;
         }
 
-        public Optional<Material> getMaterial() {
-            return Optional.ofNullable(material);
+        /**
+         * Returns an unmodifiable material set, which throws {@code UnsupportedOperationException}
+         * if modification is attempted.
+         * Returns {@code Optional#empty()} if {@code materials} is null.
+         */
+        public Optional<Set<Material>> getMaterials() {
+            return (materials != null) ? Optional.of(Collections.unmodifiableSet(materials)) : Optional.empty();
         }
 
         public void setBudget(Budget budget) {
@@ -250,7 +279,7 @@ public class EventEditCommand extends Command {
                     && Objects.equals(endDate, otherEditEventDescriptor.endDate)
                     && Objects.equals(location, otherEditEventDescriptor.location)
                     && Objects.equals(description, otherEditEventDescriptor.description)
-                    && Objects.equals(material, otherEditEventDescriptor.material)
+                    && Objects.equals(materials, otherEditEventDescriptor.materials)
                     && Objects.equals(budget, otherEditEventDescriptor.budget);
         }
 
@@ -263,7 +292,7 @@ public class EventEditCommand extends Command {
                     .add("end date", endDate)
                     .add("location", location)
                     .add("description", description)
-                    .add("material", material)
+                    .add("materials", materials)
                     .add("budget", budget)
                     .toString();
         }
