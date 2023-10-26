@@ -131,11 +131,11 @@ Examples:
 * `vfind alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
-### Editing a volunteer: `vedit` [COMING SOON]
+### Editing a volunteer: `vedit`
 
 Edits an existing volunteer in the volunteer list.
 
-Format: `vedit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SKILL]…​`
+Format: `vedit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [s/SKILL]…​`
 
 * Edits the volunteer at the specified `INDEX`. The index refers to the index number shown in the displayed volunteer list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -145,8 +145,8 @@ Format: `vedit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SKILL]…​`
     specifying any skills after it.
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st volunteer to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower s/` Edits the name of the 2nd volunteer to be `Betsy Crower` and clears all existing skills.
+*  `vedit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st volunteer to be `91234567` and `johndoe@example.com` respectively.
+*  `vedit 2 n/Betsy Crower s/` Edits the name of the 2nd volunteer to be `Betsy Crower` and clears all existing skills.
 
 ### Deleting a volunteer from the volunteer list: `vdelete`
 
@@ -175,7 +175,7 @@ Format: `vclear`
 
 Volunteer Coordinators can create new events.
 
-Format: `ecreate n/EVENT_NAME r/ROLES_NEEDED… sd/START_DATETIME [ed/END_DATETIME] l/LOCATION dsc/DESCRIPTION [m/MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET]`
+Format: `ecreate n/EVENT_NAME r/ROLES_NEEDED… sd/START_DATETIME [ed/END_DATETIME] l/LOCATION dsc/DESCRIPTION [m/QUANTITY MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET]`
 
 Parameters:
 * n/ - Event name
@@ -184,7 +184,7 @@ Parameters:
 * ed/ - End date and time of the event
 * l/ - Location of the event
 * dsc/ - Description of the event
-* m/ - Materials needed for the event
+* m/ - Materials needed for the event and its quantity
 * b/ - Budget for the event
 
 Restrictions:
