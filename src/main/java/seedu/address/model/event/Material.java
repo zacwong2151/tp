@@ -20,7 +20,7 @@ public class Material {
      * The expression allows for multiple words to be inputted.
      * The expression matches a valid integer, followed by the words to be inputted.
      */
-    public static final String VALIDATION_REGEX = "[0-9]+\\s[A-Za-z0-9 _.,!\"'/$]+";
+    public static final String VALIDATION_REGEX = "[0-9]+\\s[\\p{Alnum}][\\p{Alnum} ]*";
 
     /*
      * The first character of the material must not be a whitespace,
@@ -28,7 +28,7 @@ public class Material {
      * The expression allows for multiple words to be inputted.
      * This regex applies only for the material name portion of the material string.
      */
-    public static final String VALIDATION_REGEX_MATERIAL_NAME = "[A-Za-z0-9 _.,!\"'/$]+";
+    public static final String VALIDATION_REGEX_MATERIAL_NAME = "[\\p{Alnum}][\\p{Alnum} ]*";
 
     public final String material;
 
@@ -58,7 +58,8 @@ public class Material {
      */
     public Material(String material, int requiredQuantity) {
         requireNonNull(material);
-        checkArgument(isValidMaterial(material), MESSAGE_CONSTRAINTS);
+        checkArgument(isValidMaterialName(material), MESSAGE_CONSTRAINTS);
+        checkArgument(isValidQuantity(requiredQuantity), MESSAGE_CONSTRAINTS);
         this.material = material;
         this.currentQuantity = 0;
         this.requiredQuantity = requiredQuantity;
@@ -88,7 +89,9 @@ public class Material {
         try {
             int quantity = Integer.parseInt(test.split("\\s+")[0]);
             return test.matches(VALIDATION_REGEX) && isValidQuantity(quantity);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            // if the material cannot be parsed into format [number] [material name]
+            // or the number is not valid
             return false;
         }
     }
@@ -145,7 +148,11 @@ public class Material {
         }
 
         Material otherMaterial = (Material) other;
-        return material.equals(otherMaterial.material);
+
+        // must be the same material name and quantities
+        return material.equals(otherMaterial.material)
+                && currentQuantity == otherMaterial.currentQuantity
+                && requiredQuantity == otherMaterial.requiredQuantity;
     }
 
     @Override
