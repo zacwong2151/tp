@@ -31,7 +31,7 @@ iVolunteer is your dedicated application for volunteer coordination, designed wi
 
    * `elist` : Lists all events
 
-   * `ecreate n/food donation r/chef r/packer d/23/9/2023 1500 l/hougang dsc/help food distribution m/50 potatoes b/50.00` : Creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
+   * `ecreate n/food donation r/chef r/packer d/23/9/2023 1500 dsc/help food distribution m/50 potatoes b/50.00` : Creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
 
    * `edelete 3` : Deletes the 3rd event in the current event list
 
@@ -175,12 +175,13 @@ Format: `vclear`
 
 Volunteer Coordinators can create new events.
 
-Format: `ecreate n/EVENT_NAME r/ROLES_NEEDED… d/DATE_AND_TIME l/LOCATION dsc/DESCRIPTION [m/MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET]`
+Format: `ecreate n/EVENT_NAME r/ROLES_NEEDED… sd/START_DATETIME [ed/END_DATETIME] l/LOCATION dsc/DESCRIPTION [m/MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET]`
 
 Parameters:
 * n/ - Event name
 * r/ - Roles needed for the event
-* d/ - Date and time of the event
+* sd/ - Start date and time of the event
+* ed/ - End date and time of the event
 * l/ - Location of the event
 * dsc/ - Description of the event
 * m/ - Materials needed for the event
@@ -188,14 +189,22 @@ Parameters:
 
 Restrictions:
 * All parameters must be separated by a single space.
-* The date and time format must be exactly `DD/MM/YYYY TTTT`
+* All arguments cannot be blank.
+* The date and time formats must be exactly `DD/MM/YYYY TTTT`.
+* If the end date and time is specified, it must be the _same time_ or _after_ the start date and time of the event.
 * The budget argument must be a floating point number with 2 decimal places.
 
+<box type="tip" seamless>
+
+**Tip:** If the end date and time is not specified, iVolunteer will automatically set the end date and time to **exactly 3 hours** after the start date and time.
+</box>
+
 Examples:
-* `ecreate n/food donation r/chef r/packer d/23/9/2023 1500 dsc/help food distribution m/50 potatoes b/50.00` creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, description `help food distribution`, materials needed `50 potatoes` and budget `$50.00`
+* `ecreate n/food donation r/chef r/packer sd/23/9/2023 1500 l/nus dsc/help food distribution m/50 potatoes b/50.00` creates an event with name `food donation`, roles needed `chef` and `packer`, event date from `23rd September 2023, 3pm` to `23rd September 2023, 6pm`, location `nus`, description `help food distribution`, materials needed `50 potatoes` and budget `$50.00`
+* `ecreate n/clean beach r/cleaner sd/30/11/2023 1200 ed/30/11/2023 1800 l/east coast park dsc/help clean east coast park m/cleaning supplies m/trash bags b/50.00` creates an event with name `clean beach`, roles needed `cleaner`, event date from `30th November 2023, 12pm` to `30th November 2023, 6pm`, location `east coast park`, description `help clean east coast park`, materials needed `cleaning supplies` and `trash bags` and budget `$50.00`
 
 ### Listing all events: `elist`
-Volunteer coordinators can see all the events they are organising. For each event, only the most important information will be shown: name, date and time, location, and description.
+Volunteer coordinators can see all the events they are organising. For each event, only the most important information will be shown: name, start date and time, end date and time, location, and description.
 
 Format: `elist`
 
@@ -210,7 +219,7 @@ Restrictions:
 * First and second parts must be separated by a single space.
 
 Examples:
-* `eshow 7` will result in a pop-up window appearing, listing all details of the event at id `7`. This includes its name, date and time, location, roles needed, logistics needed (if any), budget (if any), and a description.
+* `eshow 7` will result in a pop-up window appearing, listing all details of the event at id `7`. This includes its name, start date and time, end date and time, location, roles needed, logistics needed (if any), budget (if any), and a description.
 
 ### Deleting an event: `edelete`
 
