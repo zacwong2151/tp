@@ -278,7 +278,7 @@ Restrictions:
 * The event id must be positive and must correspond to exactly one of the ids of the events currently listed.
 
 Examples:
-* `elistv eid/1` lists the volunteers added to the event with id 1.
+* `elistv 1` lists the volunteers added to the event with id 1.
 
 ### Removing a volunteer from an event: `eremovev`
 
@@ -363,6 +363,6 @@ coming soon
 | **Delete a volunteer profile**                | `vdelete VOLUNTEER_ID` <br> e.g., `vdelete 4`                                                                                                                                                                                                                                                                                           |
 | **Clear all volunteer profiles**              | `vclear`                                                                                                                                                                                                                                                                                                                                |
 | **Add a volunteer to an event**               | `eaddv vid/VOLUNTEER_ID eid/EVENT_ID`<br> e.g., `eaddv vid/1 eid/3`                                                                                                                                                                                                                                                                     |
-| **Check for volunteers assigned to an event** | `elistv eid/EVENT_ID` <br> e.g. `elistv eid/8`                                                                                                                                                                                                                                                                                          |
+| **Check for volunteers assigned to an event** | `elistv EVENT_ID` <br> e.g. `elistv 8`                                                                                                                                                                                                                                                                                                  |
 | **Remove a volunteer from an event**          | `eremovev vid/VOLUNTEER_ID eid/EVENT_ID`<br> e.g., `eremovev vid/3 eid/4`                                                                                                                                                                                                                                                               |
 | **Exits iVolunteer**                          | `exit`                                                                                                                                                                                                                                                                                                                                  |
