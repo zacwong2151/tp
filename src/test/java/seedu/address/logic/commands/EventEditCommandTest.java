@@ -3,18 +3,19 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_SKILL_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_CLEANUP;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_HELPOUT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENTNAME_CLEANUP;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENTNAME_HELPOUT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_HELPOUT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ROLE_BRAIN;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showEventAtIndex;
-import static seedu.address.testutil.TypicalVolunteers.getTypicalVolunteerStorage;
+import static seedu.address.testutil.TypicalEvents.getTypicalEventStorage;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
-import static seedu.address.testutil.TypicalEvents.getTypicalEventStorage;
+import static seedu.address.testutil.TypicalVolunteers.getTypicalVolunteerStorage;
 
 import org.junit.jupiter.api.Test;
 
@@ -22,8 +23,11 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.eventcommands.EventEditCommand;
 import seedu.address.logic.commands.eventcommands.EventEditCommand.EditEventDescriptor;
-import seedu.address.model.;
 import seedu.address.model.EventStorage;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.VolunteerStorage;
 import seedu.address.model.event.Event;
 import seedu.address.testutil.EditEventDescriptorBuilder;
 import seedu.address.testutil.EventBuilder;
@@ -57,11 +61,12 @@ public class EventEditCommandTest {
         Event lastEvent = model.getFilteredEventList().get(indexLastEvent.getZeroBased());
 
         EventBuilder eventInList = new EventBuilder(lastEvent);
-        Event editedEvent = eventInList.withEventName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withSkills(VALID_SKILL_HUSBAND).build();
+        Event editedEvent = eventInList.withEventName(VALID_EVENTNAME_HELPOUT).withLocation(VALID_LOCATION_HELPOUT)
+                .withRoles(VALID_ROLE_BRAIN).build();
 
-        EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withSkills(VALID_SKILL_HUSBAND).build();
+        EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withEventName(VALID_EVENTNAME_HELPOUT)
+                                                .withLocation(VALID_LOCATION_HELPOUT)
+                                                .withRoles(VALID_ROLE_BRAIN).build();
         EventEditCommand eventEditCommand = new EventEditCommand(indexLastEvent, descriptor);
 
         String expectedMessage = String.format(EventEditCommand.MESSAGE_EDIT_EVENT_SUCCESS,
@@ -94,9 +99,9 @@ public class EventEditCommandTest {
         showEventAtIndex(model, INDEX_FIRST);
 
         Event eventInFilteredList = model.getFilteredEventList().get(INDEX_FIRST.getZeroBased());
-        Event editedEvent = new EventBuilder(eventInFilteredList).withEventName(VALID_NAME_BOB).build();
+        Event editedEvent = new EventBuilder(eventInFilteredList).withEventName(VALID_EVENTNAME_CLEANUP).build();
         EventEditCommand eventEditCommand = new EventEditCommand(INDEX_FIRST,
-                new EditEventDescriptorBuilder().withName(VALID_NAME_BOB).build());
+                new EditEventDescriptorBuilder().withEventName(VALID_EVENTNAME_CLEANUP).build());
 
         String expectedMessage = String.format(EventEditCommand.MESSAGE_EDIT_EVENT_SUCCESS,
                 Messages.format(editedEvent));
@@ -122,7 +127,7 @@ public class EventEditCommandTest {
         showEventAtIndex(model, INDEX_FIRST);
 
         // edit event in filtered list into a duplicate in Event storage
-        Event EventInList = model.getEventStorage().getEventList()
+        Event eventInList = model.getEventStorage().getEventList()
                 .get(INDEX_SECOND.getZeroBased());
         EventEditCommand eventEditCommand = new EventEditCommand(INDEX_FIRST,
                 new EditEventDescriptorBuilder(eventInList).build());
@@ -133,7 +138,8 @@ public class EventEditCommandTest {
     @Test
     public void execute_invalidEventIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredEventList().size() + 1);
-        EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withName(VALID_NAME_BOB).build();
+        EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withEventName(VALID_EVENTNAME_CLEANUP)
+                                                                            .build();
         EventEditCommand eventEditCommand = new EventEditCommand(outOfBoundIndex, descriptor);
 
         assertCommandFailure(eventEditCommand, model, Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
@@ -151,17 +157,17 @@ public class EventEditCommandTest {
         assertTrue(outOfBoundIndex.getZeroBased() < model.getEventStorage().getEventList().size());
 
         EventEditCommand eventEditCommand = new EventEditCommand(outOfBoundIndex,
-                new EditEventDescriptorBuilder().withName(VALID_NAME_BOB).build());
+                new EditEventDescriptorBuilder().withEventName(VALID_EVENTNAME_CLEANUP).build());
 
         assertCommandFailure(eventEditCommand, model, Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
     }
 
     @Test
     public void equals() {
-        final EventEditCommand standardCommand = new EventEditCommand(INDEX_FIRST, DESC_AMY);
+        final EventEditCommand standardCommand = new EventEditCommand(INDEX_FIRST, DESC_CLEANUP);
 
         // same values -> returns true
-        EditEventDescriptor copyDescriptor = new EditEventDescriptor(DESC_AMY);
+        EditEventDescriptor copyDescriptor = new EditEventDescriptor(DESC_CLEANUP);
         EventEditCommand commandWithSameValues = new EventEditCommand(INDEX_FIRST, copyDescriptor);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
@@ -172,13 +178,13 @@ public class EventEditCommandTest {
         assertFalse(standardCommand.equals(null));
 
         // different types -> returns false
-//        assertFalse(standardCommand.equals(new EventClearCommand()));
+        // assertFalse(standardCommand.equals(new EventClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new EventEditCommand(INDEX_SECOND, DESC_AMY)));
+        assertFalse(standardCommand.equals(new EventEditCommand(INDEX_SECOND, DESC_CLEANUP)));
 
         // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new EventEditCommand(INDEX_FIRST, DESC_BOB)));
+        assertFalse(standardCommand.equals(new EventEditCommand(INDEX_FIRST, DESC_HELPOUT)));
     }
 
     @Test

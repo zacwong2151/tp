@@ -77,7 +77,7 @@ public class EditEventDescriptorTest {
     @Test
     public void toStringMethod() {
         EditEventDescriptor editEventDescriptor = new EditEventDescriptor();
-        String expected = EditEventDescriptor.class.getCanonicalName() + "{name="
+        String expected = EditEventDescriptor.class.getCanonicalName() + "{event name="
                 + editEventDescriptor.getEventName().orElse(null) + ", roles="
                 + editEventDescriptor.getRoles().orElse(null) + ", start date="
                 + editEventDescriptor.getStartDate().orElse(null) + ", end date="

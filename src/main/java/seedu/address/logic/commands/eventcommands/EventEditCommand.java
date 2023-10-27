@@ -288,7 +288,7 @@ public class EventEditCommand extends Command {
         @Override
         public String toString() {
             return new ToStringBuilder(this)
-                    .add("eventName", eventName)
+                    .add("event name", eventName)
                     .add("roles", roles)
                     .add("start date", startDate)
                     .add("end date", endDate)
