@@ -65,6 +65,25 @@ public class EventAddVolunteerCommandTest {
     }
 
     @Test
+    public void execute_clashingEvent_throwsCommandException() {
+        // Assign a volunteer to an existing event
+        model.getEventStorage().getEventList().get(model.getEventStorage().getEventList().size() - 1)
+                .addVolunteer(model.getVolunteerStorage().getVolunteerList()
+                        .get(model.getVolunteerStorage().getVolunteerList().size() - 1));
+
+        // Assign the volunteer a clashing event
+        model.getVolunteerStorage().getVolunteerList().get(model.getVolunteerStorage().getVolunteerList().size() - 1)
+                .addEvent(model.getEventStorage().getEventList()
+                        .get(model.getEventStorage().getEventList().size() - 2));
+
+        Index validEventIndex = Index.fromOneBased(model.getFilteredEventList().size() - 1);
+        Index validVolunteerIndex = Index.fromOneBased(model.getFilteredVolunteerList().size());
+        EventAddVolunteerCommand command = new EventAddVolunteerCommand(validEventIndex, validVolunteerIndex);
+        assertThrows(CommandException.class, EventAddVolunteerCommand.MESSAGE_CLASHING_EVENTS, ()
+                -> command.execute(model));
+    }
+
+    @Test
     public void equals() {
         EventAddVolunteerCommand firstCommand = new EventAddVolunteerCommand(INDEX_FIRST, INDEX_SECOND);
         EventAddVolunteerCommand secondCommand = new EventAddVolunteerCommand(INDEX_SECOND, INDEX_FIRST);

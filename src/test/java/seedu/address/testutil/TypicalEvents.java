@@ -91,8 +91,8 @@ public class TypicalEvents {
             .withBudget("80.00").build();
     public static final Event HELPOUT = new EventBuilder().withEventName("Help out")
             .withRoles("brain")
-            .withStartDate("25/10/2023 2000")
-            .withEndDate("25/10/2023 2100")
+            .withStartDate("23/10/2023 2000")
+            .withEndDate("23/10/2023 2100")
             .withLocation("admiralty")
             .withDescription("help out la")
             .withMaterials("hands")
