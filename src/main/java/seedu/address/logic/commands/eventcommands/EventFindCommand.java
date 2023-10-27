@@ -1,4 +1,4 @@
-package seedu.address.logic.commands.volunteercommands;
+package seedu.address.logic.commands.eventcommands;
 
 import static java.util.Objects.requireNonNull;
 
@@ -7,34 +7,33 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.model.Model;
-import seedu.address.model.volunteer.SkillNameContainsKeywordsPredicate;
+import seedu.address.model.volunteer.NameContainsKeywordsPredicate;
 
 /**
- * Finds and lists all volunteers in volunteer storage whose name contains any of the argument keywords.
- * Keyword matching is case insensitive.
+ * Shows a list of all events.
  */
-public class VolunteerFindCommand extends Command {
+public class EventFindCommand extends Command {
 
-    public static final String COMMAND_WORD = "vfind";
+    public static final String COMMAND_WORD = "efind";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Finds all volunteers whose names or skills contain any of "
+            + ": Finds all events whose names contain any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " n/alice n/bob s/chef";
+            + "Example: " + COMMAND_WORD + " n/food distribution";
 
-    private final SkillNameContainsKeywordsPredicate predicate;
+    private final NameContainsKeywordsPredicate predicate;
 
-    public VolunteerFindCommand(SkillNameContainsKeywordsPredicate predicate) {
+    public EventFindCommand(NameContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
 
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        model.updateFilteredVolunteerList(predicate);
+        model.updateFilteredEventList(predicate);
         return new CommandResult(
-                String.format(Messages.MESSAGE_EVENTS_LISTED_OVERVIEW, model.getFilteredVolunteerList().size()));
+                String.format(Messages.MESSAGE_VOLUNTEERS_LISTED_OVERVIEW, model.getFilteredEventList().size()));
     }
 
     @Override
@@ -44,12 +43,12 @@ public class VolunteerFindCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof VolunteerFindCommand)) {
+        if (!(other instanceof EventFindCommand)) {
             return false;
         }
 
-        VolunteerFindCommand otherVolunteerFindCommand = (VolunteerFindCommand) other;
-        return predicate.equals(otherVolunteerFindCommand.predicate);
+        EventFindCommand otherEventFindCommand = (EventFindCommand) other;
+        return predicate.equals(otherEventFindCommand.predicate);
     }
 
     @Override

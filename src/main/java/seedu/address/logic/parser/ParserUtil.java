@@ -58,6 +58,22 @@ public class ParserUtil {
     }
 
     /**
+     * asd
+     * @param names asd
+     * @return asd
+     * @throws ParseException asd
+     */
+    public static Set<EventName> parseEventNames(Collection<String> names) throws ParseException {
+        requireNonNull(names);
+        final Set<EventName> eventNameSet = new LinkedHashSet<>();
+        // for some reason a normal HashSet will automatically reorder the elements that you add into it,
+        // presumably by lexicographic order, so must use LinkedHashSet instead
+        for (String name : names) {
+            eventNameSet.add(parseEventName(name));
+        }
+        return eventNameSet;
+    }
+    /**
      * Parses a {@code String role} into a {@code Role}.
      * Leading and trailing whitespaces will be trimmed.
      *

@@ -13,6 +13,7 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.eventcommands.EventCreateCommand;
 import seedu.address.logic.commands.eventcommands.EventDeleteCommand;
+import seedu.address.logic.commands.eventcommands.EventFindCommand;
 import seedu.address.logic.commands.eventcommands.EventListCommand;
 import seedu.address.logic.commands.eventcommands.EventShowCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerClearCommand;
@@ -23,6 +24,7 @@ import seedu.address.logic.commands.volunteercommands.VolunteerFindCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerListCommand;
 import seedu.address.logic.parser.eventcommandparsers.EventCreateCommandParser;
 import seedu.address.logic.parser.eventcommandparsers.EventDeleteCommandParser;
+import seedu.address.logic.parser.eventcommandparsers.EventFindCommandParser;
 import seedu.address.logic.parser.eventcommandparsers.EventShowCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.parser.volunteercommandparsers.VolunteerCreateCommandParser;
@@ -48,6 +50,7 @@ public class IVolunteerParser {
      * @return the command based on the user input
      * @throws ParseException if the user input does not conform the expected format
      */
+    @SuppressWarnings("checkstyle:Regexp")
     public Command parseCommand(String userInput) throws ParseException {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         if (!matcher.matches()) {
@@ -74,6 +77,9 @@ public class IVolunteerParser {
 
         case EventListCommand.COMMAND_WORD:
             return new EventListCommand();
+
+        case EventFindCommand.COMMAND_WORD:
+            return new EventFindCommandParser().parse(arguments);
 
         case VolunteerCreateCommand.COMMAND_WORD:
             return new VolunteerCreateCommandParser().parse(arguments);
