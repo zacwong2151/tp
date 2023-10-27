@@ -434,6 +434,34 @@ _{Explain here how the data archiving feature will be implemented}_
 
 --------------------------------------------------------------------------------------------------------------------
 
+### \[Proposed\] vfind feature
+
+#### Proposed Implementation
+
+The proposed vfind mechanism is facilitated by `VolunteerFindCommand`, `VolunteerFindCommandParser` and `SkillNameContainsKeywordsPredicate`. `VolunteerFindCommandParser` extends the interface `Parser`, and it implements the following operation:
+
+* `VolunteerFindCommandParser#parse()` — Processes the user input's arguments.
+
+Meanwhile, `VolunteerFindCommand` extends the abstract class `Command`, and implements the following operation:
+
+* `VolunteerFindCommand#execute()` — Displays the filtered volunteer list.
+
+Lastly, `SkillNameContainsKeywordsPredicate` implements the interface `Predicate`, and implements the following operation:
+
+* `SkillNameContainsKeywordsPredicate#test` — Checks if any `skill` or `name` matches the user input.
+
+Given below is an example usage scenario and how the vfind command behaves at each step.
+
+Step 1. The user launches the application. The user executes `vfind n/Alex` command to find any volunteers named 'Alex' in the volunteer list. The `vfind` command calls `LogicManager#execute`, which attempts to execute the command. 
+
+Step 2. This creates a `VolunteerFindCommandParser` object, which processes the user input's arguments, namely 'Alex'. This creates a `VolunteerFindCommand` object, with its predicate encapsulating a list of `names` and a list of `skills`.
+
+### \[Proposed\] Data archiving
+
+_{Explain here how the data archiving feature will be implemented}_
+
+
+
 ## **Documentation, logging, testing, configuration, dev-ops**
 
 * [Documentation guide](Documentation.md)
