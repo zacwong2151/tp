@@ -422,7 +422,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 1f1. System prompts Volunteer Coordinator to use the correct budget format.
 
   Use case resumes from step 1.
-  
+
 **Use case UCE02: List all volunteering events**
 
 **MSS**
@@ -437,7 +437,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1a. The input command is incorrect.
 
     * 1a1. System prompts the user to provide a valid command.
-      
+    
       Use case resumes from step 1.
 
 * 1b. There are no events to list.
@@ -493,7 +493,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2a. Invalid event id.
     * 2a1. iVolunteer requests for the correct command with valid event id.
-    * 2a2. User enters correct command. 
+    * 2a2. User enters correct command.
     Steps 2a1-2a2 are repeated until the data entered is correct.
     Use case resumes at step 3.
 

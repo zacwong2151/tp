@@ -3,6 +3,7 @@ package seedu.address.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.logic.commands.VolunteerFindCommandTest.preparePredicate;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_VOLUNTEERS;
 import static seedu.address.testutil.Assert.assertThrows;
@@ -13,15 +14,15 @@ import static seedu.address.testutil.TypicalVolunteers.BENSON;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.commands.CommandTestUtil;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Event;
-import seedu.address.model.volunteer.NameContainsKeywordsPredicate;
+import seedu.address.model.volunteer.SkillNameContainsKeywordsPredicate;
 import seedu.address.testutil.TypicalEvents;
 import seedu.address.testutil.VolunteerStorageBuilder;
 
@@ -111,7 +112,7 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void equals() {
+    public void equals() throws ParseException {
         // Need to change
         EventStorage eventStorage = TypicalEvents.getTypicalEventStorage();
         EventStorage differentEventStorage = new EventStorage();
@@ -138,9 +139,10 @@ public class ModelManagerTest {
         // different addressBook -> returns false
         assertFalse(modelManager.equals(new ModelManager(differentEventStorage, differentVolunteerStorage, userPrefs)));
 
-        // different filteredVolunteerList -> returns false
-        String[] volunteerKeywords = ALICE.getName().fullName.split("\\s+");
-        modelManager.updateFilteredVolunteerList(new NameContainsKeywordsPredicate(Arrays.asList(volunteerKeywords)));
+        // different filteredList -> returns false
+        String name = ALICE.getName().fullName.split("\\s+")[0];
+        SkillNameContainsKeywordsPredicate predicate = preparePredicate(" n/" + name);
+        modelManager.updateFilteredVolunteerList(predicate);
         assertFalse(modelManager.equals(new ModelManager(eventStorage, volunteerStorage, userPrefs)));
 
         // resets modelManager to initial state for upcoming tests
