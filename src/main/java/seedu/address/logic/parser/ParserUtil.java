@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
@@ -177,13 +178,27 @@ public class ParserUtil {
      *
      * @throws ParseException if the given {@code name} is invalid.
      */
-    public static Name parseName(String name) throws ParseException {
+    public static Name parseVolunteerName(String name) throws ParseException {
         requireNonNull(name);
         String trimmedName = name.trim();
-        if (!EventName.isValidEventName(trimmedName)) {
-            throw new ParseException(EventName.MESSAGE_CONSTRAINTS);
+        if (!Name.isValidName(trimmedName)) {
+            throw new ParseException(Name.MESSAGE_CONSTRAINTS);
         }
         return new Name(trimmedName);
+    }
+
+    /**
+     * Parses {@code Collection<String> names} into a {@code Set<Name>}.
+     */
+    public static Set<Name> parseNames(Collection<String> names) throws ParseException {
+        requireNonNull(names);
+        final Set<Name> nameSet = new LinkedHashSet<>();
+        // for some reason a normal HashSet will automatically reorder the elements that you add into it,
+        // presumably by lexicographic order, so must use LinkedHashSet instead
+        for (String name : names) {
+            nameSet.add(parseVolunteerName(name));
+        }
+        return nameSet;
     }
 
     /**
@@ -236,10 +251,22 @@ public class ParserUtil {
      */
     public static Set<Skill> parseSkills(Collection<String> skills) throws ParseException {
         requireNonNull(skills);
-        final Set<Skill> skillSet = new HashSet<>();
+        final Set<Skill> skillSet = new LinkedHashSet<>();
         for (String skillName : skills) {
             skillSet.add(parseSkill(skillName));
         }
         return skillSet;
     }
+    /*
+     public static Set<Name> parseNames(Collection<String> names) throws ParseException {
+        requireNonNull(names);
+        final Set<Name> nameSet = new LinkedHashSet<>();
+        // for some reason a normal HashSet will automatically reorder the elements that you add into it,
+        // presumably by lexicographic order, so must use LinkedHashSet instead
+        for (String name : names) {
+            nameSet.add(parseName(name));
+        }
+        return nameSet;
+    }
+     */
 }
