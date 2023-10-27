@@ -132,7 +132,11 @@ Format: `vfind [n/NAME]…​ [s/SKILL]…​`
 Examples:
 * `vfind n/John` returns `john` and `John Doe`
 * `vfind n/alex n/david` returns `Alex Yeoh`, `David Li`<br>
+
+
   ![result for 'find alex david'](images/findAlexDavidResult.png)
+
+
 * `vfind s/chef` returns volunteers who are chefs
 
 ### Editing a volunteer: `vedit` [COMING SOON]
@@ -205,8 +209,8 @@ Restrictions:
 </box>
 
 Examples:
-* `ecreate n/food donation r/chef r/packer sd/23/9/2023 1500 l/nus dsc/help food distribution m/50 potatoes b/50.00` creates an event with name `food donation`, roles needed `chef` and `packer`, event date from `23rd September 2023, 3pm` to `23rd September 2023, 6pm`, location `nus`, description `help food distribution`, materials needed `50 potatoes` and budget `$50.00`
-* `ecreate n/clean beach r/cleaner sd/30/11/2023 1200 ed/30/11/2023 1800 l/east coast park dsc/help clean east coast park m/10 pairs of gloves m/10 trash bags b/50.00` creates an event with name `clean beach`, roles needed `cleaner`, event date from `30th November 2023, 12pm` to `30th November 2023, 6pm`, location `east coast park`, description `help clean east coast park`, materials needed `10 pairs of gloves` and `10 trash bags` and budget `$50.00`
+* `ecreate n/clean beach r/cleaner sd/30/11/2023 1200 ed/30/11/2023 1800 l/east coast park dsc/help clean east coast park m/10 pairs of gloves m/10 trash bags b/50.00` 
+  * Creates an event with name `clean beach`, roles needed `cleaner`, event date from `30th November 2023, 12pm` to `30th November 2023, 6pm`, location `east coast park`, description `help clean east coast park`, materials needed `10 pairs of gloves` and `10 trash bags` and budget `$50.00`
 
 ### Listing all events: `elist`
 Volunteer coordinators can see all the events they are organising. For each event, only the most important information will be shown: name, start date and time, end date and time, location, and description.
