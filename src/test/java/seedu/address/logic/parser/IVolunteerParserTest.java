@@ -68,7 +68,7 @@ public class IVolunteerParserTest {
     }
 
     @Test
-    public void parseCommand_edit() throws Exception {
+    public void parseCommand_volunteerEdit() throws Exception {
         Volunteer volunteer = new VolunteerBuilder().build();
         EditVolunteerDescriptor descriptor = new EditVolunteerDescriptorBuilder(volunteer).build();
         VolunteerEditCommand command = (VolunteerEditCommand) parser
