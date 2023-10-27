@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.eventcommands.EventDeleteCommand;
+import seedu.address.logic.commands.eventcommands.EventEditCommand;
 import seedu.address.logic.commands.eventcommands.EventListCommand;
 import seedu.address.logic.commands.eventcommands.EventShowCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerClearCommand;
@@ -26,11 +27,10 @@ import seedu.address.logic.commands.volunteercommands.VolunteerEditCommand.EditV
 import seedu.address.logic.commands.volunteercommands.VolunteerFindCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.event.Event;
 import seedu.address.model.volunteer.SkillNameContainsKeywordsPredicate;
 import seedu.address.model.volunteer.Volunteer;
-import seedu.address.testutil.EditVolunteerDescriptorBuilder;
-import seedu.address.testutil.VolunteerBuilder;
-import seedu.address.testutil.VolunteerUtil;
+import seedu.address.testutil.*;
 
 public class IVolunteerParserTest {
 
@@ -77,6 +77,18 @@ public class IVolunteerParserTest {
                         + VolunteerUtil.getEditVolunteerDescriptorDetails(descriptor)
                 );
         assertEquals(new VolunteerEditCommand(INDEX_FIRST, descriptor), command);
+    }
+
+    @Test
+    public void parseCommand_eventEdit() throws Exception {
+        Event event = new EventBuilder().build();
+        EventEditCommand.EditEventDescriptor descriptor = new EditEventDescriptorBuilder(event).build();
+        EventEditCommand command = (EventEditCommand) parser
+                .parseCommand(EventEditCommand.COMMAND_WORD + " "
+                        + INDEX_FIRST.getOneBased() + " "
+                        + EventUtil.getEditEventDescriptorDetails(descriptor)
+                );
+        assertEquals(new EventEditCommand(INDEX_FIRST, descriptor), command);
     }
 
     @Test
