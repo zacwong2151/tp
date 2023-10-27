@@ -310,6 +310,25 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{more aspects and alternatives to be added}_
 
+### \[In progress\] Delete the event from a list of event
+
+### Implementation
+
+To facilitate the event delete command, the class EventDeleteCommand is created. The class extends from the interface
+Command. When the command is then parsed and executed.
+
+Given below is an example usage scenario and how the mechanism of the event delete behaves at each step.
+
+Step 1. When the user input the event delete command, it will be parsed by IVolunteerParser. Then the keyword of the command is noticed and EventDeleteCommandParser is called. 
+
+<puml src="diagrams/DeleteSequenceDiagram.puml" alt="DeleteSequenceDiagram" />
+
+Step 2. When the command is parsed, the index of the event in the event list is then determined by parsing from String to an integer.
+
+Step 3. The command is then executed and with the index and the event is deleted from the filtered list.
+
+Step 4. Then the storage will also be updated accordingly by the filtered list.
+
 ### \[In progress\] Tracking amount of roles and materials
 
 #### Implementation
