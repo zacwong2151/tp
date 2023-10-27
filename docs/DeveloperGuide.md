@@ -158,6 +158,69 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+### Create Event Feature
+
+#### Implementation
+To encapsulate the aspects of an event, a new `Event` class is created. The Event class has fields representing the various aspects of an Event, namely `eventName`, `roles`, `startDate`, `endDate`, `location`, `description`, `materials` and `budget`. New classes were also created to facilitate the logic of these fields, which are `EventName`, `Role`, `Location`, `Description`, `Material` and `Budget`.
+
+To store the created events, a new class `EventStorage` is created, which effectively acts as the list storing all created events. A reference to the EventStorage is kept in the ModelManager to facilitate logical operations.
+
+After creating an event, the new EventStorage is saved by converting it to a `JsonSerializableEventStorage` and writing it to the JSON file, `eventStorage.json`.
+
+Given below is an example usage scenario and how the create event mechanism behaves at each step.
+
+Step 1:
+The user launches the application and enters the command to create a new event.
+`ecreate n/Clean up the beach r/cleaner sd/23/10/23 1900 l/East Coast Park dsc/Pick up all litter on the beach m/10 trash bags b/50.00`. After parsing all the arguments, a new `Event` object is created along with its respective fields.
+<puml src="diagrams/EventClassDiagram.puml" alt="EventClassDiagram" />
+
+Step 2:
+The created `Event` object is passed to `EventCreateCommand` and executed. During its execution, the application checks the `EventStorage` in the `ModelManager` if an event with the same `eventName` already exists. If not, the new `Event` is added to the `EventStorage`.
+<puml src="diagrams/EventCreateSequenceDiagram.puml" alt="EventCreateSequenceDiagram" />
+
+Step 3:
+When the `EventCreateCommand` finishes executing, the updated `EventStorage` is written into `eventStorage.json` file.
+<puml src="diagrams/EventStorageClassDiagram.puml" alt="EventStorageClassDiagram" />
+
+**Aspect: How undo & redo executes:**
+
+* **Alternative 1 (current choice):** Saves the entire address book.
+    * Pros: Easy to implement.
+    * Cons: May have performance issues in terms of memory usage.
+
+### Design Considerations
+**Aspect: How the individual fields of an Event are stored:**
+
+* **Alternative 1 (current choice):** Create new classes to represent the fields.
+    * Pros:
+        * Improves the overall structure and readability of the code.
+    * Cons:
+        * Results in more code. 
+        * More memory usage as objects have to be instantiated for each field.
+
+* **Alternative 2:** Store each field as the relevant substring inputted by the user.
+
+    * Pros:
+        * Less code required.
+        * Less memory usage as objects do not have to be instantiated for each field.
+    * Cons:
+        * No encapsulation for fields as all fields are treated simply as a string.
+        * The Event class will be cluttered with methods as methods specific to each field are compiled into a single class.
+
+**Aspect: How created Events are saved:**
+
+* **Alternative 1 (current choice):** Save the entire updated `EventStorage`.
+    * Pros:
+      * Easier to implement
+    * Cons:
+      * More time is taken to execute the command as the entire `EventStorage` must be saved, compared to just appending the new `Event`.
+
+* **Alternative 2:** Append the `Event` at the end of the JSON file.
+    * Pros:
+      * The command can be executed quickly as the new `Event` only has to be appended, as compared to saving the entire updated `EventStorage`.
+    * Cons:
+      * A new method must be created to save data after executing other commands. E.g. The save() method after an edit event command would be different from a create event command as the `Event` would have to be located first in the JSON file and then updated.
+
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
