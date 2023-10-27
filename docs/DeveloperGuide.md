@@ -310,6 +310,20 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{more aspects and alternatives to be added}_
 
+### \[Proposed\] Reading an individual event feature
+
+#### Proposed Implementation
+
+When the app is initialized, the MainApp will first initialize all key components of the app. Specifically in this case:
+
+First, eventToShowList in ModelManager will be initialized, with the list of all events currently in the EventStorage.
+
+Then, when MainWindow is being initialized, the EventShowWindow will also be initialized.
+
+EventShowWindow consists of ListView displaying the eventToShowList in Model, and its contents are obtained by calling Logic.getEventToShowList(), which will call Model.getEventToShowList().
+
+In summary, when the app is initialized, EventShowWindow will be initialized with its contents being the list of all events obtained from the EventStorage. However, user will not see it as without receiving its command, EventShowWindow will not be shown.
+
 ### \[In progress\] Delete the event from a list of event
 
 ### Implementation
