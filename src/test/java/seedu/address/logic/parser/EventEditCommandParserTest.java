@@ -2,9 +2,7 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.*;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_SKILL;
+import static seedu.address.logic.parser.CliSyntax.*;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
@@ -19,16 +17,12 @@ import seedu.address.logic.commands.eventcommands.EventEditCommand;
 import seedu.address.logic.commands.eventcommands.EventEditCommand.EditEventDescriptor;
 import seedu.address.logic.parser.eventcommandparsers.EventEditCommandParser;
 import seedu.address.model.event.*;
-import seedu.address.model.skill.Skill;
-import seedu.address.model.event.Email;
-import seedu.address.model.event.Name;
-import seedu.address.model.event.Phone;
 import seedu.address.testutil.EditEventDescriptorBuilder;
 
 public class EventEditCommandParserTest {
 
-    private static final String SKILL_EMPTY = " " + PREFIX_SKILL;
-
+    private static final String ROLE_EMPTY = " " + PREFIX_ROLE;
+    private static final String MATERIAL_EMPTY = " " + PREFIX_MATERIAL;
     private static final String MESSAGE_INVALID_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, EventEditCommand.MESSAGE_USAGE);
 
@@ -88,12 +82,12 @@ public class EventEditCommandParserTest {
 
         // while parsing {@code PREFIX_SKILL} alone will reset the skills of the {@code event} being edited,
         // parsing it together with a valid skill results in error
-        assertParseFailure(parser, "1" + SKILL_DESC_FRIEND + SKILL_DESC_HUSBAND + SKILL_EMPTY,
-                Skill.MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, "1" + SKILL_DESC_FRIEND + SKILL_EMPTY + SKILL_DESC_HUSBAND,
-                Skill.MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, "1" + SKILL_EMPTY + SKILL_DESC_FRIEND + SKILL_DESC_HUSBAND,
-                Skill.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "1" + ROLE_DESC_CLEANER + ROLE_DESC_BRAIN + ROLE_EMPTY,
+                Role.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "1" + ROLE_DESC_CLEANER + ROLE_EMPTY + ROLE_DESC_BRAIN,
+                Role.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "1" + ROLE_EMPTY + ROLE_DESC_CLEANER + ROLE_DESC_BRAIN,
+                Role.MESSAGE_CONSTRAINTS);
 
         // multiple invalid values, but only the first invalid value is captured
         assertParseFailure(parser, "1" + INVALID_EVENTNAME_DESC
@@ -103,12 +97,15 @@ public class EventEditCommandParserTest {
     @Test
     public void parse_allFieldsSpecified_success() {
         Index targetIndex = INDEX_SECOND;
-        String userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + SKILL_DESC_HUSBAND
-                + EMAIL_DESC_AMY + NAME_DESC_AMY + SKILL_DESC_FRIEND;
+        String userInput = targetIndex.getOneBased() + EVENTNAME_DESC_CLEANUP + ROLE_DESC_CLEANER
+                            + START_DATETIME_DESC_CLEANUP + END_DATETIME_DESC_CLEANUP + LOCATION_DESC_CLEANUP
+                            + DESCRIPTION_DESC_CLEANUP + MATERIAL_DESC_TRASHBAG +BUDGET_DESC_CLEANUP;
 
-        EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withName(VALID_NAME_AMY)
-                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY)
-                .withSkills(VALID_SKILL_HUSBAND, VALID_SKILL_FRIEND).build();
+        EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withEventName(VALID_EVENTNAME_CLEANUP)
+                .withStartDate(VALID_START_DATETIME_CLEANUP).withEndDate(VALID_END_DATETIME_CLEANUP)
+                .withRoles(VALID_ROLE_CLEANER).withLocation(VALID_LOCATION_CLEANUP)
+                .withMaterials(VALID_MATERIAL_TRASHBAG).withDescription(VALID_DESCRIPTION_CLEANUP)
+                .withBudget(VALID_BUDGET_CLEANUP).build();
         EventEditCommand expectedCommand = new EventEditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -117,10 +114,10 @@ public class EventEditCommandParserTest {
     @Test
     public void parse_someFieldsSpecified_success() {
         Index targetIndex = INDEX_FIRST;
-        String userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + EMAIL_DESC_AMY;
+        String userInput = targetIndex.getOneBased() + LOCATION_DESC_HELPOUT + BUDGET_DESC_CLEANUP;
 
-        EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withPhone(VALID_PHONE_BOB)
-                .withEmail(VALID_EMAIL_AMY).build();
+        EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withLocation(VALID_LOCATION_HELPOUT)
+                .withBudget(VALID_BUDGET_CLEANUP).build();
         EventEditCommand expectedCommand = new EventEditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -130,26 +127,50 @@ public class EventEditCommandParserTest {
     public void parse_oneFieldSpecified_success() {
         // name
         Index targetIndex = INDEX_THIRD;
-        String userInput = targetIndex.getOneBased() + NAME_DESC_AMY;
-        EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withName(VALID_NAME_AMY).build();
+        String userInput = targetIndex.getOneBased() + EVENTNAME_DESC_CLEANUP;
+        EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withEventName(VALID_EVENTNAME_CLEANUP).build();
         EventEditCommand expectedCommand = new EventEditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
-        // phone
-        userInput = targetIndex.getOneBased() + PHONE_DESC_AMY;
-        descriptor = new EditEventDescriptorBuilder().withPhone(VALID_PHONE_AMY).build();
+        // roles
+        userInput = targetIndex.getOneBased() + ROLE_DESC_CLEANER;
+        descriptor = new EditEventDescriptorBuilder().withRoles(VALID_ROLE_CLEANER).build();
         expectedCommand = new EventEditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
-        // email
-        userInput = targetIndex.getOneBased() + EMAIL_DESC_AMY;
-        descriptor = new EditEventDescriptorBuilder().withEmail(VALID_EMAIL_AMY).build();
+        // start date
+        userInput = targetIndex.getOneBased() + START_DATETIME_DESC_CLEANUP;
+        descriptor = new EditEventDescriptorBuilder().withStartDate(VALID_START_DATETIME_CLEANUP).build();
         expectedCommand = new EventEditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
-        // skills
-        userInput = targetIndex.getOneBased() + SKILL_DESC_FRIEND;
-        descriptor = new EditEventDescriptorBuilder().withSkills(VALID_SKILL_FRIEND).build();
+        // end date
+        userInput = targetIndex.getOneBased() + END_DATETIME_DESC_CLEANUP;
+        descriptor = new EditEventDescriptorBuilder().withEndDate(VALID_END_DATETIME_CLEANUP).build();
+        expectedCommand = new EventEditCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+
+        // location
+        userInput = targetIndex.getOneBased() + LOCATION_DESC_CLEANUP;
+        descriptor = new EditEventDescriptorBuilder().withLocation(VALID_LOCATION_CLEANUP).build();
+        expectedCommand = new EventEditCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+
+        // description
+        userInput = targetIndex.getOneBased() + DESCRIPTION_DESC_CLEANUP;
+        descriptor = new EditEventDescriptorBuilder().withDescription(VALID_DESCRIPTION_CLEANUP).build();
+        expectedCommand = new EventEditCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+
+        // material
+        userInput = targetIndex.getOneBased() + MATERIAL_DESC_TRASHBAG;
+        descriptor = new EditEventDescriptorBuilder().withMaterials(VALID_MATERIAL_TRASHBAG).build();
+        expectedCommand = new EventEditCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+
+        // budget
+        userInput = targetIndex.getOneBased() + BUDGET_DESC_CLEANUP;
+        descriptor = new EditEventDescriptorBuilder().withBudget(VALID_BUDGET_CLEANUP).build();
         expectedCommand = new EventEditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
@@ -161,37 +182,48 @@ public class EventEditCommandParserTest {
 
         // valid followed by invalid
         Index targetIndex = INDEX_FIRST;
-        String userInput = targetIndex.getOneBased() + INVALID_PHONE_DESC + PHONE_DESC_BOB;
+        String userInput = targetIndex.getOneBased() + INVALID_LOCATION_DESC + LOCATION_DESC_HELPOUT;
 
-        assertParseFailure(parser, userInput, Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE));
+        assertParseFailure(parser, userInput, Messages.getErrorMessageForDuplicatePrefixes(PREFIX_LOCATION));
 
         // invalid followed by valid
-        userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + INVALID_PHONE_DESC;
+        userInput = targetIndex.getOneBased() + BUDGET_DESC_HELPOUT + INVALID_BUDGET_DESC;
 
-        assertParseFailure(parser, userInput, Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE));
+        assertParseFailure(parser, userInput, Messages.getErrorMessageForDuplicatePrefixes(PREFIX_BUDGET));
 
-        // mulltiple valid fields repeated
-        userInput = targetIndex.getOneBased() + PHONE_DESC_AMY + EMAIL_DESC_AMY
-                + SKILL_DESC_FRIEND + PHONE_DESC_AMY + EMAIL_DESC_AMY + SKILL_DESC_FRIEND
-                + PHONE_DESC_BOB + EMAIL_DESC_BOB + SKILL_DESC_HUSBAND;
+        // multiple valid fields repeated
+        userInput = targetIndex.getOneBased() + START_DATETIME_DESC_CLEANUP + EVENTNAME_DESC_CLEANUP
+                + DESCRIPTION_DESC_CLEANUP + START_DATETIME_DESC_CLEANUP + EVENTNAME_DESC_CLEANUP + DESCRIPTION_DESC_CLEANUP
+                + EVENTNAME_DESC_HELPOUT + START_DATETIME_DESC_HELPOUT + END_DATETIME_DESC_HELPOUT;
 
         assertParseFailure(parser, userInput,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL));
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_START_DATETIME, PREFIX_NAME, PREFIX_DESCRIPTION));
 
         // multiple invalid values
-        userInput = targetIndex.getOneBased() + INVALID_PHONE_DESC + INVALID_EMAIL_DESC
-                + INVALID_PHONE_DESC + INVALID_EMAIL_DESC;
+        userInput = targetIndex.getOneBased() + INVALID_BUDGET_DESC + INVALID_LOCATION_DESC
+                + INVALID_BUDGET_DESC + INVALID_LOCATION_DESC;
 
         assertParseFailure(parser, userInput,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL));
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_BUDGET, PREFIX_LOCATION));
     }
 
     @Test
-    public void parse_resetSkills_success() {
+    public void parse_resetRoles_success() {
         Index targetIndex = INDEX_THIRD;
-        String userInput = targetIndex.getOneBased() + SKILL_EMPTY;
+        String userInput = targetIndex.getOneBased() + ROLE_EMPTY;
 
-        EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withSkills().build();
+        EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withRoles().build();
+        EventEditCommand expectedCommand = new EventEditCommand(targetIndex, descriptor);
+
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_resetMaterials_success() {
+        Index targetIndex = INDEX_THIRD;
+        String userInput = targetIndex.getOneBased() + MATERIAL_EMPTY;
+
+        EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withMaterials().build();
         EventEditCommand expectedCommand = new EventEditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);

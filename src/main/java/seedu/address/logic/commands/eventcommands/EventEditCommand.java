@@ -109,8 +109,7 @@ public class EventEditCommand extends Command {
         DateTime updatedStartTime = editEventDescriptor.getStartDate().orElse(eventToEdit.getStartDate());
         DateTime updatedEndTime = editEventDescriptor.getEndDate().orElse(eventToEdit.getEndDate());
 
-        if (updatedEndTime.dateAndTime.isBefore(updatedStartTime.dateAndTime)
-                || updatedStartTime.equals(updatedEndTime)) {
+        if (updatedEndTime.dateAndTime.isBefore(updatedStartTime.dateAndTime)) {
             throw new CommandException(MESSAGE_INVALID_DATE_PARAMS);
         }
         return new Event(updatedEventName, updatedRoles, updatedStartTime, updatedEndTime, updatedLocation,
