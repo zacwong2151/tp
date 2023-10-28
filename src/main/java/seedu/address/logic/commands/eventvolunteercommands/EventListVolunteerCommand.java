@@ -16,7 +16,7 @@ import seedu.address.model.event.Event;
 import seedu.address.model.volunteer.Volunteer;
 
 /**
- * Removes a volunteer from an event.
+ * Lists all volunteers from an event.
  */
 public class EventListVolunteerCommand extends Command {
 
@@ -28,7 +28,7 @@ public class EventListVolunteerCommand extends Command {
     private final Index eventIndex;
 
     /**
-     * Creates an EventListVolunteerCommand to add the specified {@code Volunteer} to the {@code Event}
+     * Creates an EventListVolunteerCommand to list all {@code Volunteer} assigned to {@code Event}.
      */
     public EventListVolunteerCommand(Index eventIndex) {
         this.eventIndex = eventIndex;
