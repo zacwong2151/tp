@@ -11,6 +11,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.eventcommands.EventAddMaterialCommand;
 import seedu.address.logic.commands.eventcommands.EventCreateCommand;
 import seedu.address.logic.commands.eventcommands.EventDeleteCommand;
 import seedu.address.logic.commands.eventcommands.EventListCommand;
@@ -24,6 +25,7 @@ import seedu.address.logic.commands.volunteercommands.VolunteerDeleteCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerEditCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerFindCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerListCommand;
+import seedu.address.logic.parser.eventcommandparsers.EventAddMaterialCommandParser;
 import seedu.address.logic.parser.eventcommandparsers.EventCreateCommandParser;
 import seedu.address.logic.parser.eventcommandparsers.EventDeleteCommandParser;
 import seedu.address.logic.parser.eventcommandparsers.EventShowCommandParser;
@@ -107,6 +109,9 @@ public class IVolunteerParser {
 
         case EventRemoveVolunteerCommand.COMMAND_WORD:
             return new EventRemoveVolunteerCommandParser().parse(arguments);
+
+        case EventAddMaterialCommand.COMMAND_WORD:
+            return new EventAddMaterialCommandParser().parse(arguments);
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();

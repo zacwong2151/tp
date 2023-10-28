@@ -3,8 +3,6 @@ package seedu.address.model.event;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-import seedu.address.commons.util.ToStringBuilder;
-
 /**
  * Represents an Event's material in the Event list.
  * Guarantees: immutable; is valid as declared in {@link #isValidMaterial(String)}
@@ -83,7 +81,32 @@ public class Material {
     }
 
     /**
-     * Returns true if a given string is a valid material.
+     * Gets the material name from a {@code String material} of the format [quantity] [material name].
+     *
+     * @param material A valid material format containing a valid whole number quantity at the front.
+     * @return The material name from the {@code String material}.
+     */
+    public static String nameFromString(String material) {
+        requireNonNull(material);
+        checkArgument(isValidMaterial(material), MESSAGE_CONSTRAINTS);
+        return material.substring(material.indexOf(" ") + 1);
+    }
+
+    /**
+     * Gets the quantity from a {@code String material} of the format [required/current quantity] [material name]. This
+     * can parse required or current quantity depending on what is required.
+     *
+     * @param material A valid material format containing a valid whole number quantity at the front.
+     * @return The material quantity from the {@code String material}.
+     */
+    public static int quantityFromString(String material) {
+        requireNonNull(material);
+        checkArgument(isValidMaterial(material), MESSAGE_CONSTRAINTS);
+        return Integer.parseInt(material.substring(0, material.indexOf(" ")));
+    }
+
+    /**
+     * Returns true if a given string is a valid material (of the format [quantity] [material name]).
      */
     public static boolean isValidMaterial(String test) {
         try {
@@ -112,11 +135,7 @@ public class Material {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .add("material", material)
-                .add("currentQuantity", currentQuantity)
-                .add("requiredQuantity", requiredQuantity)
-                .toString();
+        return currentQuantity + " / " + requiredQuantity + " " + material;
     }
 
     /**
