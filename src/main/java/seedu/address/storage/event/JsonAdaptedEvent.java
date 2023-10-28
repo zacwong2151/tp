@@ -20,6 +20,7 @@ import seedu.address.model.event.EventName;
 import seedu.address.model.event.Location;
 import seedu.address.model.event.Material;
 import seedu.address.model.event.Role;
+import seedu.address.model.volunteer.Name;
 
 /**
  * Jackson-friendly version of {@link Event}.
@@ -34,6 +35,7 @@ public class JsonAdaptedEvent {
     private final String description;
     private final List<JsonAdaptedMaterial> materials = new ArrayList<>();
     private final String budget;
+    private final List<JsonAdaptedName> assignedVolunteers = new ArrayList();
 
     /**
      * Constructs a {@code JsonAdaptedEvent} with the given event details.
@@ -46,7 +48,8 @@ public class JsonAdaptedEvent {
                             @JsonProperty("location") String location,
                             @JsonProperty("description") String description,
                             @JsonProperty("materials") List<JsonAdaptedMaterial> materials,
-                            @JsonProperty("budget") String budget) {
+                            @JsonProperty("budget") String budget,
+                            @JsonProperty("assignedVolunteers") List<JsonAdaptedName> assignedVolunteers) {
         this.eventName = eventName;
         if (roles != null) {
             this.roles.addAll(roles);
@@ -59,6 +62,9 @@ public class JsonAdaptedEvent {
             this.materials.addAll(materials);
         }
         this.budget = budget;
+        if (assignedVolunteers != null) {
+            this.assignedVolunteers.addAll(assignedVolunteers);
+        }
     }
 
     /**
@@ -77,6 +83,9 @@ public class JsonAdaptedEvent {
                 .map(JsonAdaptedMaterial::new)
                 .collect(Collectors.toList()));
         budget = source.getBudget().budget;
+        assignedVolunteers.addAll(source.getAssignedVolunteers().stream()
+                .map(JsonAdaptedName::new)
+                .collect(Collectors.toList()));
     }
 
     /**
@@ -145,18 +154,26 @@ public class JsonAdaptedEvent {
             eventMaterials.add(material.toModelType());
         }
 
+        Budget modelBudget;
         if (budget == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Budget.class.getSimpleName()));
-        }
-        if (!Budget.isValidBudget(budget)) {
+        } else if (budget.isEmpty()) {
+            modelBudget = new Budget("");
+        } else if (!Budget.isValidBudget(budget)) {
             throw new IllegalValueException(Budget.MESSAGE_CONSTRAINTS);
         }
-        final Budget modelBudget = new Budget(budget);
+        modelBudget = new Budget(budget);
+
+        final List<Name> eventVolunteers = new ArrayList<>();
+        for (JsonAdaptedName name : assignedVolunteers) {
+            eventVolunteers.add(name.toModelType());
+        }
 
         final Set<Role> modelRoles = new HashSet<>(eventRoles);
         final Set<Material> modelMaterials = new HashSet<>(eventMaterials);
+        final Set<Name> modelAssignedVolunteers = new HashSet<>(eventVolunteers);
         return new Event(modelName, modelRoles, modelStartDate, modelEndDate, modelLocation, modelDescription,
-                modelMaterials, modelBudget);
+                modelMaterials, modelBudget, modelAssignedVolunteers);
     }
 
 }

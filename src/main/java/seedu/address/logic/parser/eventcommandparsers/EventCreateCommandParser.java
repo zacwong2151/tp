@@ -11,6 +11,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATETIME;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -29,6 +30,7 @@ import seedu.address.model.event.EventName;
 import seedu.address.model.event.Location;
 import seedu.address.model.event.Material;
 import seedu.address.model.event.Role;
+import seedu.address.model.volunteer.Name;
 
 
 /**
@@ -81,7 +83,8 @@ public class EventCreateCommandParser implements Parser<EventCreateCommand> {
             budget = ParserUtil.parseBudget(argMultimap.getValue(PREFIX_BUDGET).get());
         }
 
-        Event event = new Event(eventName, roleList, startDate, endDate, location, description, materialList, budget);
+        Event event = new Event(eventName, roleList, startDate, endDate, location, description, materialList, budget,
+                new HashSet<Name>());
 
         return new EventCreateCommand(event);
     }

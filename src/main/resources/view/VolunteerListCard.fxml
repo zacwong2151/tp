@@ -31,9 +31,10 @@
       <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
       <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
       <FlowPane fx:id="skills" hgap="5.0">
-            <children>
-            <Label styleClass="cell_small_label" text="Skills:" />
-            </children></FlowPane>
+        <children>
+          <Label styleClass="cell_small_label" text="Skills:" />
+        </children>
+      </FlowPane>
     </VBox>
       <rowConstraints>
          <RowConstraints />

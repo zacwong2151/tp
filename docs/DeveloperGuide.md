@@ -158,6 +158,69 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+### Create Event Feature
+
+#### Implementation
+To encapsulate the aspects of an event, a new `Event` class is created. The Event class has fields representing the various aspects of an Event, namely `eventName`, `roles`, `startDate`, `endDate`, `location`, `description`, `materials` and `budget`. New classes were also created to facilitate the logic of these fields, which are `EventName`, `Role`, `Location`, `Description`, `Material` and `Budget`.
+
+To store the created events, a new class `EventStorage` is created, which effectively acts as the list storing all created events. A reference to the EventStorage is kept in the ModelManager to facilitate logical operations.
+
+After creating an event, the new EventStorage is saved by converting it to a `JsonSerializableEventStorage` and writing it to the JSON file, `eventStorage.json`.
+
+Given below is an example usage scenario and how the create event mechanism behaves at each step.
+
+Step 1:
+The user launches the application and enters the command to create a new event.
+`ecreate n/Clean up the beach r/cleaner sd/23/10/23 1900 l/East Coast Park dsc/Pick up all litter on the beach m/10 trash bags b/50.00`. After parsing all the arguments, a new `Event` object is created along with its respective fields.
+<puml src="diagrams/EventClassDiagram.puml" alt="EventClassDiagram" />
+
+Step 2:
+The created `Event` object is passed to `EventCreateCommand` and executed. During its execution, the application checks the `EventStorage` in the `ModelManager` if an event with the same `eventName` already exists. If not, the new `Event` is added to the `EventStorage`.
+<puml src="diagrams/EventCreateSequenceDiagram.puml" alt="EventCreateSequenceDiagram" />
+
+Step 3:
+When the `EventCreateCommand` finishes executing, the updated `EventStorage` is written into `eventStorage.json` file.
+<puml src="diagrams/EventStorageClassDiagram.puml" alt="EventStorageClassDiagram" />
+
+**Aspect: How undo & redo executes:**
+
+* **Alternative 1 (current choice):** Saves the entire address book.
+    * Pros: Easy to implement.
+    * Cons: May have performance issues in terms of memory usage.
+
+### Design Considerations
+**Aspect: How the individual fields of an Event are stored:**
+
+* **Alternative 1 (current choice):** Create new classes to represent the fields.
+    * Pros:
+        * Improves the overall structure and readability of the code.
+    * Cons:
+        * Results in more code. 
+        * More memory usage as objects have to be instantiated for each field.
+
+* **Alternative 2:** Store each field as the relevant substring inputted by the user.
+
+    * Pros:
+        * Less code required.
+        * Less memory usage as objects do not have to be instantiated for each field.
+    * Cons:
+        * No encapsulation for fields as all fields are treated simply as a string.
+        * The Event class will be cluttered with methods as methods specific to each field are compiled into a single class.
+
+**Aspect: How created Events are saved:**
+
+* **Alternative 1 (current choice):** Save the entire updated `EventStorage`.
+    * Pros:
+      * Easier to implement
+    * Cons:
+      * More time is taken to execute the command as the entire `EventStorage` must be saved, compared to just appending the new `Event`.
+
+* **Alternative 2:** Append the `Event` at the end of the JSON file.
+    * Pros:
+      * The command can be executed quickly as the new `Event` only has to be appended, as compared to saving the entire updated `EventStorage`.
+    * Cons:
+      * A new method must be created to save data after executing other commands. E.g. The save() method after an edit event command would be different from a create event command as the `Event` would have to be located first in the JSON file and then updated.
+
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
@@ -247,12 +310,157 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{more aspects and alternatives to be added}_
 
+### \[Proposed\] Reading an individual event feature
+
+#### Proposed Implementation
+
+When the app is initialized, the MainApp will first initialize all key components of the app. Specifically in this case:
+
+First, eventToShowList in ModelManager will be initialized, with the list of all events currently in the EventStorage.
+
+Then, when MainWindow is being initialized, the EventShowWindow will also be initialized.
+
+EventShowWindow consists of ListView displaying the eventToShowList in Model, and its contents are obtained by calling Logic.getEventToShowList(), which will call Model.getEventToShowList().
+
+In summary, when the app is initialized, EventShowWindow will be initialized with its contents being the list of all events obtained from the EventStorage. However, user will not see it as without receiving its command, EventShowWindow will not be shown.
+
+### \[In progress\] Delete the event from a list of event
+
+### Implementation
+
+To facilitate the event delete command, the class EventDeleteCommand is created. The class extends from the interface
+Command. When the command is then parsed and executed.
+
+Given below is an example usage scenario and how the mechanism of the event delete behaves at each step.
+
+Step 1. When the user input the event delete command, it will be parsed by IVolunteerParser. Then the keyword of the command is noticed and EventDeleteCommandParser is called. 
+
+<puml src="diagrams/DeleteSequenceDiagram.puml" alt="DeleteSequenceDiagram" />
+
+Step 2. When the command is parsed, the index of the event in the event list is then determined by parsing from String to an integer.
+
+Step 3. The command is then executed and with the index and the event is deleted from the filtered list.
+
+Step 4. Then the storage will also be updated accordingly by the filtered list.
+
+### \[In progress\] Tracking amount of roles and materials
+
+#### Implementation
+
+The mechanism to track the amount of roles and materials within the `Event` class is handled by the `Quantity` interface's 
+`currentQuantity` and `requiredQuantity` fields. Both fields are positive integers. `Role` and `Material` classes thereby
+implement this `Quantity` interface. In addition, for each class, operations to track, access and update the amount of
+each role/material have been added into the `Quantity` interface as follows:
+
+- `Quantity#isValidQuantity(int test)` — Checks if `test` is a valid quantity.
+- `Quantity#addToQuantity(int addedQuantity)` — Adds `addedQuantity` to the current quantity.
+- `Quantity#hasEnough()` — Checks if the current quantity ≥ the required quantity.
+- `Quantity#toUiString()` — Returns the string representation to be shown to users in the UI.
+
+To reflect the `currentQuantity` and `requiredQuantity` fields as required in the `Quantity` interface in `EventStorage`,
+every `Role` and `Material` instance will be expressed as a JSON object with the following format:
+
+**Material:**
+
+```json
+{
+  "material" : "potatoes",
+  "currentQuantity" : "20",
+  "requiredQuantity" : "75"
+}
+```
+
+**Role:**
+
+```json
+{
+  "role" : "chef",
+  "currentQuantity" : "1",
+  "requiredQuantity" : "4"
+}
+```
+
+This class diagram shows the interface relationship between `Role`, `Material` and `Quantity`:
+
+<puml src="diagrams/QuantityClassDiagram.puml" width="400" />
+
+#### Process
+
+This is the process in which a user might track the amount of roles and materials as needed:
+
+Step 1. The user runs the command `ecreate n/cook for people r/5 chef m/50 potato ...`. Here, a new `Event` object will be created with
+a `Set<Role>` that contains a `Role` object that corresponds to `5 chef` and `Set<Material>` that corresponds to `50 potato`.
+In the constructor to `Role` and `Material` respectively, the `requiredAmount` for the `:Role` object is **5** and the 
+`requiredAmount` for the `:Material` object is **50**, while the `currentAmount` are both set to **0**.
+
+**Tracking roles**
+
+Step 2. The user creates a new volunteer using the command `vcreate n/John s/chef...`. This creates a new `Volunteer` object
+with name `John` that contains a skill with name `chef`.
+
+Step 3. Assuming both the `Event` and `Volunteer` objects are at the top of their respective lists, the user runs the
+command `eaddv eid/1 vid/1` to add the volunteer named `John` to the event named `cook for people`. Given that the `cook for people`
+event has a role `chef` and the volunteer `John` has a skill `chef`, iVolunteer will notice and **increment** the current quantity
+within the `Role` object using `Quantity#addToQuantity()`.
+
+Step 4. As a result, the `Role` object will be updated as follows (in the JSON-serialised format):
+```json
+{
+  "role" : "chef",
+  "currentQuantity" : "1",
+  "requiredQuantity" : "5"
+}
+```
+
+**Tracking materials**
+
+Step 5. Assuming the `Event` object is at the top of the event list, the user runs command `eaddm eid/1 m/20 potato`. This
+results in a `EventAddMaterialCommand` created and then executed, which triggers the change in current quantity within the
+`Material` object using `Quantity#addToQuantity()`.
+
+Step 6. As a result, the `Material` object will be updated as follows (in the JSON-serialised format):
+```json
+{
+  "material" : "potato",
+  "currentQuantity" : "20",
+  "requiredQuantity" : "50"
+}
+```
+
 ### \[Proposed\] Data archiving
 
 _{Explain here how the data archiving feature will be implemented}_
 
 
 --------------------------------------------------------------------------------------------------------------------
+
+### \[Proposed\] vfind feature
+
+#### Proposed Implementation
+
+The proposed vfind mechanism is facilitated by `VolunteerFindCommand`, `VolunteerFindCommandParser` and `SkillNameContainsKeywordsPredicate`. `VolunteerFindCommandParser` extends the interface `Parser`, and it implements the following operation:
+
+* `VolunteerFindCommandParser#parse()` — Processes the user input's arguments.
+
+Meanwhile, `VolunteerFindCommand` extends the abstract class `Command`, and implements the following operation:
+
+* `VolunteerFindCommand#execute()` — Displays the filtered volunteer list.
+
+Lastly, `SkillNameContainsKeywordsPredicate` implements the interface `Predicate`, and implements the following operation:
+
+* `SkillNameContainsKeywordsPredicate#test` — Checks if any `skill` or `name` matches the user input.
+
+Given below is an example usage scenario and how the vfind command behaves at each step.
+
+Step 1. The user launches the application. The user executes `vfind n/Alex` command to find any volunteers named 'Alex' in the volunteer list. The `vfind` command calls `LogicManager#execute`, which attempts to execute the command. 
+
+Step 2. This creates a `VolunteerFindCommandParser` object, which processes the user input's arguments, namely 'Alex'. This creates a `VolunteerFindCommand` object, with its predicate encapsulating a list of `names` and a list of `skills`.
+
+### \[Proposed\] Data archiving
+
+_{Explain here how the data archiving feature will be implemented}_
+
+
 
 ## **Documentation, logging, testing, configuration, dev-ops**
 
@@ -359,7 +567,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 1f1. System prompts Volunteer Coordinator to use the correct budget format.
 
   Use case resumes from step 1.
-  
+
 **Use case UCE02: List all volunteering events**
 
 **MSS**
@@ -374,7 +582,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1a. The input command is incorrect.
 
     * 1a1. System prompts the user to provide a valid command.
-      
+    
       Use case resumes from step 1.
 
 * 1b. There are no events to list.
@@ -430,7 +638,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2a. Invalid event id.
     * 2a1. iVolunteer requests for the correct command with valid event id.
-    * 2a2. User enters correct command. 
+    * 2a2. User enters correct command.
     Steps 2a1-2a2 are repeated until the data entered is correct.
     Use case resumes at step 3.
 

@@ -214,7 +214,6 @@ public class ModelManager implements Model {
         requireNonNull(predicate);
         filteredVolunteers.setPredicate(predicate);
     }
-
     @Override
     public boolean equals(Object other) {
         if (other == this) {
