@@ -74,6 +74,7 @@ public class CommandTestUtil {
     public static final String END_DATETIME_DESC_CLEANUP_BEFORE_START =
             " " + PREFIX_END_DATETIME + VALID_END_DATETIME_CLEANUP_BEFORE_START;
     public static final String EVENTID_DESC = " " + PREFIX_EVENT_ID;
+    public static final String MATERIAL_DESC = " " + PREFIX_MATERIAL;
 
 
     public static final String INVALID_EVENTNAME_DESC = " " + PREFIX_NAME + "Clean&";

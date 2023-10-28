@@ -37,11 +37,16 @@ public class EventAddMaterialCommandParser implements Parser<EventAddMaterialCom
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_EVENT_ID, PREFIX_MATERIAL);
-        Index eventIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_EVENT_ID).get());
-        String materialName = ParserUtil.parseMaterialName(argMultimap.getValue(PREFIX_MATERIAL).get());
-        int amount = ParserUtil.parseMaterialQuantity(argMultimap.getValue(PREFIX_MATERIAL).get());
+        try {
+            Index eventIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_EVENT_ID).get());
+            String materialName = ParserUtil.parseMaterialName(argMultimap.getValue(PREFIX_MATERIAL).get());
+            int amount = ParserUtil.parseMaterialQuantity(argMultimap.getValue(PREFIX_MATERIAL).get());
 
-        return new EventAddMaterialCommand(eventIndex, amount, materialName);
+            return new EventAddMaterialCommand(eventIndex, amount, materialName);
+        } catch (ParseException pe) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, EventAddMaterialCommand.MESSAGE_USAGE), pe);
+        }
     }
 
     /**

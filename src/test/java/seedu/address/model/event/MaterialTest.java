@@ -92,11 +92,108 @@ public class MaterialTest {
     }
 
     @Test
+    public void nameFromString_nullMaterialName_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> Material.nameFromString(null));
+    }
+
+    @Test
+    public void nameFromString_invalidFormat_throwsIllegalArgumentException() {
+        // no number for quantity
+        assertThrows(IllegalArgumentException.class, () -> Material.nameFromString("john"));
+
+        // negative numbers
+        assertThrows(IllegalArgumentException.class, () -> Material.nameFromString("-2 apples"));
+
+        // non-whole numbers
+        assertThrows(IllegalArgumentException.class, () -> Material.nameFromString("3.5 cakes"));
+        assertThrows(IllegalArgumentException.class, () -> Material.nameFromString("-1.5 cakes"));
+
+        // no material name
+        assertThrows(IllegalArgumentException.class, () -> Material.nameFromString("51"));
+
+        // invalid material name
+        assertThrows(IllegalArgumentException.class, () -> Material.nameFromString("3 cakes&"));
+    }
+
+    @Test
+    public void nameFromString_validFormat_success() {
+        assertTrue(Material.nameFromString("2 apples").equals("apples"));
+        assertTrue(Material.nameFromString("0 cakes").equals("cakes"));
+    }
+
+    @Test
+    public void quantityFromString_nullMaterialName_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> Material.quantityFromString(null));
+    }
+
+    @Test
+    public void quantityFromString_invalidFormat_throwsIllegalArgumentException() {
+        // no number for quantity
+        assertThrows(IllegalArgumentException.class, () -> Material.quantityFromString("john"));
+
+        // negative numbers
+        assertThrows(IllegalArgumentException.class, () -> Material.quantityFromString("-2 apples"));
+
+        // non-whole numbers
+        assertThrows(IllegalArgumentException.class, () -> Material.quantityFromString("3.5 cakes"));
+        assertThrows(IllegalArgumentException.class, () -> Material.quantityFromString("-1.5 cakes"));
+
+        // no material name
+        assertThrows(IllegalArgumentException.class, () -> Material.quantityFromString("51"));
+
+        // invalid material name
+        assertThrows(IllegalArgumentException.class, () -> Material.quantityFromString("3 cakes&"));
+    }
+
+    @Test
+    public void quantityFromString_validFormat_success() {
+        assertTrue(Material.quantityFromString("2 apples") == 2);
+        assertTrue(Material.quantityFromString("0 cakes") == 0);
+    }
+
+    @Test
+    public void addItems() {
+        Material material = new Material("50 potatoes");
+        Material newMaterial = material.addItems(20);
+        Material expectedMaterial = new Material("potatoes", 20, 50);
+
+        assertTrue(newMaterial.equals(expectedMaterial));
+    }
+
+    @Test
+    public void hasEnoughItems() {
+        Material materialNoItems = new Material("50 potatoes");
+        Material materialSomeItems = new Material("potatoes", 20, 50);
+        Material materialEqualItems = new Material("potatoes", 50, 50);
+        Material materialMoreItems = new Material("potatoes", 70, 50);
+
+        assertFalse(materialNoItems.hasEnoughItems());
+        assertFalse(materialSomeItems.hasEnoughItems());
+        assertTrue(materialEqualItems.hasEnoughItems());
+        assertTrue(materialMoreItems.hasEnoughItems());
+    }
+
+    @Test
+    public void toUiString() {
+        Material materialNoItems = new Material("50 potatoes");
+        Material materialSomeItems = new Material("potatoes", 20, 50);
+        Material materialEqualItems = new Material("potatoes", 50, 50);
+        Material materialMoreItems = new Material("potatoes", 70, 50);
+
+        assertTrue(materialNoItems.toUiString().equals("0 / 50 potatoes"));
+        assertTrue(materialSomeItems.toUiString().equals("20 / 50 potatoes"));
+        assertTrue(materialEqualItems.toUiString().equals("50 / 50 potatoes"));
+        assertTrue(materialMoreItems.toUiString().equals("70 / 50 potatoes"));
+    }
+
+    @Test
     public void equals() {
         // same name and quantity - return true
         Material material1a = new Material("50 potatoes");
         Material material1b = new Material("potatoes", 50);
         Material material1c = new Material("potatoes", 0, 50);
+
+        assertTrue(material1a.equals(material1a)); // equals itself
         assertTrue(material1a.equals(material1b));
         assertTrue(material1b.equals(material1c));
         assertTrue(material1a.equals(material1c));
@@ -129,5 +226,11 @@ public class MaterialTest {
         Material material4d = new Material("potatoes", 40, 50);
         assertFalse(material4a.equals(material4b));
         assertFalse(material4c.equals(material4d));
+
+        // different typed object and null
+        Material material5a = new Material("50 potatoes");
+        String material5b = "50 potatoes";
+        assertFalse(material5a.equals(material5b));
+        assertFalse(material5a.equals(null));
     }
 }
