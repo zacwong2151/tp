@@ -1,13 +1,5 @@
 package seedu.address.testutil;
 
-import java.util.Set;
-
-import seedu.address.logic.commands.eventcommands.EventCreateCommand;
-import seedu.address.logic.commands.eventcommands.EventEditCommand.EditEventDescriptor;
-import seedu.address.model.event.Event;
-import seedu.address.model.event.Material;
-import seedu.address.model.event.Role;
-
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BUDGET;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATETIME;
@@ -16,6 +8,14 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_MATERIAL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATETIME;
+
+import java.util.Set;
+
+import seedu.address.logic.commands.eventcommands.EventCreateCommand;
+import seedu.address.logic.commands.eventcommands.EventEditCommand.EditEventDescriptor;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.Material;
+import seedu.address.model.event.Role;
 
 /**
  * A utility class for Event.

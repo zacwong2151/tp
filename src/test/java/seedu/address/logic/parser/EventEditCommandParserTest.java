@@ -1,8 +1,45 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.*;
-import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.commands.CommandTestUtil.BUDGET_DESC_CLEANUP;
+import static seedu.address.logic.commands.CommandTestUtil.BUDGET_DESC_HELPOUT;
+import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_DESC_CLEANUP;
+import static seedu.address.logic.commands.CommandTestUtil.END_DATETIME_DESC_CLEANUP;
+import static seedu.address.logic.commands.CommandTestUtil.END_DATETIME_DESC_HELPOUT;
+import static seedu.address.logic.commands.CommandTestUtil.EVENTNAME_DESC_CLEANUP;
+import static seedu.address.logic.commands.CommandTestUtil.EVENTNAME_DESC_HELPOUT;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_BUDGET_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DESCRIPTION_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_END_DATETIME_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_EVENTNAME_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_LOCATION_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_MATERIAL_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_ROLE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_START_DATETIME_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.LOCATION_DESC_CLEANUP;
+import static seedu.address.logic.commands.CommandTestUtil.LOCATION_DESC_HELPOUT;
+import static seedu.address.logic.commands.CommandTestUtil.MATERIAL_DESC_HANDS;
+import static seedu.address.logic.commands.CommandTestUtil.MATERIAL_DESC_TRASHBAG;
+import static seedu.address.logic.commands.CommandTestUtil.ROLE_DESC_BRAIN;
+import static seedu.address.logic.commands.CommandTestUtil.ROLE_DESC_CLEANER;
+import static seedu.address.logic.commands.CommandTestUtil.START_DATETIME_DESC_CLEANUP;
+import static seedu.address.logic.commands.CommandTestUtil.START_DATETIME_DESC_HELPOUT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_BUDGET_CLEANUP;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_CLEANUP;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_END_DATETIME_CLEANUP;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENTNAME_CLEANUP;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_CLEANUP;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_HELPOUT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_MATERIAL_TRASHBAG;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ROLE_CLEANER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_DATETIME_CLEANUP;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BUDGET;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MATERIAL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATETIME;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
@@ -16,7 +53,13 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.eventcommands.EventEditCommand;
 import seedu.address.logic.commands.eventcommands.EventEditCommand.EditEventDescriptor;
 import seedu.address.logic.parser.eventcommandparsers.EventEditCommandParser;
-import seedu.address.model.event.*;
+import seedu.address.model.event.Budget;
+import seedu.address.model.event.DateTime;
+import seedu.address.model.event.Description;
+import seedu.address.model.event.EventName;
+import seedu.address.model.event.Location;
+import seedu.address.model.event.Material;
+import seedu.address.model.event.Role;
 import seedu.address.testutil.EditEventDescriptorBuilder;
 
 public class EventEditCommandParserTest {
@@ -77,17 +120,26 @@ public class EventEditCommandParserTest {
         assertParseFailure(parser, "1" + INVALID_BUDGET_DESC, Budget.MESSAGE_CONSTRAINTS);
 
         // invalid start date followed by valid budget
-        assertParseFailure(parser, "1" + INVALID_START_DATETIME_DESC +  BUDGET_DESC_CLEANUP,
+        assertParseFailure(parser, "1" + INVALID_START_DATETIME_DESC + BUDGET_DESC_CLEANUP,
                             DateTime.MESSAGE_CONSTRAINTS);
 
-        // while parsing {@code PREFIX_SKILL} alone will reset the skills of the {@code event} being edited,
-        // parsing it together with a valid skill results in error
+        // while parsing {@code PREFIX_ROLE} alone will reset the roles of the {@code event} being edited,
+        // parsing it together with a valid role results in error
         assertParseFailure(parser, "1" + ROLE_DESC_CLEANER + ROLE_DESC_BRAIN + ROLE_EMPTY,
                 Role.MESSAGE_CONSTRAINTS);
         assertParseFailure(parser, "1" + ROLE_DESC_CLEANER + ROLE_EMPTY + ROLE_DESC_BRAIN,
                 Role.MESSAGE_CONSTRAINTS);
         assertParseFailure(parser, "1" + ROLE_EMPTY + ROLE_DESC_CLEANER + ROLE_DESC_BRAIN,
                 Role.MESSAGE_CONSTRAINTS);
+
+        // while parsing {@code PREFIX_MATERIAL} alone will reset the materials of the {@code event} being edited,
+        // parsing it together with a valid material results in error
+        assertParseFailure(parser, "1" + MATERIAL_DESC_TRASHBAG + MATERIAL_DESC_HANDS + MATERIAL_EMPTY,
+                Material.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "1" + MATERIAL_DESC_HANDS + MATERIAL_EMPTY + MATERIAL_DESC_TRASHBAG,
+                Material.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "1" + MATERIAL_EMPTY + MATERIAL_DESC_TRASHBAG + MATERIAL_DESC_HANDS,
+                Material.MESSAGE_CONSTRAINTS);
 
         // multiple invalid values, but only the first invalid value is captured
         assertParseFailure(parser, "1" + INVALID_EVENTNAME_DESC
@@ -99,7 +151,7 @@ public class EventEditCommandParserTest {
         Index targetIndex = INDEX_SECOND;
         String userInput = targetIndex.getOneBased() + EVENTNAME_DESC_CLEANUP + ROLE_DESC_CLEANER
                             + START_DATETIME_DESC_CLEANUP + END_DATETIME_DESC_CLEANUP + LOCATION_DESC_CLEANUP
-                            + DESCRIPTION_DESC_CLEANUP + MATERIAL_DESC_TRASHBAG +BUDGET_DESC_CLEANUP;
+                            + DESCRIPTION_DESC_CLEANUP + MATERIAL_DESC_TRASHBAG + BUDGET_DESC_CLEANUP;
 
         EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withEventName(VALID_EVENTNAME_CLEANUP)
                 .withStartDate(VALID_START_DATETIME_CLEANUP).withEndDate(VALID_END_DATETIME_CLEANUP)
@@ -128,7 +180,8 @@ public class EventEditCommandParserTest {
         // name
         Index targetIndex = INDEX_THIRD;
         String userInput = targetIndex.getOneBased() + EVENTNAME_DESC_CLEANUP;
-        EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withEventName(VALID_EVENTNAME_CLEANUP).build();
+        EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withEventName(VALID_EVENTNAME_CLEANUP)
+                                            .build();
         EventEditCommand expectedCommand = new EventEditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
@@ -193,8 +246,9 @@ public class EventEditCommandParserTest {
 
         // multiple valid fields repeated
         userInput = targetIndex.getOneBased() + START_DATETIME_DESC_CLEANUP + EVENTNAME_DESC_CLEANUP
-                + DESCRIPTION_DESC_CLEANUP + START_DATETIME_DESC_CLEANUP + EVENTNAME_DESC_CLEANUP + DESCRIPTION_DESC_CLEANUP
-                + EVENTNAME_DESC_HELPOUT + START_DATETIME_DESC_HELPOUT + END_DATETIME_DESC_HELPOUT;
+                + DESCRIPTION_DESC_CLEANUP + START_DATETIME_DESC_CLEANUP + EVENTNAME_DESC_CLEANUP
+                + DESCRIPTION_DESC_CLEANUP + EVENTNAME_DESC_HELPOUT + START_DATETIME_DESC_HELPOUT
+                + END_DATETIME_DESC_HELPOUT;
 
         assertParseFailure(parser, userInput,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_START_DATETIME, PREFIX_NAME, PREFIX_DESCRIPTION));

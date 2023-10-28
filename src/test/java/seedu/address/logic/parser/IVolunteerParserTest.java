@@ -30,8 +30,12 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Event;
 import seedu.address.model.volunteer.SkillNameContainsKeywordsPredicate;
 import seedu.address.model.volunteer.Volunteer;
-import seedu.address.testutil.*;
-
+import seedu.address.testutil.EditEventDescriptorBuilder;
+import seedu.address.testutil.EditVolunteerDescriptorBuilder;
+import seedu.address.testutil.EventBuilder;
+import seedu.address.testutil.EventUtil;
+import seedu.address.testutil.VolunteerBuilder;
+import seedu.address.testutil.VolunteerUtil;
 public class IVolunteerParserTest {
 
     private final IVolunteerParser parser = new IVolunteerParser();
