@@ -6,7 +6,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_VOLUNTEER_ID;
 
 import java.util.List;
 import java.util.Set;
-import java.util.function.Predicate;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
