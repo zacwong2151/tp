@@ -22,8 +22,11 @@ public class VolunteerListEventCommand extends Command {
 
     public static final String COMMAND_WORD = "vliste";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lists events joined by a volunteer. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": List events joined by a volunteer.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
+
     public static final String MESSAGE_SUCCESS = "Listed all %2$d events joined by VOLUNTEER: %1$s";
     private final Index volunteerIndex;
 

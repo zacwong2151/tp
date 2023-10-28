@@ -22,8 +22,11 @@ public class EventListVolunteerCommand extends Command {
 
     public static final String COMMAND_WORD = "elistv";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lists all volunteer assigned to an event. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": List all volunteers assigned to an event.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
+
     public static final String MESSAGE_SUCCESS = "Listed all %2$d volunteers FROM EVENT: %1$s";
     private final Index eventIndex;
 
