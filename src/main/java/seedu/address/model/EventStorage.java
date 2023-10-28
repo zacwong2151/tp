@@ -90,6 +90,7 @@ public class EventStorage implements ReadOnlyEventStorage {
      */
     @Override
     public Event getEvent(EventName eventName) {
+        requireNonNull(eventName);
         return events.get(eventName);
     }
     /**

@@ -71,7 +71,6 @@ public class EventAddVolunteerCommand extends Command {
 
         Set<EventName> assignedEvents = volunteerToAssign.getAssignedEvents();
         for (EventName eventName : assignedEvents) {
-            Predicate<Event> eventPredicate = e -> e.getEventName().equals(eventName);
             Event otherEvent = model.getEventStorage().getEvent(eventName);
             if (hasClashingEvents(eventToAssign, otherEvent)) {
                 throw new CommandException(MESSAGE_CLASHING_EVENTS);
@@ -90,19 +89,16 @@ public class EventAddVolunteerCommand extends Command {
      * @return true if the two events clash.
      */
     public boolean hasClashingEvents(Event eventToAssign, Event otherEvent) {
-        boolean startDateTimeClashes = eventToAssign.getStartDate().dateAndTime
-                .isAfter(otherEvent.getStartDate().dateAndTime)
+        boolean startDateTimeClashes = !eventToAssign.getStartDate().dateAndTime
+                .isBefore(otherEvent.getStartDate().dateAndTime)
                 && eventToAssign.getStartDate().dateAndTime.isBefore(otherEvent.getEndDate().dateAndTime);
         boolean endDateTimeClashes = eventToAssign.getEndDate().dateAndTime
                 .isAfter(otherEvent.getStartDate().dateAndTime)
-                && eventToAssign.getEndDate().dateAndTime.isBefore(otherEvent.getEndDate().dateAndTime);
-        boolean sameStartAndEndDateTime = eventToAssign.getStartDate().dateAndTime
-                .isEqual(otherEvent.getStartDate().dateAndTime)
-                && eventToAssign.getEndDate().dateAndTime.isEqual(otherEvent.getEndDate().dateAndTime);
+                && !eventToAssign.getEndDate().dateAndTime.isAfter(otherEvent.getEndDate().dateAndTime);
         boolean startsEarlierAndEndsLater = eventToAssign.getStartDate().dateAndTime
                 .isBefore(otherEvent.getStartDate().dateAndTime)
                 && eventToAssign.getEndDate().dateAndTime.isAfter(otherEvent.getEndDate().dateAndTime);
-        return startDateTimeClashes || endDateTimeClashes || sameStartAndEndDateTime || startsEarlierAndEndsLater;
+        return startDateTimeClashes || endDateTimeClashes || startsEarlierAndEndsLater;
     }
 
     @Override

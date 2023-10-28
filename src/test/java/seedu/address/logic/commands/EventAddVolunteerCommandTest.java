@@ -10,6 +10,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 import static seedu.address.testutil.TypicalVolunteers.getTypicalVolunteerStorage;
 
+import javafx.collections.ObservableList;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
@@ -19,6 +20,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.event.Event;
+import seedu.address.model.volunteer.Volunteer;
 
 public class EventAddVolunteerCommandTest {
     private Model model = new ModelManager(getTypicalEventStorage(), getTypicalVolunteerStorage(), new UserPrefs());
@@ -66,15 +69,15 @@ public class EventAddVolunteerCommandTest {
 
     @Test
     public void execute_clashingEvent_throwsCommandException() {
+        ObservableList<Event> eventList = model.getEventStorage().getEventList();
+        ObservableList<Volunteer> volunteerList = model.getVolunteerStorage().getVolunteerList();
         // Assign a volunteer to an existing event
         model.getEventStorage().getEventList().get(model.getEventStorage().getEventList().size() - 1)
-                .addVolunteer(model.getVolunteerStorage().getVolunteerList()
-                        .get(model.getVolunteerStorage().getVolunteerList().size() - 1));
+                .addVolunteer(volunteerList.get(volunteerList.size() - 1));
 
         // Assign the volunteer a clashing event
         model.getVolunteerStorage().getVolunteerList().get(model.getVolunteerStorage().getVolunteerList().size() - 1)
-                .addEvent(model.getEventStorage().getEventList()
-                        .get(model.getEventStorage().getEventList().size() - 2));
+                .addEvent(eventList.get(eventList.size() - 2));
 
         Index validEventIndex = Index.fromOneBased(model.getFilteredEventList().size() - 1);
         Index validVolunteerIndex = Index.fromOneBased(model.getFilteredVolunteerList().size());
