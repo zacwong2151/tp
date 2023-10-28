@@ -34,7 +34,7 @@ public class VolunteerFindCommand extends Command {
         requireNonNull(model);
         model.updateFilteredVolunteerList(predicate);
         return new CommandResult(
-                String.format(Messages.MESSAGE_EVENTS_LISTED_OVERVIEW, model.getFilteredVolunteerList().size()));
+                String.format(Messages.MESSAGE_VOLUNTEERS_LISTED_OVERVIEW, model.getFilteredVolunteerList().size()));
     }
 
     @Override

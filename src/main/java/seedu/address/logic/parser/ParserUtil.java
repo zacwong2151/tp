@@ -58,21 +58,33 @@ public class ParserUtil {
     }
 
     /**
-     * asd
-     * @param names asd
-     * @return asd
-     * @throws ParseException asd
+     * Parses {@code Collection<String> evnet names} into a {@code Set<String>}.
+     * @throws ParseException if any of the strings in the Collection is invalid.
      */
-    public static Set<EventName> parseEventNames(Collection<String> names) throws ParseException {
-        requireNonNull(names);
-        final Set<EventName> eventNameSet = new LinkedHashSet<>();
-        // for some reason a normal HashSet will automatically reorder the elements that you add into it,
-        // presumably by lexicographic order, so must use LinkedHashSet instead
-        for (String name : names) {
-            eventNameSet.add(parseEventName(name));
+    public static Set<String> parseEventNames(Collection<String> eventNames) throws ParseException {
+        requireNonNull(eventNames);
+        final Set<String> nameSet = new LinkedHashSet<>();
+        for (String name : eventNames) {
+            nameSet.add(parseEventNameToString(name));
         }
-        return eventNameSet;
+        return nameSet;
     }
+
+    /**
+     * Parses a {@code String name} into a {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code name} is invalid.
+     */
+    public static String parseEventNameToString(String name) throws ParseException {
+        requireNonNull(name);
+        String trimmedName = name.trim();
+        if (!EventName.isValidEventName(trimmedName)) {
+            throw new ParseException(EventName.MESSAGE_CONSTRAINTS);
+        }
+        return trimmedName;
+    }
+
     /**
      * Parses a {@code String role} into a {@code Role}.
      * Leading and trailing whitespaces will be trimmed.
@@ -205,7 +217,7 @@ public class ParserUtil {
     /**
      * Parses {@code Collection<String> names} into a {@code Set<Name>}.
      */
-    public static Set<Name> parseNames(Collection<String> names) throws ParseException {
+    public static Set<Name> parseVolunteerNames(Collection<String> names) throws ParseException {
         requireNonNull(names);
         final Set<Name> nameSet = new LinkedHashSet<>();
         // for some reason a normal HashSet will automatically reorder the elements that you add into it,
@@ -263,6 +275,7 @@ public class ParserUtil {
 
     /**
      * Parses {@code Collection<String> skills} into a {@code Set<Skill>}.
+     * @throws ParseException if any of the skills in the Collection is invalid.
      */
     public static Set<Skill> parseSkills(Collection<String> skills) throws ParseException {
         requireNonNull(skills);
@@ -272,16 +285,4 @@ public class ParserUtil {
         }
         return skillSet;
     }
-    /*
-     public static Set<Name> parseNames(Collection<String> names) throws ParseException {
-        requireNonNull(names);
-        final Set<Name> nameSet = new LinkedHashSet<>();
-        // for some reason a normal HashSet will automatically reorder the elements that you add into it,
-        // presumably by lexicographic order, so must use LinkedHashSet instead
-        for (String name : names) {
-            nameSet.add(parseName(name));
-        }
-        return nameSet;
-    }
-     */
 }

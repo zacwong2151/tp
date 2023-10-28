@@ -14,16 +14,15 @@ import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.event.EventName;
-import seedu.address.model.volunteer.NameContainsKeywordsPredicate;
+import seedu.address.model.event.EventNameContainsKeywordsPredicate;
 
 /**
- * asd
+ * Parses input arguments and creates a new EventFindCommand object
  */
 public class EventFindCommandParser implements Parser<EventFindCommand> {
     /**
-     * Parses the given {@code String} of arguments in the context of the EventDeleteCommand
-     * and returns a EventDeleteCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the EventFindCommand
+     * and returns a EventFindCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public EventFindCommand parse(String args) throws ParseException {
@@ -38,9 +37,9 @@ public class EventFindCommandParser implements Parser<EventFindCommand> {
 
         assert argMultimap.getValue(PREFIX_NAME).isPresent() : "At least one PREFIX_NAME should be present";
 
-        Set<EventName> eventNameKeywords = ParserUtil.parseEventNames(argMultimap.getAllValues(PREFIX_NAME));
-        List<EventName> eventNames = new ArrayList<>(eventNameKeywords);
+        Set<String> eventNameKeywords = ParserUtil.parseEventNames(argMultimap.getAllValues(PREFIX_NAME));
+        List<String> eventNames = new ArrayList<>(eventNameKeywords);
 
-        return new EventFindCommand(new NameContainsKeywordsPredicate(eventNames));
+        return new EventFindCommand(new EventNameContainsKeywordsPredicate(eventNames));
     }
 }
