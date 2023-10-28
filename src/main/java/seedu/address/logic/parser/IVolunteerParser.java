@@ -16,6 +16,9 @@ import seedu.address.logic.commands.eventcommands.EventDeleteCommand;
 import seedu.address.logic.commands.eventcommands.EventEditCommand;
 import seedu.address.logic.commands.eventcommands.EventListCommand;
 import seedu.address.logic.commands.eventcommands.EventShowCommand;
+import seedu.address.logic.commands.eventvolunteercommands.EventAddVolunteerCommand;
+import seedu.address.logic.commands.eventvolunteercommands.EventListVolunteerCommand;
+import seedu.address.logic.commands.eventvolunteercommands.EventRemoveVolunteerCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerClearCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerCreateCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerDeleteCommand;
@@ -26,6 +29,9 @@ import seedu.address.logic.parser.eventcommandparsers.EventCreateCommandParser;
 import seedu.address.logic.parser.eventcommandparsers.EventDeleteCommandParser;
 import seedu.address.logic.parser.eventcommandparsers.EventEditCommandParser;
 import seedu.address.logic.parser.eventcommandparsers.EventShowCommandParser;
+import seedu.address.logic.parser.eventvolunteercommandparsers.EventAddVolunteerCommandParser;
+import seedu.address.logic.parser.eventvolunteercommandparsers.EventListVolunteerCommandParser;
+import seedu.address.logic.parser.eventvolunteercommandparsers.EventRemoveVolunteerCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.parser.volunteercommandparsers.VolunteerCreateCommandParser;
 import seedu.address.logic.parser.volunteercommandparsers.VolunteerDeleteCommandParser;
@@ -97,6 +103,15 @@ public class IVolunteerParser {
 
         case VolunteerListCommand.COMMAND_WORD:
             return new VolunteerListCommand();
+
+        case EventAddVolunteerCommand.COMMAND_WORD:
+            return new EventAddVolunteerCommandParser().parse(arguments);
+
+        case EventListVolunteerCommand.COMMAND_WORD:
+            return new EventListVolunteerCommandParser().parse(arguments);
+
+        case EventRemoveVolunteerCommand.COMMAND_WORD:
+            return new EventRemoveVolunteerCommandParser().parse(arguments);
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
