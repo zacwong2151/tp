@@ -99,7 +99,10 @@ public class EventAddVolunteerCommand extends Command {
         boolean sameStartAndEndDateTime = eventToAssign.getStartDate().dateAndTime
                 .isEqual(otherEvent.getStartDate().dateAndTime)
                 && eventToAssign.getEndDate().dateAndTime.isEqual(otherEvent.getEndDate().dateAndTime);
-        return startDateTimeClashes || endDateTimeClashes || sameStartAndEndDateTime;
+        boolean startsEarlierAndEndsLater = eventToAssign.getStartDate().dateAndTime
+                .isBefore(otherEvent.getStartDate().dateAndTime)
+                && eventToAssign.getEndDate().dateAndTime.isAfter(otherEvent.getEndDate().dateAndTime);
+        return startDateTimeClashes || endDateTimeClashes || sameStartAndEndDateTime || startsEarlierAndEndsLater;
     }
 
     @Override
