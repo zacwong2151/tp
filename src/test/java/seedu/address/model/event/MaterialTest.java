@@ -187,6 +187,20 @@ public class MaterialTest {
     }
 
     @Test
+    public void fromUiString() {
+        Material materialNoItems = new Material("50 potatoes");
+        Material materialSomeItems = new Material("potatoes", 20, 50);
+        Material materialEqualItems = new Material("potatoes", 50, 50);
+        Material materialMoreItems = new Material("potatoes", 70, 50);
+
+        assertTrue(materialNoItems.equals(Material.fromUiString(materialNoItems.toUiString())));
+        assertTrue(materialNoItems.equals(Material.fromUiString("50 potatoes")));
+        assertTrue(materialSomeItems.equals(Material.fromUiString(materialSomeItems.toUiString())));
+        assertTrue(materialEqualItems.equals(Material.fromUiString(materialEqualItems.toUiString())));
+        assertTrue(materialMoreItems.equals(Material.fromUiString(materialMoreItems.toUiString())));
+    }
+
+    @Test
     public void equals() {
         // same name and quantity - return true
         Material material1a = new Material("50 potatoes");

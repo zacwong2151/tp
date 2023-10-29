@@ -23,7 +23,7 @@ public class TypicalEvents {
             .withEndDate("23/10/2023 2100")
             .withLocation("Sembawang")
             .withDescription("Clean up la")
-            .withMaterials("12 trash bags", "80 gloves")
+            .withMaterials("12 / 20 trash bags", "80 gloves")
             .withBudget("50.00").build();
 
     public static final Event SECOND = new EventBuilder().withEventName("Clean 2")

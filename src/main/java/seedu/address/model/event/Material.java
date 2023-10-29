@@ -18,6 +18,14 @@ public class Material {
      * The expression allows for multiple words to be inputted.
      * The expression matches a valid integer, followed by the words to be inputted.
      */
+    public static final String VALIDATION_REGEX_UI = "[0-9]+\\s/\\s[0-9]+\\s[\\p{Alnum}][\\p{Alnum} ]*";
+
+    /*
+     * The first character of the material must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
+     * The expression allows for multiple words to be inputted.
+     * The expression matches a valid integer, followed by the words to be inputted.
+     */
     public static final String VALIDATION_REGEX = "[0-9]+\\s[\\p{Alnum}][\\p{Alnum} ]*";
 
     /*
@@ -81,6 +89,33 @@ public class Material {
     }
 
     /**
+     * Constructs a {@code Material} from a {@code String material} in 2 formats: [quantity] [name] or
+     * [quantity] / [quantity] [name] (UI string format). This allows the generation of a Material with a current
+     * quantity field from a string.
+     * @param material A valid material containing 1 or 2 valid whole number quantities in the format: [quantity] [name]
+     *                 or [quantity] / [quantity] [name]
+     * @return The material generated from the material string.
+     * @throws IllegalArgumentException If the material cannot be parsed from its string or UI string representation.
+     */
+    public static Material fromUiString(String material) {
+        requireNonNull(material);
+
+        // of the format [quantity] [material name]
+        if (isValidMaterial(material)) {
+            return new Material(material);
+        } else {
+            checkArgument(isValidUiString(material), MESSAGE_CONSTRAINTS);
+            int currentQuantity = Integer.parseInt(material.substring(0, material.indexOf(" / ")));
+            String remainingStr = material.substring(material.indexOf(" / ") + 3);
+
+            int requiredQuantity = Integer.parseInt(remainingStr.substring(0, remainingStr.indexOf(" ")));
+            String materialName = remainingStr.substring(remainingStr.indexOf(" ") + 1);
+
+            return new Material(materialName, currentQuantity, requiredQuantity);
+        }
+    }
+
+    /**
      * Gets the material name from a {@code String material} of the format [quantity] [material name].
      *
      * @param material A valid material format containing a valid whole number quantity at the front.
@@ -114,6 +149,23 @@ public class Material {
             return test.matches(VALIDATION_REGEX) && isValidQuantity(quantity);
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
             // if the material cannot be parsed into format [number] [material name]
+            // or the number is not valid
+            return false;
+        }
+    }
+
+    /**
+     * Returns true if a given string is a valid material (of the format [quantity] / [quantity] [material name]).
+     */
+    public static boolean isValidUiString(String test) {
+        try {
+            int currentQuantity = Integer.parseInt(test.split("\\s+")[0]);
+            int requiredQuantity = Integer.parseInt(test.split("\\s+")[2]);
+            return test.matches(VALIDATION_REGEX_UI)
+                    && isValidQuantity(currentQuantity)
+                    && isValidQuantity(requiredQuantity);
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            // if the material cannot be parsed into format [number] / [number] [material name]
             // or the number is not valid
             return false;
         }
