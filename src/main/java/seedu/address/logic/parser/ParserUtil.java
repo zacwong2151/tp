@@ -158,7 +158,7 @@ public class ParserUtil {
             throw new ParseException(Material.MESSAGE_CONSTRAINTS);
         }
 
-        return Material.nameFromString(material);
+        return Material.nameFromString(trimmedMaterial);
     }
 
     /**
@@ -174,7 +174,7 @@ public class ParserUtil {
             throw new ParseException(Material.MESSAGE_CONSTRAINTS);
         }
 
-        return Material.quantityFromString(material);
+        return Material.quantityFromString(trimmedMaterial);
     }
 
     /**
