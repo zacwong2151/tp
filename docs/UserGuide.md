@@ -254,6 +254,27 @@ Clears all entries from the event list.
 
 Format: `eclear`
 
+### Adding and tracking quantity of materials into an event: `eaddm`
+
+Volunteer coordinators can track the current quantity of materials in an event and add materials into an event, in order to
+track the progress of the logistics gathered for the event.
+
+Format: `eaddm eid/EVENT_ID m/MATERIAL`
+
+Parameters:
+* eid/ - Event id
+* m/ - The current quantity of a material to add to the event
+
+Restrictions:
+* The event id must be positive and must correspond to exactly one of the ids of the events currently listed.
+* The event id **must be a positive integer** 1, 2, 3, …
+* The material name specified must be present within the event.
+
+Examples:
+* `ecreate n/clean beach m/10 trash bags ...` (refer to [ecreate](#creating-an-event-ecreate) above for full command) creates an 
+  event `clean beach` that requires `20 trash bags`. By performing `efind clean beach`, then `eaddm eid/1 10 trash bags`,
+  the event `clean beach` will now contain `10 / 20 trash bags`.
+
 ### Adding a volunteer into an event: `eaddv`
 
 Adds a volunteer to an event.
