@@ -84,6 +84,7 @@ public class VolunteerEditCommand extends Command {
 
         model.setVolunteer(volunteerToEdit, editedVolunteer);
         model.updateFilteredVolunteerList(PREDICATE_SHOW_ALL_VOLUNTEERS);
+        model.commitToBothVersionedStorages(model.getEventStorage(), model.getVolunteerStorage());
         return new CommandResult(String.format(MESSAGE_EDIT_VOLUNTEER_SUCCESS, Messages.format(editedVolunteer)));
     }
 

@@ -11,6 +11,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.eventcommands.EventCreateCommand;
 import seedu.address.logic.commands.eventcommands.EventDeleteCommand;
 import seedu.address.logic.commands.eventcommands.EventListCommand;
@@ -92,6 +93,9 @@ public class IVolunteerParser {
 
         case VolunteerListCommand.COMMAND_WORD:
             return new VolunteerListCommand();
+
+        case UndoCommand.COMMAND_WORD:
+            return new UndoCommand();
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();

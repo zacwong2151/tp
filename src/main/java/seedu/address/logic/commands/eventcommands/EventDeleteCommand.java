@@ -44,6 +44,7 @@ public class EventDeleteCommand extends Command {
 
         Event eventToDelete = lastShownList.get(targetIndex.getZeroBased());
         model.deleteEvent(eventToDelete);
+        model.commitToBothVersionedStorages(model.getEventStorage(), model.getVolunteerStorage());
         return new CommandResult(String.format(MESSAGE_DELETE_EVENT_SUCCESS, Messages.format(eventToDelete)));
     }
 

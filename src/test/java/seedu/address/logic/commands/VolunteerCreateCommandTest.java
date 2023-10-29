@@ -223,6 +223,17 @@ public class VolunteerCreateCommandTest {
         public void updateEventToShowList(Predicate<Event> eventPredicate) {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public void undoBothStorages() {
+            throw new AssertionError("This method should not be called");
+        }
+
+        @Override
+        public void commitToBothVersionedStorages(ReadOnlyEventStorage readOnlyEventStorage,
+                                                  ReadOnlyVolunteerStorage readOnlyVolunteerStorage) {
+            throw new AssertionError("This method should not be called");
+        }
     }
 
     /**
@@ -269,6 +280,15 @@ public class VolunteerCreateCommandTest {
         @Override
         public ReadOnlyEventStorage getEventStorage() {
             return new EventStorage();
+        }
+        @Override
+        public void undoBothStorages() {
+            // does nothing
+        }
+        @Override
+        public void commitToBothVersionedStorages(ReadOnlyEventStorage readOnlyEventStorage,
+                                                  ReadOnlyVolunteerStorage readOnlyVolunteerStorage) {
+            // does nothing
         }
     }
 

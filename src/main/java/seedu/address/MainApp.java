@@ -52,7 +52,6 @@ public class MainApp extends Application {
     public void init() throws Exception {
         logger.info("=============================[ Initializing iVolunteer ]===========================");
         super.init();
-
         AppParameters appParameters = AppParameters.parse(getParameters());
         config = initConfig(appParameters.getConfigPath());
         initLogging(config);
