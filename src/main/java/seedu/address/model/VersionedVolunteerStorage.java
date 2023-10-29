@@ -44,12 +44,8 @@ public class VersionedVolunteerStorage extends VolunteerStorage {
 
     /**
      * When undo command is executed, currentStatePointer is shifted to point to the previous state of Volunteers.
-     * @throws CommandException if current state of Volunteers is equivalent to the initial state of Volunteers.
      */
-    public void shiftPointerBackwards() throws CommandException {
-        if (this.currentStatePointer == 0) {
-            throw new CommandException("Cannot undo any further");
-        }
+    public void shiftPointerBackwards() {
         this.currentStatePointer -= 1;
     }
 
@@ -60,7 +56,6 @@ public class VersionedVolunteerStorage extends VolunteerStorage {
      */
     public void saveNewState(ReadOnlyVolunteerStorage readOnlyVolunteerStorage) {
         UniqueVolunteerList newState = generateUniqueVolunteerList(readOnlyVolunteerStorage);;
-        // assert currentStatePointer > versionedVolunteerList.size() : "Current state pointer is too small";
         if (versionedVolunteers.size() > currentStatePointer) {
             versionedVolunteers = new ArrayList<>(versionedVolunteers.subList(0, currentStatePointer));
         }
@@ -71,9 +66,33 @@ public class VersionedVolunteerStorage extends VolunteerStorage {
      * Points to the previous state of Volunteers and returns it.
      */
     public List<Volunteer> undo() throws CommandException {
+        canUndoVersionedEvents();
         shiftPointerBackwards();
         UniqueVolunteerList newState = this.versionedVolunteers.get(currentStatePointer);
         return newState.asUnmodifiableObservableList();
+    }
+    private void canUndoVersionedEvents() throws CommandException {
+        if (this.currentStatePointer == 0) {
+            throw new CommandException("Cannot undo any further");
+        }
+        assert currentStatePointer > 0;
+    }
+    /**
+     * asd
+     * @return asd
+     * @throws CommandException asd
+     */
+    public List<Volunteer> redo() throws CommandException {
+        canRedoVersionedEvents();
+        shiftPointerForward();
+        UniqueVolunteerList newState = this.versionedVolunteers.get(currentStatePointer);
+        return newState.asUnmodifiableObservableList();
+    }
+    private void canRedoVersionedEvents() throws CommandException {
+        if (versionedVolunteers.size() == currentStatePointer + 1) {
+            throw new CommandException("Unable to redo");
+        }
+        assert currentStatePointer < versionedVolunteers.size();
     }
     private static UniqueVolunteerList generateUniqueVolunteerList(ReadOnlyVolunteerStorage readOnlyVolunteerStorage) {
         List<Volunteer> volunteers = readOnlyVolunteerStorage.getVolunteerList();

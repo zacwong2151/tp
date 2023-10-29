@@ -156,6 +156,7 @@ public interface Model {
      * Points the Event and Volunteer state to the previous state.
      */
     void undoBothStorages() throws CommandException;
+    void redoBothStorages() throws CommandException;
 
     /**
      * If there is a change to the Event and Volunteer state, then save this state and point to it.

@@ -46,12 +46,8 @@ public class VersionedEventStorage extends EventStorage {
 
     /**
      * When undo command is executed, currentStatePointer is shifted to point to the previous state of Events.
-     * @throws CommandException if current state of events is equivalent to the initial state of events.
      */
-    public void shiftPointerBackwards() throws CommandException {
-        if (this.currentStatePointer == 0) {
-            throw new CommandException("Cannot undo any further");
-        }
+    public void shiftPointerBackwards() {
         this.currentStatePointer -= 1;
     }
 
@@ -70,11 +66,35 @@ public class VersionedEventStorage extends EventStorage {
     }
     /**
      * Points to the previous state of Events and returns it.
+     * @throws CommandException if currentStatePointer is pointing to the initial state of Events.
      */
     public List<Event> undo() throws CommandException {
+        canUndoVersionedEvents();
         shiftPointerBackwards();
         UniqueEventList newState = this.versionedEvents.get(currentStatePointer);
         return newState.asUnmodifiableObservableList();
+    }
+    private void canUndoVersionedEvents() throws CommandException {
+        if (this.currentStatePointer == 0) {
+            throw new CommandException("Cannot undo any further");
+        }
+        assert currentStatePointer > 0;
+    }
+    /**
+     * Points to the next state of Events and returns it.
+     * @throws CommandException if currentStatePointer is pointing to the latest state of Events.
+     */
+    public List<Event> redo() throws CommandException {
+        canRedoVersionedEvents();
+        shiftPointerForward();
+        UniqueEventList newState = this.versionedEvents.get(currentStatePointer);
+        return newState.asUnmodifiableObservableList();
+    }
+    private void canRedoVersionedEvents() throws CommandException {
+        if (versionedEvents.size() == currentStatePointer + 1) {
+            throw new CommandException("Unable to redo");
+        }
+        assert currentStatePointer < versionedEvents.size();
     }
     private static UniqueEventList generateUniqueEventList(ReadOnlyEventStorage readOnlyEventStorage) {
         List<Event> events = readOnlyEventStorage.getEventList();

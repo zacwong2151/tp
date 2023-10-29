@@ -234,6 +234,11 @@ public class VolunteerCreateCommandTest {
                                                   ReadOnlyVolunteerStorage readOnlyVolunteerStorage) {
             throw new AssertionError("This method should not be called");
         }
+
+        @Override
+        public void redoBothStorages() {
+            throw new AssertionError("This method should not be called");
+        }
     }
 
     /**

@@ -113,6 +113,16 @@ public class ModelManager implements Model {
         updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
     }
     @Override
+    public void redoBothStorages() throws CommandException {
+        List<Volunteer> newVolunteerState = versionedVolunteerStorage.redo();
+        volunteerStorage.setVolunteers(newVolunteerState);
+        updateFilteredVolunteerList(PREDICATE_SHOW_ALL_VOLUNTEERS);
+
+        List<Event> newEventState = versionedEventStorage.redo();
+        eventStorage.setEvents(newEventState);
+        updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+    }
+    @Override
     public void commitToBothVersionedStorages(ReadOnlyEventStorage readOnlyEventStorage,
                                               ReadOnlyVolunteerStorage readOnlyVolunteerStorage) {
         versionedEventStorage.shiftPointerForward();
