@@ -77,6 +77,7 @@ public class EventEditCommandTest {
         expectedModel.setEvent(lastEvent, editedEvent);
 
         assertCommandSuccess(eventEditCommand, model, expectedMessage, expectedModel);
+
     }
 
     @Test
