@@ -11,9 +11,12 @@ import static seedu.address.testutil.TypicalEvents.FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalVolunteers.ALICE;
 import static seedu.address.testutil.TypicalVolunteers.BENSON;
+import static seedu.address.testutil.TypicalVolunteers.BOB;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
@@ -23,6 +26,7 @@ import seedu.address.logic.commands.CommandTestUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Event;
 import seedu.address.model.volunteer.SkillNameContainsKeywordsPredicate;
+import seedu.address.model.volunteer.Volunteer;
 import seedu.address.testutil.TypicalEvents;
 import seedu.address.testutil.VolunteerStorageBuilder;
 
@@ -69,15 +73,31 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void setAddressBookFilePath_nullPath_throwsNullPointerException() {
+    public void setVolunteerStorageFilePath_nullPath_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> modelManager.setVolunteerStorageFilePath(null));
     }
 
     @Test
-    public void setAddressBookFilePath_validPath_setsAddressBookFilePath() {
+    public void setVolunteerStorageFilePath_validPath_setsVolunteerStorageFilePath() {
         Path path = Paths.get("address/book/file/path");
         modelManager.setVolunteerStorageFilePath(path);
         assertEquals(path, modelManager.getVolunteerStorageFilePath());
+    }
+
+    @Test
+    public void undoBothStorages_nil_displaysCorrectVolunteerList() {
+        VolunteerStorage volunteerStorage = new VolunteerStorageBuilder().build();
+        List<Volunteer> list = new ArrayList<>();
+        list.add(ALICE);
+        list.add(BOB);
+        volunteerStorage.setVolunteers(list);
+        assertEquals(volunteerStorage.getVolunteerList(), list);
+    }
+
+    @Test
+    public void commitToBothVersionedStorages_nullParameters_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager
+                .commitToBothVersionedStorages(null, null));
     }
 
     @Test
@@ -91,7 +111,7 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void hasVolunteer_volunteernInAddressBook_returnsTrue() {
+    public void hasVolunteer_volunteerInAddressBook_returnsTrue() {
         modelManager.addVolunteer(ALICE);
         assertTrue(modelManager.hasVolunteer(ALICE));
     }

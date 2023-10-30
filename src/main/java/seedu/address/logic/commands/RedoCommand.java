@@ -6,7 +6,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 
 /**
- * asd
+ * Redo an undo command.
  */
 public class RedoCommand extends Command {
     public static final String COMMAND_WORD = "redo";

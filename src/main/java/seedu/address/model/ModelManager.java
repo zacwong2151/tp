@@ -105,26 +105,31 @@ public class ModelManager implements Model {
     @Override
     public void undoBothStorages() throws CommandException {
         List<Volunteer> newVolunteerState = versionedVolunteerStorage.undo();
+        assert newVolunteerState != null;
         volunteerStorage.setVolunteers(newVolunteerState);
         updateFilteredVolunteerList(PREDICATE_SHOW_ALL_VOLUNTEERS);
 
         List<Event> newEventState = versionedEventStorage.undo();
+        assert newEventState != null;
         eventStorage.setEvents(newEventState);
         updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
     }
     @Override
     public void redoBothStorages() throws CommandException {
         List<Volunteer> newVolunteerState = versionedVolunteerStorage.redo();
+        assert newVolunteerState != null;
         volunteerStorage.setVolunteers(newVolunteerState);
         updateFilteredVolunteerList(PREDICATE_SHOW_ALL_VOLUNTEERS);
 
         List<Event> newEventState = versionedEventStorage.redo();
+        assert newEventState != null;
         eventStorage.setEvents(newEventState);
         updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
     }
     @Override
     public void commitToBothVersionedStorages(ReadOnlyEventStorage readOnlyEventStorage,
                                               ReadOnlyVolunteerStorage readOnlyVolunteerStorage) {
+        requireAllNonNull(readOnlyEventStorage, readOnlyVolunteerStorage);
         versionedEventStorage.shiftPointerForward();
         versionedEventStorage.saveNewState(readOnlyEventStorage);
         versionedVolunteerStorage.shiftPointerForward();
