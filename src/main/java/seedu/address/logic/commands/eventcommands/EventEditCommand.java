@@ -31,6 +31,7 @@ import seedu.address.model.event.EventName;
 import seedu.address.model.event.Location;
 import seedu.address.model.event.Material;
 import seedu.address.model.event.Role;
+import seedu.address.model.volunteer.Name;
 
 
 /**
@@ -108,12 +109,13 @@ public class EventEditCommand extends Command {
         Budget updatedBudget = editEventDescriptor.getBudget().orElse(eventToEdit.getBudget());
         DateTime updatedStartTime = editEventDescriptor.getStartDate().orElse(eventToEdit.getStartDate());
         DateTime updatedEndTime = editEventDescriptor.getEndDate().orElse(eventToEdit.getEndDate());
+        Set<Name> assignedVolunteers = eventToEdit.getAssignedVolunteers();
 
         if (updatedEndTime.dateAndTime.isBefore(updatedStartTime.dateAndTime)) {
             throw new CommandException(MESSAGE_INVALID_DATE_PARAMS);
         }
         return new Event(updatedEventName, updatedRoles, updatedStartTime, updatedEndTime, updatedLocation,
-                updatedDescription, updatedMaterial, updatedBudget);
+                updatedDescription, updatedMaterial, updatedBudget, assignedVolunteers);
     }
 
     @Override
@@ -154,6 +156,7 @@ public class EventEditCommand extends Command {
         private Description description;
         private Set<Material> materials;
         private Budget budget;
+        private Set<Name> assignedVolunteers;
 
         public EditEventDescriptor() {}
 
@@ -178,7 +181,7 @@ public class EventEditCommand extends Command {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(eventName, roles, startDate, endDate, location, description, materials,
-                                                budget);
+                                                budget, assignedVolunteers);
         }
         public void setEventName(EventName eventName) {
             this.eventName = eventName;
