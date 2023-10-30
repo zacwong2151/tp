@@ -51,7 +51,7 @@ class VersionedEventStorageTest {
     }
 
     @Test
-    public void saveNewState_addNewVersionedEvents_success() {
+    public void saveNewState_addNewVersionedEvents_success() throws CommandException {
         int initialSize = versionedEventStorage.getVersionedEventsSize();
         commitToVersionedEventStorage();
         int updatedSize = versionedEventStorage.getVersionedEventsSize();
@@ -60,7 +60,20 @@ class VersionedEventStorageTest {
 
         commitToVersionedEventStorage();
         int updatedSizeAgain = versionedEventStorage.getVersionedEventsSize();
+        // at this point, size = 3, currentStatePointer = 2
         assertEquals(updatedSize + 1, updatedSizeAgain);
+
+        // at this point, size = 3, currentStatePointer = 1
+        versionedEventStorage.undo();
+
+        /*
+         currentStatePointer is incremented to 2. VersionedEventStorage#saveNewState will resize versionedEvents to
+          contain only the first 2 elements. Then a versionedEvent will be added to the list of versionedEvents.
+           Thus, size of versionedEvents becomes 3.
+         */
+        commitToVersionedEventStorage();
+        assertEquals(versionedEventStorage.getCurrentStatePointer(), 2);
+        assertEquals(versionedEventStorage.getVersionedEventsSize(), 3);
     }
 
     @Test
@@ -96,6 +109,9 @@ class VersionedEventStorageTest {
 
         // pointer now points at the initial state of events
         assertEquals(versionedEventStorage.getCurrentStatePointer(), 0);
+
+        // user tries to call the undo function again
+        assertThrows(CommandException.class, () -> versionedEventStorage.undo());
     }
 
     @Test
@@ -126,11 +142,14 @@ class VersionedEventStorageTest {
         versionedEventStorage.redo();
         versionedEventStorage.redo();
 
-        // total of 5 events in the event history, because 4 new events were saved
+        // total of 5 versionedEvents in the event history, because 4 new versionedEvents were saved
         assertEquals(versionedEventStorage.getVersionedEventsSize(), 5);
 
         // pointer now points at the latest state of events
         assertEquals(versionedEventStorage.getCurrentStatePointer(), 4);
+
+        // user tries to call the redo function again
+        assertThrows(CommandException.class, () -> versionedEventStorage.redo());
     }
 
     private void commitToVersionedEventStorage() {

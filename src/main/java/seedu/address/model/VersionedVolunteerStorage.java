@@ -13,7 +13,7 @@ import seedu.address.model.volunteer.Volunteer;
  * Stores the history of Volunteers.
  */
 public class VersionedVolunteerStorage extends VolunteerStorage {
-    private ArrayList<UniqueVolunteerList> versionedVolunteers = new ArrayList<>();
+    private final ArrayList<UniqueVolunteerList> versionedVolunteers = new ArrayList<>();
     private int currentStatePointer;
     /**
      * Upon running the app, initialises the history of Volunteers.
@@ -57,10 +57,16 @@ public class VersionedVolunteerStorage extends VolunteerStorage {
         UniqueVolunteerList newState = generateUniqueVolunteerList(readOnlyVolunteerStorage);
         requireNonNull(readOnlyVolunteerStorage);
         if (versionedVolunteers.size() > currentStatePointer) {
-            versionedVolunteers = new ArrayList<>(versionedVolunteers.subList(0, currentStatePointer));
+            trimVersionedVolunteers();
         }
         assert versionedVolunteers.size() == currentStatePointer;
         versionedVolunteers.add(currentStatePointer, newState);
+    }
+    private void trimVersionedVolunteers() {
+        int size = versionedVolunteers.size();
+        for (int i = currentStatePointer; i <= size - 1; i++) {
+            versionedVolunteers.remove(i);
+        }
     }
     /**
      * Points to the previous state of Volunteers and returns it.

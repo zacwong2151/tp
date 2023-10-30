@@ -13,7 +13,7 @@ import seedu.address.model.event.UniqueEventList;
  * Stores the history of Events.
  */
 public class VersionedEventStorage extends EventStorage {
-    private ArrayList<UniqueEventList> versionedEvents = new ArrayList<>();
+    private final ArrayList<UniqueEventList> versionedEvents = new ArrayList<>();
     private int currentStatePointer;
     /**
      * Upon running the app, initialises the history of Events.
@@ -57,10 +57,16 @@ public class VersionedEventStorage extends EventStorage {
         UniqueEventList newState = generateUniqueEventList(readOnlyEventStorage);
         requireNonNull(readOnlyEventStorage);
         if (versionedEvents.size() > currentStatePointer) {
-            versionedEvents = new ArrayList<>(versionedEvents.subList(0, currentStatePointer));
+            trimVersionedEvents();
         }
         assert versionedEvents.size() == currentStatePointer;
         versionedEvents.add(currentStatePointer, newState);
+    }
+    private void trimVersionedEvents() {
+        int size = versionedEvents.size();
+        for (int i = currentStatePointer; i <= size - 1; i++) {
+            versionedEvents.remove(i);
+        }
     }
     /**
      * Points to the previous state of Events and returns it.

@@ -65,6 +65,8 @@ public class EventAddVolunteerCommand extends Command {
         }
         volunteerToAssign.addEvent(eventToAssign);
         eventToAssign.addVolunteer(volunteerToAssign);
+        model.commitToBothVersionedStorages(model.getEventStorage(), model.getVolunteerStorage());
+
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(eventToAssign),
                 eventToAssign.getAssignedVolunteers().size()));
     }

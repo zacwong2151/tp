@@ -77,6 +77,7 @@ public class EventAddMaterialCommand extends Command {
         Event updatedEvent = createEditedEvent(event, updatedMaterial);
         model.setEvent(event, updatedEvent);
         model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+        model.commitToBothVersionedStorages(model.getEventStorage(), model.getVolunteerStorage());
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(event)));
     }

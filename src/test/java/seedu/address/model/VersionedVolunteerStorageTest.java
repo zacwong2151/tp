@@ -51,7 +51,7 @@ class VersionedVolunteerStorageTest {
     }
 
     @Test
-    public void saveNewState_addNewVersionedVolunteers_success() {
+    public void saveNewState_addNewVersionedVolunteers_success() throws CommandException {
         int initialSize = versionedVolunteerStorage.getVersionedVolunteersSize();
         commitToVersionedVolunteerStorage();
         int updatedSize = versionedVolunteerStorage.getVersionedVolunteersSize();
@@ -60,7 +60,20 @@ class VersionedVolunteerStorageTest {
 
         commitToVersionedVolunteerStorage();
         int updatedSizeAgain = versionedVolunteerStorage.getVersionedVolunteersSize();
+        // at this point, size = 3, currentStatePointer = 2
         assertEquals(updatedSize + 1, updatedSizeAgain);
+
+        // at this point, size = 3, currentStatePointer = 1
+        versionedVolunteerStorage.undo();
+
+        /*
+         currentStatePointer is incremented to 2. VersionedEventStorage#saveNewState will resize versionedEvents to
+          contain only the first 2 elements. Then a versionedEvent will be added to the list of versionedEvents.
+           Thus, size of versionedEvents becomes 3.
+         */
+        commitToVersionedVolunteerStorage();
+        assertEquals(versionedVolunteerStorage.getCurrentStatePointer(), 2);
+        assertEquals(versionedVolunteerStorage.getVersionedVolunteersSize(), 3);
     }
 
     @Test
@@ -96,6 +109,9 @@ class VersionedVolunteerStorageTest {
 
         // pointer now points at the initial state of Volunteers
         assertEquals(versionedVolunteerStorage.getCurrentStatePointer(), 0);
+
+        // user tries to call the undo function again
+        assertThrows(CommandException.class, () -> versionedVolunteerStorage.undo());
     }
 
     @Test
@@ -132,6 +148,9 @@ class VersionedVolunteerStorageTest {
 
         // pointer now points at the latest state of versionedVolunteers
         assertEquals(versionedVolunteerStorage.getCurrentStatePointer(), 4);
+
+        // user tries to call the redo function again
+        assertThrows(CommandException.class, () -> versionedVolunteerStorage.redo());
     }
 
     private void commitToVersionedVolunteerStorage() {

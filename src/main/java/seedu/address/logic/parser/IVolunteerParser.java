@@ -108,6 +108,7 @@ public class IVolunteerParser {
 
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
+
         case EventAddVolunteerCommand.COMMAND_WORD:
             return new EventAddVolunteerCommandParser().parse(arguments);
 
