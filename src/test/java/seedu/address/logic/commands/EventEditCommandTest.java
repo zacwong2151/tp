@@ -6,9 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_CLEANUP;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_HELPOUT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENTNAME_CLEANUP;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENTNAME_HELPOUT;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_HELPOUT;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ROLE_BRAIN;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showEventAtIndex;
@@ -54,30 +51,6 @@ public class EventEditCommandTest {
 
         assertCommandSuccess(eventEditCommand, model, expectedMessage, expectedModel);
     }
-
-//    @Test
-//    public void execute_someFieldsSpecifiedUnfilteredList_success() {
-//        Index indexLastEvent = Index.fromOneBased(model.getFilteredEventList().size());
-//        Event lastEvent = model.getFilteredEventList().get(indexLastEvent.getZeroBased());
-//
-//        EventBuilder eventInList = new EventBuilder(lastEvent);
-//        Event editedEvent = eventInList.withEventName(VALID_EVENTNAME_HELPOUT).withLocation(VALID_LOCATION_HELPOUT)
-//                .withRoles(VALID_ROLE_BRAIN).build();
-//
-//        EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withEventName(VALID_EVENTNAME_HELPOUT)
-//                                                .withLocation(VALID_LOCATION_HELPOUT)
-//                                                .withRoles(VALID_ROLE_BRAIN).build();
-//        EventEditCommand eventEditCommand = new EventEditCommand(indexLastEvent, descriptor);
-//
-//        String expectedMessage = String.format(EventEditCommand.MESSAGE_EDIT_EVENT_SUCCESS,
-//                Messages.format(editedEvent));
-//
-//        Model expectedModel = new ModelManager(new EventStorage(model.getEventStorage()),
-//                new VolunteerStorage(model.getVolunteerStorage()), new UserPrefs());
-//        expectedModel.setEvent(lastEvent, editedEvent);
-//
-//        assertCommandSuccess(eventEditCommand, model, expectedMessage, expectedModel);
-//    }
 
     @Test
     public void execute_noFieldSpecifiedUnfilteredList_success() {
