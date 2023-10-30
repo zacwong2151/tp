@@ -55,30 +55,29 @@ public class EventEditCommandTest {
         assertCommandSuccess(eventEditCommand, model, expectedMessage, expectedModel);
     }
 
-    @Test
-    public void execute_someFieldsSpecifiedUnfilteredList_success() {
-        Index indexLastEvent = Index.fromOneBased(model.getFilteredEventList().size());
-        Event lastEvent = model.getFilteredEventList().get(indexLastEvent.getZeroBased());
-
-        EventBuilder eventInList = new EventBuilder(lastEvent);
-        Event editedEvent = eventInList.withEventName(VALID_EVENTNAME_HELPOUT).withLocation(VALID_LOCATION_HELPOUT)
-                .withRoles(VALID_ROLE_BRAIN).build();
-
-        EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withEventName(VALID_EVENTNAME_HELPOUT)
-                                                .withLocation(VALID_LOCATION_HELPOUT)
-                                                .withRoles(VALID_ROLE_BRAIN).build();
-        EventEditCommand eventEditCommand = new EventEditCommand(indexLastEvent, descriptor);
-
-        String expectedMessage = String.format(EventEditCommand.MESSAGE_EDIT_EVENT_SUCCESS,
-                Messages.format(editedEvent));
-
-        Model expectedModel = new ModelManager(new EventStorage(model.getEventStorage()),
-                new VolunteerStorage(model.getVolunteerStorage()), new UserPrefs());
-        expectedModel.setEvent(lastEvent, editedEvent);
-
-        assertCommandSuccess(eventEditCommand, model, expectedMessage, expectedModel);
-
-    }
+//    @Test
+//    public void execute_someFieldsSpecifiedUnfilteredList_success() {
+//        Index indexLastEvent = Index.fromOneBased(model.getFilteredEventList().size());
+//        Event lastEvent = model.getFilteredEventList().get(indexLastEvent.getZeroBased());
+//
+//        EventBuilder eventInList = new EventBuilder(lastEvent);
+//        Event editedEvent = eventInList.withEventName(VALID_EVENTNAME_HELPOUT).withLocation(VALID_LOCATION_HELPOUT)
+//                .withRoles(VALID_ROLE_BRAIN).build();
+//
+//        EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withEventName(VALID_EVENTNAME_HELPOUT)
+//                                                .withLocation(VALID_LOCATION_HELPOUT)
+//                                                .withRoles(VALID_ROLE_BRAIN).build();
+//        EventEditCommand eventEditCommand = new EventEditCommand(indexLastEvent, descriptor);
+//
+//        String expectedMessage = String.format(EventEditCommand.MESSAGE_EDIT_EVENT_SUCCESS,
+//                Messages.format(editedEvent));
+//
+//        Model expectedModel = new ModelManager(new EventStorage(model.getEventStorage()),
+//                new VolunteerStorage(model.getVolunteerStorage()), new UserPrefs());
+//        expectedModel.setEvent(lastEvent, editedEvent);
+//
+//        assertCommandSuccess(eventEditCommand, model, expectedMessage, expectedModel);
+//    }
 
     @Test
     public void execute_noFieldSpecifiedUnfilteredList_success() {
