@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_SKILL_HUSBAND;
 import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.TypicalEvents.getTypicalEventStorage;
 import static seedu.address.testutil.TypicalVolunteers.ALICE;
 import static seedu.address.testutil.TypicalVolunteers.getTypicalVolunteerStorage;
 
@@ -24,22 +25,30 @@ import seedu.address.testutil.VolunteerBuilder;
 public class AddressBookTest {
 
     private final VolunteerStorage volunteerStorage = new VolunteerStorage();
+    private final EventStorage eventStorage = new EventStorage();
 
     @Test
     public void constructor() {
         assertEquals(Collections.emptyList(), volunteerStorage.getVolunteerList());
+        assertEquals(Collections.emptyList(), eventStorage.getEventList());
     }
 
     @Test
     public void resetData_null_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> volunteerStorage.resetData(null));
+        assertThrows(NullPointerException.class, () -> eventStorage.resetData(null));
     }
 
     @Test
     public void resetData_withValidReadOnlyAddressBook_replacesData() {
-        VolunteerStorage newData = getTypicalVolunteerStorage();
-        volunteerStorage.resetData(newData);
-        assertEquals(newData, volunteerStorage);
+        VolunteerStorage newVolunteerData = getTypicalVolunteerStorage();
+        EventStorage newEventData = getTypicalEventStorage();
+
+        volunteerStorage.resetData(newVolunteerData);
+        eventStorage.resetData(newEventData);
+
+        assertEquals(newVolunteerData, volunteerStorage);
+        assertEquals(newEventData, eventStorage);
     }
 
     @Test
