@@ -29,7 +29,6 @@ public class EventTest {
         Set<Material> firstMaterials = new HashSet<>();
         Material cloth = new Material("23 cloths");
         Material soap = new Material("10 bottles of soap");
-      
         firstMaterials.add(cloth);
         firstMaterials.add(soap);
 
