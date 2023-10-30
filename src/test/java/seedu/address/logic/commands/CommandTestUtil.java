@@ -40,8 +40,8 @@ public class CommandTestUtil {
     // Event fields
     public static final String VALID_EVENTNAME_CLEANUP = "Clean up";
     public static final String VALID_EVENTNAME_HELPOUT = "Help out";
-    public static final String VALID_ROLE_CLEANER = "cleaner";
-    public static final String VALID_ROLE_BRAIN = "brain";
+    public static final String VALID_ROLE_CLEANER = "20 cleaner";
+    public static final String VALID_ROLE_BRAIN = "15 brain";
     public static final String VALID_START_DATETIME_CLEANUP = "23/9/2023 1800";
     public static final String VALID_END_DATETIME_CLEANUP = "23/9/2023 2100";
     public static final String VALID_END_DATETIME_CLEANUP_BEFORE_START = "23/9/2023 1700";
