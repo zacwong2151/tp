@@ -3,16 +3,20 @@ package seedu.address.model.event;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.volunteer.Name;
+import seedu.address.model.volunteer.Volunteer;
 
 /**
  * Represents an Event in the Event list.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Event {
+public class Event implements Comparable<Event> {
     // Identity fields
     private final EventName eventName;
 
@@ -24,13 +28,15 @@ public class Event {
     private final Description description;
     private final Set<Material> materials;
     private final Budget budget;
+    private final Set<Name> assignedVolunteers;
 
     /**
      * Every field must be present and not null.
      */
     public Event(EventName eventName, Set<Role> roles, DateTime startDate, DateTime endDate, Location location,
-                 Description description, Set<Material> materials, Budget budget) {
-        requireAllNonNull(eventName, roles, startDate, endDate, location, description, materials, budget);
+                 Description description, Set<Material> materials, Budget budget, Set<Name> assignedVolunteers) {
+        requireAllNonNull(eventName, roles, startDate, endDate, location, description, materials, budget,
+                assignedVolunteers);
         this.eventName = eventName;
         this.roles = roles;
         this.startDate = startDate;
@@ -39,6 +45,7 @@ public class Event {
         this.description = description;
         this.materials = materials;
         this.budget = budget;
+        this.assignedVolunteers = assignedVolunteers;
     }
 
     public EventName getEventName() {
@@ -71,8 +78,61 @@ public class Event {
     public Set<Material> getMaterials() {
         return Collections.unmodifiableSet(materials);
     }
+
+    /**
+     * Gets a {@code Material} in the current {@code Event} instance that has a specified material name. If there are
+     * no such materials, null is returned.
+     * @param name The material name to search for.
+     * @return The {@code Material} object if present; null otherwise.
+     */
+    public Material getMaterialByName(String name) {
+        List<Material> materialList = materials.stream()
+                .filter(material -> material.material.equals(name))
+                .collect(Collectors.toList());
+
+        if (materialList.size() >= 1) {
+            return materialList.get(0);
+        } else {
+            return null;
+        }
+    }
+
     public Budget getBudget() {
         return budget;
+    }
+    /**
+     * Returns an immutable Volunteer set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Set<Name> getAssignedVolunteers() {
+        return Collections.unmodifiableSet(assignedVolunteers);
+    }
+    /**
+     * Adds a volunteer to the {@code assignedVolunteers}.
+     * @param volunteer The volunteer to be added.
+     */
+    public void addVolunteer(Volunteer volunteer) {
+        assignedVolunteers.add(volunteer.getName());
+    }
+    /**
+     * Checks if a volunteer is already in {@code assignedVolunteers}.
+     * @param volunteer The volunteer to check.
+     */
+    public boolean hasVolunteer(Volunteer volunteer) {
+        return assignedVolunteers.contains(volunteer.getName());
+    }
+    /**
+     * Removes a volunteer from the {@code assignedVolunteers}.
+     * @param volunteer The volunteer to be removed.
+     */
+    public void removeVolunteer(Volunteer volunteer) {
+        assignedVolunteers.remove(volunteer.getName());
+    }
+    /**
+     * Returns a set of volunteers from the {@code assignedVolunteers}.
+     */
+    public Set<Name> getVolunteerNames() {
+        return assignedVolunteers;
     }
     /**
      * Returns true if both events have the same name.
@@ -85,6 +145,30 @@ public class Event {
 
         return otherEvent != null
                 && otherEvent.getEventName().equals(getEventName());
+    }
+
+    /**
+     * Compares two Event objects. This Event is lesser than the specified Event if start date is before the other.
+     * If start dates are the same, this event is lesser than the specified Event if end date is before the other.
+     *
+     * @param otherEvent the object to be compared.
+     * @return Integer where -1 represents lesser than, 0 represents equal, 1 represents greater than.
+     */
+    @Override
+    public int compareTo(Event otherEvent) {
+        if (startDate.dateAndTime.isBefore(otherEvent.startDate.dateAndTime)) {
+            return -1;
+        } else if (startDate.dateAndTime.equals(otherEvent.startDate.dateAndTime)) {
+            if (endDate.dateAndTime.isBefore(otherEvent.endDate.dateAndTime)) {
+                return -1;
+            } else if (endDate.dateAndTime.isAfter(otherEvent.endDate.dateAndTime)) {
+                return 1;
+            } else {
+                return 0;
+            }
+        } else {
+            return 1;
+        }
     }
 
     /**
@@ -110,13 +194,15 @@ public class Event {
                 && location.equals(otherEvent.location)
                 && description.equals(otherEvent.description)
                 && materials.equals(otherEvent.materials)
-                && budget.equals(otherEvent.budget);
+                && budget.equals(otherEvent.budget)
+                && assignedVolunteers.equals(otherEvent.assignedVolunteers);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(eventName, roles, startDate, endDate, location, description, materials, budget);
+        return Objects.hash(eventName, roles, startDate, endDate, location, description, materials, budget,
+                assignedVolunteers);
     }
 
     @Override
@@ -130,6 +216,7 @@ public class Event {
                 .add("description", description)
                 .add("materials", materials)
                 .add("budget", budget)
+                .add("assigned volunteers", assignedVolunteers)
                 .toString();
     }
 

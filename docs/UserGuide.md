@@ -6,7 +6,11 @@
 
 # iVolunteer User Guide
 
-iVolunteer is your dedicated application for volunteer coordination, designed with **volunteer coordinators** in mind. It combines the efficiency of a **Command Line Interface (CLI)** with the advantages of a **Graphical User Interface (GUI)**. If you're looking to enhance your volunteer coordination tasks, iVolunteer is the tool that empowers you to **get things done efficiently**. Whether you're creating events, updating details, or managing volunteers, iVolunteer streamlines the process for **swift and effective coordination**.
+iVolunteer is your dedicated application for volunteer coordination, designed with **volunteer coordinators** in mind. It combines the efficiency of a **Command Line Interface (CLI)** with the advantages of a **Graphical User Interface (GUI)**. If you're looking to enhance your volunteer coordination tasks, iVolunteer is the tool that empowers you to **manage volunteers and volunteering events efficiently**. Whether you're managing events or volunteers, iVolunteer streamlines the process for **swift and effective coordination**.
+
+**Command Line Interface (CLI):** a text-based interface that is used to operate software and operating systems while allowing the user to respond to visual prompts by typing single commands into the interface and receiving a reply in the same way.
+
+**Graphical User Interface (GUI):** a form of user interface that allows users to interact with electronic devices through graphical icons and audio indicators such as primary notation.
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -132,14 +136,18 @@ Format: `vfind [n/NAME]…​ [s/SKILL]…​`
 Examples:
 * `vfind n/John` returns `john` and `John Doe`
 * `vfind n/alex n/david` returns `Alex Yeoh`, `David Li`<br>
+
+
   ![result for 'find alex david'](images/findAlexDavidResult.png)
+
+
 * `vfind s/chef` returns volunteers who are chefs
 
-### Editing a volunteer: `vedit` [COMING SOON]
+### Editing a volunteer: `vedit`
 
 Edits an existing volunteer in the volunteer list.
 
-Format: `vedit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SKILL]…​`
+Format: `vedit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [s/SKILL]…​`
 
 * Edits the volunteer at the specified `INDEX`. The index refers to the index number shown in the displayed volunteer list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -149,8 +157,8 @@ Format: `vedit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SKILL]…​`
     specifying any skills after it.
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st volunteer to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower s/` Edits the name of the 2nd volunteer to be `Betsy Crower` and clears all existing skills.
+*  `vedit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st volunteer to be `91234567` and `johndoe@example.com` respectively.
+*  `vedit 2 n/Betsy Crower s/` Edits the name of the 2nd volunteer to be `Betsy Crower` and clears all existing skills.
 
 ### Deleting a volunteer from the volunteer list: `vdelete`
 
@@ -188,7 +196,7 @@ Parameters:
 * ed/ - End date and time of the event
 * l/ - Location of the event
 * dsc/ - Description of the event
-* m/ - Materials needed for the event
+* m/ - Materials needed for the event and its quantity
 * b/ - Budget for the event
 
 Restrictions:
@@ -205,8 +213,8 @@ Restrictions:
 </box>
 
 Examples:
-* `ecreate n/food donation r/chef r/packer sd/23/9/2023 1500 l/nus dsc/help food distribution m/50 potatoes b/50.00` creates an event with name `food donation`, roles needed `chef` and `packer`, event date from `23rd September 2023, 3pm` to `23rd September 2023, 6pm`, location `nus`, description `help food distribution`, materials needed `50 potatoes` and budget `$50.00`
-* `ecreate n/clean beach r/cleaner sd/30/11/2023 1200 ed/30/11/2023 1800 l/east coast park dsc/help clean east coast park m/10 pairs of gloves m/10 trash bags b/50.00` creates an event with name `clean beach`, roles needed `cleaner`, event date from `30th November 2023, 12pm` to `30th November 2023, 6pm`, location `east coast park`, description `help clean east coast park`, materials needed `10 pairs of gloves` and `10 trash bags` and budget `$50.00`
+* `ecreate n/clean beach r/cleaner sd/30/11/2023 1200 ed/30/11/2023 1800 l/east coast park dsc/help clean east coast park m/10 pairs of gloves m/10 trash bags b/50.00` 
+  * Creates an event with name `clean beach`, roles needed `cleaner`, event date from `30th November 2023, 12pm` to `30th November 2023, 6pm`, location `east coast park`, description `help clean east coast park`, materials needed `10 pairs of gloves` and `10 trash bags` and budget `$50.00`
 
 ### Listing all events: `elist`
 Volunteer coordinators can see all the events they are organising. For each event, only the most important information will be shown: name, start date and time, end date and time, location, and description.
@@ -246,6 +254,27 @@ Clears all entries from the event list.
 
 Format: `eclear`
 
+### Adding and tracking quantity of materials into an event: `eaddm`
+
+Volunteer coordinators can track the current quantity of materials in an event and add materials into an event, in order to
+track the progress of the logistics gathered for the event.
+
+Format: `eaddm eid/EVENT_ID m/MATERIAL`
+
+Parameters:
+* eid/ - Event id
+* m/ - The current quantity of a material to add to the event
+
+Restrictions:
+* The event id must be positive and must correspond to exactly one of the ids of the events currently listed.
+* The event id **must be a positive integer** 1, 2, 3, …
+* The material name specified must be present within the event.
+
+Examples:
+* `ecreate n/clean beach m/10 trash bags ...` (refer to [ecreate](#creating-an-event-ecreate) above for full command) creates an 
+  event `clean beach` that requires `20 trash bags`. By performing `efind clean beach`, then `eaddm eid/1 10 trash bags`,
+  the event `clean beach` will now contain `10 / 20 trash bags`.
+
 ### Adding a volunteer into an event: `eaddv`
 
 Adds a volunteer to an event.
@@ -274,7 +303,7 @@ Restrictions:
 * The event id must be positive and must correspond to exactly one of the ids of the events currently listed.
 
 Examples:
-* `elistv eid/1` lists the volunteers added to the event with id 1.
+* `elistv 1` lists the volunteers added to the event with id 1.
 
 ### Removing a volunteer from an event: `eremovev`
 
@@ -345,15 +374,20 @@ coming soon
 
 ## Command summary
 
-| Action                                        | Format, Examples                                                                                                                                                                                                                                                                       |
-|-----------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Create a new event**                        | `ecreate n/EVENT_NAME r/ROLES_NEEDED… d/DATE_AND_TIME l/LOCATION dsc/DESCRIPTION [m/MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET]` <br> e.g., `ecreate n/Fundraising at Orchard r/logistics leader d/23-09-2023 1500 dsc/station at locations to ask for donations m/50 tin cans b/50` |
-| **List all events**                           | `elist`                                                                                                                                                                                                                                                                                |
-| **Read an individual event**                  | `eshow EVENT_ID` <br> e.g., `eshow 8`                                                                                                                                                                                                                                                  |
-| **Delete an event**                           | `edelete EVENT_ID` <br> e.g., `edelete 3`                                                                                                                                                                                                                                              |
-| **Create a new volunteer profile**            | `vcreate vn/VOLUNTEER_NAME hp/PHONE_NUMBER e/EMAIL [s/SKILLS]...`<br> e.g.,`vcreate vn/John Lim hp/81234567 e/john123@gmail.com s/Cooking`                                                                                                                                             |
-| **List all volunteer profiles**               | `vlist`                                                                                                                                                                                                                                                                                |
-| **Delete a volunteer profile**                | `vdelete VOLUNTEER_ID` <br> e.g., `vdelete 4`                                                                                                                                                                                                                                          |
-| **Add a volunteer to an event**               | `eaddv vid/VOLUNTEER_ID eid/EVENT_ID`<br> e.g., `eaddv vid/1 eid/3` <br> Alternatively, `eaddv vn/VOLUNTEER_NAME en/EVENT_NAME` <br> e.g., `eaddv vn/Betsy Crowe en/Fundraising for needy families`                                                                                    |
-| **Check for volunteers assigned to an event** | `elistv eid/EVENT_ID` <br> e.g. `elistv eid/8` <br> Alternatively, `elistv en/EVENT_NAME` <br> e.g., `elistv en/October beach clean up`                                                                                                                                                |
-| **Remove a volunteer from an event**          | `eremovev vid/VOLUNTEER_ID eid/EVENT_ID`<br> e.g., `eremovev vid/3 eid/4` <br> Alternatively, `eremovev vn/VOLUNTEER_NAME en/EVENT_NAME` <br> e.g., `eremovev vn/John Lim en/October beach clean up`                                                                                   |
+| Action                                        | Format, Examples                                                                                                                                                                                                                                                                                                                        |
+|-----------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Display help window**                       | `help`                                                                                                                                                                                                                                                                                                                                  |
+| **Create a new event**                        | `ecreate n/EVENT_NAME r/ROLES_NEEDED… sd/START_DATETIME [ed/END_DATETIME] l/LOCATION dsc/DESCRIPTION [m/MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET]` <br> e.g., `ecreate n/clean beach r/cleaner sd/30/11/2023 1200 ed/30/11/2023 1800 l/east coast park dsc/help clean east coast park m/10 pairs of gloves m/10 trash bags b/50.00` |
+| **List all events**                           | `elist`                                                                                                                                                                                                                                                                                                                                 |
+| **Read an individual event**                  | `eshow EVENT_ID` <br> e.g., `eshow 8`                                                                                                                                                                                                                                                                                                   |
+| **Delete an event**                           | `edelete EVENT_ID` <br> e.g., `edelete 3`                                                                                                                                                                                                                                                                                               |
+| **Clear all events**                          | `eclear`                                                                                                                                                                                                                                                                                                                                |
+| **Create a new volunteer profile**            | `vcreate vn/VOLUNTEER_NAME hp/PHONE_NUMBER e/EMAIL [s/SKILLS]...`<br> e.g.,`vcreate vn/John Lim hp/81234567 e/john123@gmail.com s/Cooking`                                                                                                                                                                                              |
+| **List all volunteer profiles**               | `vlist`                                                                                                                                                                                                                                                                                                                                 |
+| **Edit a volunteer profile**                  | `vedit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [s/SKILL]…​` <br> e.g., `vedit 1 p/91234567 e/johndoe@example.com`                                                                                                                                                                                                                            |
+| **Delete a volunteer profile**                | `vdelete VOLUNTEER_ID` <br> e.g., `vdelete 4`                                                                                                                                                                                                                                                                                           |
+| **Clear all volunteer profiles**              | `vclear`                                                                                                                                                                                                                                                                                                                                |
+| **Add a volunteer to an event**               | `eaddv vid/VOLUNTEER_ID eid/EVENT_ID`<br> e.g., `eaddv vid/1 eid/3`                                                                                                                                                                                                                                                                     |
+| **Check for volunteers assigned to an event** | `elistv EVENT_ID` <br> e.g. `elistv 8`                                                                                                                                                                                                                                                                                                  |
+| **Remove a volunteer from an event**          | `eremovev vid/VOLUNTEER_ID eid/EVENT_ID`<br> e.g., `eremovev vid/3 eid/4`                                                                                                                                                                                                                                                               |
+| **Exits iVolunteer**                          | `exit`                                                                                                                                                                                                                                                                                                                                  |

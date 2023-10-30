@@ -70,7 +70,7 @@ public interface Model {
     void deleteEvent(Event target);
 
     /**
-     * Adds the given event.
+     * Adds the given event, and rearranges the event list in ascending order, based on their date and time
      * {@code event} must not already exist in the event storage.
      */
     void addEvent(Event event);

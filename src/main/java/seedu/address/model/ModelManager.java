@@ -157,9 +157,11 @@ public class ModelManager implements Model {
     public void deleteEvent(Event target) {
         eventStorage.removeEvent(target);
     }
+
     @Override
     public void addEvent(Event event) {
         eventStorage.addEvent(event);
+        eventStorage.sortEvents();
         updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
     }
 
@@ -255,7 +257,6 @@ public class ModelManager implements Model {
         requireNonNull(predicate);
         filteredVolunteers.setPredicate(predicate);
     }
-
     @Override
     public boolean equals(Object other) {
         if (other == this) {

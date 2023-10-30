@@ -13,13 +13,18 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.eventcommands.EventAddMaterialCommand;
 import seedu.address.logic.commands.eventcommands.EventDeleteCommand;
 import seedu.address.logic.commands.eventcommands.EventListCommand;
 import seedu.address.logic.commands.eventcommands.EventShowCommand;
+import seedu.address.logic.commands.eventvolunteercommands.EventAddVolunteerCommand;
+import seedu.address.logic.commands.eventvolunteercommands.EventListVolunteerCommand;
+import seedu.address.logic.commands.eventvolunteercommands.EventRemoveVolunteerCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerClearCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerCreateCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerDeleteCommand;
@@ -137,6 +142,41 @@ public class IVolunteerParserTest {
         assertTrue(parser.parseCommand(
                 RedoCommand.COMMAND_WORD + " 3") instanceof RedoCommand);
     }
+
+    @Test
+    public void parseCommand_eventAddVolunteer() throws Exception {
+        Command parsedCommand = parser.parseCommand(
+                EventAddVolunteerCommand.COMMAND_WORD + " eid/1 vid/1");
+        assertTrue(parsedCommand instanceof EventAddVolunteerCommand);
+        EventAddVolunteerCommand command = (EventAddVolunteerCommand) parsedCommand;
+        assertEquals(new EventAddVolunteerCommand(INDEX_FIRST, INDEX_FIRST), command);
+    }
+
+    @Test
+    public void parseCommand_eventListVolunteer() throws Exception {
+        EventListVolunteerCommand command = (EventListVolunteerCommand) parser.parseCommand(
+                EventListVolunteerCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased());
+        assertEquals(new EventListVolunteerCommand(INDEX_FIRST), command);
+    }
+
+    @Test
+    public void parseCommand_eventRemoveVolunteer() throws Exception {
+        Command parsedCommand = parser.parseCommand(
+                EventRemoveVolunteerCommand.COMMAND_WORD + " eid/1 vid/1");
+        assertTrue(parsedCommand instanceof EventRemoveVolunteerCommand);
+        EventRemoveVolunteerCommand command = (EventRemoveVolunteerCommand) parsedCommand;
+        assertEquals(new EventRemoveVolunteerCommand(INDEX_FIRST, INDEX_FIRST), command);
+    }
+
+    @Test
+    public void parseCommand_eventAddMaterial() throws Exception {
+        Command parsedCommand = parser.parseCommand(
+                EventAddMaterialCommand.COMMAND_WORD + " eid/1 m/20 potatoes");
+        assertTrue(parsedCommand instanceof EventAddMaterialCommand);
+        EventAddMaterialCommand command = (EventAddMaterialCommand) parsedCommand;
+        assertEquals(new EventAddMaterialCommand(INDEX_FIRST, 20, "potatoes"), command);
+    }
+
 
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() {
