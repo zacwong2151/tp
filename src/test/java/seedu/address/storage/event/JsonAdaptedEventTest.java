@@ -170,11 +170,28 @@ public class JsonAdaptedEventTest {
 
     @Test
     public void toModelType_invalidMaterials_throwsIllegalValueException() {
-        List<JsonAdaptedMaterial> invalidMaterials = new ArrayList<>(VALID_MATERIALS);
-        invalidMaterials.add(new JsonAdaptedMaterial(INVALID_MATERIAL));
-        JsonAdaptedEvent event =
+        // test 1: invalid material format
+        List<JsonAdaptedMaterial> invalidMaterials1 = new ArrayList<>(VALID_MATERIALS);
+        invalidMaterials1.add(new JsonAdaptedMaterial(INVALID_MATERIAL));
+        JsonAdaptedEvent event1 =
                 new JsonAdaptedEvent(VALID_EVENT_NAME, VALID_ROLES, VALID_START_DATE, VALID_END_DATE,
-                        VALID_LOCATION, VALID_DESCRIPTION, invalidMaterials, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS);
-        assertThrows(IllegalValueException.class, event::toModelType);
+                        VALID_LOCATION, VALID_DESCRIPTION, invalidMaterials1, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS);
+        assertThrows(IllegalValueException.class, event1::toModelType);
+
+        // test 2: invalid current quantity
+        List<JsonAdaptedMaterial> invalidMaterials2 = new ArrayList<>(VALID_MATERIALS);
+        invalidMaterials2.add(new JsonAdaptedMaterial("trash bags", "-2", "30"));
+        JsonAdaptedEvent event2 =
+                new JsonAdaptedEvent(VALID_EVENT_NAME, VALID_ROLES, VALID_START_DATE, VALID_END_DATE,
+                        VALID_LOCATION, VALID_DESCRIPTION, invalidMaterials2, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS);
+        assertThrows(IllegalValueException.class, event2::toModelType);
+
+        // test 3: invalid required quantity
+        List<JsonAdaptedMaterial> invalidMaterials3 = new ArrayList<>(VALID_MATERIALS);
+        invalidMaterials3.add(new JsonAdaptedMaterial("trash bags", "30", "-2"));
+        JsonAdaptedEvent event3 =
+                new JsonAdaptedEvent(VALID_EVENT_NAME, VALID_ROLES, VALID_START_DATE, VALID_END_DATE,
+                        VALID_LOCATION, VALID_DESCRIPTION, invalidMaterials3, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS);
+        assertThrows(IllegalValueException.class, event3::toModelType);
     }
 }

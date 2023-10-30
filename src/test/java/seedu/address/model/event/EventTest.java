@@ -27,8 +27,8 @@ public class EventTest {
         firstRoles.add(clean);
 
         Set<Material> firstMaterials = new HashSet<>();
-        Material cloth = new Material("cloth");
-        Material soap = new Material("soap");
+        Material cloth = new Material("23 cloths");
+        Material soap = new Material("10 bottles of soap");
         firstMaterials.add(cloth);
         firstMaterials.add(soap);
 
@@ -53,8 +53,8 @@ public class EventTest {
         secondRoles.add(paint);
 
         Set<Material> secondMaterials = new HashSet<>();
-        Material brush = new Material("paint brush");
-        Material pail = new Material("pail");
+        Material brush = new Material("12 paint brush");
+        Material pail = new Material("3 pail");
         secondMaterials.add(brush);
         secondMaterials.add(pail);
 

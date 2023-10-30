@@ -3,8 +3,10 @@ package seedu.address.model.event;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.volunteer.Name;
@@ -76,6 +78,25 @@ public class Event implements Comparable<Event> {
     public Set<Material> getMaterials() {
         return Collections.unmodifiableSet(materials);
     }
+
+    /**
+     * Gets a {@code Material} in the current {@code Event} instance that has a specified material name. If there are
+     * no such materials, null is returned.
+     * @param name The material name to search for.
+     * @return The {@code Material} object if present; null otherwise.
+     */
+    public Material getMaterialByName(String name) {
+        List<Material> materialList = materials.stream()
+                .filter(material -> material.material.equals(name))
+                .collect(Collectors.toList());
+
+        if (materialList.size() >= 1) {
+            return materialList.get(0);
+        } else {
+            return null;
+        }
+    }
+
     public Budget getBudget() {
         return budget;
     }
