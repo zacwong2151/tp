@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import seedu.address.model.event.Event;
 
 /**
@@ -41,7 +42,7 @@ public class EventWindowCard extends UiPart<Region> {
     @FXML
     private Label description;
     @FXML
-    private FlowPane materials;
+    private VBox materials;
 
     @FXML
     private Label budget;
@@ -65,7 +66,7 @@ public class EventWindowCard extends UiPart<Region> {
         budget.setText("Budget: " + event.getBudget().budget);
         event.getMaterials().stream()
                 .sorted(Comparator.comparing(material -> material.material))
-                .forEach(material -> materials.getChildren().add(new Label(material.material)));
+                .forEach(material -> materials.getChildren().add(new Label("\u2022 " + material.toUiString())));
         description.setText("Description: " + event.getDescription().description);
     }
 }

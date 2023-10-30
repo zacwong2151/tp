@@ -101,6 +101,13 @@ public class UniqueEventList implements Iterable<Event> {
     }
 
     /**
+     * Sorts this list in ascending order, by their date and time.
+     */
+    public void sortEvents() {
+        internalList.sort(Event::compareTo);
+    }
+
+    /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
     public ObservableList<Event> asUnmodifiableObservableList() {

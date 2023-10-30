@@ -35,7 +35,7 @@ public class JsonAdaptedEvent {
     private final String description;
     private final List<JsonAdaptedMaterial> materials = new ArrayList<>();
     private final String budget;
-    private final List<JsonAdaptedName> assignedVolunteers = new ArrayList();
+    private final List<JsonAdaptedName> assignedVolunteers = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedEvent} with the given event details.
