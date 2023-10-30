@@ -13,7 +13,7 @@ public class Role {
             + "role quantity should be a whole number (0 or positive), and it should not be blank";
 
     /*
-     * The first character of the material must not be a whitespace,
+     * The first character of the role must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      * The expression allows for multiple words to be inputted.
      * The expression matches a valid integer, followed by the words to be inputted.
@@ -21,7 +21,7 @@ public class Role {
     public static final String VALIDATION_REGEX_UI = "[0-9]+\\s/\\s[0-9]+\\s[\\p{Alnum}][\\p{Alnum} ]*";
 
     /*
-     * The first character of the material must not be a whitespace,
+     * The first character of the role must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      * The expression allows for multiple words to be inputted.
      * The expression matches a valid integer, followed by the words to be inputted.
@@ -29,10 +29,10 @@ public class Role {
     public static final String VALIDATION_REGEX = "[0-9]+\\s[\\p{Alnum}][\\p{Alnum} ]*";
 
     /*
-     * The first character of the material must not be a whitespace,
+     * The first character of the role must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      * The expression allows for multiple words to be inputted.
-     * This regex applies only for the material name portion of the material string.
+     * This regex applies only for the role name portion of the role string.
      */
     public static final String VALIDATION_REGEX_ROLE_NAME = "[\\p{Alnum}][\\p{Alnum} ]*";
 
@@ -94,13 +94,13 @@ public class Role {
      * quantity field from a string.
      * @param role A valid role containing 1 or 2 valid whole number quantities in the format: [quantity] [role name]
      *                 or [quantity] / [quantity] [role name]
-     * @return The material generated from the material string.
-     * @throws IllegalArgumentException If the material cannot be parsed from its string or UI string representation.
+     * @return The role generated from the role string.
+     * @throws IllegalArgumentException If the role cannot be parsed from its string or UI string representation.
      */
     public static Role fromUiString(String role) {
         requireNonNull(role);
 
-        // of the format [quantity] [material name]
+        // of the format [quantity] [role name]
         if (isValidRole(role)) {
             return new Role(role);
         } else {
@@ -113,6 +113,31 @@ public class Role {
 
             return new Role(roleName, currentQuantity, requiredQuantity);
         }
+    }
+
+    /**
+     * Gets the role name from a {@code String role} of the format [quantity] [role name].
+     *
+     * @param role A valid role format containing a valid whole number quantity at the front.
+     * @return The role name from the {@code String role}.
+     */
+    public static String nameFromString(String role) {
+        requireNonNull(role);
+        checkArgument(isValidRole(role), MESSAGE_CONSTRAINTS);
+        return role.substring(role.indexOf(" ") + 1);
+    }
+
+    /**
+     * Gets the quantity from a {@code String role} of the format [required/current quantity] [role name]. This
+     * can parse required or current quantity depending on what is required.
+     *
+     * @param role A valid role format containing a valid whole number quantity at the front.
+     * @return The role quantity from the {@code String role}.
+     */
+    public static int quantityFromString(String role) {
+        requireNonNull(role);
+        checkArgument(isValidRole(role), MESSAGE_CONSTRAINTS);
+        return Integer.parseInt(role.substring(0, role.indexOf(" ")));
     }
 
     /**
@@ -140,7 +165,7 @@ public class Role {
                     && isValidQuantity(currentQuantity)
                     && isValidQuantity(requiredQuantity);
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-            // if the material cannot be parsed into format [number] / [number] [material name]
+            // if the role cannot be parsed into format [number] / [number] [role name]
             // or the number is not valid
             return false;
         }
