@@ -35,7 +35,7 @@ public class VolunteerCreateCommand extends Command {
             + PREFIX_SKILL + "owesMoney";
 
     public static final String MESSAGE_SUCCESS = "New volunteer added: %1$s";
-    public static final String MESSAGE_DUPLICATE_VOLUNTEER = "This volunteer already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_VOLUNTEER = "This volunteer already exists in the volunteer list";
 
     private final Volunteer toAdd;
 

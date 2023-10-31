@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ class VersionedEventStorageTest {
     }
 
     @Test
-    public void saveNewState_addNewVersionedEvents_success() throws CommandException {
+    public void saveNewState_addNewVersionedEvents_success() {
         int initialSize = versionedEventStorage.getVersionedEventsSize();
         commitToVersionedEventStorage();
         int updatedSize = versionedEventStorage.getVersionedEventsSize();
@@ -63,8 +64,12 @@ class VersionedEventStorageTest {
         // at this point, size = 3, currentStatePointer = 2
         assertEquals(updatedSize + 1, updatedSizeAgain);
 
-        // at this point, size = 3, currentStatePointer = 1
-        versionedEventStorage.undo();
+        try {
+            // at this point, size = 3, currentStatePointer = 1
+            versionedEventStorage.undo();
+        } catch (CommandException e) {
+            fail();
+        }
 
         /*
          currentStatePointer is incremented to 2. VersionedEventStorage#saveNewState will resize versionedEvents to
@@ -82,14 +87,20 @@ class VersionedEventStorageTest {
     }
 
     @Test
-    public void undo() throws CommandException {
+    public void undo() {
         // First command user executes is undo
         assertThrows(CommandException.class, () -> versionedEventStorage.undo());
 
         // A new state is saved, and it is undone, so the pointers will point at the same state
         int initialPointer = versionedEventStorage.getCurrentStatePointer();
         commitToVersionedEventStorage();
-        versionedEventStorage.undo();
+
+        try {
+            versionedEventStorage.undo();
+        } catch (CommandException e) {
+            fail();
+        }
+
         int updatedPointer = versionedEventStorage.getCurrentStatePointer();
         assertEquals(initialPointer, updatedPointer);
 
@@ -100,9 +111,13 @@ class VersionedEventStorageTest {
         commitToVersionedEventStorage();
         commitToVersionedEventStorage();
         commitToVersionedEventStorage();
-        versionedEventStorage.undo();
-        versionedEventStorage.undo();
-        versionedEventStorage.undo();
+        try {
+            versionedEventStorage.undo();
+            versionedEventStorage.undo();
+            versionedEventStorage.undo();
+        } catch (CommandException e) {
+            fail();
+        }
 
         // total of 4 events in the event history
         assertEquals(versionedEventStorage.getVersionedEventsSize(), 4);
@@ -115,7 +130,7 @@ class VersionedEventStorageTest {
     }
 
     @Test
-    public void redo() throws CommandException {
+    public void redo() {
         // First command user executes is redo
         assertThrows(CommandException.class, () -> versionedEventStorage.redo());
 
@@ -123,8 +138,12 @@ class VersionedEventStorageTest {
         // next state compared to the initialPointer
         int initialPointer = versionedEventStorage.getCurrentStatePointer();
         commitToVersionedEventStorage();
-        versionedEventStorage.undo();
-        versionedEventStorage.redo();
+        try {
+            versionedEventStorage.undo();
+            versionedEventStorage.redo();
+        } catch (CommandException e) {
+            fail();
+        }
         int updatedPointer = versionedEventStorage.getCurrentStatePointer();
         assertEquals(initialPointer + 1, updatedPointer);
 
@@ -135,12 +154,17 @@ class VersionedEventStorageTest {
         commitToVersionedEventStorage();
         commitToVersionedEventStorage();
         commitToVersionedEventStorage();
-        versionedEventStorage.undo();
-        versionedEventStorage.undo();
-        versionedEventStorage.undo();
-        versionedEventStorage.redo();
-        versionedEventStorage.redo();
-        versionedEventStorage.redo();
+
+        try {
+            versionedEventStorage.undo();
+            versionedEventStorage.undo();
+            versionedEventStorage.undo();
+            versionedEventStorage.redo();
+            versionedEventStorage.redo();
+            versionedEventStorage.redo();
+        } catch (CommandException e) {
+            fail();
+        }
 
         // total of 5 versionedEvents in the event history, because 4 new versionedEvents were saved
         assertEquals(versionedEventStorage.getVersionedEventsSize(), 5);

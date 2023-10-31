@@ -135,6 +135,14 @@ public class ModelManager implements Model {
         versionedVolunteerStorage.shiftPointerForward();
         versionedVolunteerStorage.saveNewState(readOnlyVolunteerStorage);
     }
+    @Override
+    public VersionedVolunteerStorage getVersionedVolunteerStorage() {
+        return versionedVolunteerStorage;
+    }
+    @Override
+    public VersionedEventStorage getVersionedEventStorage() {
+        return versionedEventStorage;
+    }
 
     //=========== Event Storage ================================================================================
     @Override

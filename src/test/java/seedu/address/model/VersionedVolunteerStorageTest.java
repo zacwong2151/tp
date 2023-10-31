@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ class VersionedVolunteerStorageTest {
     }
 
     @Test
-    public void saveNewState_addNewVersionedVolunteers_success() throws CommandException {
+    public void saveNewState_addNewVersionedVolunteers_success() {
         int initialSize = versionedVolunteerStorage.getVersionedVolunteersSize();
         commitToVersionedVolunteerStorage();
         int updatedSize = versionedVolunteerStorage.getVersionedVolunteersSize();
@@ -64,7 +65,11 @@ class VersionedVolunteerStorageTest {
         assertEquals(updatedSize + 1, updatedSizeAgain);
 
         // at this point, size = 3, currentStatePointer = 1
-        versionedVolunteerStorage.undo();
+        try {
+            versionedVolunteerStorage.undo();
+        } catch (CommandException e) {
+            fail();
+        }
 
         /*
          currentStatePointer is incremented to 2. VersionedEventStorage#saveNewState will resize versionedEvents to
@@ -82,14 +87,20 @@ class VersionedVolunteerStorageTest {
     }
 
     @Test
-    public void undo() throws CommandException {
+    public void undo() {
         // First command user executes is undo
         assertThrows(CommandException.class, () -> versionedVolunteerStorage.undo());
 
         // A new state is saved, and it is undone, so the pointers will point at the same state
         int initialPointer = versionedVolunteerStorage.getCurrentStatePointer();
         commitToVersionedVolunteerStorage();
-        versionedVolunteerStorage.undo();
+
+        try {
+            versionedVolunteerStorage.undo();
+        } catch (CommandException e) {
+            fail();
+        }
+
         int updatedPointer = versionedVolunteerStorage.getCurrentStatePointer();
         assertEquals(initialPointer, updatedPointer);
 
@@ -100,9 +111,14 @@ class VersionedVolunteerStorageTest {
         commitToVersionedVolunteerStorage();
         commitToVersionedVolunteerStorage();
         commitToVersionedVolunteerStorage();
-        versionedVolunteerStorage.undo();
-        versionedVolunteerStorage.undo();
-        versionedVolunteerStorage.undo();
+
+        try {
+            versionedVolunteerStorage.undo();
+            versionedVolunteerStorage.undo();
+            versionedVolunteerStorage.undo();
+        } catch (CommandException e) {
+            fail();
+        }
 
         // total of 4 Volunteers in the Volunteer history
         assertEquals(versionedVolunteerStorage.getVersionedVolunteersSize(), 4);
@@ -115,7 +131,7 @@ class VersionedVolunteerStorageTest {
     }
 
     @Test
-    public void redo() throws CommandException {
+    public void redo() {
         // First command user executes is redo
         assertThrows(CommandException.class, () -> versionedVolunteerStorage.redo());
 
@@ -123,8 +139,14 @@ class VersionedVolunteerStorageTest {
         // next state compared to the initialPointer
         int initialPointer = versionedVolunteerStorage.getCurrentStatePointer();
         commitToVersionedVolunteerStorage();
-        versionedVolunteerStorage.undo();
-        versionedVolunteerStorage.redo();
+
+        try {
+            versionedVolunteerStorage.undo();
+            versionedVolunteerStorage.redo();
+        } catch (CommandException e) {
+            fail();
+        }
+
         int updatedPointer = versionedVolunteerStorage.getCurrentStatePointer();
         assertEquals(initialPointer + 1, updatedPointer);
 
@@ -135,12 +157,17 @@ class VersionedVolunteerStorageTest {
         commitToVersionedVolunteerStorage();
         commitToVersionedVolunteerStorage();
         commitToVersionedVolunteerStorage();
-        versionedVolunteerStorage.undo();
-        versionedVolunteerStorage.undo();
-        versionedVolunteerStorage.undo();
-        versionedVolunteerStorage.redo();
-        versionedVolunteerStorage.redo();
-        versionedVolunteerStorage.redo();
+
+        try {
+            versionedVolunteerStorage.undo();
+            versionedVolunteerStorage.undo();
+            versionedVolunteerStorage.undo();
+            versionedVolunteerStorage.redo();
+            versionedVolunteerStorage.redo();
+            versionedVolunteerStorage.redo();
+        } catch (CommandException e) {
+            fail();
+        }
 
         // total of 5 versionedVolunteers in the versionedVolunteers history, because 4 new
         // versionedVolunteers were saved

@@ -165,4 +165,9 @@ public interface Model {
      */
     void commitToBothVersionedStorages(ReadOnlyEventStorage readOnlyEventStorage,
                                        ReadOnlyVolunteerStorage readOnlyVolunteerStorage);
+
+    /** Returns an unmodifiable view of the versionedVolunteerStorage */
+    VersionedVolunteerStorage getVersionedVolunteerStorage();
+    /** Returns an unmodifiable view of the versionedEventStorage */
+    VersionedEventStorage getVersionedEventStorage();
 }

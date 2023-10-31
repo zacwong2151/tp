@@ -67,6 +67,16 @@ public class EventAddVolunteerCommand extends Command {
         eventToAssign.addVolunteer(volunteerToAssign);
         model.commitToBothVersionedStorages(model.getEventStorage(), model.getVolunteerStorage());
 
+        /**
+         * line 67 changes versionedEvents of VersionedEventStorage FOR WHATEVER REASON, and so this messes up the
+         * initial state cos the initial state will be the new state. Hence when you undo, you will stay at 'the same
+         * state'.
+         * I believe this happens cos line 67 changes the filteredEvents field of ModelManager which FOR WHATEVER
+         * REASON changes the versionedEvents of VersionedEventStorage. So maybe can decouple filteredEvents from
+         * versionedEvents in ModelManager. For this, take note of ModelManager#getFilteredVolunteerList method.
+         * Does it really return 'an unmodifiable view of the list'?
+         */
+
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(eventToAssign),
                 eventToAssign.getAssignedVolunteers().size()));
     }
