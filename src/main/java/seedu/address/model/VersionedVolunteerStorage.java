@@ -46,9 +46,13 @@ public class VersionedVolunteerStorage extends VolunteerStorage {
         currentStatePointer -= 1;
     }
 
-    public int getCurrentStatePointer() { return currentStatePointer; }
+    public int getCurrentStatePointer() {
+        return currentStatePointer;
+    }
 
-    public int getVersionedVolunteersSize() { return versionedVolunteers.size(); }
+    public int getVersionedVolunteersSize() {
+        return versionedVolunteers.size();
+    }
 
     /**
      * When commands that change the current state of Volunteers are executed, the new state of Volunteers will be

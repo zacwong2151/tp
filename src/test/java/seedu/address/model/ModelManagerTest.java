@@ -12,12 +12,9 @@ import static seedu.address.testutil.TypicalEvents.FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalVolunteers.ALICE;
 import static seedu.address.testutil.TypicalVolunteers.BENSON;
-import static seedu.address.testutil.TypicalVolunteers.BOB;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
@@ -27,9 +24,7 @@ import seedu.address.logic.commands.CommandTestUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Event;
-import seedu.address.model.util.SampleDataUtil;
 import seedu.address.model.volunteer.SkillNameContainsKeywordsPredicate;
-import seedu.address.model.volunteer.Volunteer;
 import seedu.address.testutil.TypicalEvents;
 import seedu.address.testutil.VolunteerStorageBuilder;
 

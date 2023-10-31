@@ -46,9 +46,13 @@ public class VersionedEventStorage extends EventStorage {
         currentStatePointer -= 1;
     }
 
-    public int getCurrentStatePointer() { return currentStatePointer; }
+    public int getCurrentStatePointer() {
+        return currentStatePointer;
+    }
 
-    public int getVersionedEventsSize() { return versionedEvents.size(); }
+    public int getVersionedEventsSize() {
+        return versionedEvents.size();
+    }
 
     /**
      * When commands that change the current state of Events are executed, the new state of Events will be
