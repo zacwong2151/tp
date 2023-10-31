@@ -23,7 +23,6 @@ public class UndoCommandTest {
         // because you can't execute an undo command without first changing the event or volunteer state
         assertThrows(CommandException.class, () -> undoCommand.execute(model));
     }
-    
     @Test
     public void equals() {
         UndoCommand undoFirstCommand = new UndoCommand();
