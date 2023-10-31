@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
@@ -32,6 +33,8 @@ public class ParserUtilTest {
     private static final String VALID_SKILL_2 = "neighbour";
 
     private static final String WHITESPACE = " \t\r\n";
+
+    // volunteer parsing methods
 
     @Test
     public void parseIndex_invalidInput_throwsParseException() {
@@ -168,5 +171,65 @@ public class ParserUtilTest {
                 new Skill(VALID_SKILL_2)));
 
         assertEquals(expectedSkillSet, actualSkillSet);
+    }
+
+    // event parsing methods
+
+    @Test
+    public void parseMaterialName_nullMaterial_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseMaterialName(null));
+    }
+
+    @Test
+    public void parseMaterialName_invalidMaterial_throwsParseException() {
+        // invalid quantity
+        assertThrows(ParseException.class, () -> ParserUtil.parseMaterialName("-3 potatoes"));
+        assertThrows(ParseException.class, () -> ParserUtil.parseMaterialName("3.5 potatoes"));
+        assertThrows(ParseException.class, () -> ParserUtil.parseMaterialName("-3.5 potatoes"));
+
+        // invalid material name
+        assertThrows(ParseException.class, () -> ParserUtil.parseMaterialName("-3 potatoes&"));
+    }
+
+    @Test
+    public void parseMaterialName_validMaterial_success() {
+        try {
+            assertTrue(ParserUtil.parseMaterialName("3 potatoes").equals("potatoes"));
+            assertTrue(ParserUtil.parseMaterialName("4 apple").equals("apple"));
+
+            // contains whitespace
+            assertTrue(ParserUtil.parseMaterialName("   300 gloves ").equals("gloves"));
+        } catch (ParseException pe) {
+            fail("ParseException should not be thrown");
+        }
+    }
+
+    @Test
+    public void parseMaterialQuantity_nullMaterial_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseMaterialQuantity(null));
+    }
+
+    @Test
+    public void parseMaterialQuantity_invalidMaterial_throwsParseException() {
+        // invalid quantity
+        assertThrows(ParseException.class, () -> ParserUtil.parseMaterialQuantity("-3 potatoes"));
+        assertThrows(ParseException.class, () -> ParserUtil.parseMaterialQuantity("3.5 potatoes"));
+        assertThrows(ParseException.class, () -> ParserUtil.parseMaterialQuantity("-3.5 potatoes"));
+
+        // invalid material name
+        assertThrows(ParseException.class, () -> ParserUtil.parseMaterialQuantity("-3 potatoes&"));
+    }
+
+    @Test
+    public void parseMaterialQuantity_validMaterial_success() {
+        try {
+            assertTrue(ParserUtil.parseMaterialQuantity("3 potatoes") == 3);
+            assertTrue(ParserUtil.parseMaterialQuantity("4 apple") == 4);
+
+            // contains whitespace
+            assertTrue(ParserUtil.parseMaterialQuantity("   300 gloves ") == 300);
+        } catch (ParseException pe) {
+            fail("ParseException should not be thrown");
+        }
     }
 }

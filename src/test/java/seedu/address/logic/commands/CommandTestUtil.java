@@ -53,8 +53,8 @@ public class CommandTestUtil {
     public static final String VALID_LOCATION_HELPOUT = "admiralty";
     public static final String VALID_DESCRIPTION_CLEANUP = "clean it up";
     public static final String VALID_DESCRIPTION_HELPOUT = "help out la";
-    public static final String VALID_MATERIAL_TRASHBAG = "trash bag";
-    public static final String VALID_MATERIAL_HANDS = "hands";
+    public static final String VALID_MATERIAL_TRASHBAG = "20 trash bags";
+    public static final String VALID_MATERIAL_HANDS = "30 hands";
     public static final String VALID_BUDGET_CLEANUP = "80.00";
     public static final String VALID_BUDGET_HELPOUT = "100.00";
     public static final String EVENTNAME_DESC_CLEANUP = " " + PREFIX_NAME + VALID_EVENTNAME_CLEANUP;
@@ -76,6 +76,7 @@ public class CommandTestUtil {
     public static final String END_DATETIME_DESC_CLEANUP_BEFORE_START =
             " " + PREFIX_END_DATETIME + VALID_END_DATETIME_CLEANUP_BEFORE_START;
     public static final String EVENTID_DESC = " " + PREFIX_EVENT_ID;
+    public static final String MATERIAL_DESC = " " + PREFIX_MATERIAL;
 
 
     public static final String INVALID_EVENTNAME_DESC = " " + PREFIX_NAME + "Clean&";
@@ -84,7 +85,7 @@ public class CommandTestUtil {
     public static final String INVALID_END_DATETIME_DESC = " " + PREFIX_END_DATETIME + "23-9-2023 1800";
     public static final String INVALID_LOCATION_DESC = " " + PREFIX_LOCATION + "sembawang&";
     public static final String INVALID_DESCRIPTION_DESC = " " + PREFIX_DESCRIPTION + "clean&";
-    public static final String INVALID_MATERIAL_DESC = " " + PREFIX_MATERIAL + "trash bag&";
+    public static final String INVALID_MATERIAL_DESC = " " + PREFIX_MATERIAL + "20 trash bag&";
     public static final String INVALID_BUDGET_DESC = " " + PREFIX_BUDGET + "50.0";
 
     // Volunteer fields

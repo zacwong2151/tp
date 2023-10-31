@@ -3,8 +3,10 @@ package seedu.address.model.event;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.volunteer.Name;
@@ -14,7 +16,7 @@ import seedu.address.model.volunteer.Volunteer;
  * Represents an Event in the Event list.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Event {
+public class Event implements Comparable<Event> {
     // Identity fields
     private final EventName eventName;
 
@@ -76,6 +78,25 @@ public class Event {
     public Set<Material> getMaterials() {
         return Collections.unmodifiableSet(materials);
     }
+
+    /**
+     * Gets a {@code Material} in the current {@code Event} instance that has a specified material name. If there are
+     * no such materials, null is returned.
+     * @param name The material name to search for.
+     * @return The {@code Material} object if present; null otherwise.
+     */
+    public Material getMaterialByName(String name) {
+        List<Material> materialList = materials.stream()
+                .filter(material -> material.material.equals(name))
+                .collect(Collectors.toList());
+
+        if (materialList.size() >= 1) {
+            return materialList.get(0);
+        } else {
+            return null;
+        }
+    }
+
     public Budget getBudget() {
         return budget;
     }
@@ -124,6 +145,30 @@ public class Event {
 
         return otherEvent != null
                 && otherEvent.getEventName().equals(getEventName());
+    }
+
+    /**
+     * Compares two Event objects. This Event is lesser than the specified Event if start date is before the other.
+     * If start dates are the same, this event is lesser than the specified Event if end date is before the other.
+     *
+     * @param otherEvent the object to be compared.
+     * @return Integer where -1 represents lesser than, 0 represents equal, 1 represents greater than.
+     */
+    @Override
+    public int compareTo(Event otherEvent) {
+        if (startDate.dateAndTime.isBefore(otherEvent.startDate.dateAndTime)) {
+            return -1;
+        } else if (startDate.dateAndTime.equals(otherEvent.startDate.dateAndTime)) {
+            if (endDate.dateAndTime.isBefore(otherEvent.endDate.dateAndTime)) {
+                return -1;
+            } else if (endDate.dateAndTime.isAfter(otherEvent.endDate.dateAndTime)) {
+                return 1;
+            } else {
+                return 0;
+            }
+        } else {
+            return 1;
+        }
     }
 
     /**

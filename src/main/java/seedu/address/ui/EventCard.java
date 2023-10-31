@@ -1,11 +1,15 @@
 package seedu.address.ui;
 
+import java.util.Comparator;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.event.Event;
+import seedu.address.ui.labels.MaterialLabel;
+import seedu.address.ui.labels.RoleLabel;
 
 /**
  * An UI component that displays information of an {@code Event}.
@@ -37,6 +41,8 @@ public class EventCard extends UiPart<Region> {
     @FXML
     private Label description;
     @FXML
+    private FlowPane roles;
+    @FXML
     private FlowPane materials;
 
     /**
@@ -50,5 +56,11 @@ public class EventCard extends UiPart<Region> {
         dateAndTime.setText(event.getStartDate().toString() + " to " + event.getEndDate().toString());
         loc.setText("Location: " + event.getLocation().location);
         description.setText("Description: " + event.getDescription().description);
+        event.getRoles().stream()
+                .sorted(Comparator.comparing(role -> role.roleName))
+                .forEach(role -> roles.getChildren().add(new RoleLabel(role).getRoot()));
+        event.getMaterials().stream()
+                .sorted(Comparator.comparing(material -> material.material))
+                .forEach(material -> materials.getChildren().add(new MaterialLabel(material).getRoot()));
     }
 }
