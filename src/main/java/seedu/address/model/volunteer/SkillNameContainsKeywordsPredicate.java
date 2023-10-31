@@ -89,6 +89,5 @@ public class SkillNameContainsKeywordsPredicate implements Predicate<Volunteer> 
                 .add("names", names)
                 .add("skills", skills)
                 .toString();
-        // zac: the two add methods here might be wrong, not sure
     }
 }
