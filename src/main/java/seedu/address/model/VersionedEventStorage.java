@@ -45,7 +45,9 @@ public class VersionedEventStorage extends EventStorage {
     public void shiftPointerBackwards() {
         currentStatePointer -= 1;
     }
+
     public int getCurrentStatePointer() { return currentStatePointer; }
+
     public int getVersionedEventsSize() { return versionedEvents.size(); }
 
     /**

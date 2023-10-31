@@ -45,7 +45,9 @@ public class VersionedVolunteerStorage extends VolunteerStorage {
     public void shiftPointerBackwards() {
         currentStatePointer -= 1;
     }
+
     public int getCurrentStatePointer() { return currentStatePointer; }
+
     public int getVersionedVolunteersSize() { return versionedVolunteers.size(); }
 
     /**
