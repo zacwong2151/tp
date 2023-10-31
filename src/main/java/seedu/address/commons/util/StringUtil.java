@@ -54,7 +54,6 @@ public class StringUtil {
         requireNonNull(skill);
 
         Stream<String> preppedSkills = skills.stream().map(s -> s.skillName.toLowerCase());
-        // might be flatmap
         String preppedSkill = skill.skillName.toLowerCase();
 
         checkArgument(!preppedSkill.equals(""), "Skill cannot be empty string");

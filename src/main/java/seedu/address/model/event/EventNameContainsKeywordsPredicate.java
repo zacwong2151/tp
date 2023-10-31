@@ -40,6 +40,6 @@ public class EventNameContainsKeywordsPredicate implements Predicate<Event> {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).add("keywords", keywords).toString();
+        return new ToStringBuilder(this).add("event names", keywords).toString();
     }
 }

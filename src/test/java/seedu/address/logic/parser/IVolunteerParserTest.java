@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.logic.commands.VolunteerFindCommandTest.preparePredicate;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 
@@ -14,12 +13,15 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.EventFindCommandTest;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.VolunteerFindCommandTest;
 import seedu.address.logic.commands.eventcommands.EventAddMaterialCommand;
 import seedu.address.logic.commands.eventcommands.EventDeleteCommand;
+import seedu.address.logic.commands.eventcommands.EventFindCommand;
 import seedu.address.logic.commands.eventcommands.EventListCommand;
 import seedu.address.logic.commands.eventcommands.EventShowCommand;
 import seedu.address.logic.commands.eventvolunteercommands.EventAddVolunteerCommand;
@@ -33,6 +35,7 @@ import seedu.address.logic.commands.volunteercommands.VolunteerEditCommand.EditV
 import seedu.address.logic.commands.volunteercommands.VolunteerFindCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.event.EventNameContainsKeywordsPredicate;
 import seedu.address.model.volunteer.SkillNameContainsKeywordsPredicate;
 import seedu.address.model.volunteer.Volunteer;
 import seedu.address.testutil.EditVolunteerDescriptorBuilder;
@@ -93,13 +96,22 @@ public class IVolunteerParserTest {
     }
 
     @Test
-    public void parseCommand_find() throws Exception {
+    public void parseCommand_volunteerFind() throws Exception {
         String input = " n/foo n/bar n/baz";
-        SkillNameContainsKeywordsPredicate predicate = preparePredicate(input);
+        SkillNameContainsKeywordsPredicate predicate = VolunteerFindCommandTest.preparePredicate(input);
         List<String> keywords = Arrays.asList(input);
         VolunteerFindCommand command = (VolunteerFindCommand) parser.parseCommand(
                 VolunteerFindCommand.COMMAND_WORD + input);
         assertEquals(new VolunteerFindCommand(predicate), command);
+    }
+    @Test
+    public void parseCommand_eventFind() throws Exception {
+        String input = " n/foo n/bar n/baz";
+        EventNameContainsKeywordsPredicate predicate = EventFindCommandTest.preparePredicate(input);
+        List<String> keywords = Arrays.asList(input);
+        EventFindCommand command = (EventFindCommand) parser.parseCommand(
+                EventFindCommand.COMMAND_WORD + input);
+        assertEquals(new EventFindCommand(predicate), command);
     }
 
     @Test
