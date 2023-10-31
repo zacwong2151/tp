@@ -110,9 +110,14 @@ public class Event implements Comparable<Event> {
     /**
      * Adds a volunteer to the {@code assignedVolunteers}.
      * @param volunteer The volunteer to be added.
+     * @return The event after the addition of the new volunteer.
      */
-    public void addVolunteer(Volunteer volunteer) {
-        assignedVolunteers.add(volunteer.getName());
+    public Event addVolunteer(Volunteer volunteer) {
+        Set<Name> newVolunteers = assignedVolunteers;
+        newVolunteers.add(volunteer.getName());
+
+        return new Event(eventName, roles, startDate, endDate,
+                location, description, materials, budget, newVolunteers);
     }
     /**
      * Checks if a volunteer is already in {@code assignedVolunteers}.
@@ -124,9 +129,14 @@ public class Event implements Comparable<Event> {
     /**
      * Removes a volunteer from the {@code assignedVolunteers}.
      * @param volunteer The volunteer to be removed.
+     * @return The event after the removal of the volunteer.
      */
-    public void removeVolunteer(Volunteer volunteer) {
-        assignedVolunteers.remove(volunteer.getName());
+    public Event removeVolunteer(Volunteer volunteer) {
+        Set<Name> newVolunteers = assignedVolunteers;
+        newVolunteers.remove(volunteer.getName());
+
+        return new Event(eventName, roles, startDate, endDate,
+                location, description, materials, budget, newVolunteers);
     }
     /**
      * Returns a set of volunteers from the {@code assignedVolunteers}.

@@ -76,16 +76,24 @@ public class Volunteer {
     /**
      * Adds an event to the {@code assignedEvents}.
      * @param event The event to be added.
+     * @return The volunteer after the addition of the new event.
      */
-    public void addEvent(Event event) {
-        assignedEvents.add(event.getEventName());
+    public Volunteer addEvent(Event event) {
+        Set<EventName> newEvents = assignedEvents;
+        newEvents.add(event.getEventName());
+
+        return new Volunteer(name, phone, email, skills, newEvents);
     }
     /**
      * Removes an event from the {@code assignedEvents}.
      * @param event The event to be removed.
+     * @return The volunteer after the removal of the event.
      */
-    public void removeEvent(Event event) {
-        assignedEvents.remove(event.getEventName());
+    public Volunteer removeEvent(Event event) {
+        Set<EventName> newEvents = assignedEvents;
+        newEvents.remove(event.getEventName());
+
+        return new Volunteer(name, phone, email, skills, newEvents);
     }
     /**
      * Returns true if both volunteers have the same name.
