@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.eventcommands.EventEditCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.volunteercommands.VolunteerEditCommand;
 import seedu.address.model.Model;
@@ -31,6 +32,7 @@ import seedu.address.model.event.EventNameContainsKeywordsPredicate;
 import seedu.address.model.volunteer.Name;
 import seedu.address.model.volunteer.SkillNameContainsKeywordsPredicate;
 import seedu.address.model.volunteer.Volunteer;
+import seedu.address.testutil.EditEventDescriptorBuilder;
 import seedu.address.testutil.EditVolunteerDescriptorBuilder;
 
 /**
@@ -51,8 +53,8 @@ public class CommandTestUtil {
     public static final String VALID_LOCATION_HELPOUT = "admiralty";
     public static final String VALID_DESCRIPTION_CLEANUP = "clean it up";
     public static final String VALID_DESCRIPTION_HELPOUT = "help out la";
-    public static final String VALID_MATERIAL_TRASHBAG = "trash bag";
-    public static final String VALID_MATERIAL_HANDS = "hands";
+    public static final String VALID_MATERIAL_TRASHBAG = "20 trash bags";
+    public static final String VALID_MATERIAL_HANDS = "30 hands";
     public static final String VALID_BUDGET_CLEANUP = "80.00";
     public static final String VALID_BUDGET_HELPOUT = "100.00";
     public static final String EVENTNAME_DESC_CLEANUP = " " + PREFIX_NAME + VALID_EVENTNAME_CLEANUP;
@@ -74,6 +76,7 @@ public class CommandTestUtil {
     public static final String END_DATETIME_DESC_CLEANUP_BEFORE_START =
             " " + PREFIX_END_DATETIME + VALID_END_DATETIME_CLEANUP_BEFORE_START;
     public static final String EVENTID_DESC = " " + PREFIX_EVENT_ID;
+    public static final String MATERIAL_DESC = " " + PREFIX_MATERIAL;
 
 
     public static final String INVALID_EVENTNAME_DESC = " " + PREFIX_NAME + "Clean&";
@@ -82,7 +85,7 @@ public class CommandTestUtil {
     public static final String INVALID_END_DATETIME_DESC = " " + PREFIX_END_DATETIME + "23-9-2023 1800";
     public static final String INVALID_LOCATION_DESC = " " + PREFIX_LOCATION + "sembawang&";
     public static final String INVALID_DESCRIPTION_DESC = " " + PREFIX_DESCRIPTION + "clean&";
-    public static final String INVALID_MATERIAL_DESC = " " + PREFIX_MATERIAL + "trash bag&";
+    public static final String INVALID_MATERIAL_DESC = " " + PREFIX_MATERIAL + "20 trash bag&";
     public static final String INVALID_BUDGET_DESC = " " + PREFIX_BUDGET + "50.0";
 
     // Volunteer fields
@@ -115,6 +118,8 @@ public class CommandTestUtil {
 
     public static final VolunteerEditCommand.EditVolunteerDescriptor DESC_AMY;
     public static final VolunteerEditCommand.EditVolunteerDescriptor DESC_BOB;
+    public static final EventEditCommand.EditEventDescriptor DESC_CLEANUP;
+    public static final EventEditCommand.EditEventDescriptor DESC_HELPOUT;
 
     static {
         DESC_AMY = new EditVolunteerDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -122,6 +127,20 @@ public class CommandTestUtil {
         DESC_BOB = new EditVolunteerDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
                 .withSkills(VALID_SKILL_HUSBAND, VALID_SKILL_FRIEND).build();
+    }
+
+    static {
+        DESC_CLEANUP = new EditEventDescriptorBuilder().withEventName(VALID_EVENTNAME_CLEANUP)
+                .withRoles(VALID_ROLE_CLEANER).withStartDate(VALID_START_DATETIME_CLEANUP)
+                .withEndDate(VALID_END_DATETIME_CLEANUP).withLocation(VALID_LOCATION_CLEANUP)
+                .withDescription(VALID_DESCRIPTION_CLEANUP).withMaterials(VALID_MATERIAL_TRASHBAG)
+                .withBudget(VALID_BUDGET_CLEANUP).build();
+
+        DESC_HELPOUT = new EditEventDescriptorBuilder().withEventName(VALID_EVENTNAME_HELPOUT)
+                .withRoles(VALID_ROLE_BRAIN).withStartDate(VALID_START_DATETIME_HELPOUT)
+                .withEndDate(VALID_END_DATETIME_HELPOUT).withLocation(VALID_LOCATION_HELPOUT)
+                .withDescription(VALID_DESCRIPTION_HELPOUT).withMaterials(VALID_MATERIAL_HANDS)
+                .withBudget(VALID_BUDGET_HELPOUT).build();
     }
 
     /**

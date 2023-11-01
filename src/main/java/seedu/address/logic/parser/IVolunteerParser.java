@@ -11,8 +11,10 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.eventcommands.EventAddMaterialCommand;
 import seedu.address.logic.commands.eventcommands.EventCreateCommand;
 import seedu.address.logic.commands.eventcommands.EventDeleteCommand;
+import seedu.address.logic.commands.eventcommands.EventEditCommand;
 import seedu.address.logic.commands.eventcommands.EventListCommand;
 import seedu.address.logic.commands.eventcommands.EventShowCommand;
 import seedu.address.logic.commands.eventvolunteercommands.EventAddVolunteerCommand;
@@ -25,8 +27,10 @@ import seedu.address.logic.commands.volunteercommands.VolunteerDeleteCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerEditCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerFindCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerListCommand;
+import seedu.address.logic.parser.eventcommandparsers.EventAddMaterialCommandParser;
 import seedu.address.logic.parser.eventcommandparsers.EventCreateCommandParser;
 import seedu.address.logic.parser.eventcommandparsers.EventDeleteCommandParser;
+import seedu.address.logic.parser.eventcommandparsers.EventEditCommandParser;
 import seedu.address.logic.parser.eventcommandparsers.EventShowCommandParser;
 import seedu.address.logic.parser.eventvolunteercommandparsers.EventAddVolunteerCommandParser;
 import seedu.address.logic.parser.eventvolunteercommandparsers.EventListVolunteerCommandParser;
@@ -83,6 +87,9 @@ public class IVolunteerParser {
         case EventListCommand.COMMAND_WORD:
             return new EventListCommand();
 
+        case EventEditCommand.COMMAND_WORD:
+            return new EventEditCommandParser().parse(arguments);
+
         case VolunteerCreateCommand.COMMAND_WORD:
             return new VolunteerCreateCommandParser().parse(arguments);
 
@@ -112,6 +119,9 @@ public class IVolunteerParser {
 
         case VolunteerListEventCommand.COMMAND_WORD:
             return new VolunteerListEventCommandParser().parse(arguments);
+
+        case EventAddMaterialCommand.COMMAND_WORD:
+            return new EventAddMaterialCommandParser().parse(arguments);
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();

@@ -8,6 +8,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.volunteer.Volunteer;
+import seedu.address.ui.labels.SkillLabel;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -51,6 +52,6 @@ public class VolunteerCard extends UiPart<Region> {
         email.setText("Email: " + volunteer.getEmail().value);
         volunteer.getSkills().stream()
                 .sorted(Comparator.comparing(skill -> skill.skillName))
-                .forEach(skill -> skills.getChildren().add(new Label(skill.skillName)));
+                .forEach(skill -> skills.getChildren().add(new SkillLabel(skill).getRoot()));
     }
 }

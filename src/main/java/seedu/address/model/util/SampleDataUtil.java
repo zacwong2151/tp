@@ -70,8 +70,10 @@ public class SampleDataUtil {
      * Returns a material set containing the list of strings given.
      */
     public static Set<Material> getMaterialSet(String... strings) {
+        // Material::fromUiString parses a Ui string representation of Material, allowing Material with
+        // current quantity to be parsed.
         return Arrays.stream(strings)
-                .map(Material::new)
+                .map(Material::fromUiString)
                 .collect(Collectors.toSet());
     }
     public static Volunteer[] getSampleVolunteers() {

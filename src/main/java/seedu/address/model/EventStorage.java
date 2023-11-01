@@ -93,6 +93,13 @@ public class EventStorage implements ReadOnlyEventStorage {
         events.remove(key);
     }
 
+    /**
+     * Sorts UniqueEventList in ascending order, by their date and time.
+     */
+    public void sortEvents() {
+        events.sortEvents();
+    }
+
     //// util methods
 
     @Override
