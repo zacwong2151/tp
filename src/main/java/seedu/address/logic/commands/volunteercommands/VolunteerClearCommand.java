@@ -20,6 +20,7 @@ public class VolunteerClearCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
         model.setVolunteerStorage(new VolunteerStorage());
+        model.commitToBothVersionedStorages(model.getEventStorage(), model.getVolunteerStorage());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

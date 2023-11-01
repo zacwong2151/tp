@@ -16,6 +16,8 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.eventcommands.EventAddMaterialCommand;
 import seedu.address.logic.commands.eventcommands.EventCreateCommand;
 import seedu.address.logic.commands.eventcommands.EventDeleteCommand;
@@ -25,6 +27,7 @@ import seedu.address.logic.commands.eventcommands.EventShowCommand;
 import seedu.address.logic.commands.eventvolunteercommands.EventAddVolunteerCommand;
 import seedu.address.logic.commands.eventvolunteercommands.EventListVolunteerCommand;
 import seedu.address.logic.commands.eventvolunteercommands.EventRemoveVolunteerCommand;
+import seedu.address.logic.commands.eventvolunteercommands.VolunteerListEventCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerClearCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerCreateCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerDeleteCommand;
@@ -42,6 +45,7 @@ import seedu.address.testutil.EventBuilder;
 import seedu.address.testutil.EventUtil;
 import seedu.address.testutil.VolunteerBuilder;
 import seedu.address.testutil.VolunteerUtil;
+
 public class IVolunteerParserTest {
 
     private final IVolunteerParser parser = new IVolunteerParser();
@@ -148,7 +152,29 @@ public class IVolunteerParserTest {
     public void parseCommand_eventList() throws Exception {
         assertTrue(parser.parseCommand(EventListCommand.COMMAND_WORD) instanceof EventListCommand);
         assertTrue(parser.parseCommand(
-                EventListCommand.COMMAND_WORD + " 3") instanceof EventListCommand);
+                EventListCommand.COMMAND_WORD + " 3") instanceof EventListCommand
+        );
+    }
+
+    @Test
+    public void parseCommand_volunteerListEvent() throws Exception {
+        VolunteerListEventCommand command = (VolunteerListEventCommand) parser.parseCommand(
+                VolunteerListEventCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased());
+        assertEquals(new VolunteerListEventCommand(INDEX_FIRST), command);
+    }
+
+    @Test
+    public void parseCommand_undo() throws Exception {
+        assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORD) instanceof UndoCommand);
+        assertTrue(parser.parseCommand(
+                UndoCommand.COMMAND_WORD + " 3") instanceof UndoCommand);
+    }
+
+    @Test
+    public void parseCommand_redo() throws Exception {
+        assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORD) instanceof RedoCommand);
+        assertTrue(parser.parseCommand(
+                RedoCommand.COMMAND_WORD + " 3") instanceof RedoCommand);
     }
 
     @Test

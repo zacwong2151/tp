@@ -44,6 +44,7 @@ public class VolunteerDeleteCommand extends Command {
 
         Volunteer volunteerToDelete = lastShownList.get(targetIndex.getZeroBased());
         model.deleteVolunteer(volunteerToDelete);
+        model.commitToBothVersionedStorages(model.getEventStorage(), model.getVolunteerStorage());
         return new CommandResult(String.format(MESSAGE_DELETE_VOLUNTEER_SUCCESS, Messages.format(volunteerToDelete)));
     }
 

@@ -67,6 +67,7 @@ public class EventRemoveVolunteerCommand extends Command {
         Event updatedEvent = eventToAssign.removeVolunteer(volunteerToAssign);
         model.setVolunteer(volunteerToAssign, updatedVolunteer);
         model.setEvent(eventToAssign, updatedEvent);
+        model.commitToBothVersionedStorages(model.getEventStorage(), model.getVolunteerStorage());
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(eventToAssign),
                 eventToAssign.getAssignedVolunteers().size()));
