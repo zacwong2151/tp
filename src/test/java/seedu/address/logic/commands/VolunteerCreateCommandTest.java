@@ -25,6 +25,8 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyEventStorage;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.ReadOnlyVolunteerStorage;
+import seedu.address.model.VersionedEventStorage;
+import seedu.address.model.VersionedVolunteerStorage;
 import seedu.address.model.VolunteerStorage;
 import seedu.address.model.event.Event;
 import seedu.address.model.volunteer.Volunteer;
@@ -223,6 +225,32 @@ public class VolunteerCreateCommandTest {
         public void updateEventToShowList(Predicate<Event> eventPredicate) {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public void undoBothStorages() {
+            throw new AssertionError("This method should not be called");
+        }
+
+        @Override
+        public void commitToBothVersionedStorages(ReadOnlyEventStorage readOnlyEventStorage,
+                                                  ReadOnlyVolunteerStorage readOnlyVolunteerStorage) {
+            throw new AssertionError("This method should not be called");
+        }
+
+        @Override
+        public void redoBothStorages() {
+            throw new AssertionError("This method should not be called");
+        }
+
+        @Override
+        public VersionedEventStorage getVersionedEventStorage() {
+            throw new AssertionError("This method should not be called");
+        }
+
+        @Override
+        public VersionedVolunteerStorage getVersionedVolunteerStorage() {
+            throw new AssertionError("This method should not be called");
+        }
     }
 
     /**
@@ -269,6 +297,15 @@ public class VolunteerCreateCommandTest {
         @Override
         public ReadOnlyEventStorage getEventStorage() {
             return new EventStorage();
+        }
+        @Override
+        public void undoBothStorages() {
+            // does nothing
+        }
+        @Override
+        public void commitToBothVersionedStorages(ReadOnlyEventStorage readOnlyEventStorage,
+                                                  ReadOnlyVolunteerStorage readOnlyVolunteerStorage) {
+            // does nothing
         }
     }
 

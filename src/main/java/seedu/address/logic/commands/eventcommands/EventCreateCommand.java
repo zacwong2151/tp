@@ -68,6 +68,7 @@ public class EventCreateCommand extends Command {
         }
 
         model.addEvent(toAdd);
+        model.commitToBothVersionedStorages(model.getEventStorage(), model.getVolunteerStorage());
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }
 
