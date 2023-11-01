@@ -102,4 +102,11 @@ public class MaxVolunteerSize {
         return Long.valueOf(maxVolunteerSize).hashCode();
     }
 
+    /**
+     * Returns the string representation to be shown in the GUI.
+     * @return The UI string representation of the MaxVolunteerSize object.
+     */
+    public String toUiString() {
+        return maxVolunteerSize == Long.MAX_VALUE ? "No limit" : String.valueOf(maxVolunteerSize);
+    }
 }
