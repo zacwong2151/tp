@@ -75,8 +75,10 @@ public class EventAddVolunteerCommand extends Command {
                 throw new CommandException(MESSAGE_CLASHING_EVENTS);
             }
         }
-        volunteerToAssign.addEvent(eventToAssign);
-        eventToAssign.addVolunteer(volunteerToAssign);
+        Volunteer updatedVolunteer = volunteerToAssign.addEvent(eventToAssign);
+        Event updatedEvent = eventToAssign.addVolunteer(volunteerToAssign);
+        model.setVolunteer(volunteerToAssign, updatedVolunteer);
+        model.setEvent(eventToAssign, updatedEvent);
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(eventToAssign),
                 eventToAssign.getAssignedVolunteers().size()));
     }

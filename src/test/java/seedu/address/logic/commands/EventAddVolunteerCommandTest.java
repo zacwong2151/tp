@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalEvents.getTypicalEventStorage;
@@ -28,20 +29,21 @@ public class EventAddVolunteerCommandTest {
 
     // This test case is buggy and needs to be fixed in the future
     @Test
-    public void execute_validIndexes_addSuccess() {
-        Index validEventIndex = Index.fromOneBased(model.getFilteredEventList().size() - 2);
-        Index validVolunteerIndex = Index.fromOneBased(model.getFilteredVolunteerList().size());
-
+    public void execute_validIndexes_addSuccessful() {
+        Model startModel = new ModelManager(getTypicalEventStorage(), getTypicalVolunteerStorage(),
+                new UserPrefs());
+        Index validEventIndex = Index.fromOneBased(startModel.getFilteredEventList().size());
+        Index validVolunteerIndex = Index.fromOneBased(2);
         EventAddVolunteerCommand command = new EventAddVolunteerCommand(validEventIndex, validVolunteerIndex);
+
         try {
-            CommandResult commandResult = command.execute(model);
-            Event event = model.getEventStorage().getEventList().get(validEventIndex.getZeroBased());
-            int numberOfVolunteers = event.getAssignedVolunteers().size();
-            assertEquals(String.format(EventAddVolunteerCommand.MESSAGE_SUCCESS, Messages.format(event),
-                            numberOfVolunteers),
-                    commandResult.getFeedbackToUser());
-        } catch (CommandException e) {
-            assertTrue(true);
+            CommandResult commandResult = command.execute(startModel);
+            Event eventToAddTo = startModel.getEventStorage().getEventList().get(validEventIndex.getZeroBased());
+            String expectedMessage = String.format(EventAddVolunteerCommand.MESSAGE_SUCCESS,
+                    Messages.format(eventToAddTo), eventToAddTo.getAssignedVolunteers().size());
+            assertEquals(commandResult.getFeedbackToUser(), expectedMessage);
+        } catch (Exception e) {
+            fail("Exception " + e + " should not be thrown!");
         }
     }
     @Test
