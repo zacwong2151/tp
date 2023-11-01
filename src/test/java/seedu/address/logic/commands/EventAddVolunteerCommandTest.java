@@ -26,6 +26,7 @@ import seedu.address.model.volunteer.Volunteer;
 public class EventAddVolunteerCommandTest {
     private Model model = new ModelManager(getTypicalEventStorage(), getTypicalVolunteerStorage(), new UserPrefs());
 
+    // This test case is buggy and needs to be fixed in the future
     @Test
     public void execute_validIndexes_addSuccess() {
         Index validEventIndex = Index.fromOneBased(model.getFilteredEventList().size() - 2);
