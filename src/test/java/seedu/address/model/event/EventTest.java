@@ -22,7 +22,7 @@ public class EventTest {
         // Creation of event that comes after default event from event builder
         EventName firstName = new EventName("Clean home");
 
-        Role clean = new Role("cleaning");
+        Role clean = new Role("30 cleaners");
         Set<Role> firstRoles = new HashSet<>();
         firstRoles.add(clean);
 
@@ -48,7 +48,7 @@ public class EventTest {
         // Creation of event that comes after default event from event builder
         EventName secondName = new EventName("Paint home");
 
-        Role paint = new Role("painting");
+        Role paint = new Role("30 painters");
         Set<Role> secondRoles = new HashSet<>();
         secondRoles.add(paint);
 

@@ -75,7 +75,7 @@ public class EventNameContainsKeywordsPredicateTest {
         // Keywords match role, and location, but does not match name
         predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("DoNothing", "Event", "leader",
                 "admiralty"));
-        assertFalse(predicate.test(new EventBuilder().withEventName("Clean").withRoles("Event Leader")
+        assertFalse(predicate.test(new EventBuilder().withEventName("Clean").withRoles("5 Event Leader")
                 .withLocation("admiralty").withDescription("help out la").build()));
         predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("Food"));
         assertFalse(predicate.test(new EventBuilder().withEventName("Clean up").build()));

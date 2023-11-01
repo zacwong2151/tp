@@ -160,12 +160,29 @@ public class JsonAdaptedEventTest {
 
     @Test
     public void toModelType_invalidRoles_throwsIllegalValueException() {
-        List<JsonAdaptedRole> invalidRoles = new ArrayList<>(VALID_ROLES);
-        invalidRoles.add(new JsonAdaptedRole(INVALID_ROLE));
+        // test 1: invalid role format
+        List<JsonAdaptedRole> invalidRoles1 = new ArrayList<>(VALID_ROLES);
+        invalidRoles1.add(new JsonAdaptedRole(INVALID_ROLE));
         JsonAdaptedEvent event =
-                new JsonAdaptedEvent(VALID_EVENT_NAME, invalidRoles, VALID_START_DATE, VALID_END_DATE,
+                new JsonAdaptedEvent(VALID_EVENT_NAME, invalidRoles1, VALID_START_DATE, VALID_END_DATE,
                         VALID_LOCATION, VALID_DESCRIPTION, VALID_MATERIALS, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS);
         assertThrows(IllegalValueException.class, event::toModelType);
+
+        // test 2: invalid current quantity
+        List<JsonAdaptedRole> invalidRoles2 = new ArrayList<>(VALID_ROLES);
+        invalidRoles2.add(new JsonAdaptedRole("chefs", "-2", "30"));
+        JsonAdaptedEvent event2 =
+                new JsonAdaptedEvent(VALID_EVENT_NAME, invalidRoles2, VALID_START_DATE, VALID_END_DATE,
+                        VALID_LOCATION, VALID_DESCRIPTION, VALID_MATERIALS, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS);
+        assertThrows(IllegalValueException.class, event2::toModelType);
+
+        // test 3: invalid required quantity
+        List<JsonAdaptedRole> invalidRoles3 = new ArrayList<>(VALID_ROLES);
+        invalidRoles3.add(new JsonAdaptedRole("cleaners", "30", "-2"));
+        JsonAdaptedEvent event3 =
+                new JsonAdaptedEvent(VALID_EVENT_NAME, invalidRoles3, VALID_START_DATE, VALID_END_DATE,
+                        VALID_LOCATION, VALID_DESCRIPTION, VALID_MATERIALS, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS);
+        assertThrows(IllegalValueException.class, event3::toModelType);
     }
 
     @Test

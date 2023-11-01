@@ -30,7 +30,7 @@ public class EventRemoveVolunteerCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_EVENT_ID + "1 "
             + PREFIX_VOLUNTEER_ID + "2 ";
-    public static final String MESSAGE_SUCCESS = "VOLUNTEER removed FROM EVENT: %1$s %1$s\n"
+    public static final String MESSAGE_SUCCESS = "Volunteer removed from event.\nUpdated event: %1$s %1$s\n"
             + "Event currently has %2$d volunteers";
     public static final String MESSAGE_VOLUNTEER_NOT_IN_EVENT = "VOLUNTEER is not assigned TO EVENT";
     private final Index assignedEventIndex;
@@ -69,8 +69,8 @@ public class EventRemoveVolunteerCommand extends Command {
         model.setEvent(eventToAssign, updatedEvent);
         model.commitToBothVersionedStorages(model.getEventStorage(), model.getVolunteerStorage());
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(eventToAssign),
-                eventToAssign.getAssignedVolunteers().size()));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(updatedEvent),
+                updatedEvent.getAssignedVolunteers().size()));
     }
     @Override
     public boolean equals(Object other) {
