@@ -223,6 +223,14 @@ public class Role {
         return new Role(roleName, currentQuantity + 1, requiredQuantity);
     }
 
+    /**
+     * Removes 1 to the current quantity, and returns a new Role with the new quantity.
+     * @return A new Role with the updated quantity.
+     */
+    public Role decreaseRoleManpower() {
+        return new Role(roleName, currentQuantity - 1, requiredQuantity);
+    }
+
     public boolean hasEnoughManpower() {
         return currentQuantity >= requiredQuantity;
     }

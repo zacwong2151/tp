@@ -161,6 +161,16 @@ public class RoleTest {
     }
 
     @Test
+    public void decreaseRoleManpower() {
+        // initialise role with 3 bakers
+        Role role = new Role("bakers", 3, 50);
+        Role newRole = role.decreaseRoleManpower();
+        Role expectedRole = new Role("bakers", 2, 50);
+
+        assertTrue(newRole.equals(expectedRole));
+    }
+
+    @Test
     public void hasEnoughManpower() {
         Role roleNoPeople = new Role("50 bakers");
         Role roleSomePeople = new Role("bakers", 20, 50);
