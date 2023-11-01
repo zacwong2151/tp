@@ -26,6 +26,7 @@ import seedu.address.logic.commands.eventcommands.EventShowCommand;
 import seedu.address.logic.commands.eventvolunteercommands.EventAddVolunteerCommand;
 import seedu.address.logic.commands.eventvolunteercommands.EventListVolunteerCommand;
 import seedu.address.logic.commands.eventvolunteercommands.EventRemoveVolunteerCommand;
+import seedu.address.logic.commands.eventvolunteercommands.VolunteerListEventCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerClearCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerCreateCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerDeleteCommand;
@@ -43,6 +44,7 @@ import seedu.address.testutil.EventBuilder;
 import seedu.address.testutil.EventUtil;
 import seedu.address.testutil.VolunteerBuilder;
 import seedu.address.testutil.VolunteerUtil;
+
 public class IVolunteerParserTest {
 
     private final IVolunteerParser parser = new IVolunteerParser();
@@ -142,7 +144,15 @@ public class IVolunteerParserTest {
     public void parseCommand_eventList() throws Exception {
         assertTrue(parser.parseCommand(EventListCommand.COMMAND_WORD) instanceof EventListCommand);
         assertTrue(parser.parseCommand(
-                EventListCommand.COMMAND_WORD + " 3") instanceof EventListCommand);
+                EventListCommand.COMMAND_WORD + " 3") instanceof EventListCommand
+        );
+    }
+
+    @Test
+    public void parseCommand_volunteerListEvent() throws Exception {
+        VolunteerListEventCommand command = (VolunteerListEventCommand) parser.parseCommand(
+                VolunteerListEventCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased());
+        assertEquals(new VolunteerListEventCommand(INDEX_FIRST), command);
     }
 
     @Test

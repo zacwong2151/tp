@@ -16,19 +16,22 @@ import seedu.address.model.event.Event;
 import seedu.address.model.volunteer.Volunteer;
 
 /**
- * Removes a volunteer from an event.
+ * Lists all volunteers from an event.
  */
 public class EventListVolunteerCommand extends Command {
 
     public static final String COMMAND_WORD = "elistv";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lists all volunteer assigned to an event. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": List all volunteers assigned to an event.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
+
     public static final String MESSAGE_SUCCESS = "Listed all %2$d volunteers FROM EVENT: %1$s";
     private final Index eventIndex;
 
     /**
-     * Creates an EventListVolunteerCommand to add the specified {@code Volunteer} to the {@code Event}
+     * Creates an EventListVolunteerCommand to list all {@code Volunteer} assigned to {@code Event}.
      */
     public EventListVolunteerCommand(Index eventIndex) {
         this.eventIndex = eventIndex;
