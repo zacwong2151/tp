@@ -63,8 +63,11 @@ public class EventRemoveVolunteerCommand extends Command {
         if (!eventToAssign.hasVolunteer(volunteerToAssign)) {
             throw new CommandException(MESSAGE_VOLUNTEER_NOT_IN_EVENT);
         }
-        volunteerToAssign.removeEvent(eventToAssign);
-        eventToAssign.removeVolunteer(volunteerToAssign);
+        Volunteer updatedVolunteer = volunteerToAssign.removeEvent(eventToAssign);
+        Event updatedEvent = eventToAssign.removeVolunteer(volunteerToAssign);
+        model.setVolunteer(volunteerToAssign, updatedVolunteer);
+        model.setEvent(eventToAssign, updatedEvent);
+
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(eventToAssign),
                 eventToAssign.getAssignedVolunteers().size()));
     }
