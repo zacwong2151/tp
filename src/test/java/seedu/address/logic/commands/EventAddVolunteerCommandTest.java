@@ -3,8 +3,8 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-//import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-//import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalEvents.getTypicalEventStorage;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
@@ -43,47 +43,48 @@ public class EventAddVolunteerCommandTest {
             assertTrue(false);
         }
     }
-    //    @Test
-    //    public void execute_invalidIndexes_throwsCommandException() {
-    //        Index outOfBoundEventIndex = Index.fromOneBased(model.getFilteredEventList().size() + 1);
-    //        Index outOfBoundVolunteerIndex = Index.fromOneBased(model.getFilteredVolunteerList().size() + 1);
-    //        Index validEventIndex = Index.fromOneBased(model.getFilteredEventList().size());
-    //        Index validVolunteerIndex = Index.fromOneBased(model.getFilteredVolunteerList().size());
-    //
-    //        // invalid event id
-    //        EventAddVolunteerCommand commandInvalidEventId = new EventAddVolunteerCommand(outOfBoundEventIndex,
-    //                validVolunteerIndex);
-    //        assertThrows(CommandException.class, Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX, ()
-    //                -> commandInvalidEventId.execute(model));
-    //        assertCommandFailure(commandInvalidEventId, model, Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
-    //
-    //        // invalid volunteer id
-    //        EventAddVolunteerCommand commandInvalidVolunteerId = new EventAddVolunteerCommand(validEventIndex,
-    //                outOfBoundVolunteerIndex);
-    //        assertThrows(CommandException.class, Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX, ()
-    //                -> commandInvalidEventId.execute(model));
-    //
-    //        // invalid event and volunteer id
-    //        EventAddVolunteerCommand commandBothInvalidId = new EventAddVolunteerCommand(outOfBoundEventIndex,
-    //                outOfBoundVolunteerIndex);
-    //        assertThrows(CommandException.class, Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX, ()
-    //                -> commandInvalidEventId.execute(model));
-    //    }
-    //
-    //    @Test
-    //    public void execute_duplicateVolunteer_throwsCommandException() {
-    //        // Assign a volunteer to an existing event
-    //        model.getEventStorage().getEventList().get(model.getEventStorage().getEventList().size() - 1)
-    //                .addVolunteer(model.getVolunteerStorage().getVolunteerList()
-    //                        .get(model.getVolunteerStorage().getVolunteerList().size() - 1));
-    //
-    //        Index validEventIndex = Index.fromOneBased(model.getFilteredEventList().size());
-    //        Index validVolunteerIndex = Index.fromOneBased(model.getFilteredVolunteerList().size());
-    //        EventAddVolunteerCommand command = new EventAddVolunteerCommand(validEventIndex, validVolunteerIndex);
-    //        assertThrows(CommandException.class, EventAddVolunteerCommand.MESSAGE_DUPLICATE_VOLUNTEER, ()
-    //                -> command.execute(model));
-    //    }
-    //
+    @Test
+    public void execute_invalidIndexes_throwsCommandException() {
+        Index outOfBoundEventIndex = Index.fromOneBased(model.getFilteredEventList().size() + 1);
+        Index outOfBoundVolunteerIndex = Index.fromOneBased(model.getFilteredVolunteerList().size() + 1);
+        Index validEventIndex = Index.fromOneBased(model.getFilteredEventList().size());
+        Index validVolunteerIndex = Index.fromOneBased(model.getFilteredVolunteerList().size());
+
+        // invalid event id
+        EventAddVolunteerCommand commandInvalidEventId = new EventAddVolunteerCommand(outOfBoundEventIndex,
+                validVolunteerIndex);
+        assertThrows(CommandException.class, Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX, ()
+                -> commandInvalidEventId.execute(model));
+        assertCommandFailure(commandInvalidEventId, model, Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
+
+        // invalid volunteer id
+        EventAddVolunteerCommand commandInvalidVolunteerId = new EventAddVolunteerCommand(validEventIndex,
+                outOfBoundVolunteerIndex);
+        assertThrows(CommandException.class, Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX, ()
+                -> commandInvalidEventId.execute(model));
+
+        // invalid event and volunteer id
+        EventAddVolunteerCommand commandBothInvalidId = new EventAddVolunteerCommand(outOfBoundEventIndex,
+                outOfBoundVolunteerIndex);
+        assertThrows(CommandException.class, Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX, ()
+                -> commandInvalidEventId.execute(model));
+    }
+
+    @Test
+    public void execute_duplicateVolunteer_throwsCommandException() {
+        // Assign a volunteer to an existing event
+        model.getEventStorage().getEventList().get(model.getEventStorage().getEventList().size() - 1)
+                .addVolunteer(model.getVolunteerStorage().getVolunteerList()
+                        .get(model.getVolunteerStorage().getVolunteerList().size() - 1));
+
+        Index validEventIndex = Index.fromOneBased(model.getFilteredEventList().size());
+        Index validVolunteerIndex = Index.fromOneBased(model.getFilteredVolunteerList().size());
+        EventAddVolunteerCommand command = new EventAddVolunteerCommand(validEventIndex, validVolunteerIndex);
+        assertThrows(CommandException.class, EventAddVolunteerCommand.MESSAGE_DUPLICATE_VOLUNTEER, ()
+                -> command.execute(model));
+    }
+
+    // This test case is causing errors and needs to be fixed later.
     //    @Test
     //    public void execute_clashingEvent_throwsCommandException() {
     //        ObservableList<Event> eventList = model.getEventStorage().getEventList();
