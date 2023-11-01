@@ -32,6 +32,8 @@ public class EventAddVolunteerCommand extends Command {
             + PREFIX_VOLUNTEER_ID + "2 ";
     public static final String MESSAGE_SUCCESS = "New volunteer added to event.\nUpdated Event: %1$s\n"
             + "Event currently has %2$d volunteers";
+    public static final String MESSAGE_EVENT_FULL = "This event has already reached a maximum of %1$d volunteer(s), "
+            + "and is unable to accept any more volunteers";
     public static final String MESSAGE_DUPLICATE_VOLUNTEER = "This volunteer is already assigned to this event";
     private final Index assignedEventIndex;
 
@@ -62,6 +64,10 @@ public class EventAddVolunteerCommand extends Command {
         Volunteer volunteerToAssign = lastShownVolunteerList.get(assignedVolunteerIndex.getZeroBased());
         if (eventToAssign.hasVolunteer(volunteerToAssign)) {
             throw new CommandException(MESSAGE_DUPLICATE_VOLUNTEER);
+        }
+        if (eventToAssign.getAssignedVolunteers().size() >= eventToAssign.getMaxVolunteerSize().maxVolunteerSize) {
+            throw new CommandException(String.format(MESSAGE_EVENT_FULL,
+                    eventToAssign.getMaxVolunteerSize().maxVolunteerSize));
         }
         Volunteer updatedVolunteer = volunteerToAssign.addEvent(eventToAssign);
         Event updatedEvent = eventToAssign.addVolunteer(volunteerToAssign);

@@ -3,6 +3,7 @@ package seedu.address.logic.commands.eventcommands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_DATE_PARAMS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MAX_VOLUNTEER_SIZE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATETIME;
@@ -30,6 +31,7 @@ import seedu.address.model.event.Event;
 import seedu.address.model.event.EventName;
 import seedu.address.model.event.Location;
 import seedu.address.model.event.Material;
+import seedu.address.model.event.MaxVolunteerSize;
 import seedu.address.model.event.Role;
 import seedu.address.model.volunteer.Name;
 
@@ -48,7 +50,8 @@ public class EventEditCommand extends Command {
             + "[" + PREFIX_NAME + "EVENT NAME] "
             + "[" + PREFIX_ROLE + "ROLES] "
             + "[" + PREFIX_START_DATETIME + "START DATE] "
-            + "[" + PREFIX_LOCATION + "LOCATION] ...\n"
+            + "[" + PREFIX_LOCATION + "LOCATION]... "
+            + "[" + PREFIX_MAX_VOLUNTEER_SIZE + "MAX VOLUNTEER SIZE]"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_ROLE + "Director "
             + PREFIX_LOCATION + "Kent Ridge";
@@ -56,6 +59,9 @@ public class EventEditCommand extends Command {
     public static final String MESSAGE_EDIT_EVENT_SUCCESS = "Edited Event: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists in the event list.";
+    public static final String MESSAGE_INVALID_MAX_VOLUNTEER_SIZE = "The maximum number of volunteers in an event"
+            + " should not be less than the number of volunteers currently in the event. To remove the cap on the"
+            + " number of volunteers, you can use vs/0";
 
     private final Index index;
     private final EditEventDescriptor editEventDescriptor;
@@ -110,12 +116,17 @@ public class EventEditCommand extends Command {
         DateTime updatedStartTime = editEventDescriptor.getStartDate().orElse(eventToEdit.getStartDate());
         DateTime updatedEndTime = editEventDescriptor.getEndDate().orElse(eventToEdit.getEndDate());
         Set<Name> assignedVolunteers = eventToEdit.getAssignedVolunteers();
+        MaxVolunteerSize updatedMaxVolunteerSize = editEventDescriptor.getMaxVolunteerSize().orElse(
+                eventToEdit.getMaxVolunteerSize());
 
         if (updatedEndTime.dateAndTime.isBefore(updatedStartTime.dateAndTime)) {
             throw new CommandException(MESSAGE_INVALID_DATE_PARAMS);
         }
+        if (updatedMaxVolunteerSize.maxVolunteerSize < assignedVolunteers.size()) {
+            throw new CommandException(MESSAGE_INVALID_MAX_VOLUNTEER_SIZE);
+        }
         return new Event(updatedEventName, updatedRoles, updatedStartTime, updatedEndTime, updatedLocation,
-                updatedDescription, updatedMaterial, updatedBudget, assignedVolunteers);
+                updatedDescription, updatedMaterial, updatedBudget, assignedVolunteers, updatedMaxVolunteerSize);
     }
 
     @Override
@@ -157,6 +168,7 @@ public class EventEditCommand extends Command {
         private Set<Material> materials;
         private Budget budget;
         private Set<Name> assignedVolunteers;
+        private MaxVolunteerSize maxVolunteerSize;
 
         public EditEventDescriptor() {}
 
@@ -174,6 +186,7 @@ public class EventEditCommand extends Command {
             setDescription(toCopy.description);
             setMaterials(toCopy.materials);
             setBudget(toCopy.budget);
+            setMaxVolunteerSize(toCopy.maxVolunteerSize);
         }
 
         /**
@@ -181,7 +194,7 @@ public class EventEditCommand extends Command {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(eventName, roles, startDate, endDate, location, description, materials,
-                                                budget, assignedVolunteers);
+                                                budget, assignedVolunteers, maxVolunteerSize);
         }
         public void setEventName(EventName eventName) {
             this.eventName = eventName;
@@ -265,6 +278,14 @@ public class EventEditCommand extends Command {
             return Optional.ofNullable(budget);
         }
 
+        public void setMaxVolunteerSize(MaxVolunteerSize maxVolunteerSize) {
+            this.maxVolunteerSize = maxVolunteerSize;
+        }
+
+        public Optional<MaxVolunteerSize> getMaxVolunteerSize() {
+            return Optional.ofNullable(maxVolunteerSize);
+        }
+
         @Override
         public boolean equals(Object other) {
             if (other == this) {
@@ -284,7 +305,8 @@ public class EventEditCommand extends Command {
                     && Objects.equals(location, otherEditEventDescriptor.location)
                     && Objects.equals(description, otherEditEventDescriptor.description)
                     && Objects.equals(materials, otherEditEventDescriptor.materials)
-                    && Objects.equals(budget, otherEditEventDescriptor.budget);
+                    && Objects.equals(budget, otherEditEventDescriptor.budget)
+                    && Objects.equals(maxVolunteerSize, otherEditEventDescriptor.maxVolunteerSize);
         }
 
         @Override
@@ -298,6 +320,7 @@ public class EventEditCommand extends Command {
                     .add("description", description)
                     .add("materials", materials)
                     .add("budget", budget)
+                    .add("max volunteer size", maxVolunteerSize)
                     .toString();
         }
     }

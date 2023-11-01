@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATETIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MATERIAL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MAX_VOLUNTEER_SIZE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATETIME;
@@ -43,7 +44,8 @@ public class EventEditCommandParser implements Parser<EventEditCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_ROLE, PREFIX_START_DATETIME,
-                        PREFIX_END_DATETIME, PREFIX_LOCATION, PREFIX_DESCRIPTION, PREFIX_MATERIAL, PREFIX_BUDGET);
+                        PREFIX_END_DATETIME, PREFIX_LOCATION, PREFIX_DESCRIPTION, PREFIX_MATERIAL, PREFIX_BUDGET,
+                        PREFIX_MAX_VOLUNTEER_SIZE);
 
         Index index;
         DateTime startDate;
@@ -73,6 +75,10 @@ public class EventEditCommandParser implements Parser<EventEditCommand> {
         }
         if (argMultimap.getValue(PREFIX_BUDGET).isPresent()) {
             editEventDescriptor.setBudget(ParserUtil.parseBudget(argMultimap.getValue(PREFIX_BUDGET).get()));
+        }
+        if (argMultimap.getValue(PREFIX_MAX_VOLUNTEER_SIZE).isPresent()) {
+            editEventDescriptor.setMaxVolunteerSize(
+                    ParserUtil.parseMaxVolunteerSize(argMultimap.getValue(PREFIX_MAX_VOLUNTEER_SIZE).get()));
         }
 
         if (argMultimap.getValue(PREFIX_START_DATETIME).isPresent()) {

@@ -43,7 +43,8 @@ public class EventTest {
                 new Description("No description."),
                 firstMaterials,
                 firstBudget,
-                firstVList);
+                firstVList,
+                new MaxVolunteerSize("3"));
 
         // Creation of event that comes after default event from event builder
         EventName secondName = new EventName("Paint home");
@@ -69,7 +70,8 @@ public class EventTest {
                 new Description("No description."),
                 secondMaterials,
                 secondBudget,
-                secondVList);
+                secondVList,
+                new MaxVolunteerSize("3"));
 
         assertTrue(beforeCurrentEvent.getEventName().equals(new EventName("Clean home")));
         assertTrue(beforeCurrentEvent.getRoles().contains(clean));
