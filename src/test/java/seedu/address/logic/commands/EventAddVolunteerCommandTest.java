@@ -57,11 +57,11 @@ public class EventAddVolunteerCommandTest {
     @Test
     public void execute_duplicateVolunteer_throwsCommandException() {
         Model model = new ModelManager(getTypicalEventStorage(), getTypicalVolunteerStorage(), new UserPrefs());
+        ObservableList<Event> events = model.getEventStorage().getEventList();
+        ObservableList<Volunteer> volunteers = model.getVolunteerStorage().getVolunteerList();
 
         // Assign a volunteer to an existing event
-        model.getEventStorage().getEventList().get(model.getEventStorage().getEventList().size() - 1)
-                .addVolunteer(model.getVolunteerStorage().getVolunteerList()
-                        .get(model.getVolunteerStorage().getVolunteerList().size() - 1));
+        events.get(events.size() - 1).addVolunteer(volunteers.get(volunteers.size() - 1));
 
         Index validEventIndex = Index.fromOneBased(model.getFilteredEventList().size());
         Index validVolunteerIndex = Index.fromOneBased(model.getFilteredVolunteerList().size());
