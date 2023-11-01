@@ -1,27 +1,25 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.*;
+import static seedu.address.logic.commands.CommandTestUtil.EVENTID_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_LOCATION_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.VOLUNTEERID_DESC;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalEvents.CLEANUP;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.Messages;
-import seedu.address.logic.commands.eventcommands.EventCreateCommand;
 import seedu.address.logic.commands.eventvolunteercommands.EventAddVolunteerCommand;
 import seedu.address.logic.parser.eventvolunteercommandparsers.EventAddVolunteerCommandParser;
-import seedu.address.model.event.Event;
-import seedu.address.testutil.EventBuilder;
 
 public class EventAddVolunteerCommandParserTest {
     private EventAddVolunteerCommandParser parser = new EventAddVolunteerCommandParser();
     @Test
     public void parse_allFieldsPresent_success() {
         EventAddVolunteerCommand expectedCommand = new EventAddVolunteerCommand(INDEX_FIRST, INDEX_FIRST);
-        assertParseSuccess(parser," eid/1 vid/1", expectedCommand);
+        assertParseSuccess(parser, " eid/1 vid/1", expectedCommand);
     }
     @Test
     public void parse_multiplePrefixes_parseUnsuccessful() {

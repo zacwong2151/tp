@@ -10,7 +10,6 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.commands.eventvolunteercommands.EventAddVolunteerCommand;
 import seedu.address.logic.commands.eventvolunteercommands.EventRemoveVolunteerCommand;
 import seedu.address.logic.parser.eventvolunteercommandparsers.EventRemoveVolunteerCommandParser;
 
@@ -19,7 +18,7 @@ public class EventRemoveVolunteerCommandParserTest {
     @Test
     public void parse_allFieldsPresent_success() {
         EventRemoveVolunteerCommand expectedCommand = new EventRemoveVolunteerCommand(INDEX_FIRST, INDEX_FIRST);
-        assertParseSuccess(parser," eid/1 vid/1", expectedCommand);
+        assertParseSuccess(parser, " eid/1 vid/1", expectedCommand);
     }
     @Test
     public void parse_missingArguments_parseUnsuccessful() {

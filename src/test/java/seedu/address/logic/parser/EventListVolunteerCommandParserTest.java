@@ -7,7 +7,6 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.commands.eventvolunteercommands.EventAddVolunteerCommand;
 import seedu.address.logic.commands.eventvolunteercommands.EventListVolunteerCommand;
 import seedu.address.logic.parser.eventvolunteercommandparsers.EventListVolunteerCommandParser;
 
@@ -17,7 +16,7 @@ public class EventListVolunteerCommandParserTest {
     @Test
     public void parse_allFieldsPresent_success() {
         EventListVolunteerCommand expectedCommand = new EventListVolunteerCommand(INDEX_FIRST);
-        assertParseSuccess(parser," 1", expectedCommand);
+        assertParseSuccess(parser, " 1", expectedCommand);
     }
     @Test
     public void parse_missingIndex_parseUnsuccessful() {
