@@ -63,8 +63,10 @@ public class EventAddVolunteerCommand extends Command {
         if (eventToAssign.hasVolunteer(volunteerToAssign)) {
             throw new CommandException(MESSAGE_DUPLICATE_VOLUNTEER);
         }
-        volunteerToAssign.addEvent(eventToAssign);
-        eventToAssign.addVolunteer(volunteerToAssign);
+        Volunteer updatedVolunteer = volunteerToAssign.addEvent(eventToAssign);
+        Event updatedEvent = eventToAssign.addVolunteer(volunteerToAssign);
+        model.setVolunteer(volunteerToAssign, updatedVolunteer);
+        model.setEvent(eventToAssign, updatedEvent);
         model.commitToBothVersionedStorages(model.getEventStorage(), model.getVolunteerStorage());
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(eventToAssign),
