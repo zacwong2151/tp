@@ -5,15 +5,22 @@ import static seedu.address.logic.commands.CommandTestUtil.EVENTID_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_LOCATION_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.VOLUNTEERID_DESC;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.commands.eventvolunteercommands.EventAddVolunteerCommand;
 import seedu.address.logic.commands.eventvolunteercommands.EventRemoveVolunteerCommand;
 import seedu.address.logic.parser.eventvolunteercommandparsers.EventRemoveVolunteerCommandParser;
 
 public class EventRemoveVolunteerCommandParserTest {
     private EventRemoveVolunteerCommandParser parser = new EventRemoveVolunteerCommandParser();
+    @Test
+    public void parse_allFieldsPresent_success() {
+        EventRemoveVolunteerCommand expectedCommand = new EventRemoveVolunteerCommand(INDEX_FIRST, INDEX_FIRST);
+        assertParseSuccess(parser," eid/1 vid/1", expectedCommand);
+    }
     @Test
     public void parse_missingArguments_parseUnsuccessful() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
