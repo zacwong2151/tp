@@ -25,7 +25,7 @@ public class EventUtil {
     /**
      * Returns an add command string for adding the {@code event}.
      */
-    public static String getAddCommand(Event event) {
+    public static String getEventCreateCommand(Event event) {
         return EventCreateCommand.COMMAND_WORD + " " + getEventDetails(event);
     }
 

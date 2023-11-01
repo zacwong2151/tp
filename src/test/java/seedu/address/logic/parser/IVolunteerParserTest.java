@@ -7,6 +7,7 @@ import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.VolunteerFindCommandTest.preparePredicate;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,6 +18,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.eventcommands.EventAddMaterialCommand;
+import seedu.address.logic.commands.eventcommands.EventCreateCommand;
 import seedu.address.logic.commands.eventcommands.EventDeleteCommand;
 import seedu.address.logic.commands.eventcommands.EventEditCommand;
 import seedu.address.logic.commands.eventcommands.EventListCommand;
@@ -46,7 +48,15 @@ public class IVolunteerParserTest {
     private final IVolunteerParser parser = new IVolunteerParser();
 
     @Test
-    public void parseCommand_add() throws Exception {
+    public void parseCommand_eventCreate() throws Exception {
+        Event event = new EventBuilder().withRoles("chef").build();
+        String events = EventUtil.getEventCreateCommand(event);
+        EventCreateCommand command = (EventCreateCommand) parser.parseCommand(EventUtil
+                .getEventCreateCommand(event));
+        assertEquals(new EventCreateCommand(event), command);
+    }
+    @Test
+    public void parseCommand_volunteerCreate() throws Exception {
         Volunteer volunteer = new VolunteerBuilder().build();
         VolunteerCreateCommand command = (VolunteerCreateCommand) parser.parseCommand(VolunteerUtil
                                             .getAddCommand(volunteer));
@@ -99,7 +109,6 @@ public class IVolunteerParserTest {
                 );
         assertEquals(new EventEditCommand(INDEX_FIRST, descriptor), command);
     }
-
     @Test
     public void parseCommand_exit() throws Exception {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD) instanceof ExitCommand);
