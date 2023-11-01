@@ -3,6 +3,7 @@ package seedu.address.model.event;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -115,9 +116,9 @@ public class Event implements Comparable<Event> {
      * @return The event after the addition of the new volunteer.
      */
     public Event addVolunteer(Volunteer volunteer) {
-        Set<Name> newVolunteers = assignedVolunteers;
+        Set<Name> newVolunteers = new HashSet<>(assignedVolunteers);
         newVolunteers.add(volunteer.getName());
-        Set<Role> newRoles = roles;
+        Set<Role> newRoles = new HashSet<>(roles);
 
         // check if volunteer's skills match the roles
         for (Skill skill : volunteer.getSkills()) {
@@ -146,9 +147,9 @@ public class Event implements Comparable<Event> {
      * @return The event after the removal of the volunteer.
      */
     public Event removeVolunteer(Volunteer volunteer) {
-        Set<Name> newVolunteers = assignedVolunteers;
+        Set<Name> newVolunteers = new HashSet<>(assignedVolunteers);
         newVolunteers.remove(volunteer.getName());
-        Set<Role> newRoles = roles;
+        Set<Role> newRoles = new HashSet<>(roles);
 
         // check if volunteer's skills match the roles
         for (Skill skill : volunteer.getSkills()) {
