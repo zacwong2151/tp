@@ -4,8 +4,10 @@ import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.event.Event;
@@ -55,6 +57,16 @@ public class EventShowWindow extends UiPart<Stage> {
      */
     public void show() {
         logger.fine("Showing the event window.");
+
+        // Closes event window when user presses on the ESC key
+        Scene scene = getRoot().getScene();
+        scene.setOnKeyPressed(ke -> {
+            if (ke.getCode() == KeyCode.ESCAPE) {
+                logger.info("User pressed ESC key in event show window.");
+                getRoot().close();
+            }
+        });
+
         getRoot().show();
         getRoot().centerOnScreen();
     }
