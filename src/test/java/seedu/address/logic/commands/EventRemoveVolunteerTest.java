@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalEvents.getTypicalEventStorage;
@@ -20,6 +21,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.event.Event;
+import seedu.address.model.volunteer.Volunteer;
 
 public class EventRemoveVolunteerTest {
     private Model model = new ModelManager(getTypicalEventStorage(), getTypicalVolunteerStorage(), new UserPrefs());
@@ -65,8 +67,11 @@ public class EventRemoveVolunteerTest {
         Index validEventIndex = Index.fromOneBased(startModel.getFilteredEventList().size());
         Index validVolunteerIndex = Index.fromOneBased(startModel.getFilteredVolunteerList().size());
         // Add the volunteer to the event
-        startModel.getEventStorage().getEventList().get(validEventIndex.getZeroBased()).addVolunteer(
-                model.getVolunteerStorage().getVolunteerList().get(validVolunteerIndex.getZeroBased()));
+        Event currentEvent = startModel.getEventStorage().getEventList().get(validEventIndex.getZeroBased());
+        Volunteer volunteerToAdd = startModel.getVolunteerStorage().getVolunteerList()
+                .get(validVolunteerIndex.getZeroBased());
+        Event newEvent = currentEvent.addVolunteer(volunteerToAdd);
+        startModel.setEvent(currentEvent, newEvent);
         EventRemoveVolunteerCommand command = new EventRemoveVolunteerCommand(validEventIndex, validVolunteerIndex);
 
         try {
@@ -76,7 +81,7 @@ public class EventRemoveVolunteerTest {
                     Messages.format(eventToRemoveFrom), eventToRemoveFrom.getAssignedVolunteers().size());
             assertEquals(commandResult.getFeedbackToUser(), expectedMessage);
         } catch (Exception e) {
-            assertTrue(false);
+            fail("Exception " + e + " should not be thrown here!");
         }
     }
     @Test

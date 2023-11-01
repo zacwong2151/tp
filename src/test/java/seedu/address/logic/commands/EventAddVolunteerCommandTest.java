@@ -62,6 +62,15 @@ public class EventAddVolunteerCommandTest {
         Index validEventIndex = Index.fromOneBased(model.getFilteredEventList().size());
         Index validVolunteerIndex = Index.fromOneBased(model.getFilteredVolunteerList().size());
         EventAddVolunteerCommand command = new EventAddVolunteerCommand(validEventIndex, validVolunteerIndex);
+
+        // first execution, shouldn't fail
+        try {
+            command.execute(model);
+        } catch (CommandException e) {
+            fail("CommandException shouldn't fail in the first run!");
+        }
+
+        // second execution, should fail since the volunteer has been assigned to the event
         assertThrows(CommandException.class, EventAddVolunteerCommand.MESSAGE_DUPLICATE_VOLUNTEER, ()
                 -> command.execute(model));
     }
@@ -79,7 +88,7 @@ public class EventAddVolunteerCommandTest {
             Event eventToAddTo = startModel.getEventStorage().getEventList().get(validEventIndex.getZeroBased());
             String expectedMessage = String.format(EventAddVolunteerCommand.MESSAGE_SUCCESS,
                     Messages.format(eventToAddTo), eventToAddTo.getAssignedVolunteers().size());
-            assertEquals(commandResult.getFeedbackToUser(), expectedMessage);
+            assertEquals(expectedMessage, commandResult.getFeedbackToUser());
         } catch (Exception e) {
             fail("Exception " + e + " should not be thrown!");
         }
