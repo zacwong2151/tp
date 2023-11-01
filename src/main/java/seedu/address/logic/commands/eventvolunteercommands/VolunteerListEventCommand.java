@@ -16,7 +16,7 @@ import seedu.address.model.event.Event;
 import seedu.address.model.volunteer.Volunteer;
 
 /**
- * Lists all events joined by a volunteer.
+ * List all events joined by a volunteer.
  */
 public class VolunteerListEventCommand extends Command {
 
@@ -45,13 +45,14 @@ public class VolunteerListEventCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
         }
 
-        Volunteer volunteer = lastShownVolunteerList.get(volunteerIndex.getZeroBased());
-        Predicate<Event> predicateShowEvents = v
-                -> volunteer.getAssignedEvents().stream().anyMatch(y -> y.equals(v.getEventName()));
+        Volunteer volunteerToList = lastShownVolunteerList.get(volunteerIndex.getZeroBased());
+        Predicate<Event> predicateShowEvents = event
+                -> volunteerToList.getAssignedEvents().stream().anyMatch(y -> y.equals(event.getEventName()));
+
         model.updateFilteredEventList(predicateShowEvents);
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, volunteer.getName().fullName,
-                volunteer.getAssignedEvents().size()),
+        return new CommandResult(String.format(MESSAGE_SUCCESS, volunteerToList.getName().fullName,
+                volunteerToList.getAssignedEvents().size()),
                 false,
                 false,
                 false);

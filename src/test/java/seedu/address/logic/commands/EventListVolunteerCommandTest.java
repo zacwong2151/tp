@@ -1,8 +1,6 @@
 package seedu.address.logic.commands;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalEvents.getTypicalEventStorage;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
@@ -19,6 +17,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.event.Event;
+import seedu.address.model.volunteer.Volunteer;
 
 public class EventListVolunteerCommandTest {
     private Model model = new ModelManager(getTypicalEventStorage(), getTypicalVolunteerStorage(), new UserPrefs());
@@ -26,9 +25,13 @@ public class EventListVolunteerCommandTest {
     @Test
     public void execute_invalidIndex_throwsCommandException() {
         // Assign a volunteer to an event in the model
-        model.getEventStorage().getEventList().get(model.getFilteredEventList().size() - 1).addVolunteer(
-            model.getVolunteerStorage().getVolunteerList().get(model.getVolunteerStorage()
-                    .getVolunteerList().size() - 1));
+        Event event = model.getEventStorage().getEventList().get(model.getFilteredEventList().size() - 1);
+        Volunteer volunteerToAssign = model
+                .getVolunteerStorage()
+                .getVolunteerList()
+                .get(model.getFilteredVolunteerList().size() - 1);
+
+        event.addVolunteer(volunteerToAssign);
 
         Index invalidIndex = Index.fromOneBased(model.getFilteredEventList().size() + 1);
         EventListVolunteerCommand command = new EventListVolunteerCommand(invalidIndex);
@@ -38,23 +41,26 @@ public class EventListVolunteerCommandTest {
     @Test
     public void execute_validIndexes_listSuccessful() {
         // Assign a volunteer to an event in the model
-        model.getEventStorage().getEventList().get(model.getFilteredEventList().size() - 1).addVolunteer(
-                model.getVolunteerStorage().getVolunteerList().get(model.getVolunteerStorage()
-                        .getVolunteerList().size() - 1));
+        Event event = model.getEventStorage().getEventList().get(model.getFilteredEventList().size() - 1);
+        Volunteer volunteerToAssign = model
+                .getVolunteerStorage()
+                .getVolunteerList()
+                .get(model.getFilteredVolunteerList().size() - 1);
+
+        event.addVolunteer(volunteerToAssign);
 
         Index validIndex = Index.fromOneBased(model.getFilteredEventList().size());
         EventListVolunteerCommand command = new EventListVolunteerCommand(validIndex);
-        Event eventToAssign = model.getEventStorage().getEventList().get(validIndex.getZeroBased());
-
+        Event eventToList = model.getEventStorage().getEventList().get(validIndex.getZeroBased());
 
         String expectedMessage = String.format(EventListVolunteerCommand.MESSAGE_SUCCESS,
-            eventToAssign.getEventName(), eventToAssign.getAssignedVolunteers().size());
+            eventToList.getEventName(), eventToList.getAssignedVolunteers().size());
 
         try {
             CommandResult commandResult = command.execute(model);
             assertEquals(commandResult.getFeedbackToUser(), expectedMessage);
         } catch (Exception e) {
-            assertTrue(false);
+            fail("Command should not throw an exception.");
         }
     }
     @Test
