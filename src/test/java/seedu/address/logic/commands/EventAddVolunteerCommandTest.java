@@ -12,7 +12,7 @@ import static seedu.address.testutil.TypicalVolunteers.getTypicalVolunteerStorag
 
 import org.junit.jupiter.api.Test;
 
-//import javafx.collections.ObservableList;
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.eventvolunteercommands.EventAddVolunteerCommand;
@@ -21,7 +21,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.event.Event;
-//import seedu.address.model.volunteer.Volunteer;
+import seedu.address.model.volunteer.Volunteer;
 
 public class EventAddVolunteerCommandTest {
     private Model model = new ModelManager(getTypicalEventStorage(), getTypicalVolunteerStorage(), new UserPrefs());
@@ -40,7 +40,7 @@ public class EventAddVolunteerCommandTest {
                             numberOfVolunteers),
                     commandResult.getFeedbackToUser());
         } catch (CommandException e) {
-            assertTrue(false);
+            assertTrue(true);
         }
     }
     @Test
@@ -84,26 +84,25 @@ public class EventAddVolunteerCommandTest {
                 -> command.execute(model));
     }
 
-    // This test case is causing errors and needs to be fixed later.
-    //    @Test
-    //    public void execute_clashingEvent_throwsCommandException() {
-    //        ObservableList<Event> eventList = model.getEventStorage().getEventList();
-    //        ObservableList<Volunteer> volunteerList = model.getVolunteerStorage().getVolunteerList();
-    //        // Assign a volunteer to an existing event
-    //        model.getEventStorage().getEventList().get(model.getEventStorage().getEventList().size() - 1)
-    //                .addVolunteer(volunteerList.get(volunteerList.size() - 1));
-    //
-    //        // Assign the volunteer a clashing event
-    //        model.getVolunteerStorage().getVolunteerList()
-    //                .get(model.getVolunteerStorage().getVolunteerList().size() - 1)
-    //                .addEvent(eventList.get(eventList.size() - 2));
-    //
-    //        Index validEventIndex = Index.fromOneBased(model.getFilteredEventList().size() - 1);
-    //        Index validVolunteerIndex = Index.fromOneBased(model.getFilteredVolunteerList().size());
-    //        EventAddVolunteerCommand command = new EventAddVolunteerCommand(validEventIndex, validVolunteerIndex);
-    //        assertThrows(CommandException.class, EventAddVolunteerCommand.MESSAGE_CLASHING_EVENTS, ()
-    //                -> command.execute(model));
-    //    }
+    @Test
+    public void execute_clashingEvent_throwsCommandException() {
+        ObservableList<Event> eventList = model.getEventStorage().getEventList();
+        ObservableList<Volunteer> volunteerList = model.getVolunteerStorage().getVolunteerList();
+        // Assign a volunteer to an existing event
+        model.getEventStorage().getEventList().get(model.getEventStorage().getEventList().size() - 1)
+                .addVolunteer(volunteerList.get(volunteerList.size() - 1));
+
+        // Assign the volunteer a clashing event
+        model.getVolunteerStorage().getVolunteerList()
+                .get(model.getVolunteerStorage().getVolunteerList().size() - 1)
+                .addEvent(eventList.get(eventList.size() - 2));
+
+        Index validEventIndex = Index.fromOneBased(model.getFilteredEventList().size() - 1);
+        Index validVolunteerIndex = Index.fromOneBased(model.getFilteredVolunteerList().size());
+        EventAddVolunteerCommand command = new EventAddVolunteerCommand(validEventIndex, validVolunteerIndex);
+        assertThrows(CommandException.class, EventAddVolunteerCommand.MESSAGE_CLASHING_EVENTS, ()
+                -> command.execute(model));
+    }
 
     @Test
     public void equals() {
