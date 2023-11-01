@@ -19,16 +19,16 @@ public class CommandResult {
     /** The application should exit. */
     private final boolean exit;
 
-    private final boolean showEvent;
+    private final boolean isShowEvent;
 
     /**
      * Constructs a {@code CommandResult} with the specified fields.
      */
-    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit, boolean showEvent) {
+    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit, boolean isShowEvent) {
         this.feedbackToUser = requireNonNull(feedbackToUser);
         this.showHelp = showHelp;
         this.exit = exit;
-        this.showEvent = showEvent;
+        this.isShowEvent = isShowEvent;
     }
 
     /**
@@ -52,7 +52,7 @@ public class CommandResult {
     }
 
     public boolean isShowEvent() {
-        return showEvent;
+        return isShowEvent;
     }
 
     @Override
@@ -70,12 +70,12 @@ public class CommandResult {
         return feedbackToUser.equals(otherCommandResult.feedbackToUser)
                 && showHelp == otherCommandResult.showHelp
                 && exit == otherCommandResult.exit
-                && showEvent == otherCommandResult.showEvent;
+                && isShowEvent == otherCommandResult.isShowEvent;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(feedbackToUser, showHelp, exit, showEvent);
+        return Objects.hash(feedbackToUser, showHelp, exit, isShowEvent);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class CommandResult {
                 .add("feedbackToUser", feedbackToUser)
                 .add("showHelp", showHelp)
                 .add("exit", exit)
-                .add("showEvent", showEvent)
+                .add("showEvent", isShowEvent)
                 .toString();
     }
 

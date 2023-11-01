@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -11,6 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Event;
 import seedu.address.model.volunteer.Volunteer;
 
@@ -21,7 +23,9 @@ public class ModelManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final VolunteerStorage volunteerStorage;
+    private final VersionedVolunteerStorage versionedVolunteerStorage;
     private final EventStorage eventStorage;
+    private final VersionedEventStorage versionedEventStorage;
     private final UserPrefs userPrefs;
     private final FilteredList<Volunteer> filteredVolunteers;
     private final FilteredList<Event> filteredEvents;
@@ -43,6 +47,9 @@ public class ModelManager implements Model {
         filteredEvents = new FilteredList<>(this.eventStorage.getEventList());
         filteredVolunteers = new FilteredList<>(this.volunteerStorage.getVolunteerList());
         eventToShowList = new FilteredList<>(this.eventStorage.getEventList());
+
+        this.versionedEventStorage = new VersionedEventStorage(eventStorage);
+        this.versionedVolunteerStorage = new VersionedVolunteerStorage(volunteerStorage);
     }
 
     public ModelManager() {
@@ -50,7 +57,6 @@ public class ModelManager implements Model {
     }
 
     //=========== UserPrefs ==================================================================================
-
     @Override
     public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
         requireNonNull(userPrefs);
@@ -95,6 +101,49 @@ public class ModelManager implements Model {
         userPrefs.setEventStorageFilePath(eventStorageFilePath);
     }
 
+    //=========== Event and Volunteer versioned history ========================================================
+    @Override
+    public void undoBothStorages() throws CommandException {
+        List<Volunteer> newVolunteerState = versionedVolunteerStorage.undo();
+        assert newVolunteerState != null;
+        volunteerStorage.setVolunteers(newVolunteerState);
+        updateFilteredVolunteerList(PREDICATE_SHOW_ALL_VOLUNTEERS);
+
+        List<Event> newEventState = versionedEventStorage.undo();
+        assert newEventState != null;
+        eventStorage.setEvents(newEventState);
+        updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+    }
+    @Override
+    public void redoBothStorages() throws CommandException {
+        List<Volunteer> newVolunteerState = versionedVolunteerStorage.redo();
+        assert newVolunteerState != null;
+        volunteerStorage.setVolunteers(newVolunteerState);
+        updateFilteredVolunteerList(PREDICATE_SHOW_ALL_VOLUNTEERS);
+
+        List<Event> newEventState = versionedEventStorage.redo();
+        assert newEventState != null;
+        eventStorage.setEvents(newEventState);
+        updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+    }
+    @Override
+    public void commitToBothVersionedStorages(ReadOnlyEventStorage readOnlyEventStorage,
+                                              ReadOnlyVolunteerStorage readOnlyVolunteerStorage) {
+        requireAllNonNull(readOnlyEventStorage, readOnlyVolunteerStorage);
+        versionedEventStorage.shiftPointerForward();
+        versionedEventStorage.saveNewState(readOnlyEventStorage);
+        versionedVolunteerStorage.shiftPointerForward();
+        versionedVolunteerStorage.saveNewState(readOnlyVolunteerStorage);
+    }
+    @Override
+    public VersionedVolunteerStorage getVersionedVolunteerStorage() {
+        return versionedVolunteerStorage;
+    }
+    @Override
+    public VersionedEventStorage getVersionedEventStorage() {
+        return versionedEventStorage;
+    }
+
     //=========== Event Storage ================================================================================
     @Override
     public void setEventStorage(ReadOnlyEventStorage eventStorage) {
@@ -116,9 +165,11 @@ public class ModelManager implements Model {
     public void deleteEvent(Event target) {
         eventStorage.removeEvent(target);
     }
+
     @Override
     public void addEvent(Event event) {
         eventStorage.addEvent(event);
+        eventStorage.sortEvents();
         updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
     }
 
@@ -214,7 +265,6 @@ public class ModelManager implements Model {
         requireNonNull(predicate);
         filteredVolunteers.setPredicate(predicate);
     }
-
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -234,5 +284,4 @@ public class ModelManager implements Model {
                 && filteredEvents.equals(otherModelManager.filteredEvents)
                 && eventToShowList.equals(otherModelManager.eventToShowList);
     }
-
 }

@@ -8,6 +8,8 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.EventName;
 import seedu.address.model.skill.Skill;
 
 /**
@@ -23,16 +25,18 @@ public class Volunteer {
 
     // Data fields
     private final Set<Skill> skills = new HashSet<>();
+    private final Set<EventName> assignedEvents = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Volunteer(Name name, Phone phone, Email email, Set<Skill> skills) {
+    public Volunteer(Name name, Phone phone, Email email, Set<Skill> skills, Set<EventName> assignedEvents) {
         requireAllNonNull(name, phone, email, skills);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.skills.addAll(skills);
+        this.assignedEvents.addAll(assignedEvents);
     }
 
     public Name getName() {
@@ -54,7 +58,43 @@ public class Volunteer {
     public Set<Skill> getSkills() {
         return Collections.unmodifiableSet(skills);
     }
+    /**
+     * Returns an immutable assigned events set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Set<EventName> getAssignedEvents() {
+        return Collections.unmodifiableSet(assignedEvents);
+    }
+    /**
+     * Returns an immutable skill set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public boolean hasEvent(Event event) {
+        return assignedEvents.contains(event.getEventName());
+    }
 
+    /**
+     * Adds an event to the {@code assignedEvents}.
+     * @param event The event to be added.
+     * @return The volunteer after the addition of the new event.
+     */
+    public Volunteer addEvent(Event event) {
+        Set<EventName> newEvents = new HashSet<>(assignedEvents);
+        newEvents.add(event.getEventName());
+
+        return new Volunteer(name, phone, email, skills, newEvents);
+    }
+    /**
+     * Removes an event from the {@code assignedEvents}.
+     * @param event The event to be removed.
+     * @return The volunteer after the removal of the event.
+     */
+    public Volunteer removeEvent(Event event) {
+        Set<EventName> newEvents = new HashSet<>(assignedEvents);
+        newEvents.remove(event.getEventName());
+
+        return new Volunteer(name, phone, email, skills, newEvents);
+    }
     /**
      * Returns true if both volunteers have the same name.
      * This defines a weaker notion of equality between two volunteers.

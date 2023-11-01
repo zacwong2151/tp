@@ -22,6 +22,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.event.EventName;
 import seedu.address.model.skill.Skill;
 import seedu.address.model.volunteer.Email;
 import seedu.address.model.volunteer.Name;
@@ -49,7 +50,7 @@ public class VolunteerEditCommand extends Command {
 
     public static final String MESSAGE_EDIT_VOLUNTEER_SUCCESS = "Edited Volunteer: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_VOLUNTEER = "This volunteer already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_VOLUNTEER = "This volunteer already exists in the volunteer list.";
 
     private final Index index;
     private final EditVolunteerDescriptor editVolunteerDescriptor;
@@ -84,6 +85,7 @@ public class VolunteerEditCommand extends Command {
 
         model.setVolunteer(volunteerToEdit, editedVolunteer);
         model.updateFilteredVolunteerList(PREDICATE_SHOW_ALL_VOLUNTEERS);
+        model.commitToBothVersionedStorages(model.getEventStorage(), model.getVolunteerStorage());
         return new CommandResult(String.format(MESSAGE_EDIT_VOLUNTEER_SUCCESS, Messages.format(editedVolunteer)));
     }
 
@@ -99,8 +101,10 @@ public class VolunteerEditCommand extends Command {
         Phone updatedPhone = editVolunteerDescriptor.getPhone().orElse(volunteerToEdit.getPhone());
         Email updatedEmail = editVolunteerDescriptor.getEmail().orElse(volunteerToEdit.getEmail());
         Set<Skill> updatedSkills = editVolunteerDescriptor.getSkills().orElse(volunteerToEdit.getSkills());
+        Set<EventName> updatedAssignedEvents = editVolunteerDescriptor.getAssignedEvents()
+                .orElse(volunteerToEdit.getAssignedEvents());
 
-        return new Volunteer(updatedName, updatedPhone, updatedEmail, updatedSkills);
+        return new Volunteer(updatedName, updatedPhone, updatedEmail, updatedSkills, updatedAssignedEvents);
     }
 
     @Override
@@ -136,6 +140,7 @@ public class VolunteerEditCommand extends Command {
         private Phone phone;
         private Email email;
         private Set<Skill> skills;
+        private Set<EventName> assignedEvents;
 
         public EditVolunteerDescriptor() {}
 
@@ -148,13 +153,14 @@ public class VolunteerEditCommand extends Command {
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setSkills(toCopy.skills);
+            setAssignedEvents(toCopy.assignedEvents);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, skills);
+            return CollectionUtil.isAnyNonNull(name, phone, email, skills, assignedEvents);
         }
 
         public void setName(Name name) {
@@ -198,6 +204,24 @@ public class VolunteerEditCommand extends Command {
             return (skills != null) ? Optional.of(Collections.unmodifiableSet(skills)) : Optional.empty();
         }
 
+        /**
+         * Returns an unmodifiable assigned event set, which throws {@code UnsupportedOperationException}
+         * if modification is attempted.
+         * Returns {@code Optional#empty()} if {@code assignedEvents} is null.
+         */
+        public Optional<Set<EventName>> getAssignedEvents() {
+            return (assignedEvents != null) ? Optional.of(Collections.unmodifiableSet(assignedEvents))
+                    : Optional.empty();
+        }
+
+        /**
+         * Sets {@code assignedEvents} to this object's {@code assignedEvents}.
+         * A defensive copy of {@code assignedEvents} is used internally.
+         */
+        public void setAssignedEvents(Set<EventName> assignedEvents) {
+            this.assignedEvents = (assignedEvents != null) ? new HashSet<>(assignedEvents) : null;
+        }
+
         @Override
         public boolean equals(Object other) {
             if (other == this) {
@@ -213,7 +237,8 @@ public class VolunteerEditCommand extends Command {
             return Objects.equals(name, otherEditVolunteerDescriptor.name)
                     && Objects.equals(phone, otherEditVolunteerDescriptor.phone)
                     && Objects.equals(email, otherEditVolunteerDescriptor.email)
-                    && Objects.equals(skills, otherEditVolunteerDescriptor.skills);
+                    && Objects.equals(skills, otherEditVolunteerDescriptor.skills)
+                    && Objects.equals(assignedEvents, otherEditVolunteerDescriptor.assignedEvents);
         }
 
         @Override
@@ -223,6 +248,7 @@ public class VolunteerEditCommand extends Command {
                     .add("phone", phone)
                     .add("email", email)
                     .add("skills", skills)
+                    .add("assigned events", assignedEvents)
                     .toString();
         }
     }

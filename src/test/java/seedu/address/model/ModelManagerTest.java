@@ -3,6 +3,7 @@ package seedu.address.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static seedu.address.logic.commands.VolunteerFindCommandTest.preparePredicate;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_VOLUNTEERS;
@@ -20,6 +21,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.commands.CommandTestUtil;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Event;
 import seedu.address.model.volunteer.SkillNameContainsKeywordsPredicate;
@@ -69,15 +71,78 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void setAddressBookFilePath_nullPath_throwsNullPointerException() {
+    public void setVolunteerStorageFilePath_nullPath_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> modelManager.setVolunteerStorageFilePath(null));
     }
 
     @Test
-    public void setAddressBookFilePath_validPath_setsAddressBookFilePath() {
+    public void setVolunteerStorageFilePath_validPath_setsVolunteerStorageFilePath() {
         Path path = Paths.get("address/book/file/path");
         modelManager.setVolunteerStorageFilePath(path);
         assertEquals(path, modelManager.getVolunteerStorageFilePath());
+    }
+
+    @Test
+    public void undoBothStorages_nil_success() {
+        modelManager.commitToBothVersionedStorages(modelManager.getEventStorage(), modelManager.getVolunteerStorage());
+        try {
+            modelManager.undoBothStorages();
+        } catch (CommandException e) {
+            fail();
+        }
+        VersionedEventStorage versionedEventStorage = modelManager.getVersionedEventStorage();
+        VersionedVolunteerStorage versionedVolunteerStorage = modelManager.getVersionedVolunteerStorage();
+
+        assertEquals(versionedEventStorage.getCurrentStatePointer(), 0);
+        assertEquals(versionedEventStorage.getVersionedEventsSize(), 2);
+        assertEquals(versionedVolunteerStorage.getCurrentStatePointer(), 0);
+        assertEquals(versionedVolunteerStorage.getVersionedVolunteersSize(), 2);
+    }
+
+    @Test
+    public void undoBothStorages_invalid_throwsCommandExceptionError() {
+        assertThrows(CommandException.class, () -> modelManager.undoBothStorages());
+    }
+
+    @Test
+    public void redoBothStorages_nil_success() {
+        modelManager.commitToBothVersionedStorages(modelManager.getEventStorage(), modelManager.getVolunteerStorage());
+        try {
+            modelManager.undoBothStorages();
+            modelManager.redoBothStorages();
+        } catch (CommandException e) {
+            fail();
+        }
+        VersionedEventStorage versionedEventStorage = modelManager.getVersionedEventStorage();
+        VersionedVolunteerStorage versionedVolunteerStorage = modelManager.getVersionedVolunteerStorage();
+
+        assertEquals(versionedEventStorage.getCurrentStatePointer(), 1);
+        assertEquals(versionedEventStorage.getVersionedEventsSize(), 2);
+        assertEquals(versionedVolunteerStorage.getCurrentStatePointer(), 1);
+        assertEquals(versionedVolunteerStorage.getVersionedVolunteersSize(), 2);
+    }
+
+    @Test
+    public void redoBothStorages_invalid_throwsCommandExceptionError() {
+        assertThrows(CommandException.class, () -> modelManager.redoBothStorages());
+    }
+
+    @Test
+    public void commitToBothVersionedStorages_nullParameters_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager
+                .commitToBothVersionedStorages(null, null));
+    }
+
+    @Test
+    public void commitToBothVersionedStorages_validParameters_success() {
+        modelManager.commitToBothVersionedStorages(modelManager.getEventStorage(), modelManager.getVolunteerStorage());
+        VersionedEventStorage versionedEventStorage = modelManager.getVersionedEventStorage();
+        VersionedVolunteerStorage versionedVolunteerStorage = modelManager.getVersionedVolunteerStorage();
+
+        assertEquals(versionedEventStorage.getCurrentStatePointer(), 1);
+        assertEquals(versionedEventStorage.getVersionedEventsSize(), 2);
+        assertEquals(versionedVolunteerStorage.getCurrentStatePointer(), 1);
+        assertEquals(versionedVolunteerStorage.getVersionedVolunteersSize(), 2);
     }
 
     @Test
@@ -91,7 +156,7 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void hasVolunteer_volunteernInAddressBook_returnsTrue() {
+    public void hasVolunteer_volunteerInAddressBook_returnsTrue() {
         modelManager.addVolunteer(ALICE);
         assertTrue(modelManager.hasVolunteer(ALICE));
     }

@@ -169,7 +169,40 @@ public class ParserUtil {
         if (!Material.isValidMaterial(trimmedMaterial)) {
             throw new ParseException(Material.MESSAGE_CONSTRAINTS);
         }
+
         return new Material(trimmedMaterial);
+    }
+
+    /**
+     * Gets the name from a {@code String material}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code material} is invalid.
+     */
+    public static String parseMaterialName(String material) throws ParseException {
+        requireNonNull(material);
+        String trimmedMaterial = material.trim();
+        if (!Material.isValidMaterial(trimmedMaterial)) {
+            throw new ParseException(Material.MESSAGE_CONSTRAINTS);
+        }
+
+        return Material.nameFromString(trimmedMaterial);
+    }
+
+    /**
+     * Gets the quantity from a {@code String material}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code material} is invalid.
+     */
+    public static int parseMaterialQuantity(String material) throws ParseException {
+        requireNonNull(material);
+        String trimmedMaterial = material.trim();
+        if (!Material.isValidMaterial(trimmedMaterial)) {
+            throw new ParseException(Material.MESSAGE_CONSTRAINTS);
+        }
+
+        return Material.quantityFromString(trimmedMaterial);
     }
 
     /**

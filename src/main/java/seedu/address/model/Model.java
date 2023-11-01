@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Event;
 import seedu.address.model.volunteer.Volunteer;
 
@@ -69,7 +70,7 @@ public interface Model {
     void deleteEvent(Event target);
 
     /**
-     * Adds the given event.
+     * Adds the given event, and rearranges the event list in ascending order, based on their date and time
      * {@code event} must not already exist in the event storage.
      */
     void addEvent(Event event);
@@ -151,4 +152,22 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredVolunteerList(Predicate<Volunteer> predicate);
+    /**
+     * Points the Event and Volunteer state to the previous state.
+     */
+    void undoBothStorages() throws CommandException;
+    void redoBothStorages() throws CommandException;
+
+    /**
+     * If there is a change to the Event and Volunteer state, then save this state and point to it.
+     * @param readOnlyEventStorage The new state of Events.
+     * @param readOnlyVolunteerStorage The new state of Volunteers.
+     */
+    void commitToBothVersionedStorages(ReadOnlyEventStorage readOnlyEventStorage,
+                                       ReadOnlyVolunteerStorage readOnlyVolunteerStorage);
+
+    /** Returns an unmodifiable view of the versionedVolunteerStorage */
+    VersionedVolunteerStorage getVersionedVolunteerStorage();
+    /** Returns an unmodifiable view of the versionedEventStorage */
+    VersionedEventStorage getVersionedEventStorage();
 }

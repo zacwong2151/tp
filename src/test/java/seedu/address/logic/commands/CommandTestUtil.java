@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_BUDGET;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATETIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MATERIAL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -13,6 +14,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SKILL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATETIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_VOLUNTEER_ID;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.eventcommands.EventEditCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.volunteercommands.VolunteerEditCommand;
 import seedu.address.model.Model;
@@ -29,6 +32,7 @@ import seedu.address.model.event.EventNameContainsKeywordsPredicate;
 import seedu.address.model.volunteer.Name;
 import seedu.address.model.volunteer.SkillNameContainsKeywordsPredicate;
 import seedu.address.model.volunteer.Volunteer;
+import seedu.address.testutil.EditEventDescriptorBuilder;
 import seedu.address.testutil.EditVolunteerDescriptorBuilder;
 
 /**
@@ -38,8 +42,8 @@ public class CommandTestUtil {
     // Event fields
     public static final String VALID_EVENTNAME_CLEANUP = "Clean up";
     public static final String VALID_EVENTNAME_HELPOUT = "Help out";
-    public static final String VALID_ROLE_CLEANER = "cleaner";
-    public static final String VALID_ROLE_BRAIN = "brain";
+    public static final String VALID_ROLE_CLEANER = "20 cleaner";
+    public static final String VALID_ROLE_BRAIN = "15 brain";
     public static final String VALID_START_DATETIME_CLEANUP = "23/9/2023 1800";
     public static final String VALID_END_DATETIME_CLEANUP = "23/9/2023 2100";
     public static final String VALID_END_DATETIME_CLEANUP_BEFORE_START = "23/9/2023 1700";
@@ -49,8 +53,8 @@ public class CommandTestUtil {
     public static final String VALID_LOCATION_HELPOUT = "admiralty";
     public static final String VALID_DESCRIPTION_CLEANUP = "clean it up";
     public static final String VALID_DESCRIPTION_HELPOUT = "help out la";
-    public static final String VALID_MATERIAL_TRASHBAG = "trash bag";
-    public static final String VALID_MATERIAL_HANDS = "hands";
+    public static final String VALID_MATERIAL_TRASHBAG = "20 trash bags";
+    public static final String VALID_MATERIAL_HANDS = "30 hands";
     public static final String VALID_BUDGET_CLEANUP = "80.00";
     public static final String VALID_BUDGET_HELPOUT = "100.00";
     public static final String EVENTNAME_DESC_CLEANUP = " " + PREFIX_NAME + VALID_EVENTNAME_CLEANUP;
@@ -71,6 +75,8 @@ public class CommandTestUtil {
     public static final String BUDGET_DESC_HELPOUT = " " + PREFIX_BUDGET + VALID_BUDGET_HELPOUT;
     public static final String END_DATETIME_DESC_CLEANUP_BEFORE_START =
             " " + PREFIX_END_DATETIME + VALID_END_DATETIME_CLEANUP_BEFORE_START;
+    public static final String EVENTID_DESC = " " + PREFIX_EVENT_ID;
+    public static final String MATERIAL_DESC = " " + PREFIX_MATERIAL;
 
 
     public static final String INVALID_EVENTNAME_DESC = " " + PREFIX_NAME + "Clean&";
@@ -79,7 +85,7 @@ public class CommandTestUtil {
     public static final String INVALID_END_DATETIME_DESC = " " + PREFIX_END_DATETIME + "23-9-2023 1800";
     public static final String INVALID_LOCATION_DESC = " " + PREFIX_LOCATION + "sembawang&";
     public static final String INVALID_DESCRIPTION_DESC = " " + PREFIX_DESCRIPTION + "clean&";
-    public static final String INVALID_MATERIAL_DESC = " " + PREFIX_MATERIAL + "trash bag&";
+    public static final String INVALID_MATERIAL_DESC = " " + PREFIX_MATERIAL + "20 trash bag&";
     public static final String INVALID_BUDGET_DESC = " " + PREFIX_BUDGET + "50.0";
 
     // Volunteer fields
@@ -105,12 +111,15 @@ public class CommandTestUtil {
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_SKILL_DESC = " " + PREFIX_SKILL + "hubby*"; // '*' not allowed in skills
+    public static final String VOLUNTEERID_DESC = " " + PREFIX_VOLUNTEER_ID;
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
     public static final VolunteerEditCommand.EditVolunteerDescriptor DESC_AMY;
     public static final VolunteerEditCommand.EditVolunteerDescriptor DESC_BOB;
+    public static final EventEditCommand.EditEventDescriptor DESC_CLEANUP;
+    public static final EventEditCommand.EditEventDescriptor DESC_HELPOUT;
 
     static {
         DESC_AMY = new EditVolunteerDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -118,6 +127,20 @@ public class CommandTestUtil {
         DESC_BOB = new EditVolunteerDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
                 .withSkills(VALID_SKILL_HUSBAND, VALID_SKILL_FRIEND).build();
+    }
+
+    static {
+        DESC_CLEANUP = new EditEventDescriptorBuilder().withEventName(VALID_EVENTNAME_CLEANUP)
+                .withRoles(VALID_ROLE_CLEANER).withStartDate(VALID_START_DATETIME_CLEANUP)
+                .withEndDate(VALID_END_DATETIME_CLEANUP).withLocation(VALID_LOCATION_CLEANUP)
+                .withDescription(VALID_DESCRIPTION_CLEANUP).withMaterials(VALID_MATERIAL_TRASHBAG)
+                .withBudget(VALID_BUDGET_CLEANUP).build();
+
+        DESC_HELPOUT = new EditEventDescriptorBuilder().withEventName(VALID_EVENTNAME_HELPOUT)
+                .withRoles(VALID_ROLE_BRAIN).withStartDate(VALID_START_DATETIME_HELPOUT)
+                .withEndDate(VALID_END_DATETIME_HELPOUT).withLocation(VALID_LOCATION_HELPOUT)
+                .withDescription(VALID_DESCRIPTION_HELPOUT).withMaterials(VALID_MATERIAL_HANDS)
+                .withBudget(VALID_BUDGET_HELPOUT).build();
     }
 
     /**

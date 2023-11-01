@@ -60,6 +60,8 @@ public class Messages {
 
         builder.append("; Budget: ")
                 .append(event.getBudget());
+        builder.append("; Assigned Volunteers: ");
+        event.getAssignedVolunteers().forEach(builder::append);
 
         return builder.toString();
     }
@@ -76,7 +78,8 @@ public class Messages {
                 .append(volunteer.getEmail())
                 .append("\nSkills: ");
         volunteer.getSkills().forEach(builder::append);
+        builder.append("\nAssigned Events: ");
+        volunteer.getAssignedEvents().forEach(builder::append);
         return builder.toString();
     }
-
 }
