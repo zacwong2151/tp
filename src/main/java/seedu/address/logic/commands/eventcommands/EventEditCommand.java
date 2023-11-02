@@ -56,7 +56,7 @@ public class EventEditCommand extends Command {
             + "[" + PREFIX_ROLE + "ROLES] "
             + "[" + PREFIX_START_DATETIME + "START DATE] "
             + "[" + PREFIX_LOCATION + "LOCATION]... "
-            + "[" + PREFIX_MAX_VOLUNTEER_SIZE + "MAX VOLUNTEER COUNT]"
+            + "[" + PREFIX_MAX_VOLUNTEER_SIZE + "MAX VOLUNTEER COUNT]\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_ROLE + "Director "
             + PREFIX_LOCATION + "Kent Ridge";

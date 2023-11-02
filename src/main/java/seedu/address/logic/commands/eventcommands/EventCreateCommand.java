@@ -26,7 +26,7 @@ public class EventCreateCommand extends Command {
 
     public static final String COMMAND_WORD = "ecreate";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an event to the event list. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an event to the event list.\n"
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_ROLE + "ROLE "

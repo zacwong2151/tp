@@ -27,7 +27,7 @@ public class EventAddMaterialCommand extends Command {
     public static final String COMMAND_WORD = "eaddm";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an amount of material to a specified event in"
-            + " the event list. Parameters: "
+            + " the event list.\nParameters: "
             + PREFIX_EVENT_ID + "EVENT_ID "
             + PREFIX_MATERIAL + "MATERIAL\n"
             + "Example: " + COMMAND_WORD + " "
