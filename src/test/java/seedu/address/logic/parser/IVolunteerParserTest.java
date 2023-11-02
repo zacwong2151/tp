@@ -52,7 +52,7 @@ public class IVolunteerParserTest {
 
     @Test
     public void parseCommand_eventCreate() throws Exception {
-        Event event = new EventBuilder().withRoles("chef").build();
+        Event event = new EventBuilder().withRoles("50 chef").build();
         String events = EventUtil.getEventCreateCommand(event);
         EventCreateCommand command = (EventCreateCommand) parser.parseCommand(EventUtil
                 .getEventCreateCommand(event));
