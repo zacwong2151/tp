@@ -18,4 +18,5 @@ public class CliSyntax {
     public static final Prefix PREFIX_SKILL = new Prefix("s/");
     public static final Prefix PREFIX_EVENT_ID = new Prefix("eid/");
     public static final Prefix PREFIX_VOLUNTEER_ID = new Prefix("vid/");
+    public static final Prefix PREFIX_MAX_VOLUNTEER_SIZE = new Prefix("vs/");
 }
