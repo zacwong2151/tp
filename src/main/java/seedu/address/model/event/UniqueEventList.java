@@ -29,6 +29,14 @@ public class UniqueEventList implements Iterable<Event> {
             FXCollections.unmodifiableObservableList(internalList);
 
     /**
+     * Returns the event in the event storage with the {@code eventName}.
+     */
+    public Event get(EventName eventName) {
+        requireNonNull(eventName);
+        return internalList.stream().filter(e -> e.getEventName().equals(eventName)).findFirst().get();
+    }
+
+    /**
      * Returns true if the list contains an equivalent event as the given argument.
      */
     public boolean contains(Event toCheck) {

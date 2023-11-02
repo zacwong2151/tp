@@ -108,7 +108,8 @@ public class EventAddMaterialCommand extends Command {
                 eventToEdit.getDescription(),
                 updatedMaterials,
                 eventToEdit.getBudget(),
-                eventToEdit.getAssignedVolunteers());
+                eventToEdit.getAssignedVolunteers(),
+                eventToEdit.getMaxVolunteerSize());
     }
 
     @Override
