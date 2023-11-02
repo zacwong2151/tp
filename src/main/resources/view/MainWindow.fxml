@@ -46,9 +46,9 @@
             <Insets bottom="5" left="10" right="10" top="5" />
           </padding>
         </StackPane>
-            <HBox>
+            <HBox VBox.vgrow="ALWAYS">
                <children>
-                   <VBox fx:id="volunteerList" alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" minWidth="100.0" styleClass="pane-with-border" HBox.hgrow="ALWAYS">
+                   <VBox fx:id="volunteerList" alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" minWidth="100.0" styleClass="pane-with-border" HBox.hgrow="ALWAYS"  VBox.vgrow="ALWAYS">
                 <padding>
                   <Insets bottom="10" left="10" right="10" top="10" />
                 </padding>
@@ -62,7 +62,7 @@
                      </Text>
                 <StackPane fx:id="volunteerListPanelPlaceholder" VBox.vgrow="ALWAYS" />
               </VBox>
-                  <VBox fx:id="eventList" alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" minWidth="100.0" styleClass="pane-with-border" HBox.hgrow="ALWAYS">
+                  <VBox fx:id="eventList" alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" minWidth="100.0" styleClass="pane-with-border" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                      <padding>
                         <Insets bottom="10" left="10" right="10" top="10" />
                      </padding>
