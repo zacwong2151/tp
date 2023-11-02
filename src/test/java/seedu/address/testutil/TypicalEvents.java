@@ -18,7 +18,7 @@ import seedu.address.model.volunteer.Volunteer;
  */
 public class TypicalEvents {
     public static final Event FIRST = new EventBuilder().withEventName("Clean 1")
-            .withRoles("cleaner")
+            .withRoles("20 cleaner")
             .withStartDate("23/10/2023 1800")
             .withEndDate("23/10/2023 2100")
             .withLocation("Sembawang")
@@ -27,7 +27,7 @@ public class TypicalEvents {
             .withBudget("50.00").build();
 
     public static final Event SECOND = new EventBuilder().withEventName("Clean 2")
-            .withRoles("cleaner")
+            .withRoles("15 cleaner")
             .withStartDate("23/10/2023 1800")
             .withEndDate("24/10/2023 1900")
             .withLocation("Sembawang")
@@ -36,7 +36,7 @@ public class TypicalEvents {
             .withBudget("50.00").build();
 
     public static final Event THIRD = new EventBuilder().withEventName("Clean 3")
-            .withRoles("cleaner")
+            .withRoles("10 cleaner")
             .withStartDate("23/10/2023 1800")
             .withEndDate("1/1/2024 2000")
             .withLocation("Sembawang")
@@ -45,7 +45,7 @@ public class TypicalEvents {
             .withBudget("50.00").build();
 
     public static final Event FOURTH = new EventBuilder().withEventName("Clean 4")
-            .withRoles("cleaner")
+            .withRoles("5 cleaner")
             .withStartDate("23/10/2023 1800")
             .withEndDate("27/10/2023 1800")
             .withLocation("Sembawang")
@@ -54,7 +54,7 @@ public class TypicalEvents {
             .withBudget("50.00").build();
 
     public static final Event FIFTH = new EventBuilder().withEventName("Clean 5")
-            .withRoles("cleaner")
+            .withRoles("12 cleaner")
             .withStartDate("23/10/2023 1800")
             .withEndDate("23/10/2023 2100")
             .withLocation("Sembawang")
@@ -63,7 +63,7 @@ public class TypicalEvents {
             .withBudget("50.00").build();
 
     public static final Event SIXTH = new EventBuilder().withEventName("Clean 6")
-            .withRoles("cleaner")
+            .withRoles("16 cleaner")
             .withStartDate("23/10/2023 1800")
             .withEndDate("23/10/2023 2100")
             .withLocation("Sembawang")
@@ -72,7 +72,7 @@ public class TypicalEvents {
             .withBudget("50.00").build();
 
     public static final Event SEVENTH = new EventBuilder().withEventName("Clean 7")
-            .withRoles("cleaner")
+            .withRoles("30 cleaner")
             .withStartDate("23/10/2023 1800")
             .withEndDate("23/10/2023 2100")
             .withLocation("Sembawang")
@@ -82,7 +82,7 @@ public class TypicalEvents {
 
     // Manually added - Event's details found in {@code CommandTestUtil}
     public static final Event CLEANUP = new EventBuilder().withEventName("Clean up")
-            .withRoles("cleaner")
+            .withRoles("20 cleaner")
             .withStartDate("23/9/2023 1800")
             .withEndDate("23/9/2023 2100")
             .withLocation("serangoon")
@@ -90,8 +90,7 @@ public class TypicalEvents {
             .withMaterials("20 trash bags")
             .withBudget("80.00").build();
     public static final Event HELPOUT = new EventBuilder().withEventName("Help out")
-            .withRoles("brain")
-
+            .withRoles("15 brain")
             .withStartDate("25/10/2023 2000")
             .withEndDate("25/10/2023 2200")
             .withLocation("admiralty")

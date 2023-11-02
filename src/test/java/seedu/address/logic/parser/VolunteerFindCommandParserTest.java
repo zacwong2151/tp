@@ -14,9 +14,11 @@ import seedu.address.logic.parser.volunteercommandparsers.VolunteerFindCommandPa
 import seedu.address.model.volunteer.SkillNameContainsKeywordsPredicate;
 
 public class VolunteerFindCommandParserTest {
-
     private VolunteerFindCommandParser parser = new VolunteerFindCommandParser();
-
+    @Test
+    public void parse_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> parser.parse(null));
+    }
     @Test
     public void parse_emptyArg_throwsParseException() {
         assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
