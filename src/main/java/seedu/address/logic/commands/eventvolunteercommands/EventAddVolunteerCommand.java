@@ -25,10 +25,10 @@ public class EventAddVolunteerCommand extends Command {
 
     public static final String COMMAND_WORD = "eaddv";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a volunteer to an event. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a volunteer to an event.\n"
             + "Parameters: "
             + PREFIX_EVENT_ID + "EVENT ID "
-            + PREFIX_VOLUNTEER_ID + "VOLUNTEER ID "
+            + PREFIX_VOLUNTEER_ID + "VOLUNTEER ID\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_EVENT_ID + "1 "
             + PREFIX_VOLUNTEER_ID + "2 ";
