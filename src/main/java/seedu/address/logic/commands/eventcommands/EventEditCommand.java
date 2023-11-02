@@ -11,10 +11,12 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
@@ -38,6 +40,8 @@ import seedu.address.model.volunteer.Name;
  * Edits the details of an existing event in the event list.
  */
 public class EventEditCommand extends Command {
+
+    private static final Logger logger = LogsCenter.getLogger(EventEditCommand.class);
 
     public static final String COMMAND_WORD = "eedit";
 
@@ -90,6 +94,8 @@ public class EventEditCommand extends Command {
 
         model.setEvent(eventToEdit, editedEvent);
         model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+
+        logger.info("Event is edited successfully.");
         return new CommandResult(String.format(MESSAGE_EDIT_EVENT_SUCCESS, Messages.format(editedEvent)));
     }
 
@@ -114,6 +120,8 @@ public class EventEditCommand extends Command {
         if (updatedEndTime.dateAndTime.isBefore(updatedStartTime.dateAndTime)) {
             throw new CommandException(MESSAGE_INVALID_DATE_PARAMS);
         }
+
+        logger.info("Edited event created successfully");
         return new Event(updatedEventName, updatedRoles, updatedStartTime, updatedEndTime, updatedLocation,
                 updatedDescription, updatedMaterial, updatedBudget, assignedVolunteers);
     }
