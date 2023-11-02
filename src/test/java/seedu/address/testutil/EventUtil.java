@@ -25,7 +25,7 @@ public class EventUtil {
     /**
      * Returns an add command string for adding the {@code event}.
      */
-    public static String getAddCommand(Event event) {
+    public static String getEventCreateCommand(Event event) {
         return EventCreateCommand.COMMAND_WORD + " " + getEventDetails(event);
     }
 
@@ -36,7 +36,7 @@ public class EventUtil {
         StringBuilder sb = new StringBuilder();
         sb.append(PREFIX_NAME + event.getEventName().eventName + " ");
         event.getRoles().stream().forEach(
-                s -> sb.append(PREFIX_ROLE + s.roleName + " ")
+                s -> sb.append(PREFIX_ROLE + "" + s.requiredQuantity + " " + s.roleName + " ")
         );
         sb.append(PREFIX_START_DATETIME + event.getStartDate().toString() + " ");
         sb.append(PREFIX_END_DATETIME + event.getEndDate().toString() + " ");

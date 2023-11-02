@@ -124,7 +124,7 @@ public class VolunteerFindCommandTest {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, VolunteerFindCommand.MESSAGE_USAGE));
         }
 
-        Set<Name> nameKeywords = ParserUtil.parseNames(argMultimap.getAllValues(PREFIX_NAME));
+        Set<Name> nameKeywords = ParserUtil.parseVolunteerNames(argMultimap.getAllValues(PREFIX_NAME));
         List<Name> names = new ArrayList<>(nameKeywords);
         Set<Skill> skillKeywords = ParserUtil.parseSkills(argMultimap.getAllValues(PREFIX_SKILL));
         List<Skill> skills = new ArrayList<>(skillKeywords);
