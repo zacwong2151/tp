@@ -15,8 +15,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
@@ -66,6 +68,8 @@ public class EventEditCommand extends Command {
             + " should not be less than the number of volunteers currently in the event. To remove the cap on the"
             + " number of volunteers, you can use vs/0";
 
+    private static final Logger logger = LogsCenter.getLogger(EventEditCommand.class);
+
     private final Index index;
     private final EditEventDescriptor editEventDescriptor;
 
@@ -100,6 +104,8 @@ public class EventEditCommand extends Command {
 
         model.setEvent(eventToEdit, editedEvent);
         model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+
+        logger.info("Event is edited successfully.");
         return new CommandResult(String.format(MESSAGE_EDIT_EVENT_SUCCESS, Messages.format(editedEvent)));
     }
 
@@ -126,9 +132,12 @@ public class EventEditCommand extends Command {
         if (updatedEndTime.dateAndTime.isBefore(updatedStartTime.dateAndTime)) {
             throw new CommandException(MESSAGE_INVALID_DATE_PARAMS);
         }
+
         if (updatedMaxVolunteerSize.maxVolunteerSize < assignedVolunteers.size()) {
             throw new CommandException(MESSAGE_INVALID_MAX_VOLUNTEER_SIZE);
         }
+
+        logger.info("Edited event created successfully");
         return new Event(updatedEventName, updatedRoles, updatedStartTime, updatedEndTime, updatedLocation,
                 updatedDescription, updatedMaterial, updatedBudget, assignedVolunteers, updatedMaxVolunteerSize);
     }
