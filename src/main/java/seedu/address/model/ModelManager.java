@@ -113,6 +113,11 @@ public class ModelManager implements Model {
         assert newEventState != null;
         eventStorage.setEvents(newEventState);
         updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+
+        logger.info("Size of version history is: "
+                + versionedEventStorage.getVersionedEventsSize()
+                + ". Current state pointer is: "
+                + versionedEventStorage.getCurrentStatePointer());
     }
     @Override
     public void redoBothStorages() throws CommandException {
@@ -125,6 +130,11 @@ public class ModelManager implements Model {
         assert newEventState != null;
         eventStorage.setEvents(newEventState);
         updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+
+        logger.info("Size of version history is: "
+                + versionedEventStorage.getVersionedEventsSize()
+                + ". Current state pointer is: "
+                + versionedEventStorage.getCurrentStatePointer());
     }
     @Override
     public void commitToBothVersionedStorages(ReadOnlyEventStorage readOnlyEventStorage,
@@ -134,6 +144,11 @@ public class ModelManager implements Model {
         versionedEventStorage.saveNewState(readOnlyEventStorage);
         versionedVolunteerStorage.shiftPointerForward();
         versionedVolunteerStorage.saveNewState(readOnlyVolunteerStorage);
+
+        logger.info("Committed to version history. Size of version history is: "
+                + versionedEventStorage.getVersionedEventsSize()
+                + ". Current state pointer is: "
+                + versionedEventStorage.getCurrentStatePointer());
     }
     @Override
     public VersionedVolunteerStorage getVersionedVolunteerStorage() {

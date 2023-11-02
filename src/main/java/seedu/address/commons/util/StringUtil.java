@@ -54,11 +54,11 @@ public class StringUtil {
         requireNonNull(skill);
 
         Stream<String> preppedSkills = skills.stream().map(s -> s.skillName.toLowerCase());
-        // might be flatmap
         String preppedSkill = skill.skillName.toLowerCase();
 
         checkArgument(!preppedSkill.equals(""), "Skill cannot be empty string");
-        checkArgument(preppedSkill.split("\\s+").length == 1, "String parameter should be a single word");
+        checkArgument(preppedSkill.split("\\s+").length == 1,
+                "Skill parameter should be a single word");
 
         return preppedSkills.anyMatch(s -> s.contains(preppedSkill));
     }

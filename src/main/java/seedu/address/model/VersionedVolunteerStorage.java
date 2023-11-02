@@ -4,7 +4,9 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.volunteer.UniqueVolunteerList;
 import seedu.address.model.volunteer.Volunteer;
@@ -15,6 +17,7 @@ import seedu.address.model.volunteer.Volunteer;
 public class VersionedVolunteerStorage extends VolunteerStorage {
     private final ArrayList<UniqueVolunteerList> versionedVolunteers = new ArrayList<>();
     private int currentStatePointer;
+    private final Logger logger = LogsCenter.getLogger(VersionedVolunteerStorage.class);
     /**
      * Upon running the app, initialises the history of Volunteers.
      */
@@ -30,6 +33,7 @@ public class VersionedVolunteerStorage extends VolunteerStorage {
         requireNonNull(initialState);
         UniqueVolunteerList uniqueVolunteerList = generateUniqueVolunteerList(initialState);
         versionedVolunteers.add(uniqueVolunteerList);
+        logger.info("Initialising versioned volunteers history");
     }
 
     /**
@@ -86,6 +90,7 @@ public class VersionedVolunteerStorage extends VolunteerStorage {
     }
     private void canUndoVersionedVolunteers() throws CommandException {
         if (currentStatePointer == 0) {
+            logger.info("Tried to undo when current state pointer points at initial version of volunteers");
             throw new CommandException("Cannot undo any further");
         }
         assert currentStatePointer > 0;
@@ -101,11 +106,13 @@ public class VersionedVolunteerStorage extends VolunteerStorage {
         return getCurrentVolunteerState();
     }
     private List<Volunteer> getCurrentVolunteerState() {
+        assert versionedVolunteers.size() > currentStatePointer;
         UniqueVolunteerList newState = versionedVolunteers.get(currentStatePointer);
         return newState.asUnmodifiableObservableList();
     }
     private void canRedoVersionedVolunteers() throws CommandException {
         if (versionedVolunteers.size() == currentStatePointer + 1) {
+            logger.info("Tried to redo when current state pointer points at latest version of volunteers");
             throw new CommandException("Unable to redo");
         }
         assert currentStatePointer < versionedVolunteers.size();
