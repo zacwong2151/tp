@@ -17,7 +17,7 @@ import seedu.address.model.event.UniqueEventList;
 public class VersionedEventStorage extends EventStorage {
     private final ArrayList<UniqueEventList> versionedEvents = new ArrayList<>();
     private int currentStatePointer;
-    private static final Logger logger = LogsCenter.getLogger(VersionedEventStorage.class);
+    private final Logger logger = LogsCenter.getLogger(VersionedEventStorage.class);
     /**
      * Upon running the app, initialises the history of Events.
      */

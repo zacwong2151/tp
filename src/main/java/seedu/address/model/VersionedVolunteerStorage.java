@@ -17,7 +17,7 @@ import seedu.address.model.volunteer.Volunteer;
 public class VersionedVolunteerStorage extends VolunteerStorage {
     private final ArrayList<UniqueVolunteerList> versionedVolunteers = new ArrayList<>();
     private int currentStatePointer;
-    private static final Logger logger = LogsCenter.getLogger(VersionedVolunteerStorage.class);
+    private final Logger logger = LogsCenter.getLogger(VersionedVolunteerStorage.class);
     /**
      * Upon running the app, initialises the history of Volunteers.
      */
