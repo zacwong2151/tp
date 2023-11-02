@@ -11,10 +11,10 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
@@ -41,8 +41,6 @@ import seedu.address.model.volunteer.Name;
  */
 public class EventEditCommand extends Command {
 
-    private static final Logger logger = LogsCenter.getLogger(EventEditCommand.class);
-
     public static final String COMMAND_WORD = "eedit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the event identified "
@@ -60,6 +58,7 @@ public class EventEditCommand extends Command {
     public static final String MESSAGE_EDIT_EVENT_SUCCESS = "Edited Event: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists in the event list.";
+    private static final Logger logger = LogsCenter.getLogger(EventEditCommand.class);
 
     private final Index index;
     private final EditEventDescriptor editEventDescriptor;

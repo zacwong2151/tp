@@ -95,9 +95,9 @@ public class EventFindCommandTest {
     public void toStringMethod() {
         EventNameContainsKeywordsPredicate predicate =
                 new EventNameContainsKeywordsPredicate(Arrays.asList("keyword1"));
-        EventFindCommand EventFindCommand = new EventFindCommand(predicate);
+        EventFindCommand eventFindCommand = new EventFindCommand(predicate);
         String expected = EventFindCommand.class.getCanonicalName() + "{predicate=" + predicate + "}";
-        assertEquals(expected, EventFindCommand.toString());
+        assertEquals(expected, eventFindCommand.toString());
     }
 
     @Test
