@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.eventcommands.EventEditCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.volunteercommands.VolunteerEditCommand;
 import seedu.address.model.Model;
@@ -31,6 +32,7 @@ import seedu.address.model.event.EventNameContainsKeywordsPredicate;
 import seedu.address.model.volunteer.Name;
 import seedu.address.model.volunteer.SkillNameContainsKeywordsPredicate;
 import seedu.address.model.volunteer.Volunteer;
+import seedu.address.testutil.EditEventDescriptorBuilder;
 import seedu.address.testutil.EditVolunteerDescriptorBuilder;
 
 /**
@@ -40,8 +42,8 @@ public class CommandTestUtil {
     // Event fields
     public static final String VALID_EVENTNAME_CLEANUP = "Clean up";
     public static final String VALID_EVENTNAME_HELPOUT = "Help out";
-    public static final String VALID_ROLE_CLEANER = "cleaner";
-    public static final String VALID_ROLE_BRAIN = "brain";
+    public static final String VALID_ROLE_CLEANER = "20 cleaner";
+    public static final String VALID_ROLE_BRAIN = "15 brain";
     public static final String VALID_START_DATETIME_CLEANUP = "23/9/2023 1800";
     public static final String VALID_END_DATETIME_CLEANUP = "23/9/2023 2100";
     public static final String VALID_END_DATETIME_CLEANUP_BEFORE_START = "23/9/2023 1700";
@@ -116,6 +118,8 @@ public class CommandTestUtil {
 
     public static final VolunteerEditCommand.EditVolunteerDescriptor DESC_AMY;
     public static final VolunteerEditCommand.EditVolunteerDescriptor DESC_BOB;
+    public static final EventEditCommand.EditEventDescriptor DESC_CLEANUP;
+    public static final EventEditCommand.EditEventDescriptor DESC_HELPOUT;
 
     static {
         DESC_AMY = new EditVolunteerDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -123,6 +127,20 @@ public class CommandTestUtil {
         DESC_BOB = new EditVolunteerDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
                 .withSkills(VALID_SKILL_HUSBAND, VALID_SKILL_FRIEND).build();
+    }
+
+    static {
+        DESC_CLEANUP = new EditEventDescriptorBuilder().withEventName(VALID_EVENTNAME_CLEANUP)
+                .withRoles(VALID_ROLE_CLEANER).withStartDate(VALID_START_DATETIME_CLEANUP)
+                .withEndDate(VALID_END_DATETIME_CLEANUP).withLocation(VALID_LOCATION_CLEANUP)
+                .withDescription(VALID_DESCRIPTION_CLEANUP).withMaterials(VALID_MATERIAL_TRASHBAG)
+                .withBudget(VALID_BUDGET_CLEANUP).build();
+
+        DESC_HELPOUT = new EditEventDescriptorBuilder().withEventName(VALID_EVENTNAME_HELPOUT)
+                .withRoles(VALID_ROLE_BRAIN).withStartDate(VALID_START_DATETIME_HELPOUT)
+                .withEndDate(VALID_END_DATETIME_HELPOUT).withLocation(VALID_LOCATION_HELPOUT)
+                .withDescription(VALID_DESCRIPTION_HELPOUT).withMaterials(VALID_MATERIAL_HANDS)
+                .withBudget(VALID_BUDGET_HELPOUT).build();
     }
 
     /**

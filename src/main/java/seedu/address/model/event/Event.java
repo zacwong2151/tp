@@ -3,12 +3,14 @@ package seedu.address.model.event;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.skill.Skill;
 import seedu.address.model.volunteer.Name;
 import seedu.address.model.volunteer.Volunteer;
 
@@ -108,11 +110,29 @@ public class Event implements Comparable<Event> {
         return Collections.unmodifiableSet(assignedVolunteers);
     }
     /**
-     * Adds a volunteer to the {@code assignedVolunteers}.
+     * Adds a volunteer to the {@code assignedVolunteers}, and count them into the quantity of roles needed for the
+     * event if their skills match the event role.
      * @param volunteer The volunteer to be added.
+     * @return The event after the addition of the new volunteer.
      */
-    public void addVolunteer(Volunteer volunteer) {
-        assignedVolunteers.add(volunteer.getName());
+    public Event addVolunteer(Volunteer volunteer) {
+        Set<Name> newVolunteers = new HashSet<>(assignedVolunteers);
+        newVolunteers.add(volunteer.getName());
+        Set<Role> newRoles = new HashSet<>(roles);
+
+        // check if volunteer's skills match the roles
+        for (Skill skill : volunteer.getSkills()) {
+            for (Role role : roles) {
+                if (role.roleName.equals(skill.skillName)) {
+                    Role newRole = role.addRoleManpower();
+                    newRoles.remove(role);
+                    newRoles.add(newRole);
+                }
+            }
+        }
+
+        return new Event(eventName, newRoles, startDate, endDate,
+                location, description, materials, budget, newVolunteers);
     }
     /**
      * Checks if a volunteer is already in {@code assignedVolunteers}.
@@ -124,9 +144,26 @@ public class Event implements Comparable<Event> {
     /**
      * Removes a volunteer from the {@code assignedVolunteers}.
      * @param volunteer The volunteer to be removed.
+     * @return The event after the removal of the volunteer.
      */
-    public void removeVolunteer(Volunteer volunteer) {
-        assignedVolunteers.remove(volunteer.getName());
+    public Event removeVolunteer(Volunteer volunteer) {
+        Set<Name> newVolunteers = new HashSet<>(assignedVolunteers);
+        newVolunteers.remove(volunteer.getName());
+        Set<Role> newRoles = new HashSet<>(roles);
+
+        // check if volunteer's skills match the roles
+        for (Skill skill : volunteer.getSkills()) {
+            for (Role role : roles) {
+                if (role.roleName.equals(skill.skillName)) {
+                    Role newRole = role.decreaseRoleManpower();
+                    newRoles.remove(role);
+                    newRoles.add(newRole);
+                }
+            }
+        }
+
+        return new Event(eventName, newRoles, startDate, endDate,
+                location, description, materials, budget, newVolunteers);
     }
     /**
      * Returns a set of volunteers from the {@code assignedVolunteers}.

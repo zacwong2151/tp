@@ -1,5 +1,6 @@
 package seedu.address.ui.labels;
 
+import static seedu.address.ui.labels.LabelColors.LABEL_GREEN;
 import static seedu.address.ui.labels.LabelColors.LABEL_RED;
 
 import seedu.address.model.event.Role;
@@ -13,6 +14,6 @@ public class RoleLabel extends EnclosedLabel {
      * Creates a {@code RoleLabel} with the given {@code Role}.
      */
     public RoleLabel(Role role) {
-        super(role.roleName, LABEL_RED);
+        super(role.toUiString(), role.hasEnoughManpower() ? LABEL_GREEN : LABEL_RED);
     }
 }

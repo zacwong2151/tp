@@ -19,7 +19,7 @@ public class EventFindCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Finds all events whose names contain any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: n/NAME [n/MORE_KEYWORDS]...\n"
+            + "Parameters: n/NAME [n/MORE_NAMES]...\n"
             + "Example: " + COMMAND_WORD + " n/food distribution";
 
     private final EventNameContainsKeywordsPredicate predicate;

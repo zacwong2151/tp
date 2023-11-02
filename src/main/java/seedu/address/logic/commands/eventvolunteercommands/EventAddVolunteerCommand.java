@@ -30,7 +30,7 @@ public class EventAddVolunteerCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_EVENT_ID + "1 "
             + PREFIX_VOLUNTEER_ID + "2 ";
-    public static final String MESSAGE_SUCCESS = "New VOLUNTEER added TO EVENT: %1$s\n"
+    public static final String MESSAGE_SUCCESS = "New volunteer added to event.\nUpdated Event: %1$s\n"
             + "Event currently has %2$d volunteers";
     public static final String MESSAGE_DUPLICATE_VOLUNTEER = "This volunteer is already assigned to this event";
     private final Index assignedEventIndex;
@@ -63,12 +63,14 @@ public class EventAddVolunteerCommand extends Command {
         if (eventToAssign.hasVolunteer(volunteerToAssign)) {
             throw new CommandException(MESSAGE_DUPLICATE_VOLUNTEER);
         }
-        volunteerToAssign.addEvent(eventToAssign);
-        eventToAssign.addVolunteer(volunteerToAssign);
+        Volunteer updatedVolunteer = volunteerToAssign.addEvent(eventToAssign);
+        Event updatedEvent = eventToAssign.addVolunteer(volunteerToAssign);
+        model.setVolunteer(volunteerToAssign, updatedVolunteer);
+        model.setEvent(eventToAssign, updatedEvent);
         model.commitToBothVersionedStorages(model.getEventStorage(), model.getVolunteerStorage());
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(eventToAssign),
-                eventToAssign.getAssignedVolunteers().size()));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(updatedEvent),
+                updatedEvent.getAssignedVolunteers().size()));
     }
     @Override
     public boolean equals(Object other) {

@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
-import seedu.address.logic.commands.eventvolunteercommands.EventListVolunteerCommand;
+import seedu.address.logic.commands.eventvolunteercommands.VolunteerListEventCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -22,42 +22,42 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.event.Event;
 import seedu.address.model.volunteer.Volunteer;
 
-public class EventListVolunteerCommandTest {
+public class VolunteerListEventCommandTest {
     private Model model = new ModelManager(getTypicalEventStorage(), getTypicalVolunteerStorage(), new UserPrefs());
 
     @Test
     public void execute_invalidIndex_throwsCommandException() {
         // Assign a volunteer to an event in the model
-        Event event = model.getEventStorage().getEventList().get(model.getFilteredEventList().size() - 1);
-        Volunteer volunteerToAssign = model
+        Volunteer volunteer = model
                 .getVolunteerStorage()
                 .getVolunteerList()
                 .get(model.getFilteredVolunteerList().size() - 1);
+        Event eventToAssign = model.getEventStorage().getEventList().get(model.getFilteredEventList().size() - 1);
 
-        event.addVolunteer(volunteerToAssign);
+        eventToAssign.addVolunteer(volunteer);
 
-        Index invalidIndex = Index.fromOneBased(model.getFilteredEventList().size() + 1);
-        EventListVolunteerCommand command = new EventListVolunteerCommand(invalidIndex);
+        Index invalidIndex = Index.fromOneBased(model.getFilteredVolunteerList().size() + 1);
+        VolunteerListEventCommand command = new VolunteerListEventCommand(invalidIndex);
         assertThrows(CommandException.class, Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX, ()
                 -> command.execute(model));
     }
     @Test
     public void execute_validIndexes_listSuccessful() {
         // Assign a volunteer to an event in the model
-        Event event = model.getEventStorage().getEventList().get(model.getFilteredEventList().size() - 1);
-        Volunteer volunteerToAssign = model
+        Volunteer volunteer = model
                 .getVolunteerStorage()
                 .getVolunteerList()
                 .get(model.getFilteredVolunteerList().size() - 1);
+        Event eventToAssign = model.getEventStorage().getEventList().get(model.getFilteredEventList().size() - 1);
 
-        event.addVolunteer(volunteerToAssign);
+        eventToAssign.addVolunteer(volunteer);
 
-        Index validIndex = Index.fromOneBased(model.getFilteredEventList().size());
-        EventListVolunteerCommand command = new EventListVolunteerCommand(validIndex);
-        Event eventToList = model.getEventStorage().getEventList().get(validIndex.getZeroBased());
+        Index validIndex = Index.fromOneBased(model.getFilteredVolunteerList().size());
+        VolunteerListEventCommand command = new VolunteerListEventCommand(validIndex);
+        Volunteer volunteerToList = model.getVolunteerStorage().getVolunteerList().get(validIndex.getZeroBased());
 
-        String expectedMessage = String.format(EventListVolunteerCommand.MESSAGE_SUCCESS,
-            eventToList.getEventName(), eventToList.getAssignedVolunteers().size());
+        String expectedMessage = String.format(VolunteerListEventCommand.MESSAGE_SUCCESS,
+                volunteerToList.getName().fullName, volunteerToList.getAssignedEvents().size());
 
         try {
             CommandResult commandResult = command.execute(model);
@@ -68,14 +68,14 @@ public class EventListVolunteerCommandTest {
     }
     @Test
     public void equals() {
-        EventListVolunteerCommand firstCommand = new EventListVolunteerCommand(INDEX_FIRST);
-        EventListVolunteerCommand secondCommand = new EventListVolunteerCommand(INDEX_SECOND);
+        VolunteerListEventCommand firstCommand = new VolunteerListEventCommand(INDEX_FIRST);
+        VolunteerListEventCommand secondCommand = new VolunteerListEventCommand(INDEX_SECOND);
 
         // same object -> returns true
         assertTrue(firstCommand.equals(firstCommand));
 
         // same values -> returns true
-        EventListVolunteerCommand firstCommandCopy = new EventListVolunteerCommand(INDEX_FIRST);
+        VolunteerListEventCommand firstCommandCopy = new VolunteerListEventCommand(INDEX_FIRST);
         assertTrue(firstCommand.equals(firstCommandCopy));
 
         // null -> returns false
@@ -87,9 +87,10 @@ public class EventListVolunteerCommandTest {
 
     @Test
     public void toStringMethod() {
-        Index eventIndex = Index.fromOneBased(1);
-        EventListVolunteerCommand command = new EventListVolunteerCommand(eventIndex);
-        String expected = EventListVolunteerCommand.class.getCanonicalName() + "{eventIndex=" + eventIndex + "}";
+        Index volunteerIndex = Index.fromOneBased(1);
+        VolunteerListEventCommand command = new VolunteerListEventCommand(volunteerIndex);
+        String expected = VolunteerListEventCommand.class.getCanonicalName()
+                + "{volunteerIndex=" + volunteerIndex + "}";
         assertEquals(expected, command.toString());
     }
 }
