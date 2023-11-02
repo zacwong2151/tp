@@ -171,7 +171,8 @@ public class EventEditCommand extends Command {
                 event.getDescription(),
                 event.getMaterials(),
                 event.getBudget(),
-                event.getAssignedVolunteers());
+                event.getAssignedVolunteers(),
+                event.getMaxVolunteerSize());
     }
 
     @Override
