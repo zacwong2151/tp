@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalEvents.getTypicalEventStorage;
@@ -71,6 +72,7 @@ public class EventRemoveVolunteerTest {
 
         // Add the volunteer to the event
         events.get(validEventIndex.getZeroBased()).addVolunteer(volunteers.get(validVolunteerIndex.getZeroBased()));
+
         EventRemoveVolunteerCommand command = new EventRemoveVolunteerCommand(validEventIndex, validVolunteerIndex);
 
         try {
@@ -80,7 +82,7 @@ public class EventRemoveVolunteerTest {
                     Messages.format(eventToRemoveFrom), eventToRemoveFrom.getAssignedVolunteers().size());
             assertEquals(commandResult.getFeedbackToUser(), expectedMessage);
         } catch (Exception e) {
-            assertTrue(false);
+            fail("Exception " + e + " should not be thrown here!");
         }
     }
     @Test

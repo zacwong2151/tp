@@ -28,7 +28,7 @@
       <Label fx:id="loc" styleClass="cell_small_label" text="\$loc" wrapText="true" />
       <Separator />
       <Label text="Roles needed: " />
-      <FlowPane fx:id="roles" />
+      <VBox fx:id="roles" />
       <Separator />
       <Label fx:id="budget" styleClass="cell_small_label" text="\$budget" />
       <Separator />

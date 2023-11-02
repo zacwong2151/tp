@@ -61,8 +61,10 @@ public class SampleDataUtil {
      * Returns a role set containing the list of strings given.
      */
     public static Set<Role> getRoleSet(String... strings) {
+        // Role::fromUiString parses a Ui string representation of Role, allowing Role with
+        // current quantity to be parsed.
         return Arrays.stream(strings)
-                .map(Role::new)
+                .map(Role::fromUiString)
                 .collect(Collectors.toSet());
     }
 

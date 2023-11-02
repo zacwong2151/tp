@@ -32,7 +32,7 @@ public class EventAddVolunteerCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_EVENT_ID + "1 "
             + PREFIX_VOLUNTEER_ID + "2 ";
-    public static final String MESSAGE_SUCCESS = "New VOLUNTEER added TO EVENT: %1$s\n"
+    public static final String MESSAGE_SUCCESS = "New volunteer added to event.\nUpdated Event: %1$s\n"
             + "Event currently has %2$d volunteers";
     public static final String MESSAGE_DUPLICATE_VOLUNTEER = "This volunteer is already assigned to this event";
     public static final String MESSAGE_CLASHING_EVENTS = "This event clashes with the volunteer's assigned events";
@@ -81,8 +81,8 @@ public class EventAddVolunteerCommand extends Command {
         model.setEvent(eventToAssign, updatedEvent);
         model.commitToBothVersionedStorages(model.getEventStorage(), model.getVolunteerStorage());
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(eventToAssign),
-                eventToAssign.getAssignedVolunteers().size()));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(updatedEvent),
+                updatedEvent.getAssignedVolunteers().size()));
     }
 
     /**

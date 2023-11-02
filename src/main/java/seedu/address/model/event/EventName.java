@@ -17,7 +17,7 @@ public class EventName {
      * otherwise " " (a blank string) becomes a valid input.
      * The expression allows for multiple words to be inputted.
      */
-    public static final String VALIDATION_REGEX = "[A-Za-z0-9 _.,!\"'/$]+";
+    public static final String VALIDATION_REGEX = "(?=.*[A-Za-z0-9])^[A-Za-z0-9 ]+$";
 
     public final String eventName;
 

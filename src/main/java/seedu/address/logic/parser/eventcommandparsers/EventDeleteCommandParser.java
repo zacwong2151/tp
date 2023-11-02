@@ -27,5 +27,4 @@ public class EventDeleteCommandParser implements Parser<EventDeleteCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, EventDeleteCommand.MESSAGE_USAGE), pe);
         }
     }
-
 }

@@ -20,8 +20,8 @@ public class VolunteerFindCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Finds all volunteers whose names or skills contain any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " n/alice n/bob s/chef";
+            + "Parameters: n/NAME s/SKILL [n/MORE_NAMES s/MORE_SKILLS]...\n"
+            + "Example: " + COMMAND_WORD + " n/alice s/chef";
 
     private final SkillNameContainsKeywordsPredicate predicate;
 
