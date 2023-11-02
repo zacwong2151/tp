@@ -7,6 +7,7 @@ import java.util.List;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.EventName;
 import seedu.address.model.event.UniqueEventList;
 
 /**
@@ -84,7 +85,14 @@ public class EventStorage implements ReadOnlyEventStorage {
 
         events.setEvent(target, editedEvent);
     }
-
+    /**
+     * Returns the event in the event storage with the {@code eventName}.
+     */
+    @Override
+    public Event getEvent(EventName eventName) {
+        requireNonNull(eventName);
+        return events.get(eventName);
+    }
     /**
      * Removes {@code key} from this {@code EventStorage}.
      * {@code key} must exist in the event storage.

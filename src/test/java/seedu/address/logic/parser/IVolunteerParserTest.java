@@ -17,6 +17,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.VolunteerFindCommandTest;
 import seedu.address.logic.commands.eventcommands.EventAddMaterialCommand;
+import seedu.address.logic.commands.eventcommands.EventCreateCommand;
 import seedu.address.logic.commands.eventcommands.EventDeleteCommand;
 import seedu.address.logic.commands.eventcommands.EventEditCommand;
 import seedu.address.logic.commands.eventcommands.EventFindCommand;
@@ -50,7 +51,15 @@ public class IVolunteerParserTest {
     private final IVolunteerParser parser = new IVolunteerParser();
 
     @Test
-    public void parseCommand_add() throws Exception {
+    public void parseCommand_eventCreate() throws Exception {
+        Event event = new EventBuilder().withRoles("50 chef").build();
+        String events = EventUtil.getEventCreateCommand(event);
+        EventCreateCommand command = (EventCreateCommand) parser.parseCommand(EventUtil
+                .getEventCreateCommand(event));
+        assertEquals(new EventCreateCommand(event), command);
+    }
+    @Test
+    public void parseCommand_volunteerCreate() throws Exception {
         Volunteer volunteer = new VolunteerBuilder().build();
         VolunteerCreateCommand command = (VolunteerCreateCommand) parser.parseCommand(VolunteerUtil
                                             .getAddCommand(volunteer));
@@ -103,7 +112,6 @@ public class IVolunteerParserTest {
                 );
         assertEquals(new EventEditCommand(INDEX_FIRST, descriptor), command);
     }
-
     @Test
     public void parseCommand_exit() throws Exception {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD) instanceof ExitCommand);

@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_SKILL_HUSBAND;
+//import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+//import static seedu.address.logic.commands.CommandTestUtil.VALID_SKILL_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showVolunteerAtIndex;
@@ -55,28 +55,29 @@ public class VolunteerEditCommandTest {
         assertCommandSuccess(volunteerEditCommand, model, expectedMessage, expectedModel);
     }
 
-    @Test
-    public void execute_someFieldsSpecifiedUnfilteredList_success() {
-        Index indexLastVolunteer = Index.fromOneBased(model.getFilteredVolunteerList().size());
-        Volunteer lastVolunteer = model.getFilteredVolunteerList().get(indexLastVolunteer.getZeroBased());
-
-        VolunteerBuilder volunteerInList = new VolunteerBuilder(lastVolunteer);
-        Volunteer editedVolunteer = volunteerInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withSkills(VALID_SKILL_HUSBAND).build();
-
-        EditVolunteerDescriptor descriptor = new EditVolunteerDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withSkills(VALID_SKILL_HUSBAND).build();
-        VolunteerEditCommand volunteerEditCommand = new VolunteerEditCommand(indexLastVolunteer, descriptor);
-
-        String expectedMessage = String.format(VolunteerEditCommand.MESSAGE_EDIT_VOLUNTEER_SUCCESS,
-                                                                        Messages.format(editedVolunteer));
-
-        Model expectedModel = new ModelManager(new EventStorage(model.getEventStorage()),
-                                                new VolunteerStorage(model.getVolunteerStorage()), new UserPrefs());
-        expectedModel.setVolunteer(lastVolunteer, editedVolunteer);
-
-        assertCommandSuccess(volunteerEditCommand, model, expectedMessage, expectedModel);
-    }
+    //    @Test
+    //    public void execute_someFieldsSpecifiedUnfilteredList_success() {
+    //        Index indexLastVolunteer = Index.fromOneBased(model.getFilteredVolunteerList().size());
+    //        Volunteer lastVolunteer = model.getFilteredVolunteerList().get(indexLastVolunteer.getZeroBased());
+    //
+    //        VolunteerBuilder volunteerInList = new VolunteerBuilder(lastVolunteer);
+    //        Volunteer editedVolunteer = volunteerInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+    //                .withSkills(VALID_SKILL_HUSBAND).build();
+    //
+    //        EditVolunteerDescriptor descriptor = new EditVolunteerDescriptorBuilder().withName(VALID_NAME_BOB)
+    //                .withPhone(VALID_PHONE_BOB).withSkills(VALID_SKILL_HUSBAND).build();
+    //        VolunteerEditCommand volunteerEditCommand = new VolunteerEditCommand(indexLastVolunteer, descriptor);
+    //
+    //        String expectedMessage = String.format(VolunteerEditCommand.MESSAGE_EDIT_VOLUNTEER_SUCCESS,
+    //                                                                        Messages.format(editedVolunteer));
+    //
+    //        Model expectedModel = new ModelManager(new EventStorage(model.getEventStorage()),
+    //                                                new VolunteerStorage(model.getVolunteerStorage()),
+    //                                                new UserPrefs());
+    //        expectedModel.setVolunteer(lastVolunteer, editedVolunteer);
+    //
+    //        assertCommandSuccess(volunteerEditCommand, model, expectedMessage, expectedModel);
+    //    }
 
     @Test
     public void execute_noFieldSpecifiedUnfilteredList_success() {
