@@ -24,7 +24,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.event.Event;
 import seedu.address.model.volunteer.Volunteer;
 
-public class EventRemoveVolunteerTest {
+public class EventRemoveVolunteerCommandTest {
     private Model model = new ModelManager(getTypicalEventStorage(), getTypicalVolunteerStorage(), new UserPrefs());
 
     @Test
@@ -71,8 +71,11 @@ public class EventRemoveVolunteerTest {
         ObservableList<Volunteer> volunteers = this.model.getFilteredVolunteerList();
 
         // Add the volunteer to the event
-        events.get(validEventIndex.getZeroBased()).addVolunteer(volunteers.get(validVolunteerIndex.getZeroBased()));
-
+        Event currentEvent = model.getEventStorage().getEventList().get(validEventIndex.getZeroBased());
+        Volunteer volunteerToAdd = model.getVolunteerStorage().getVolunteerList()
+                .get(validVolunteerIndex.getZeroBased());
+        Event newEvent = currentEvent.addVolunteer(volunteerToAdd);
+        model.setEvent(currentEvent, newEvent);
         EventRemoveVolunteerCommand command = new EventRemoveVolunteerCommand(validEventIndex, validVolunteerIndex);
 
         try {

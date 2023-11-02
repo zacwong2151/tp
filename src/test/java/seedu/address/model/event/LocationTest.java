@@ -41,6 +41,6 @@ public class LocationTest {
         assertFalse(location.equals(null));
 
         // different values -> returns false
-        assertFalse(location.equals(new Role("sembawang")));
+        assertFalse(location.equals(new Location("sembawang")));
     }
 }
