@@ -105,7 +105,7 @@ public class Volunteer {
         }
 
         return otherVolunteer != null
-                && otherVolunteer.getName().equals(getName());
+                && otherVolunteer.getName().fullName.equalsIgnoreCase(getName().fullName);
     }
 
     /**
