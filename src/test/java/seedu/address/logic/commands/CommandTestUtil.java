@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATETIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MATERIAL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MAX_VOLUNTEER_SIZE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
@@ -42,8 +43,8 @@ public class CommandTestUtil {
     // Event fields
     public static final String VALID_EVENTNAME_CLEANUP = "Clean up";
     public static final String VALID_EVENTNAME_HELPOUT = "Help out";
-    public static final String VALID_ROLE_CLEANER = "cleaner";
-    public static final String VALID_ROLE_BRAIN = "brain";
+    public static final String VALID_ROLE_CLEANER = "20 cleaner";
+    public static final String VALID_ROLE_BRAIN = "15 brain";
     public static final String VALID_START_DATETIME_CLEANUP = "23/9/2023 1800";
     public static final String VALID_END_DATETIME_CLEANUP = "23/9/2023 2100";
     public static final String VALID_END_DATETIME_CLEANUP_BEFORE_START = "23/9/2023 1700";
@@ -57,6 +58,8 @@ public class CommandTestUtil {
     public static final String VALID_MATERIAL_HANDS = "30 hands";
     public static final String VALID_BUDGET_CLEANUP = "80.00";
     public static final String VALID_BUDGET_HELPOUT = "100.00";
+    public static final String VALID_MVS_CLEANUP = "3";
+    public static final String VALID_MVS_HELPOUT = "4";
     public static final String EVENTNAME_DESC_CLEANUP = " " + PREFIX_NAME + VALID_EVENTNAME_CLEANUP;
     public static final String EVENTNAME_DESC_HELPOUT = " " + PREFIX_NAME + VALID_EVENTNAME_HELPOUT;
     public static final String ROLE_DESC_CLEANER = " " + PREFIX_ROLE + VALID_ROLE_CLEANER;
@@ -73,6 +76,8 @@ public class CommandTestUtil {
     public static final String MATERIAL_DESC_HANDS = " " + PREFIX_MATERIAL + VALID_MATERIAL_HANDS;
     public static final String BUDGET_DESC_CLEANUP = " " + PREFIX_BUDGET + VALID_BUDGET_CLEANUP;
     public static final String BUDGET_DESC_HELPOUT = " " + PREFIX_BUDGET + VALID_BUDGET_HELPOUT;
+    public static final String MVS_DESC_CLEANUP = " " + PREFIX_MAX_VOLUNTEER_SIZE + VALID_MVS_CLEANUP;
+    public static final String MVS_DESC_HELPOUT = " " + PREFIX_MAX_VOLUNTEER_SIZE + VALID_MVS_HELPOUT;
     public static final String END_DATETIME_DESC_CLEANUP_BEFORE_START =
             " " + PREFIX_END_DATETIME + VALID_END_DATETIME_CLEANUP_BEFORE_START;
     public static final String EVENTID_DESC = " " + PREFIX_EVENT_ID;
@@ -87,6 +92,7 @@ public class CommandTestUtil {
     public static final String INVALID_DESCRIPTION_DESC = " " + PREFIX_DESCRIPTION + "clean&";
     public static final String INVALID_MATERIAL_DESC = " " + PREFIX_MATERIAL + "20 trash bag&";
     public static final String INVALID_BUDGET_DESC = " " + PREFIX_BUDGET + "50.0";
+    public static final String INVALID_MVS_DESC = " " + PREFIX_MAX_VOLUNTEER_SIZE + "-4&";
 
     // Volunteer fields
     public static final String VALID_NAME_AMY = "Amy Bee";

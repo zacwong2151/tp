@@ -9,7 +9,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Skill {
 
-    public static final String MESSAGE_CONSTRAINTS = "Skills names should be alphanumeric";
+    public static final String MESSAGE_CONSTRAINTS = "Skills should be alphanumeric and should only be one word";
     public static final String VALIDATION_REGEX = "\\p{Alnum}+";
 
     public final String skillName;
@@ -56,7 +56,6 @@ public class Skill {
      * Format state as text for viewing.
      */
     public String toString() {
-        // return '[' + skillName + ']';
         return skillName;
     }
 

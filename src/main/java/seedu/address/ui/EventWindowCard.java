@@ -4,7 +4,6 @@ import java.util.Comparator;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -42,13 +41,15 @@ public class EventWindowCard extends UiPart<Region> {
     @FXML
     private Label description;
     @FXML
+    private Label maxVolunteerSize;
+    @FXML
     private VBox materials;
 
     @FXML
     private Label budget;
 
     @FXML
-    private FlowPane roles;
+    private VBox roles;
 
     /**
      * Creates a {@code EventWindowCard} with the given {@code Event} and index to display.
@@ -62,11 +63,12 @@ public class EventWindowCard extends UiPart<Region> {
         loc.setText("Location: " + event.getLocation().location);
         event.getRoles().stream()
                 .sorted(Comparator.comparing(role -> role.roleName))
-                .forEach(role -> roles.getChildren().add(new Label(role.roleName)));
+                .forEach(role -> roles.getChildren().add(new Label("\u2022 " + role.toUiString())));
         budget.setText("Budget: " + event.getBudget().budget);
         event.getMaterials().stream()
                 .sorted(Comparator.comparing(material -> material.material))
                 .forEach(material -> materials.getChildren().add(new Label("\u2022 " + material.toUiString())));
         description.setText("Description: " + event.getDescription().description);
+        maxVolunteerSize.setText("Maximum number of volunteers in event: " + event.getMaxVolunteerSize().toUiString());
     }
 }

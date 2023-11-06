@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATETIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MATERIAL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MAX_VOLUNTEER_SIZE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATETIME;
@@ -29,6 +30,7 @@ import seedu.address.model.event.Event;
 import seedu.address.model.event.EventName;
 import seedu.address.model.event.Location;
 import seedu.address.model.event.Material;
+import seedu.address.model.event.MaxVolunteerSize;
 import seedu.address.model.event.Role;
 import seedu.address.model.volunteer.Name;
 
@@ -46,7 +48,8 @@ public class EventCreateCommandParser implements Parser<EventCreateCommand> {
     public EventCreateCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_ROLE, PREFIX_START_DATETIME,
-                        PREFIX_END_DATETIME, PREFIX_LOCATION, PREFIX_DESCRIPTION, PREFIX_MATERIAL, PREFIX_BUDGET);
+                        PREFIX_END_DATETIME, PREFIX_LOCATION, PREFIX_DESCRIPTION, PREFIX_MATERIAL, PREFIX_BUDGET,
+                        PREFIX_MAX_VOLUNTEER_SIZE);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ROLE, PREFIX_START_DATETIME,
                 PREFIX_LOCATION, PREFIX_DESCRIPTION)
@@ -56,7 +59,7 @@ public class EventCreateCommandParser implements Parser<EventCreateCommand> {
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_START_DATETIME, PREFIX_END_DATETIME,
-                PREFIX_LOCATION, PREFIX_DESCRIPTION, PREFIX_BUDGET);
+                PREFIX_LOCATION, PREFIX_DESCRIPTION, PREFIX_BUDGET, PREFIX_MAX_VOLUNTEER_SIZE);
         EventName eventName = ParserUtil.parseEventName(argMultimap.getValue(PREFIX_NAME).get());
         Set<Role> roleList = ParserUtil.parseRoles(argMultimap.getAllValues(PREFIX_ROLE));
         DateTime startDate = ParserUtil.parseDateAndTime(argMultimap.getValue(PREFIX_START_DATETIME).get());
@@ -83,8 +86,15 @@ public class EventCreateCommandParser implements Parser<EventCreateCommand> {
             budget = ParserUtil.parseBudget(argMultimap.getValue(PREFIX_BUDGET).get());
         }
 
+        // Check if the command contains the optional max volunteer size field
+        MaxVolunteerSize maxVolunteerSize = new MaxVolunteerSize();
+        if (args.contains(PREFIX_MAX_VOLUNTEER_SIZE.getPrefix())) {
+            maxVolunteerSize = ParserUtil
+                    .parseMaxVolunteerSize(argMultimap.getValue(PREFIX_MAX_VOLUNTEER_SIZE).get());
+        }
+
         Event event = new Event(eventName, roleList, startDate, endDate, location, description, materialList, budget,
-                new HashSet<Name>());
+                new HashSet<Name>(), maxVolunteerSize);
 
         return new EventCreateCommand(event);
     }

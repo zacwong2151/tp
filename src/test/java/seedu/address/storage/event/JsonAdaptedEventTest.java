@@ -34,6 +34,7 @@ public class JsonAdaptedEventTest {
     private static final String VALID_LOCATION = FIRST.getLocation().toString();
     private static final String VALID_DESCRIPTION = FIRST.getDescription().toString();
     private static final String VALID_BUDGET = FIRST.getBudget().toString();
+    private static final String VALID_MAX_VOLUNTEER_SIZE = FIRST.getMaxVolunteerSize().toString();
     private static final List<JsonAdaptedName> VALID_ASSIGNED_VOLUNTEERS = FIRST.getAssignedVolunteers().stream()
             .map(JsonAdaptedName::new)
             .collect(Collectors.toList());
@@ -54,7 +55,8 @@ public class JsonAdaptedEventTest {
     public void toModelType_invalidEventName_throwsIllegalValueException() {
         JsonAdaptedEvent event =
                 new JsonAdaptedEvent(INVALID_EVENT_NAME, VALID_ROLES, VALID_START_DATE, VALID_END_DATE,
-                        VALID_LOCATION, VALID_DESCRIPTION, VALID_MATERIALS, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS);
+                        VALID_LOCATION, VALID_DESCRIPTION, VALID_MATERIALS, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS,
+                        VALID_MAX_VOLUNTEER_SIZE);
         String expectedMessage = EventName.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, event::toModelType);
     }
@@ -63,7 +65,8 @@ public class JsonAdaptedEventTest {
     public void toModelType_nullEventName_throwsIllegalValueException() {
         JsonAdaptedEvent event =
                 new JsonAdaptedEvent(null, VALID_ROLES, VALID_START_DATE, VALID_END_DATE,
-                        VALID_LOCATION, VALID_DESCRIPTION, VALID_MATERIALS, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS);
+                        VALID_LOCATION, VALID_DESCRIPTION, VALID_MATERIALS, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS,
+                        VALID_MAX_VOLUNTEER_SIZE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, EventName.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, event::toModelType);
     }
@@ -72,7 +75,8 @@ public class JsonAdaptedEventTest {
     public void toModelType_invalidStartDate_throwsIllegalValueException() {
         JsonAdaptedEvent event =
                 new JsonAdaptedEvent(VALID_EVENT_NAME, VALID_ROLES, INVALID_START_DATE, VALID_END_DATE,
-                        VALID_LOCATION, VALID_DESCRIPTION, VALID_MATERIALS, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS);
+                        VALID_LOCATION, VALID_DESCRIPTION, VALID_MATERIALS, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS,
+                        VALID_MAX_VOLUNTEER_SIZE);
         String expectedMessage = DateTime.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, event::toModelType);
     }
@@ -81,7 +85,8 @@ public class JsonAdaptedEventTest {
     public void toModelType_nullStartDate_throwsIllegalValueException() {
         JsonAdaptedEvent event =
                 new JsonAdaptedEvent(VALID_EVENT_NAME, VALID_ROLES, null, VALID_END_DATE,
-                        VALID_LOCATION, VALID_DESCRIPTION, VALID_MATERIALS, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS);
+                        VALID_LOCATION, VALID_DESCRIPTION, VALID_MATERIALS, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS,
+                        VALID_MAX_VOLUNTEER_SIZE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, DateTime.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, event::toModelType);
     }
@@ -90,7 +95,8 @@ public class JsonAdaptedEventTest {
     public void toModelType_invalidEndDate_throwsIllegalValueException() {
         JsonAdaptedEvent event =
                 new JsonAdaptedEvent(VALID_EVENT_NAME, VALID_ROLES, VALID_START_DATE, INVALID_END_DATE,
-                        VALID_LOCATION, VALID_DESCRIPTION, VALID_MATERIALS, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS);
+                        VALID_LOCATION, VALID_DESCRIPTION, VALID_MATERIALS, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS,
+                        VALID_MAX_VOLUNTEER_SIZE);
         String expectedMessage = DateTime.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, event::toModelType);
     }
@@ -99,7 +105,8 @@ public class JsonAdaptedEventTest {
     public void toModelType_nullEndDate_throwsIllegalValueException() {
         JsonAdaptedEvent event =
                 new JsonAdaptedEvent(VALID_EVENT_NAME, VALID_ROLES, VALID_START_DATE, null,
-                        VALID_LOCATION, VALID_DESCRIPTION, VALID_MATERIALS, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS);
+                        VALID_LOCATION, VALID_DESCRIPTION, VALID_MATERIALS, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS,
+                        VALID_MAX_VOLUNTEER_SIZE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, DateTime.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, event::toModelType);
     }
@@ -108,7 +115,8 @@ public class JsonAdaptedEventTest {
     public void toModelType_invalidLocation_throwsIllegalValueException() {
         JsonAdaptedEvent event =
                 new JsonAdaptedEvent(VALID_EVENT_NAME, VALID_ROLES, VALID_START_DATE, VALID_END_DATE,
-                        INVALID_LOCATION, VALID_DESCRIPTION, VALID_MATERIALS, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS);
+                        INVALID_LOCATION, VALID_DESCRIPTION, VALID_MATERIALS, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS,
+                        VALID_MAX_VOLUNTEER_SIZE);
         String expectedMessage = Location.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, event::toModelType);
     }
@@ -117,7 +125,8 @@ public class JsonAdaptedEventTest {
     public void toModelType_nullLocation_throwsIllegalValueException() {
         JsonAdaptedEvent event =
                 new JsonAdaptedEvent(VALID_EVENT_NAME, VALID_ROLES, VALID_START_DATE, VALID_END_DATE,
-                        null, VALID_DESCRIPTION, VALID_MATERIALS, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS);
+                        null, VALID_DESCRIPTION, VALID_MATERIALS, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS,
+                        VALID_MAX_VOLUNTEER_SIZE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Location.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, event::toModelType);
     }
@@ -126,7 +135,8 @@ public class JsonAdaptedEventTest {
     public void toModelType_invalidDescription_throwsIllegalValueException() {
         JsonAdaptedEvent event =
                 new JsonAdaptedEvent(VALID_EVENT_NAME, VALID_ROLES, VALID_START_DATE, VALID_END_DATE,
-                        VALID_LOCATION, INVALID_DESCRIPTION, VALID_MATERIALS, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS);
+                        VALID_LOCATION, INVALID_DESCRIPTION, VALID_MATERIALS, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS,
+                        VALID_MAX_VOLUNTEER_SIZE);
         String expectedMessage = Description.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, event::toModelType);
     }
@@ -135,7 +145,8 @@ public class JsonAdaptedEventTest {
     public void toModelType_nullDescription_throwsIllegalValueException() {
         JsonAdaptedEvent event =
                 new JsonAdaptedEvent(VALID_EVENT_NAME, VALID_ROLES, VALID_START_DATE, VALID_END_DATE,
-                        VALID_LOCATION, null, VALID_MATERIALS, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS);
+                        VALID_LOCATION, null, VALID_MATERIALS, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS,
+                        VALID_MAX_VOLUNTEER_SIZE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Description.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, event::toModelType);
     }
@@ -144,7 +155,8 @@ public class JsonAdaptedEventTest {
     public void toModelType_invalidBudget_throwsIllegalValueException() {
         JsonAdaptedEvent event =
                 new JsonAdaptedEvent(VALID_EVENT_NAME, VALID_ROLES, VALID_START_DATE, VALID_END_DATE,
-                        VALID_LOCATION, VALID_DESCRIPTION, VALID_MATERIALS, INVALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS);
+                        VALID_LOCATION, VALID_DESCRIPTION, VALID_MATERIALS, INVALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS,
+                        VALID_MAX_VOLUNTEER_SIZE);
         String expectedMessage = Budget.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, event::toModelType);
     }
@@ -153,19 +165,40 @@ public class JsonAdaptedEventTest {
     public void toModelType_nullBudget_throwsIllegalValueException() {
         JsonAdaptedEvent event =
                 new JsonAdaptedEvent(VALID_EVENT_NAME, VALID_ROLES, VALID_START_DATE, VALID_END_DATE,
-                        VALID_LOCATION, VALID_DESCRIPTION, VALID_MATERIALS, null, VALID_ASSIGNED_VOLUNTEERS);
+                        VALID_LOCATION, VALID_DESCRIPTION, VALID_MATERIALS, null, VALID_ASSIGNED_VOLUNTEERS,
+                        VALID_MAX_VOLUNTEER_SIZE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Budget.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, event::toModelType);
     }
 
     @Test
     public void toModelType_invalidRoles_throwsIllegalValueException() {
-        List<JsonAdaptedRole> invalidRoles = new ArrayList<>(VALID_ROLES);
-        invalidRoles.add(new JsonAdaptedRole(INVALID_ROLE));
+        // test 1: invalid role format
+        List<JsonAdaptedRole> invalidRoles1 = new ArrayList<>(VALID_ROLES);
+        invalidRoles1.add(new JsonAdaptedRole(INVALID_ROLE));
         JsonAdaptedEvent event =
-                new JsonAdaptedEvent(VALID_EVENT_NAME, invalidRoles, VALID_START_DATE, VALID_END_DATE,
-                        VALID_LOCATION, VALID_DESCRIPTION, VALID_MATERIALS, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS);
+                new JsonAdaptedEvent(VALID_EVENT_NAME, invalidRoles1, VALID_START_DATE, VALID_END_DATE,
+                        VALID_LOCATION, VALID_DESCRIPTION, VALID_MATERIALS, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS,
+                        VALID_MAX_VOLUNTEER_SIZE);
         assertThrows(IllegalValueException.class, event::toModelType);
+
+        // test 2: invalid current quantity
+        List<JsonAdaptedRole> invalidRoles2 = new ArrayList<>(VALID_ROLES);
+        invalidRoles2.add(new JsonAdaptedRole("chefs", "-2", "30"));
+        JsonAdaptedEvent event2 =
+                new JsonAdaptedEvent(VALID_EVENT_NAME, invalidRoles2, VALID_START_DATE, VALID_END_DATE,
+                        VALID_LOCATION, VALID_DESCRIPTION, VALID_MATERIALS, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS,
+                        VALID_MAX_VOLUNTEER_SIZE);
+        assertThrows(IllegalValueException.class, event2::toModelType);
+
+        // test 3: invalid required quantity
+        List<JsonAdaptedRole> invalidRoles3 = new ArrayList<>(VALID_ROLES);
+        invalidRoles3.add(new JsonAdaptedRole("cleaners", "30", "-2"));
+        JsonAdaptedEvent event3 =
+                new JsonAdaptedEvent(VALID_EVENT_NAME, invalidRoles3, VALID_START_DATE, VALID_END_DATE,
+                        VALID_LOCATION, VALID_DESCRIPTION, VALID_MATERIALS, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS,
+                        VALID_MAX_VOLUNTEER_SIZE);
+        assertThrows(IllegalValueException.class, event3::toModelType);
     }
 
     @Test
@@ -175,7 +208,8 @@ public class JsonAdaptedEventTest {
         invalidMaterials1.add(new JsonAdaptedMaterial(INVALID_MATERIAL));
         JsonAdaptedEvent event1 =
                 new JsonAdaptedEvent(VALID_EVENT_NAME, VALID_ROLES, VALID_START_DATE, VALID_END_DATE,
-                        VALID_LOCATION, VALID_DESCRIPTION, invalidMaterials1, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS);
+                        VALID_LOCATION, VALID_DESCRIPTION, invalidMaterials1, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS,
+                        VALID_MAX_VOLUNTEER_SIZE);
         assertThrows(IllegalValueException.class, event1::toModelType);
 
         // test 2: invalid current quantity
@@ -183,7 +217,8 @@ public class JsonAdaptedEventTest {
         invalidMaterials2.add(new JsonAdaptedMaterial("trash bags", "-2", "30"));
         JsonAdaptedEvent event2 =
                 new JsonAdaptedEvent(VALID_EVENT_NAME, VALID_ROLES, VALID_START_DATE, VALID_END_DATE,
-                        VALID_LOCATION, VALID_DESCRIPTION, invalidMaterials2, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS);
+                        VALID_LOCATION, VALID_DESCRIPTION, invalidMaterials2, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS,
+                        VALID_MAX_VOLUNTEER_SIZE);
         assertThrows(IllegalValueException.class, event2::toModelType);
 
         // test 3: invalid required quantity
@@ -191,7 +226,8 @@ public class JsonAdaptedEventTest {
         invalidMaterials3.add(new JsonAdaptedMaterial("trash bags", "30", "-2"));
         JsonAdaptedEvent event3 =
                 new JsonAdaptedEvent(VALID_EVENT_NAME, VALID_ROLES, VALID_START_DATE, VALID_END_DATE,
-                        VALID_LOCATION, VALID_DESCRIPTION, invalidMaterials3, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS);
+                        VALID_LOCATION, VALID_DESCRIPTION, invalidMaterials3, VALID_BUDGET, VALID_ASSIGNED_VOLUNTEERS,
+                        VALID_MAX_VOLUNTEER_SIZE);
         assertThrows(IllegalValueException.class, event3::toModelType);
     }
 }

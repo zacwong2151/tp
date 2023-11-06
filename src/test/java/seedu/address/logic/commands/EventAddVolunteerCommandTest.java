@@ -13,6 +13,7 @@ import static seedu.address.testutil.TypicalVolunteers.getTypicalVolunteerStorag
 
 import org.junit.jupiter.api.Test;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.eventvolunteercommands.EventAddVolunteerCommand;
@@ -21,12 +22,13 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.event.Event;
+import seedu.address.model.volunteer.Volunteer;
+import seedu.address.testutil.EventBuilder;
 
 public class EventAddVolunteerCommandTest {
-    private Model model = new ModelManager(getTypicalEventStorage(), getTypicalVolunteerStorage(), new UserPrefs());
-
     @Test
     public void execute_invalidIndexes_throwsCommandException() {
+        Model model = new ModelManager(getTypicalEventStorage(), getTypicalVolunteerStorage(), new UserPrefs());
         Index outOfBoundEventIndex = Index.fromOneBased(model.getFilteredEventList().size() + 1);
         Index outOfBoundVolunteerIndex = Index.fromOneBased(model.getFilteredVolunteerList().size() + 1);
         Index validEventIndex = Index.fromOneBased(model.getFilteredEventList().size());
@@ -54,35 +56,91 @@ public class EventAddVolunteerCommandTest {
 
     @Test
     public void execute_duplicateVolunteer_throwsCommandException() {
+        Model model = new ModelManager(getTypicalEventStorage(), getTypicalVolunteerStorage(), new UserPrefs());
+        ObservableList<Event> events = model.getEventStorage().getEventList();
+        ObservableList<Volunteer> volunteers = model.getVolunteerStorage().getVolunteerList();
+
         // Assign a volunteer to an existing event
-        model.getEventStorage().getEventList().get(model.getEventStorage().getEventList().size() - 1)
-                .addVolunteer(model.getVolunteerStorage().getVolunteerList()
-                        .get(model.getVolunteerStorage().getVolunteerList().size() - 1));
+        events.get(events.size() - 1).addVolunteer(volunteers.get(volunteers.size() - 1));
 
         Index validEventIndex = Index.fromOneBased(model.getFilteredEventList().size());
         Index validVolunteerIndex = Index.fromOneBased(model.getFilteredVolunteerList().size());
         EventAddVolunteerCommand command = new EventAddVolunteerCommand(validEventIndex, validVolunteerIndex);
+
+        // first execution, shouldn't fail
+        try {
+            command.execute(model);
+        } catch (CommandException e) {
+            fail("CommandException shouldn't fail in the first run!");
+        }
+
+        // second execution, should fail since the volunteer has been assigned to the event
         assertThrows(CommandException.class, EventAddVolunteerCommand.MESSAGE_DUPLICATE_VOLUNTEER, ()
                 -> command.execute(model));
     }
 
     @Test
     public void execute_validIndexes_addSuccessful() {
-        Model startModel = new ModelManager(getTypicalEventStorage(), getTypicalVolunteerStorage(),
+        Model model = new ModelManager(getTypicalEventStorage(), getTypicalVolunteerStorage(),
                 new UserPrefs());
-        Index validEventIndex = Index.fromOneBased(startModel.getFilteredEventList().size());
+        Index validEventIndex = Index.fromOneBased(model.getFilteredEventList().size());
         Index validVolunteerIndex = Index.fromOneBased(2);
         EventAddVolunteerCommand command = new EventAddVolunteerCommand(validEventIndex, validVolunteerIndex);
 
         try {
-            CommandResult commandResult = command.execute(startModel);
-            Event eventToAddTo = startModel.getEventStorage().getEventList().get(validEventIndex.getZeroBased());
+            CommandResult commandResult = command.execute(model);
+            Event eventToAddTo = model.getEventStorage().getEventList().get(validEventIndex.getZeroBased());
             String expectedMessage = String.format(EventAddVolunteerCommand.MESSAGE_SUCCESS,
                     Messages.format(eventToAddTo), eventToAddTo.getAssignedVolunteers().size());
-            assertEquals(commandResult.getFeedbackToUser(), expectedMessage);
+            assertEquals(expectedMessage, commandResult.getFeedbackToUser());
         } catch (Exception e) {
             fail("Exception " + e + " should not be thrown!");
         }
+    }
+
+    @Test
+    public void hasClashingEvents_clashingEvents_addFailure() {
+        Model model = new ModelManager(getTypicalEventStorage(), getTypicalVolunteerStorage(), new UserPrefs());
+        ObservableList<Event> events = model.getEventStorage().getEventList();
+        ObservableList<Volunteer> volunteers = model.getVolunteerStorage().getVolunteerList();
+
+        // Assign a volunteer to an existing event
+        Volunteer volunteerToAssign = volunteers.get(volunteers.size() - 1);
+        Event eventToAssign = events.get(events.size() - 1);
+        Volunteer updatedVolunteer = volunteerToAssign.addEvent(eventToAssign);
+        Event updatedEvent = eventToAssign.addVolunteer(volunteerToAssign);
+        model.setVolunteer(volunteerToAssign, updatedVolunteer);
+        model.setEvent(eventToAssign, updatedEvent);
+
+        // Start date clashes
+        Event startDateClashingEvent = new EventBuilder().withEventName("Event 1")
+                .withStartDate("23/10/2023 1900").withEndDate("23/10/2023 2200").build();
+        model.addEvent(startDateClashingEvent);
+        EventAddVolunteerCommand startDateClashCommand = new EventAddVolunteerCommand(
+                Index.fromOneBased(model.getFilteredEventList().size()),
+                Index.fromOneBased(model.getFilteredVolunteerList().size()));
+        assertThrows(CommandException.class, EventAddVolunteerCommand.MESSAGE_CLASHING_EVENTS, ()
+                -> startDateClashCommand.execute(model));
+
+        // End date clashes
+        Event endDateClashingEvent = new EventBuilder().withEventName("Event 2")
+                .withStartDate("23/10/2023 1700").withEndDate("23/10/2023 2000").build();
+        model.addEvent(endDateClashingEvent);
+        EventAddVolunteerCommand endDateClashCommand = new EventAddVolunteerCommand(
+                Index.fromOneBased(model.getFilteredEventList().size()),
+                Index.fromOneBased(model.getFilteredVolunteerList().size()));
+        assertThrows(CommandException.class, EventAddVolunteerCommand.MESSAGE_CLASHING_EVENTS, ()
+                -> endDateClashCommand.execute(model));
+
+        // Duration encompasses event
+        Event durationEncompassesEvent = new EventBuilder().withEventName("Event 3")
+                .withStartDate("23/10/2023 1700").withEndDate("23/10/2023 2200").build();
+        model.addEvent(durationEncompassesEvent);
+        EventAddVolunteerCommand durationEncompassesEventCommand = new EventAddVolunteerCommand(
+                Index.fromOneBased(model.getFilteredEventList().size()),
+                Index.fromOneBased(model.getFilteredVolunteerList().size()));
+        assertThrows(CommandException.class, EventAddVolunteerCommand.MESSAGE_CLASHING_EVENTS, ()
+                -> durationEncompassesEventCommand.execute(model));
     }
 
     @Test

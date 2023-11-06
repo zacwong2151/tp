@@ -75,7 +75,7 @@ public class EventNameContainsKeywordsPredicateTest {
         // Keywords match role, and location, but does not match name
         predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("DoNothing", "Event", "leader",
                 "admiralty"));
-        assertFalse(predicate.test(new EventBuilder().withEventName("Clean").withRoles("Event Leader")
+        assertFalse(predicate.test(new EventBuilder().withEventName("Clean").withRoles("5 Event Leader")
                 .withLocation("admiralty").withDescription("help out la").build()));
         predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("Food"));
         assertFalse(predicate.test(new EventBuilder().withEventName("Clean up").build()));
@@ -86,13 +86,13 @@ public class EventNameContainsKeywordsPredicateTest {
         assertFalse(predicate.test(new EventBuilder().withEventName("Clean up beach").withStartDate("23/9/2023 1800")
                 .withEndDate("24/9/2023 2100").withDescription("Clean very clean").withLocation("East").build()));
     }
-
     @Test
     public void toStringMethod() {
         List<String> keywords = List.of("keyword1", "keyword2");
         EventNameContainsKeywordsPredicate predicate = new EventNameContainsKeywordsPredicate(keywords);
 
-        String expected = EventNameContainsKeywordsPredicate.class.getCanonicalName() + "{keywords=" + keywords + "}";
+        String expected = EventNameContainsKeywordsPredicate.class.getCanonicalName()
+                + "{event names=" + keywords + "}";
         assertEquals(expected, predicate.toString());
     }
 }

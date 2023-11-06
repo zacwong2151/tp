@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATETIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MATERIAL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MAX_VOLUNTEER_SIZE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATETIME;
@@ -25,7 +26,7 @@ public class EventCreateCommand extends Command {
 
     public static final String COMMAND_WORD = "ecreate";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an event to the event list. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an event to the event list.\n"
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_ROLE + "ROLE "
@@ -33,8 +34,9 @@ public class EventCreateCommand extends Command {
             + "[" + PREFIX_END_DATETIME + "END DATE AND TIME] "
             + PREFIX_LOCATION + "LOCATION "
             + PREFIX_DESCRIPTION + "DESCRIPTION "
-            + "[" + PREFIX_MATERIAL + "MATERIALS]...\n"
-            + "[" + PREFIX_BUDGET + "BUDGET]...\n"
+            + "[" + PREFIX_MATERIAL + "MATERIALS]... "
+            + "[" + PREFIX_BUDGET + "BUDGET]... "
+            + "[" + PREFIX_MAX_VOLUNTEER_SIZE + "MAX VOLUNTEER COUNT]\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "Clean up at Orchard "
             + PREFIX_ROLE + "Cleaner "
@@ -45,7 +47,8 @@ public class EventCreateCommand extends Command {
             + PREFIX_DESCRIPTION + "Cleaning up Orchard Road! "
             + PREFIX_MATERIAL + "Trash bag "
             + PREFIX_MATERIAL + "TONGS "
-            + PREFIX_BUDGET + "50.00";
+            + PREFIX_BUDGET + "50.00 "
+            + PREFIX_MAX_VOLUNTEER_SIZE + "5";
     public static final String MESSAGE_SUCCESS = "New EVENT added: %1$s";
     public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists in the event list";
 
@@ -68,6 +71,7 @@ public class EventCreateCommand extends Command {
         }
 
         model.addEvent(toAdd);
+        model.commitToBothVersionedStorages(model.getEventStorage(), model.getVolunteerStorage());
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }
 

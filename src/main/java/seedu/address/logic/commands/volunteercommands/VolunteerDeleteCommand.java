@@ -11,6 +11,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.event.Event;
 import seedu.address.model.volunteer.Volunteer;
 
 /**
@@ -44,6 +45,16 @@ public class VolunteerDeleteCommand extends Command {
 
         Volunteer volunteerToDelete = lastShownList.get(targetIndex.getZeroBased());
         model.deleteVolunteer(volunteerToDelete);
+
+        // cascading effect: deleting a volunteer should also remove them from the events they're in
+        for (Event event : model.getEventStorage().getEventList()) {
+            if (event.hasVolunteer(volunteerToDelete)) {
+                Event newEvent = event.removeVolunteer(volunteerToDelete);
+                model.setEvent(event, newEvent);
+            }
+        }
+
+        model.commitToBothVersionedStorages(model.getEventStorage(), model.getVolunteerStorage());
         return new CommandResult(String.format(MESSAGE_DELETE_VOLUNTEER_SUCCESS, Messages.format(volunteerToDelete)));
     }
 

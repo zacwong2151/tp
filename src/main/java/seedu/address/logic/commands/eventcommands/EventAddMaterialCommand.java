@@ -27,7 +27,7 @@ public class EventAddMaterialCommand extends Command {
     public static final String COMMAND_WORD = "eaddm";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an amount of material to a specified event in"
-            + " the event list. Parameters: "
+            + " the event list.\nParameters: "
             + PREFIX_EVENT_ID + "EVENT_ID "
             + PREFIX_MATERIAL + "MATERIAL\n"
             + "Example: " + COMMAND_WORD + " "
@@ -77,6 +77,7 @@ public class EventAddMaterialCommand extends Command {
         Event updatedEvent = createEditedEvent(event, updatedMaterial);
         model.setEvent(event, updatedEvent);
         model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+        model.commitToBothVersionedStorages(model.getEventStorage(), model.getVolunteerStorage());
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(event)));
     }
@@ -107,7 +108,8 @@ public class EventAddMaterialCommand extends Command {
                 eventToEdit.getDescription(),
                 updatedMaterials,
                 eventToEdit.getBudget(),
-                eventToEdit.getAssignedVolunteers());
+                eventToEdit.getAssignedVolunteers(),
+                eventToEdit.getMaxVolunteerSize());
     }
 
     @Override

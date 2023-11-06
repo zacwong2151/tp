@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalEvents.getTypicalEventStorage;
@@ -12,6 +13,7 @@ import static seedu.address.testutil.TypicalVolunteers.getTypicalVolunteerStorag
 
 import org.junit.jupiter.api.Test;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.eventvolunteercommands.EventRemoveVolunteerCommand;
@@ -20,8 +22,9 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.event.Event;
+import seedu.address.model.volunteer.Volunteer;
 
-public class EventRemoveVolunteerTest {
+public class EventRemoveVolunteerCommandTest {
     private Model model = new ModelManager(getTypicalEventStorage(), getTypicalVolunteerStorage(), new UserPrefs());
 
     @Test
@@ -60,23 +63,29 @@ public class EventRemoveVolunteerTest {
     }
     @Test
     public void execute_validIndexes_removeSuccessful() {
-        Model startModel = new ModelManager(getTypicalEventStorage(), getTypicalVolunteerStorage(),
+        Model model = new ModelManager(getTypicalEventStorage(), getTypicalVolunteerStorage(),
                 new UserPrefs());
-        Index validEventIndex = Index.fromOneBased(startModel.getFilteredEventList().size());
-        Index validVolunteerIndex = Index.fromOneBased(startModel.getFilteredVolunteerList().size());
-        // Add the volunteer to the event
-        startModel.getEventStorage().getEventList().get(validEventIndex.getZeroBased()).addVolunteer(
-                model.getVolunteerStorage().getVolunteerList().get(validVolunteerIndex.getZeroBased()));
-        EventRemoveVolunteerCommand command = new EventRemoveVolunteerCommand(validEventIndex, validVolunteerIndex);
+        Index validEventIndex = Index.fromOneBased(model.getFilteredEventList().size());
+        Index validVolunteerIndex = Index.fromOneBased(model.getFilteredVolunteerList().size());
+        ObservableList<Event> events = this.model.getEventStorage().getEventList();
+        ObservableList<Volunteer> volunteers = this.model.getFilteredVolunteerList();
 
+        // Add the volunteer to the event
+        Event currentEvent = model.getEventStorage().getEventList().get(validEventIndex.getZeroBased());
+        Volunteer volunteerToAdd = model.getVolunteerStorage().getVolunteerList()
+                .get(validVolunteerIndex.getZeroBased());
+        Event newEvent = currentEvent.addVolunteer(volunteerToAdd);
+        model.setEvent(currentEvent, newEvent);
+
+        EventRemoveVolunteerCommand command = new EventRemoveVolunteerCommand(validEventIndex, validVolunteerIndex);
         try {
-            CommandResult commandResult = command.execute(startModel);
-            Event eventToRemoveFrom = startModel.getEventStorage().getEventList().get(validEventIndex.getZeroBased());
+            CommandResult commandResult = command.execute(model);
+            Event eventToRemoveFrom = model.getEventStorage().getEventList().get(validEventIndex.getZeroBased());
             String expectedMessage = String.format(EventRemoveVolunteerCommand.MESSAGE_SUCCESS,
                     Messages.format(eventToRemoveFrom), eventToRemoveFrom.getAssignedVolunteers().size());
             assertEquals(commandResult.getFeedbackToUser(), expectedMessage);
         } catch (Exception e) {
-            assertTrue(false);
+            fail("Exception " + e + " should not be thrown here!");
         }
     }
     @Test

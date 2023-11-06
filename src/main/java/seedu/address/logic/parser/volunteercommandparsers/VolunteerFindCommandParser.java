@@ -44,12 +44,11 @@ public class VolunteerFindCommandParser implements Parser<VolunteerFindCommand> 
         assert argMultimap.getValue(PREFIX_NAME).isPresent() || argMultimap.getValue(PREFIX_SKILL).isPresent()
                 : "At least one PREFIX_NAME or PREFIX_SKILL should be present";
 
-        Set<Name> nameKeywords = ParserUtil.parseNames(argMultimap.getAllValues(PREFIX_NAME));
+        Set<Name> nameKeywords = ParserUtil.parseVolunteerNames(argMultimap.getAllValues(PREFIX_NAME));
         List<Name> names = new ArrayList<>(nameKeywords);
         Set<Skill> skillKeywords = ParserUtil.parseSkills(argMultimap.getAllValues(PREFIX_SKILL));
         List<Skill> skills = new ArrayList<>(skillKeywords);
 
-        //return new VolunteerFindCommand(new SkillNameContainsKeywordsPredicate(names, skills));
         return new VolunteerFindCommand(new SkillNameContainsKeywordsPredicate(names, skills));
     }
 

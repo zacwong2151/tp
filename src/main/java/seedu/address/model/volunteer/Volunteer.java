@@ -79,7 +79,7 @@ public class Volunteer {
      * @return The volunteer after the addition of the new event.
      */
     public Volunteer addEvent(Event event) {
-        Set<EventName> newEvents = assignedEvents;
+        Set<EventName> newEvents = new HashSet<>(assignedEvents);
         newEvents.add(event.getEventName());
 
         return new Volunteer(name, phone, email, skills, newEvents);
@@ -90,7 +90,7 @@ public class Volunteer {
      * @return The volunteer after the removal of the event.
      */
     public Volunteer removeEvent(Event event) {
-        Set<EventName> newEvents = assignedEvents;
+        Set<EventName> newEvents = new HashSet<>(assignedEvents);
         newEvents.remove(event.getEventName());
 
         return new Volunteer(name, phone, email, skills, newEvents);
