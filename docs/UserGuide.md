@@ -216,12 +216,6 @@ Examples:
 * `vlist`, followed by `vdelete 6` will remove the 6th volunteer displayed in the volunteer list.
 * `vfind n/Betsy` followed by `vdelete 1` deletes the 1st volunteer in the results of the `vfind` command.
 
-### Clearing all volunteer entries: `vclear`
-
-Clears all volunteers from the volunteer list.
-
-Format: `vclear`
-
 ### Creating an event: `ecreate`
 
 Volunteer coordinators can create new events.
@@ -294,12 +288,6 @@ Restrictions:
 Examples:
 * `elist` followed by `edelete 2` deletes the 2nd event in the event list.
 * `efind Beach cleaning` followed by `edelete 1` deletes the 1st event in the results of the `find` command (tentative feature)
-
-### Clearing all event entries: `eclear`
-
-Clears all entries from the event list.
-
-Format: `eclear`
 
 ### Adding and tracking quantity of materials into an event: `eaddm`
 
