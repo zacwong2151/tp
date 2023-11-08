@@ -295,6 +295,40 @@ Examples:
 * `elist` followed by `edelete 2` deletes the 2nd event in the event list.
 * `efind Beach cleaning` followed by `edelete 1` deletes the 1st event in the results of the `find` command (tentative feature)
 
+### Edit the details of an event: `eedit`
+
+Volunteer coordinators can edit the details of the events.
+
+Format: `eedit EVENT_Id [n/EVENT_NAME] [r/ROLES_NEED]... [sd/START_DATETIME] [ed/END_DATETIME] [l/LOCATION] [dsc/DESCRIPTION] [m/MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET]`
+
+Parameters:
+* n/ - Event name
+* r/ - Roles needed for the event and its quantity
+* sd/ - Start date and time of the event
+* ed/ - End date and time of the event
+* l/ - Location of the event
+* dsc/ - Description of the event
+* m/ - Materials needed for the event and its quantity
+* b/ - Budget for the event
+
+Restrictions:
+* The event index must be valid, i.e. If the list of events displayed is 10 events long, the acceptable values will be from 1-10.
+* All parameters must be separated by a single space.
+* The date and time formats must be exactly `DD/MM/YYYY TTTT`.
+* If the end date and time is specified, it must be the _same time_ or _after_ the start date and time of the event.
+* If the start date and time is specified, it must be the _same time_ or _before_ the end date and time of the event.
+* The material argument must be an integer, followed by a space, and then the name of material required or empty.
+* The role argument must be an integer, followed by a space, and then the name of role required or empty.
+* The budget argument must be a number in 2 decimal places.
+
+**Tips:** 
+* There must be at least 1 field to be edited. 
+* The assigned volunteers cannot be edited with eedit.
+
+Examples:
+* `eedit 1 n/clean beach r/10 cleaner sd/30/11/2023 1200 l/east coast park dsc/help clean east coast park m/ `
+    * Edits the event to name `clean beach`, roles needed `10 cleaner`, event date from `30th November 2023, 12pm`, location `east coast park`, description `help clean east coast park` and materials needed to empty.
+
 ### Clearing all event entries: `eclear`
 
 Clears all entries from the event list.
