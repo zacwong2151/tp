@@ -36,6 +36,8 @@
       <VBox fx:id="materials" />
       <Separator />
       <Label fx:id="description" styleClass="cell_small_label" text="\$description" wrapText="true" />
+      <Separator />
+      <Label fx:id="maxVolunteerSize" styleClass="cell_small_label" text="\$maxVolunteerSize" wrapText="true" />
     </VBox>
       <rowConstraints>
          <RowConstraints />

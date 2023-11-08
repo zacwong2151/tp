@@ -23,10 +23,10 @@ public class EventRemoveVolunteerCommand extends Command {
 
     public static final String COMMAND_WORD = "eremovev";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Removes a volunteer from an event. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Removes a volunteer from an event.\n"
             + "Parameters: "
             + PREFIX_EVENT_ID + "EVENT ID "
-            + PREFIX_VOLUNTEER_ID + "VOLUNTEER ID "
+            + PREFIX_VOLUNTEER_ID + "VOLUNTEER ID\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_EVENT_ID + "1 "
             + PREFIX_VOLUNTEER_ID + "2 ";

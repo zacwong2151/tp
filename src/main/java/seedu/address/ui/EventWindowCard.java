@@ -41,6 +41,8 @@ public class EventWindowCard extends UiPart<Region> {
     @FXML
     private Label description;
     @FXML
+    private Label maxVolunteerSize;
+    @FXML
     private VBox materials;
 
     @FXML
@@ -67,5 +69,6 @@ public class EventWindowCard extends UiPart<Region> {
                 .sorted(Comparator.comparing(material -> material.material))
                 .forEach(material -> materials.getChildren().add(new Label("\u2022 " + material.toUiString())));
         description.setText("Description: " + event.getDescription().description);
+        maxVolunteerSize.setText("Maximum number of volunteers in event: " + event.getMaxVolunteerSize().toUiString());
     }
 }
