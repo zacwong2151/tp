@@ -323,6 +323,30 @@ Restrictions:
 Examples:
 * `eremovev vid/1 eid/1` removes the volunteer with id 1 from the event with id 1.
 
+### Undo a Command: `undo`
+
+Undoes an undo-able command
+
+* Undo-able commands include:
+  * vcreate
+  * vdelete
+  * vedit
+  * vclear
+  * ecreate
+  * edelete
+  * eedit
+  * eaddv
+  * eremovev
+  * eaddm
+* Only commands that changed the current history stack can be undone (iVolunteer does not remember commands that were executed in the previous run of the app)
+
+### Redo a Command: `redo`
+
+Redoes the undo command. Only can be executed after an undo command is executed. This command can be thought of as an 'undo' command that can only undo a `undo` command
+
+
+    
+
 ### Exiting the program : `exit`
 
 Exits the program.
@@ -331,11 +355,11 @@ Format: `exit`
 
 ### Saving the data
 
-iVolunteer data are saved in the hard disk automatically after any command executed. There is no need to save manually.
+iVolunteer data is automatically saved in the hard disk after any command is executed. There is no need to manually save your data.
 
 ### Editing the data file
 
-iVolunteer data are saved automatically as two JSON files, `[JAR file location]/data/volunteerStorage.json` (volunteer storage) and `[JAR file location]/data/eventStorage.json` (event storage and _event-volunteer interactions_). Advanced users are welcome to update data directly by editing both data files.
+iVolunteer data is saved automatically as two JSON files, `[JAR file location]/data/volunteerStorage.json` (volunteer storage) and `[JAR file location]/data/eventStorage.json` (event storage and _event-volunteer interactions_). Advanced users are welcome to update data directly by editing both data files.
 
 _**Note:** Event-volunteer interactions through `eaddv`, `elistv`, `eremovev` coming in v1.3!_
 
