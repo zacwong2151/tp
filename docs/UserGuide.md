@@ -226,7 +226,7 @@ Format: `vclear`
 
 Volunteer coordinators can create new events.
 
-Format: `ecreate n/EVENT_NAME r/ROLES_NEEDED… sd/START_DATETIME [ed/END_DATETIME] l/LOCATION dsc/DESCRIPTION [m/MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET]`
+Format: `ecreate n/EVENT_NAME r/ROLES_NEEDED… sd/START_DATETIME [ed/END_DATETIME] l/LOCATION dsc/DESCRIPTION [m/MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET] [vs/MAX_VOLUNTEER_COUNT]`
 
 Parameters:
 * n/ - Event name
@@ -237,6 +237,7 @@ Parameters:
 * dsc/ - Description of the event
 * m/ - Materials needed for the event and its quantity
 * b/ - Budget for the event
+* vs/ - Maximum number of volunteers allowed in the event
 
 Restrictions:
 * All parameters must be separated by a single space.
@@ -246,10 +247,14 @@ Restrictions:
 * The material argument must be an integer, followed by a space, and then the name of material required.
 * The role argument must be an integer, followed by a space, and then the name of role required.
 * The budget argument must be a number in 2 decimal places.
+* The maximum number of volunteers argument must be a non-negative integer.
 
 <box type="tip" seamless>
 
-**Tip:** If the end date and time is not specified, iVolunteer will automatically set the end date and time to **exactly 3 hours** after the start date and time.
+**Tips:** 
+- If the end date and time is not specified, iVolunteer will automatically set the end date and time to **exactly 3 hours** after the start date and time.
+- If the maximum number of volunteers argument is not specified, iVolunteer will not set a limit to the number of volunteers within the event.
+  - Alternatively, if the maximum number of volunteers is set to 0 (e.g. `ecreate ... vs/0`), iVolunteer will remove a limit to the number of volunteer within the event.
 </box>
 
 Examples:
@@ -359,6 +364,10 @@ Restrictions:
 * The event id must be positive and must correspond to exactly one of the ids of the events currently listed.
 * The volunteer id must be positive and must correspond to exactly one of the ids of the volunteers currently listed.
 * The volunteer must not already be added to the event.
+* The number of volunteers within the event should not be equal to the maximum number of volunteers allowed for the event, since adding a new volunteer
+  at that point would result in the number of volunteers exceeding the maximum allowed. 
+  * **Note:** To change the limit on the maximum number of volunteers for a certain event, use the
+    [`eedit` command](#edit-the-details-of-an-event-eedit).
 
 Examples:
 * `eaddv vid/1 eid/1` 
