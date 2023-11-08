@@ -322,7 +322,7 @@ Restrictions:
 * The budget argument must be a number in 2 decimal places.
 
 **Tips:** 
-* There must be at least 1 field to be edited. 
+* At least 1 optional fields must be provided.
 * The assigned volunteers cannot be edited with eedit.
 
 Examples:
