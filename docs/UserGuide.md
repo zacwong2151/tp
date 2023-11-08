@@ -319,7 +319,7 @@ Restrictions:
 
 Examples:
 * `ecreate n/clean beach m/10 trash bags ...` (refer to [ecreate](#creating-an-event-ecreate) above for full command) creates an 
-  event `clean beach` that requires `20 trash bags`. By performing `efind clean beach`, then `eaddm eid/1 10 trash bags`,
+  event `clean beach` that requires `20 trash bags`. By performing `efind clean beach`, then `eaddm eid/1 m/10 trash bags`,
   the event `clean beach` will now contain `10 / 20 trash bags`.
 
 ### Adding a volunteer into an event: `eaddv`
