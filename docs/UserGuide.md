@@ -243,8 +243,14 @@ Restrictions:
 * All arguments cannot be blank.
 * The date and time formats must be exactly `DD/MM/YYYY TTTT`.
 * If the end date and time is specified, it must be the _same time_ or _after_ the start date and time of the event.
-* The material argument must be an integer, followed by a space, and then the name of material required.
-* The role argument must be an integer, followed by a space, and then the name of role required.
+* The material argument must be a non-negative integer, followed by a space, and then the name of the material required.
+  * **Example of valid materials:** `m/30 potato`, `m/0 apples`
+* The role argument must be a non-negative integer, followed by a space, and then the name of the role required.
+  * **Example of valid roles:** `r/20 teachers`, `r/0 farmer`
+* If there are any duplicated materials or roles, only the first material or role will be considered.
+  * Duplicated materials are materials with the same material name. For example, `m/23 potatoes` and `m/50 potatoes` are duplicates.
+  * Duplicated roles are materials with the same role name. For example, `r/23 farmers` and `r/50 farmers` are duplicates.
+  * Take note that duplicated materials and roles are case-sensitive: `m/23 Potatoes` and `m/50 potatoes` are not duplicates.
 * The budget argument must be a number in 2 decimal places.
 
 <box type="tip" seamless>
