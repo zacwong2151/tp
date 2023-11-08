@@ -103,9 +103,12 @@ Parameters:
 </box>
 
 Restrictions:
-* The maximum number of characters of a volunteer name is 30.
 * The email must be in a valid format.
-* The phone number must be a valid 8-digit Singapore phone number.
+* The phone number must be a 8-digit number.
+* The skills are case-sensitive (`chef` and `Chef` are considered different skills).
+* Duplicate volunteers cannot be added to the volunteer list.
+  * A volunteer is considered duplicate if: his phone number **or** email address already exists in the volunteer list (reason being: in the real world, no two users can possess the same phone number or email address).
+  * Volunteers with the same name are not considered as duplicates (reason being: in the real world, you can have users with the same name).
 
 Examples:
 * `vcreate n/John p/91234567 e/john123@gmail.com` creates a volunteer named `John` with a phone number of `91234567` and an email address of `john123@gmail.com`, with no specific skills. The volunteer profile will be appended to the bottom of the volunteer list.
@@ -117,31 +120,49 @@ Shows a list of all volunteers in the volunteer list.
 
 Format: `vlist`
 
-### Locating volunteers by name: `vfind`
+### Locating volunteers by name or by skill: `vfind`
 
-Finds volunteers whose names contain any of the given keywords.
+Finds volunteers whose name or skills contain any of the given keywords.
 
 Format: `vfind [n/NAME]…​ [s/SKILL]…​`
 
 * At least one of the optional fields must be provided.
 * The search is case-insensitive. e.g `n/hans` will match `Hans`.
+* Allows partial matching of keywords e.g. `n/Han` will match `Hans`.
 * Both the volunteer name and corresponding skills can be searched.
 * The order of the keywords does not matter. e.g. `s/chef n/Hans` and `n/Hans s/chef` are valid inputs.
-* Allows partial matching of keywords e.g. `n/Han` will match `Hans`.
-* Volunteers matching **at least one** NAME keyword will be returned (i.e. `OR` search).
-  e.g. `n/Hans n/Bo` will return `Hans Gruber`, `Bo Yang`.
-* Volunteers matching **both** SKILL keywords will be returned (i.e. `AND` search).
-  e.g. `s/chef s/boxer` will return volunteers that have skills `chef` and `boxer`.
+
+Common cases:
+* Case 1: user searches for **one** name
+  * Volunteers who have that NAME keyword will be returned
+* Case 2: user searches for **more than one** names
+  * Volunteers who have **at least one** of the NAME keywords will be returned (i.e. `OR` search).
+    e.g. `n/Hans n/Bo` will return `Hans Gruber`, `Bo Yang`.
+* Case 3: user searches for **one** skill
+  * Volunteers who have that SKILL keyword will be returned
+* Case 4: user searches for **more than one** skills
+  * Volunteers who have **both** SKILL keywords will be returned (i.e. `AND` search).
+    e.g. `s/intelligent s/smart` will return volunteers that have both skills `intelligent` and `smart`.
+* Case 5: user searches for **one** name and **one** skill
+  * Volunteers who have **both** NAME and SKILL keyword will be returned (i.e. `AND` search).
 
 Examples:
-* `vfind n/John` returns `john` and `John Doe`
-* `vfind n/alex n/david` returns `Alex Yeoh`, `David Li`<br>
+* Case 1: `vfind n/David` 
+  * returns `David Li` and `David Tan`.
+* Case 2: `vfind n/alex n/roy` 
+  * returns `Alexis Yeoh`, `Roy Balakrishnan`.
+* Case 3: `vfind s/chef`
+  * returns `George`, `Ben`.
+  
+![result for 'find alex david'](images/findChefs.png)
+* Case 4: `vfind s/intelligent s/smart`
+  * returns `Bernice Yu`.
+* Case 5: `vfind n/charlotte s/mechanic`
+  * returns `Charlotte Oliveiro`.
 
 
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
 
 
-* `vfind s/chef` returns volunteers who are chefs
 
 ### Editing a volunteer: `vedit`
 
@@ -382,7 +403,7 @@ coming soon
 | **Read an individual event**                  | `eshow EVENT_ID` <br> e.g., `eshow 8`                                                                                                                                                                                                                                                                                                   |
 | **Delete an event**                           | `edelete EVENT_ID` <br> e.g., `edelete 3`                                                                                                                                                                                                                                                                                               |
 | **Clear all events**                          | `eclear`                                                                                                                                                                                                                                                                                                                                |
-| **Create a new volunteer profile**            | `vcreate vn/VOLUNTEER_NAME hp/PHONE_NUMBER e/EMAIL [s/SKILLS]...`<br> e.g.,`vcreate vn/John Lim hp/81234567 e/john123@gmail.com s/Cooking`                                                                                                                                                                                              |
+| **Create a new volunteer profile**            | `vcreate n/VOLUNTEER_NAME p/PHONE_NUMBER e/EMAIL [s/SKILLS]...`<br> e.g.,`vcreate n/John Lim p/81234567 e/john123@gmail.com s/cooking`                                                                                                                                                                                                  |
 | **List all volunteer profiles**               | `vlist`                                                                                                                                                                                                                                                                                                                                 |
 | **Edit a volunteer profile**                  | `vedit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [s/SKILL]…​` <br> e.g., `vedit 1 p/91234567 e/johndoe@example.com`                                                                                                                                                                                                                            |
 | **Delete a volunteer profile**                | `vdelete VOLUNTEER_ID` <br> e.g., `vdelete 4`                                                                                                                                                                                                                                                                                           |
