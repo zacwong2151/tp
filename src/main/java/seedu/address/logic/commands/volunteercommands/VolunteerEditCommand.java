@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
@@ -21,10 +20,8 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.eventcommands.EventEditCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.event.Event;
 import seedu.address.model.event.EventName;
 import seedu.address.model.skill.Skill;
 import seedu.address.model.volunteer.Email;
@@ -90,7 +87,7 @@ public class VolunteerEditCommand extends Command {
         model.setVolunteer(volunteerToEdit, editedVolunteer);
         model.updateFilteredVolunteerList(PREDICATE_SHOW_ALL_VOLUNTEERS);
         // edit all role quantities to match the new edited volunteer
-        updateAllEventRoleQuantities(editedVolunteer, model);
+        model.updateAllEventRoleQuantities();
         model.commitToBothVersionedStorages(model.getEventStorage(), model.getVolunteerStorage());
         return new CommandResult(String.format(MESSAGE_EDIT_VOLUNTEER_SUCCESS, Messages.format(editedVolunteer)));
     }
@@ -111,21 +108,6 @@ public class VolunteerEditCommand extends Command {
                 .orElse(volunteerToEdit.getAssignedEvents());
 
         return new Volunteer(updatedName, updatedPhone, updatedEmail, updatedSkills, updatedAssignedEvents);
-    }
-
-    public static void updateAllEventRoleQuantities(Volunteer volunteer, Model model) {
-        Set<EventName> eventNames = volunteer.getAssignedEvents();
-        // filteredEventList is the list of events joined by volunteer
-        List<Event> filteredEventList = model
-                .getEventStorage()
-                .getEventList()
-                .stream()
-                .filter(event -> eventNames.contains(event.getEventName()))
-                .collect(Collectors.toList());
-        for (Event event : filteredEventList) {
-            Event newEvent = EventEditCommand.updateEventRoleQuantities(event, model);
-            model.setEvent(event, newEvent);
-        }
     }
 
     @Override
