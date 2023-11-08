@@ -85,7 +85,8 @@ public class EditEventDescriptorTest {
                 + editEventDescriptor.getLocation().orElse(null) + ", description="
                 + editEventDescriptor.getDescription().orElse(null) + ", materials="
                 + editEventDescriptor.getMaterials().orElse(null) + ", budget="
-                + editEventDescriptor.getBudget().orElse(null) + "}";
+                + editEventDescriptor.getBudget().orElse(null) + ", max volunteer size="
+                + editEventDescriptor.getMaxVolunteerSize().orElse(null) + "}";
         assertEquals(expected, editEventDescriptor.toString());
     }
 }

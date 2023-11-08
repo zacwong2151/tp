@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATETIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MATERIAL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MAX_VOLUNTEER_SIZE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATETIME;
@@ -46,6 +47,7 @@ public class EventUtil {
                 s -> sb.append(PREFIX_MATERIAL + s.material + " ")
         );
         sb.append(PREFIX_BUDGET + event.getBudget().budget + " ");
+        sb.append(PREFIX_MAX_VOLUNTEER_SIZE + event.getMaxVolunteerSize().toString() + " ");
         return sb.toString();
     }
 
@@ -77,6 +79,7 @@ public class EventUtil {
             }
         }
         descriptor.getBudget().ifPresent(b -> sb.append(PREFIX_BUDGET).append(b.budget).append(" "));
+        descriptor.getMaxVolunteerSize().ifPresent(m -> sb.append(PREFIX_MAX_VOLUNTEER_SIZE).append(m).append(" "));
         return sb.toString();
     }
 }

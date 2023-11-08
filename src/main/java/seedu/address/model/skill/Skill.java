@@ -56,7 +56,6 @@ public class Skill {
      * Format state as text for viewing.
      */
     public String toString() {
-        // return '[' + skillName + ']';
         return skillName;
     }
 
