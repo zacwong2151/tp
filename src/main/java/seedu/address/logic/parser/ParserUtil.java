@@ -16,6 +16,7 @@ import seedu.address.model.event.Description;
 import seedu.address.model.event.EventName;
 import seedu.address.model.event.Location;
 import seedu.address.model.event.Material;
+import seedu.address.model.event.MaxVolunteerSize;
 import seedu.address.model.event.Role;
 import seedu.address.model.skill.Skill;
 import seedu.address.model.volunteer.Email;
@@ -245,6 +246,21 @@ public class ParserUtil {
             throw new ParseException(Name.MESSAGE_CONSTRAINTS);
         }
         return new Name(trimmedName);
+    }
+
+    /**
+     * Parses a {@code String mvs} into a {@code MaxVolunteerSize}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code mvs} is invalid.
+     */
+    public static MaxVolunteerSize parseMaxVolunteerSize(String mvs) throws ParseException {
+        requireNonNull(mvs);
+        String trimmedMvs = mvs.trim();
+        if (!MaxVolunteerSize.isValidMaxVolunteerSize(trimmedMvs)) {
+            throw new ParseException(MaxVolunteerSize.MESSAGE_CONSTRAINTS);
+        }
+        return new MaxVolunteerSize(trimmedMvs);
     }
 
     /**

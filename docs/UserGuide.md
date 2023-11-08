@@ -6,7 +6,7 @@
 
 # iVolunteer User Guide
 
-iVolunteer is your dedicated application for volunteer coordination, designed with **volunteer coordinators** in mind. It combines the efficiency of a **Command Line Interface (CLI)** with the advantages of a **Graphical User Interface (GUI)**. If you're looking to enhance your volunteer coordination tasks, iVolunteer is the tool that empowers you to **manage volunteers and volunteering events efficiently**. Whether you're managing events or volunteers, iVolunteer streamlines the process for **swift and effective coordination**.
+iVolunteer is your dedicated application for volunteer coordination, designed with **volunteer coordinators** in mind. If you're looking to enhance your volunteer coordination tasks, iVolunteer is the tool that empowers you to **manage volunteers and volunteering events efficiently**. iVolunteer streamlines the process for **swift and effective coordination**, by combining the efficiency of a **Command Line Interface (CLI)** with the advantages of a **Graphical User Interface (GUI)**.
 
 **Command Line Interface (CLI):** a text-based interface that is used to operate software and operating systems while allowing the user to respond to visual prompts by typing single commands into the interface and receiving a reply in the same way.
 
@@ -31,23 +31,33 @@ iVolunteer is your dedicated application for volunteer coordination, designed wi
    ![Ui](images/Ui.png)
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+
    Some example commands you can try:
 
-   * `elist` : Lists all events
+   * `elist` 
+     * Lists all events
 
-   * `ecreate n/food donation r/chef r/packer sd/23/9/2023 1500 l/hougang dsc/help food distribution m/50 potatoes b/50.00` : Creates an event with name `food donation`, roles needed `chef` and `packer`, event date `23rd September 2023, 3pm`, location `hougang`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
+   * `ecreate n/food donation r/10 chef r/20 packer sd/23/9/2023 1500 l/hougang dsc/help food distribution m/50 potatoes b/50.00`
+     * Creates an event with name `food donation`, roles needed `10 chef` and `20 packer`, event date `23rd September 2023, 3pm`, location `hougang`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
 
-   * `edelete 3` : Deletes the 3rd event in the current event list
+   * `edelete 3`
+     * Deletes the 3rd event in the current event list
 
-   * `vlist` : Lists all volunteers.
+   * `vlist`
+     * Lists all volunteers.
 
-   * `vcreate n/John Doe p/98765432 e/johnd@example.com` : Adds a volunteer named `John Doe` to the list of volunteers.
+   * `vcreate n/John Doe p/98765432 e/johnd@example.com`
+     * Adds a volunteer named `John Doe` to the list of volunteers.
 
-   * `vdelete 3` : Deletes the 3rd volunteer in the current volunteer list.
+   * `vdelete 3`
+     * Deletes the 3rd volunteer in the current volunteer list.
 
-   * `vclear` : Deletes all volunteers.
+   * `vclear`
+     * Deletes all volunteers.
 
-   * `exit` : Exits the app.
+   * `exit`
+     * Exits the app.
+     
 
 1. Refer to the [Features](#features) below for details of each command.
 
@@ -60,7 +70,7 @@ iVolunteer is your dedicated application for volunteer coordination, designed wi
 **Notes about the command format:**<br>
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+  e.g. in `vfind n/NAME`, `NAME` is a parameter which can be used as `vfind n/John Doe`.
 
 * Items in square brackets are optional.<br>
   e.g `n/NAME [s/SKILL]` can be used as `n/John Doe s/friendly` or as `n/John Doe`.
@@ -71,7 +81,7 @@ iVolunteer is your dedicated application for volunteer coordination, designed wi
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
+* Extraneous parameters for commands that do not take in parameters (such as `vlist`, `elist`, `exit` and `vclear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
@@ -87,9 +97,9 @@ Format: `help`
 
 ### Creating a new volunteer's profile: `vcreate`
 
-Volunteer Coordinators can create new volunteer profiles, and add the volunteer into the volunteer list.
+Volunteer coordinators can create new volunteer profiles, and add the volunteer into the volunteer list.
 
-Format: `vcreate n/VOLUNTEER_NAME p/PHONE_NUMBER e/EMAIL [s/SKILLS]…`
+Format: `vcreate n/NAME p/PHONE_NUMBER e/EMAIL [s/SKILLS]…`
 
 Parameters:
 * n/ - Volunteer name
@@ -108,8 +118,10 @@ Restrictions:
 * The phone number must be a valid 8-digit Singapore phone number.
 
 Examples:
-* `vcreate n/John p/91234567 e/john123@gmail.com` creates a volunteer named `John` with a phone number of `91234567` and an email address of `john123@gmail.com`, with no specific skills. The volunteer profile will be appended to the bottom of the volunteer list.
-* `vcreate n/Mary p/92345678 e/mary123@gmail.com s/Cooking s/Carrying heavy goods` creates a volunteer named `Mary` with a phone number of `92345678` and an email address of `mary123@gmail.com`, with two skills: `Cooking` and `Carrying heavy goods`. The volunteer profile will be appended to the bottom of the volunteer list.
+* `vcreate n/John p/91234567 e/john123@gmail.com` 
+  * creates a volunteer named `John` with a phone number of `91234567` and an email address of `john123@gmail.com`, with no specific skills. The volunteer profile will be appended to the bottom of the volunteer list.
+* `vcreate n/Mary p/92345678 e/mary123@gmail.com s/Cooking s/Carrying heavy goods` 
+  * creates a volunteer named `Mary` with a phone number of `92345678` and an email address of `mary123@gmail.com`, with two skills: `Cooking` and `Carrying heavy goods`. The volunteer profile will be appended to the bottom of the volunteer list.
 
 ### Listing all volunteers: `vlist`
 
@@ -117,15 +129,24 @@ Shows a list of all volunteers in the volunteer list.
 
 Format: `vlist`
 
-### Locating volunteers by name: `vfind`
+### Locating volunteers by name and skill: `vfind`
 
 Finds volunteers whose names contain any of the given keywords.
 
 Format: `vfind [n/NAME]…​ [s/SKILL]…​`
 
+Parameters:
+* n/ - Volunteer name
+* s/ - Skills of volunteer
+
+<box type="tip" seamless>
+
+**Tip:** Both the volunteer name and corresponding skills can be searched.
+</box>
+
+Restrictions:
 * At least one of the optional fields must be provided.
 * The search is case-insensitive. e.g `n/hans` will match `Hans`.
-* Both the volunteer name and corresponding skills can be searched.
 * The order of the keywords does not matter. e.g. `s/chef n/Hans` and `n/Hans s/chef` are valid inputs.
 * Allows partial matching of keywords e.g. `n/Han` will match `Hans`.
 * Volunteers matching **at least one** NAME keyword will be returned (i.e. `OR` search).
@@ -134,8 +155,10 @@ Format: `vfind [n/NAME]…​ [s/SKILL]…​`
   e.g. `s/chef s/boxer` will return volunteers that have skills `chef` and `boxer`.
 
 Examples:
-* `vfind n/John` returns `john` and `John Doe`
-* `vfind n/alex n/david` returns `Alex Yeoh`, `David Li`<br>
+* `vfind n/John` 
+  * returns `john` and `John Doe`
+* `vfind n/alex n/david` 
+  * returns `Alex Yeoh`, `David Li`<br>
 
 
   ![result for 'find alex david'](images/findAlexDavidResult.png)
@@ -143,39 +166,55 @@ Examples:
 
 * `vfind s/chef` returns volunteers who are chefs
 
-### Editing a volunteer: `vedit`
+### Editing a volunteer profile: `vedit`
 
 Edits an existing volunteer in the volunteer list.
 
-Format: `vedit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [s/SKILL]…​`
+Format: `vedit VOLUNTEER_ID [n/NAME] [p/PHONE] [e/EMAIL] [s/SKILL]…​`
 
-* Edits the volunteer at the specified `INDEX`. The index refers to the index number shown in the displayed volunteer list. The index **must be a positive integer** 1, 2, 3, …​
+Parameters:
+* n/ - Volunteer name
+* p/ - Volunteer phone number
+* e/ - Volunteer email
+* s/ - Volunteer skill
+
+Restrictions:
+* Edits the volunteer at the specified `VOLUNTEER_ID`. 
+* `VOLUNTEER_ID` refers to the index number shown in the displayed volunteer list. 
+* `VOLUNTEER_ID` **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing skills, the existing skills of the volunteer will be removed i.e adding of skills is not cumulative.
-* You can remove all the volunteer’s skills by typing `s/` without
-    specifying any skills after it.
+* When editing skills, the e**x**isting skills of the volunteer will be removed i.e adding of skills is not cumulative.
+
+<box type="tip" seamless>
+
+**Tip:** You can remove all the volunteer’s skills by typing `s/` without
+specifying any skills after it.
+</box>
 
 Examples:
-*  `vedit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st volunteer to be `91234567` and `johndoe@example.com` respectively.
-*  `vedit 2 n/Betsy Crower s/` Edits the name of the 2nd volunteer to be `Betsy Crower` and clears all existing skills.
+* `vedit 1 p/91234567 e/johndoe@example.com`
+  * Edits the phone number and email address of the 1st volunteer to be `91234567` and `johndoe@example.com` respectively.
+* `vedit 2 n/Betsy Crower s/`
+  * Edits the name of the 2nd volunteer to be `Betsy Crower` and clears all existing skills.
 
-### Deleting a volunteer from the volunteer list: `vdelete`
+
+### Deleting a volunteer profile: `vdelete`
 
 Volunteer coordinators can delete volunteers and remove them from the volunteer list if they no longer wish to volunteer anymore.
 
 Format: `vdelete VOLUNTEER_ID`
 
-* Deletes the volunteer at the specified `INDEX`.
-* The index refers to the index number shown in the displayed volunteer list.
-* The index **must be a positive integer** 1, 2, 3, …
-
 Restrictions:
-* The volunteer ID must be an integer that represents a valid volunteer number in the displayed volunteer list. If there are 30 volunteers in the volunteer list currently displayed to the user, the acceptable values will be from 1-30.
+
+* Deletes the volunteer at the specified `VOLUNTEER_ID`.
+* The `VOLUNTEER_ID` refers to the index number shown in the displayed volunteer list.
+* `VOLUNTEER_ID` **must be a positive integer** 1, 2, 3, …
+* `VOLUNTEER_ID` must represent a valid volunteer number in the displayed volunteer list. If there are 30 volunteers in the volunteer list currently displayed to the user, the acceptable values will be from 1-30.
 
 Examples:
 * `vlist`, followed by `vdelete 6` will remove the 6th volunteer displayed in the volunteer list.
-* `vfind Betsy` followed by `vdelete 1` deletes the 1st volunteer in the results of the `vfind` command.
+* `vfind n/Betsy` followed by `vdelete 1` deletes the 1st volunteer in the results of the `vfind` command.
 
 ### Clearing all volunteer entries: `vclear`
 
@@ -185,13 +224,13 @@ Format: `vclear`
 
 ### Creating an event: `ecreate`
 
-Volunteer Coordinators can create new events.
+Volunteer coordinators can create new events.
 
 Format: `ecreate n/EVENT_NAME r/ROLES_NEEDED… sd/START_DATETIME [ed/END_DATETIME] l/LOCATION dsc/DESCRIPTION [m/MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET]`
 
 Parameters:
 * n/ - Event name
-* r/ - Roles needed for the event
+* r/ - Roles needed for the event and its quantity
 * sd/ - Start date and time of the event
 * ed/ - End date and time of the event
 * l/ - Location of the event
@@ -204,7 +243,8 @@ Restrictions:
 * All arguments cannot be blank.
 * The date and time formats must be exactly `DD/MM/YYYY TTTT`.
 * If the end date and time is specified, it must be the _same time_ or _after_ the start date and time of the event.
-* The material argument must be an integer, followed by a space, and then the material required.
+* The material argument must be an integer, followed by a space, and then the name of material required.
+* The role argument must be an integer, followed by a space, and then the name of role required.
 * The budget argument must be a number in 2 decimal places.
 
 <box type="tip" seamless>
@@ -213,13 +253,18 @@ Restrictions:
 </box>
 
 Examples:
-* `ecreate n/clean beach r/cleaner sd/30/11/2023 1200 ed/30/11/2023 1800 l/east coast park dsc/help clean east coast park m/10 pairs of gloves m/10 trash bags b/50.00` 
-  * Creates an event with name `clean beach`, roles needed `cleaner`, event date from `30th November 2023, 12pm` to `30th November 2023, 6pm`, location `east coast park`, description `help clean east coast park`, materials needed `10 pairs of gloves` and `10 trash bags` and budget `$50.00`
+* `ecreate n/clean beach r/10 cleaner sd/30/11/2023 1200 ed/30/11/2023 1800 l/east coast park dsc/help clean east coast park m/10 pairs of gloves m/10 trash bags b/50.00` 
+  * Creates an event with name `clean beach`, roles needed `10 cleaner`, event date from `30th November 2023, 12pm` to `30th November 2023, 6pm`, location `east coast park`, description `help clean east coast park`, materials needed `10 pairs of gloves` and `10 trash bags` and budget `$50.00`
 
 ### Listing all events: `elist`
-Volunteer coordinators can see all the events they are organising. For each event, only the most important information will be shown: name, start date and time, end date and time, location, and description.
+Volunteer coordinators can see all the events they are organising. For each event, only the most important information will be shown: name, start date and time, end date and time, location, roles needed and materials needed.
 
 Format: `elist`
+
+<box type="tip" seamless>
+
+**Tip:** Events are sorted automatically in chronological order!
+</box>
 
 ### Locating events by name: `efind`
 
@@ -240,7 +285,6 @@ Examples:
 ![result for 'find alex david'](images/findEventsResult.png)
 
 
-
 ### Reading an individual event: `eshow`
 Volunteer coordinators can read up more about an individual event, to familiarize themselves with its requirements while planning for it.
 
@@ -252,7 +296,8 @@ Restrictions:
 * First and second parts must be separated by a single space.
 
 Examples:
-* `eshow 7` will result in a pop-up window appearing, listing all details of the event at id `7`. This includes its name, start date and time, end date and time, location, roles needed, logistics needed (if any), budget (if any), and a description.
+* `eshow 7` 
+  * result in a pop-up window appearing, listing all details of the event at id `7`. This includes its name, start date and time, end date and time, location, roles needed, logistics needed (if any), budget (if any), and a description.
 
 ### Deleting an event: `edelete`
 
@@ -260,9 +305,10 @@ Deletes the event from the event list.
 
 Format: `edelete EVENT_ID`
 
+Restrictions:
 * Deletes the event at the specified `id`.
-* The id refers to the index number shown in the displayed event list.
-* The id **must be a positive integer** 1, 2, 3, …​
+* `id` refers to the index number shown in the displayed event list.
+* `id` **must be a positive integer** 1, 2, 3, …​
 
 Examples:
 * `elist` followed by `edelete 2` deletes the 2nd event in the event list.
@@ -311,7 +357,8 @@ Restrictions:
 * The volunteer must not already be added to the event.
 
 Examples:
-* `eaddv vid/1 eid/1` adds the volunteer with id 1 to the event with id 1.
+* `eaddv vid/1 eid/1` 
+  * adds the volunteer with id 1 to the event with id 1.
 
 ### Listing all volunteers in an event: `elistv`
 
@@ -323,7 +370,8 @@ Restrictions:
 * The event id must be positive and must correspond to exactly one of the ids of the events currently listed.
 
 Examples:
-* `elistv 1` lists the volunteers added to the event with id 1.
+* `elistv 1` 
+  * lists the volunteers added to the event with id 1.
 
 ### Removing a volunteer from an event: `eremovev`
 
@@ -341,7 +389,8 @@ Restrictions:
 * The volunteer should already be added to the event.
 
 Examples:
-* `eremovev vid/1 eid/1` removes the volunteer with id 1 from the event with id 1.
+* `eremovev vid/1 eid/1` 
+  * removes the volunteer with id 1 from the event with id 1.
 
 ### Exiting the program : `exit`
 
@@ -404,7 +453,7 @@ coming soon
 | **Clear all events**                          | `eclear`                                                                                                                                                                                                                                                                                                                                |
 | **Create a new volunteer profile**            | `vcreate vn/VOLUNTEER_NAME hp/PHONE_NUMBER e/EMAIL [s/SKILLS]...`<br> e.g.,`vcreate vn/John Lim hp/81234567 e/john123@gmail.com s/Cooking`                                                                                                                                                                                              |
 | **List all volunteer profiles**               | `vlist`                                                                                                                                                                                                                                                                                                                                 |
-| **Edit a volunteer profile**                  | `vedit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [s/SKILL]…​` <br> e.g., `vedit 1 p/91234567 e/johndoe@example.com`                                                                                                                                                                                                                            |
+| **Edit a volunteer profile**                  | `vedit VOLUNTEER_ID [n/NAME] [p/PHONE] [e/EMAIL] [s/SKILL]…​` <br> e.g., `vedit 1 p/91234567 e/johndoe@example.com`                                                                                                                                                                                                                     |
 | **Delete a volunteer profile**                | `vdelete VOLUNTEER_ID` <br> e.g., `vdelete 4`                                                                                                                                                                                                                                                                                           |
 | **Clear all volunteer profiles**              | `vclear`                                                                                                                                                                                                                                                                                                                                |
 | **Add a volunteer to an event**               | `eaddv vid/VOLUNTEER_ID eid/EVENT_ID`<br> e.g., `eaddv vid/1 eid/3`                                                                                                                                                                                                                                                                     |
