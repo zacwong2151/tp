@@ -197,9 +197,7 @@ public class Role {
         }
 
         Role otherRole = (Role) other;
-        return roleName.equals(otherRole.roleName)
-                && currentQuantity == otherRole.currentQuantity
-                && requiredQuantity == otherRole.requiredQuantity;
+        return roleName.equals(otherRole.roleName);
     }
 
     @Override

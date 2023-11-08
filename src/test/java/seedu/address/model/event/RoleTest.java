@@ -222,14 +222,14 @@ public class RoleTest {
         assertTrue(role1b.equals(role1c));
         assertTrue(role1a.equals(role1c));
 
-        // same name and different current quantity - return false
+        // same name and different current quantity - return true
         Role role2a = new Role("50 bakers");
         Role role2b = new Role("bakers", 50);
         Role role2c = new Role("bakers", 10, 50);
         Role role2d = new Role("bakers", 40, 50);
-        assertFalse(role2a.equals(role2c));
-        assertFalse(role2b.equals(role2c));
-        assertFalse(role2c.equals(role2d));
+        assertTrue(role2a.equals(role2c));
+        assertTrue(role2b.equals(role2c));
+        assertTrue(role2c.equals(role2d));
 
         // different name and same current and required quantity - return false
         Role role3a = new Role("50 bakers");
@@ -243,13 +243,13 @@ public class RoleTest {
         assertTrue(role3a.equals(role3c));
         assertTrue(role3b.equals(role3d));
 
-        // same name and different required quantity - return false
+        // same name and different required quantity - return true
         Role role4a = new Role("50 bakers");
         Role role4b = new Role("bakers", 13);
         Role role4c = new Role("bakers", 40, 60);
         Role role4d = new Role("bakers", 40, 50);
-        assertFalse(role4a.equals(role4b));
-        assertFalse(role4c.equals(role4d));
+        assertTrue(role4a.equals(role4b));
+        assertTrue(role4c.equals(role4d));
 
         // different typed object and null
         Role role5a = new Role("50 bakers");

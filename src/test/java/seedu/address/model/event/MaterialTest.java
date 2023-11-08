@@ -212,14 +212,14 @@ public class MaterialTest {
         assertTrue(material1b.equals(material1c));
         assertTrue(material1a.equals(material1c));
 
-        // same name and different current quantity - return false
+        // same name and different current quantity - return true
         Material material2a = new Material("50 potatoes");
         Material material2b = new Material("potatoes", 50);
         Material material2c = new Material("potatoes", 10, 50);
         Material material2d = new Material("potatoes", 40, 50);
-        assertFalse(material2a.equals(material2c));
-        assertFalse(material2b.equals(material2c));
-        assertFalse(material2c.equals(material2d));
+        assertTrue(material2a.equals(material2c));
+        assertTrue(material2b.equals(material2c));
+        assertTrue(material2c.equals(material2d));
 
         // different name and same current and required quantity - return false
         Material material3a = new Material("50 potatoes");
@@ -233,13 +233,13 @@ public class MaterialTest {
         assertTrue(material3a.equals(material3c));
         assertTrue(material3b.equals(material3d));
 
-        // same name and different required quantity - return false
+        // same name and different required quantity - return true
         Material material4a = new Material("50 potatoes");
         Material material4b = new Material("potatoes", 13);
         Material material4c = new Material("potatoes", 40, 60);
         Material material4d = new Material("potatoes", 40, 50);
-        assertFalse(material4a.equals(material4b));
-        assertFalse(material4c.equals(material4d));
+        assertTrue(material4a.equals(material4b));
+        assertTrue(material4c.equals(material4d));
 
         // different typed object and null
         Material material5a = new Material("50 potatoes");
