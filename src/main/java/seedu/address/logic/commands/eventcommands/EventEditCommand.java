@@ -148,7 +148,7 @@ public class EventEditCommand extends Command {
      * @param model The model to get the volunteers in the volunteer list.
      * @return The event with current role quantities updated.
      */
-    private static Event updateEventRoleQuantities(Event event, Model model) {
+    public static Event updateEventRoleQuantities(Event event, Model model) {
         Set<Role> roles = event.getRoles();
         // mutable version of roles to be updated
         Set<Role> updatedRoles = new HashSet<>();
@@ -161,7 +161,8 @@ public class EventEditCommand extends Command {
                 .filter(volunteer -> volunteerNames.contains(volunteer.getName()))
                 .collect(Collectors.toList());
         for (Role role : roles) {
-            Role updatedRole = role;
+            // initialise as role with 0 current manpower before counting
+            Role updatedRole = new Role(role.roleName, 0, role.requiredQuantity);
             for (Volunteer volunteer : filteredVolunteerList) {
                 for (Skill skill : volunteer.getSkills()) {
                     if (role.roleName.equals(skill.skillName)) {
