@@ -164,8 +164,10 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     public void handleShowEvent() {
         if (!eventShowWindow.isShowing()) {
+            eventShowWindow.loadContents();
             eventShowWindow.show();
         } else {
+            eventShowWindow.loadContents();
             eventShowWindow.focus();
         }
     }
@@ -183,6 +185,7 @@ public class MainWindow extends UiPart<Stage> {
                 (int) primaryStage.getX(), (int) primaryStage.getY());
         logic.setGuiSettings(guiSettings);
         helpWindow.hide();
+        eventShowWindow.hide();
         primaryStage.hide();
     }
 
