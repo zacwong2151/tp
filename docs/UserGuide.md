@@ -255,34 +255,13 @@ Restrictions:
 - If the end date and time is not specified, iVolunteer will automatically set the end date and time to **exactly 3 hours** after the start date and time.
 - If the maximum number of volunteers argument is not specified, iVolunteer will not set a limit to the number of volunteers within the event.
   - Alternatively, if the maximum number of volunteers is set to 0 (e.g. `ecreate ... vs/0`), iVolunteer will remove a limit to the number of volunteer within the event.
+- Roles needed can be fulfilled by adding the volunteer of that specific skill into the event. Refer to the [FAQ](#faq) for more information.
+- Materials needed can be fulfilled using the `eaddm` command. Refer to the [FAQ](#faq) for more information.
 </box>
 
 Examples:
 * `ecreate n/clean beach r/10 cleaner sd/30/11/2023 1200 ed/30/11/2023 1800 l/east coast park dsc/help clean east coast park m/10 pairs of gloves m/10 trash bags b/50.00` 
   * Creates an event with name `clean beach`, roles needed `10 cleaner`, event date from `30th November 2023, 12pm` to `30th November 2023, 6pm`, location `east coast park`, description `help clean east coast park`, materials needed `10 pairs of gloves` and `10 trash bags` and budget `$50.00`
-
-<box type="info" seamless>
-
-**How do you fill up the *role* and *material* information within the UI?**
-
-![Role and material in UI](images/user-guide/event-role-material.png)
-
-- To add a **volunteer** with a certain role, you can use the [`eaddv` command](#adding-a-volunteer-into-an-event-eaddv) as follows:
-    1. Ensure that the volunteer's skill matches the role of the event you want to fill up (both role and skills are case-sensitive).
-        - In the example image above, volunteers with skills `chef` or `cooking` can be added. If not, you can use the [`eedit` command](#edit-the-details-of-an-event-eedit)
-          (e.g. `eedit VOLUNTEER_INDEX s/cooking s/other_skill`) to change the volunteer's skills to match the role.
-    2. Use the `eaddv eid/EVENT_INDEX vid/VOLUNTEER_INDEX` command to add the volunteer to the event. For example, if the volunteer with skill `cooking` you want to add is in
-       index `3` of the displayed volunteer list, and the event with role `cooking` required is in index `4` of the displayed event list, then you can use `eaddv vid/3 eid/4`
-       to add that volunteer into the event.
-    3. You should notice that the `cooking` role would be **incremented by 1** in the UI. In the example above, since `1 / 2 cooking` skills has been filled up, the addition of the new volunteer
-       will cause the role `cooking` to be updated to `2 / 2 cooking`. The role will also turn green since there are already 2 volunteers with role `cooking`.
-- To add **materials** to the event, you can use the [`eaddm` command](#adding-and-tracking-quantity-of-materials-into-an-event-eaddm) as follows:
-    1. Find the event to add materials in within the displayed volunteer list. You can use the `elist` command to list all events.
-    2. Take note of the event index and add the appropriate amount of materials to the event. For example, if the event is in index `4` within the displayed event list and since there are `0 / 50 cookwares` in this event, you can run the command
-       `eaddm eid/4 m/50 cookwares` to update the current amount of materials within the event.
-    3. You should notice that the `cookwares` material would be **incremented by the amount specified** in the `eaddm` command within the UI. In the example above, the `eaddm` command would update the material to `50 / 50 cookwares`. The material would also turn
-       green in the UI to indicate that you have fulfilled the material requirement for the event.
-</box>
 
 ### Listing all events: `elist`
 Volunteer coordinators can see all the events they are organising. For each event, only the most important information will be shown: name, start date and time, end date and time, location, roles needed and materials needed.
@@ -347,7 +326,7 @@ Restrictions:
 
 Examples:
 * `ecreate n/clean beach m/10 trash bags ...` (refer to [ecreate](#creating-an-event-ecreate) above for full command) creates an 
-  event `clean beach` that requires `20 trash bags`. By performing `efind clean beach`, then `eaddm eid/1 m/10 trash bags`,
+  event `clean beach` that requires `20 trash bags`. By performing `efind n/clean beach`, then `eaddm eid/1 m/10 trash bags`,
   the event `clean beach` will now contain `10 / 20 trash bags`.
 
 ### Adding a volunteer into an event: `eaddv`
@@ -366,7 +345,7 @@ Restrictions:
 * The volunteer must not already be added to the event.
 * The number of volunteers within the event should not be equal to the maximum number of volunteers allowed for the event, since adding a new volunteer
   at that point would result in the number of volunteers exceeding the maximum allowed. 
-  * **Note:** To change the limit on the maximum number of volunteers for a certain event, use the
+  * **Tip:** To change the limit on the maximum number of volunteers for a certain event, use the
     [`eedit` command](#edit-the-details-of-an-event-eedit).
 
 Examples:
@@ -445,6 +424,30 @@ _Details coming soon ..._
 **A**: On your Mac, do one of the following:
 1. Click the Launchpad icon in the Dock, type Terminal in the search field, then click Terminal.
 2. In the Finder, open the `/Applications/Utilities` folder, then double-click Terminal.
+
+<box type="info" seamless>
+
+**How do you fill up the *role* and *material* information within the UI?**
+
+![Role and material in UI](images/user-guide/event-role-material.png)
+
+- To add a **volunteer** with a certain role, you can use the [`eaddv` command](#adding-a-volunteer-into-an-event-eaddv) as follows:
+    1. Ensure that the volunteer's skill matches the role of the event you want to fill up (both role and skills are case-sensitive).
+        - In the example image above, volunteers with skills `chef` or `cooking` can be added. If not, you can use the [`eedit` command](#edit-the-details-of-an-event-eedit)
+          (e.g. `eedit VOLUNTEER_INDEX s/cooking s/other_skill`) to change the volunteer's skills to match the role.
+    2. Use the `eaddv eid/EVENT_INDEX vid/VOLUNTEER_INDEX` command to add the volunteer to the event. For example, if the volunteer with skill `cooking` you want to add is in
+       index `3` of the displayed volunteer list, and the event with role `cooking` required is in index `4` of the displayed event list, then you can use `eaddv vid/3 eid/4`
+       to add that volunteer into the event.
+    3. You should notice that the `cooking` role would be **incremented by 1** in the UI. In the example above, since `1 / 2 cooking` skills has been filled up, the addition of the new volunteer
+       will cause the role `cooking` to be updated to `2 / 2 cooking`. The role will also turn green since there are already 2 volunteers with role `cooking`.
+- To add **materials** to the event, you can use the [`eaddm` command](#adding-and-tracking-quantity-of-materials-into-an-event-eaddm) as follows:
+    1. Find the event to add materials in within the displayed volunteer list. You can use the `elist` command to list all events.
+    2. Take note of the event index and add the appropriate amount of materials to the event. For example, if the event is in index `4` within the displayed event list and since there are `0 / 50 cookwares` in this event, you can run the command
+       `eaddm eid/4 m/50 cookwares` to update the current amount of materials within the event.
+    3. You should notice that the `cookwares` material would be **incremented by the amount specified** in the `eaddm` command within the UI. In the example above, the `eaddm` command would update the material to `50 / 50 cookwares`. The material would also turn
+       green in the UI to indicate that you have fulfilled the material requirement for the event.
+</box>
+
 
 --------------------------------------------------------------------------------------------------------------------
 
