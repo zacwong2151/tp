@@ -20,7 +20,7 @@ import seedu.address.model.event.Event;
 public class EventShowWindow extends UiPart<Stage> {
     private static final Logger logger = LogsCenter.getLogger(EventShowWindow.class);
     private static final String FXML = "EventShowWindow.fxml";
-    ObservableList<Event> eventToShowList;
+    private final ObservableList<Event> eventToShowList;
 
     @FXML
     private ScrollPane eventShowView;
@@ -115,7 +115,9 @@ public class EventShowWindow extends UiPart<Stage> {
                 .sorted(Comparator.comparing(material -> material.material))
                 .forEach(material -> materials.getChildren().add(new Label("\u2022 " + material.toUiString())));
         description.setText("Description: " + eventToShow.getDescription().description);
-        maxVolunteerSize.setText("Maximum number of volunteers in event: " + eventToShow.getMaxVolunteerSize().toUiString());
+        maxVolunteerSize.setText("Maximum number of volunteers in event: "
+                + eventToShow.getMaxVolunteerSize().toUiString()
+        );
     }
 
     /**
