@@ -449,7 +449,7 @@ The activity diagram below shows the general workflow when `EventAddVolunteerCom
 
 The behaviour exhibited in the code block above is represented by the `[event is full]` branch within the activity diagram.
 
-### Process
+#### Process
 
 This is the process by which a user might set and undo an event's maximum volunteer count, using the [`ecreate`](UserGuide.md#creating-an-event-ecreate), [`eedit`](UserGuide.md#edit-the-details-of-an-event-eedit) and [`vcreate`](UserGuide.md#creating-a-new-volunteer-s-profile-vcreate). Assume the user starts from an empty volunteer and event list.
 
