@@ -247,10 +247,10 @@ Restrictions:
   * **Example of valid materials:** `m/30 potato`, `m/0 apples`
 * The role argument must be a non-negative integer, followed by a space, and then the name of the role required.
   * **Example of valid roles:** `r/20 teachers`, `r/0 farmer`
-* If there are any duplicated materials or roles, all duplicated materials or roles will show up, and will be updated together.
-  * Duplicated materials are materials with the same material name. For example, `m/23 potatoes` and `m/50 potatoes` are duplicates.
-  * Duplicated roles are materials with the same role name. For example, `r/23 farmers` and `r/50 farmers` are duplicates.
-  * Take note that duplicated materials and roles are case-sensitive: `m/23 Potatoes` and `m/50 potatoes` are not duplicates.
+* If there are any duplicated materials or roles, only the first duplicated material or role will show up.
+  * Duplicated materials are materials with the same material name and quantity. As a result, `m/23 potatoes` and `m/50 potatoes` are not duplicates.
+  * Duplicated roles are materials with the same role name and quantity. For example, `r/23 farmers` and `r/50 farmers` are not duplicates.
+  * Take note that duplicated materials and roles are case-sensitive: `m/23 Potatoes` and `m/23 potatoes` are not duplicates.
   * To remove duplicates, you can use the [`eedit` command](#edit-the-details-of-an-event-eedit) and re-build the entire role or material list. Examples: `eedit EVENT_INDEX r/23 farmers r/50 cleaners` or `eedit EVENT_INDEX m/23 potatoes m/3 fields`.
 * The budget argument must be a number in 2 decimal places.
 
