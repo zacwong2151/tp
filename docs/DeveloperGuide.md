@@ -153,7 +153,7 @@ This section describes some noteworthy details on how certain features are imple
 ### Create Event Feature
 
 #### Implementation
-To encapsulate the aspects of an event, a new `Event` class is created. The Event class has fields representing the various aspects of an Event, namely `eventName`, `roles`, `startDate`, `endDate`, `location`, `description`, `materials` and `budget`. New classes were also created to facilitate the logic of these fields, which are `EventName`, `Role`, `Location`, `Description`, `Material` and `Budget`.
+To encapsulate the aspects of an event, a new `Event` class is created. The Event class has fields representing the various aspects of an Event, namely `eventName`, `roles`, `startDate`, `endDate`, `location`, `description`, `materials`, `budget`, and `maxVolunteerSize`. New classes were also created to facilitate the logic of these fields, which are `EventName`, `Role`, `Location`, `Description`, `Material`, `Budget`, and `maxVolunteerSize`.
 
 To store the created events, a new class `EventStorage` is created, which effectively acts as the list storing all created events. A reference to the EventStorage is kept in the ModelManager to facilitate logical operations.
 
@@ -335,24 +335,26 @@ Step 3. The command is then executed and with the index and the event is deleted
 
 Step 4. Then the storage will also be updated accordingly by the filtered list.
 
-### \[In progress\] Tracking amount of roles and materials
+### Tracking amount of roles and materials
 
 #### Implementation
 
-The mechanism to track the amount of roles and materials within the `Event` class is handled by the `Quantity` interface's 
-`currentQuantity` and `requiredQuantity` fields. Both fields are positive integers. `Role` and `Material` classes thereby
-implement this `Quantity` interface. In addition, for each class, operations to track, access and update the amount of
-each role/material have been added into the `Quantity` interface as follows:
+The mechanism to track the amount of roles and materials within the `Event` class is handled by the `Material` and `Role` classes' `currentQuantity` and `requiredQuantity` fields. Both fields are non-negative integers. In addition, for each class, operations to track, access and update the amount of
+each role/material have been added as follows:
 
-- `Quantity#isValidQuantity(int test)` — Checks if `test` is a valid quantity.
-- `Quantity#addToQuantity(int addedQuantity)` — Adds `addedQuantity` to the current quantity.
-- `Quantity#hasEnough()` — Checks if the current quantity ≥ the required quantity.
-- `Quantity#toUiString()` — Returns the string representation to be shown to users in the UI.
+- `Role#addRoleManpower()` — Adds 1 to the current quantity of manpower.
+- `Role#decreaseRoleManpower()` — Subtracts 1 from the current quantity of manpower.
+- `Material#addItems(int addedQuantity)` — Adds `addedQuantity` to the current quantity.
+- `Role#hasEnoughManpower()` and `Material#hasEnoughItems()` — Checks if the current quantity ≥ the required quantity.
 
-To reflect the `currentQuantity` and `requiredQuantity` fields as required in the `Quantity` interface in `EventStorage`,
+Like all classes in `Event` and `Volunteer`, `Material` and `Role` classes are **immutable** and any methods that want to modify the behaviour of either object will return a new `Material` or `Role` object with the modified information.
+
+To reflect the `currentQuantity` and `requiredQuantity` fields in `EventStorage`,
 every `Role` and `Material` instance will be expressed as a JSON object with the following format:
 
 **Material:**
+
+Relevant Jackson storage class adapted for JSON: [`JsonAdaptedMaterial.java`](https://github.com/AY2324S1-CS2103T-T14-4/tp/blob/master/src/main/java/seedu/address/storage/event/JsonAdaptedMaterial.java)
 
 ```json
 {
@@ -364,6 +366,8 @@ every `Role` and `Material` instance will be expressed as a JSON object with the
 
 **Role:**
 
+Relevant Jackson storage class adapted for JSON: [`JsonAdaptedRole.java`](https://github.com/AY2324S1-CS2103T-T14-4/tp/blob/master/src/main/java/seedu/address/storage/event/JsonAdaptedRole.java)
+
 ```json
 {
   "role" : "chef",
@@ -372,18 +376,18 @@ every `Role` and `Material` instance will be expressed as a JSON object with the
 }
 ```
 
-This class diagram shows the interface relationship between `Role`, `Material` and `Quantity`:
+This class diagram shows the relationship between `Role`, `Material` and `Event`:
 
 <puml src="diagrams/QuantityClassDiagram.puml" width="400" />
 
 #### Process
 
-This is the process in which a user might track the amount of roles and materials as needed:
+This is the process in which a user might track the amount of roles and materials. In this example, the user first adds to the roles, then adds to the materials. Take note that [`ecreate`](UserGuide.md#creating-an-event-ecreate) and [`vcreate`](UserGuide.md#creating-a-new-volunteer-s-profile-vcreate) formats are incomplete for sake of brevity; check their respective user guide entries for the full command.
 
-Step 1. The user runs the command `ecreate n/cook for people r/5 chef m/50 potato ...`. Here, a new `Event` object will be created with
-a `Set<Role>` that contains a `Role` object that corresponds to `5 chef` and `Set<Material>` that corresponds to `50 potato`.
-In the constructor to `Role` and `Material` respectively, the `requiredAmount` for the `:Role` object is **5** and the 
-`requiredAmount` for the `:Material` object is **50**, while the `currentAmount` are both set to **0**.
+Step 1. The user runs the command `ecreate n/cook for people r/5 chef m/50 potato ...`. Here, a new `Event` object will be created with a `Set<Role>` that contains 1 `Role` object corresponding to `5 chef` and `Set<Material>` that contains 1 `Material` object corresponding to `50 potato`.
+
+In the constructor to `Role` and `Material` respectively, the `requiredQuantity` for the `:Role` object is **5** and the 
+`requiredQuantity` for the `:Material` object is **50**, while the `currentQuantity` are both set to **0**.
 
 **Tracking roles**
 
@@ -392,8 +396,7 @@ with name `John` that contains a skill with name `chef`.
 
 Step 3. Assuming both the `Event` and `Volunteer` objects are at the top of their respective lists, the user runs the
 command `eaddv eid/1 vid/1` to add the volunteer named `John` to the event named `cook for people`. Given that the `cook for people`
-event has a role `chef` and the volunteer `John` has a skill `chef`, iVolunteer will notice and **increment** the current quantity
-within the `Role` object using `Quantity#addToQuantity()`.
+event has a role `chef` and the volunteer `John` has a skill `chef`, iVolunteer will notice and return a new `Role` object with the current quantity **incremented by 1** using `Role#addRoleManpower()`.
 
 Step 4. As a result, the `Role` object will be updated as follows (in the JSON-serialised format):
 ```json
@@ -407,8 +410,7 @@ Step 4. As a result, the `Role` object will be updated as follows (in the JSON-s
 **Tracking materials**
 
 Step 5. Assuming the `Event` object is at the top of the event list, the user runs command `eaddm eid/1 m/20 potato`. This
-results in a `EventAddMaterialCommand` created and then executed, which triggers the change in current quantity within the
-`Material` object using `Quantity#addToQuantity()`.
+results in a `EventAddMaterialCommand` created and then executed, which causes a new `Material` object to be created with the updated current quantity using `Material#addItems()`.
 
 Step 6. As a result, the `Material` object will be updated as follows (in the JSON-serialised format):
 ```json
@@ -418,13 +420,6 @@ Step 6. As a result, the `Material` object will be updated as follows (in the JS
   "requiredQuantity" : "50"
 }
 ```
-
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
-
---------------------------------------------------------------------------------------------------------------------
 
 ### \[Proposed\] vfind feature
 
@@ -453,6 +448,7 @@ Step 2. This creates a `VolunteerFindCommandParser` object, which processes the 
 _{Explain here how the data archiving feature will be implemented}_
 
 
+--------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
 
