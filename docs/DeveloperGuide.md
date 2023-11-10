@@ -434,7 +434,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 --------------------------------------------------------------------------------------------------------------------
 
-### Volunteer Find feature
+### Find Volunteer feature
 
 #### Proposed Implementation
 
@@ -459,6 +459,8 @@ Step 2. This calls `IVolunteerParser#parseCommand()`, which creates a `Volunteer
 Step 3. The `VolunteerFindCommand#execute()` method is called, and the filtered volunteer list is updated to display all volunteers named 'Alex' with the skill 'chef'.
 
 The following sequence diagram shows how the vfind operation works:
+
+<puml src="diagrams/VolunteerFindSequenceDiagram.puml" width="400" />
 
 ### \[Proposed\] Data archiving
 
