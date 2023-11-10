@@ -282,7 +282,7 @@ Examples:
 * `efind n/litter n/teaching` returns `picking litter` and `teaching kids`<br>
 
 
-![result for 'find alex david'](images/findEventsResult.png)
+![result for 'find picking litter and teaching kids event'](images/findEventsResult.png)
 
 
 ### Reading an individual event: `eshow`
