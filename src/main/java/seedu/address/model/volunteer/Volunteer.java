@@ -104,8 +104,7 @@ public class Volunteer {
         }
 
         return otherVolunteer != null
-                && (otherVolunteer.getPhone().equals(getPhone())
-                || otherVolunteer.getEmail().equals(getEmail()));
+                && otherVolunteer.getName().equals(getName());
     }
 
     /**

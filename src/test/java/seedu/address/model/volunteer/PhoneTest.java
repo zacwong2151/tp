@@ -35,7 +35,7 @@ public class PhoneTest {
 
         // valid phone numbers
         assertTrue(Phone.isValidPhone("93121534"));
-        assertTrue(Phone.isValidPhone("12345678")); // long phone numbers
+        assertTrue(Phone.isValidPhone("12345678"));
     }
 
     @Test

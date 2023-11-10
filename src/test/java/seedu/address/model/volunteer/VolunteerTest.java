@@ -27,43 +27,29 @@ public class VolunteerTest {
 
     @Test
     public void isSameVolunteer() {
-        /*
-        a volunteer is 'same' if: phone OR email are the same
-        a volunteer is 'different' if: both phone AND email are different
-         */
-
         // same object -> returns true
         assertTrue(ALICE.isSameVolunteer(ALICE));
 
         // null -> returns false
         assertFalse(ALICE.isSameVolunteer(null));
 
-        // same phone number, email address, all other attributes different -> returns true
-        Volunteer editedBob = new VolunteerBuilder(BOB).withPhone(VALID_PHONE_ALICE).withEmail(VALID_EMAIL_ALICE)
+        // same name, all other attributes different -> returns true
+        Volunteer editedAlice = new VolunteerBuilder(ALICE).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
                 .withSkills(VALID_SKILL_HUSBAND).build();
-        assertTrue(ALICE.isSameVolunteer(editedBob));
+        assertTrue(ALICE.isSameVolunteer(editedAlice));
 
-        // different phone number, different email, all other attributes same -> returns false
-        Volunteer editedAlice = new VolunteerBuilder(ALICE).withPhone(VALID_PHONE_BOB)
-                .withEmail(VALID_EMAIL_BOB).build();
+        // different name, all other attributes same -> returns false
+        editedAlice = new VolunteerBuilder(ALICE).withName(VALID_NAME_BOB).build();
         assertFalse(ALICE.isSameVolunteer(editedAlice));
 
-        // different phone number, all other attributes same -> returns true
-        editedAlice = new VolunteerBuilder(ALICE).withPhone(VALID_PHONE_BOB).build();
-        assertTrue(ALICE.isSameVolunteer(editedAlice));
+        // name differs in case, all other attributes same -> returns false
+        Volunteer editedBob = new VolunteerBuilder(BOB).withName(VALID_NAME_BOB.toLowerCase()).build();
+        assertFalse(BOB.isSameVolunteer(editedBob));
 
-        // different email, all other attributes same -> returns true
-        editedAlice = new VolunteerBuilder(ALICE).withEmail(VALID_EMAIL_BOB).build();
-        assertTrue(ALICE.isSameVolunteer(editedAlice));
-
-        // name differs in case, all other attributes same -> returns true
-        editedBob = new VolunteerBuilder(BOB).withName(VALID_NAME_BOB.toLowerCase()).build();
-        assertTrue(BOB.isSameVolunteer(editedBob));
-
-        // name has trailing spaces, all other attributes same -> returns true
+        // name has trailing spaces, all other attributes same -> returns false
         String nameWithTrailingSpaces = VALID_NAME_BOB + " ";
         editedBob = new VolunteerBuilder(BOB).withName(nameWithTrailingSpaces).build();
-        assertTrue(BOB.isSameVolunteer(editedBob));
+        assertFalse(BOB.isSameVolunteer(editedBob));
     }
 
     @Test

@@ -106,9 +106,9 @@ Restrictions:
 * The email must be in a valid format.
 * The phone number must be a 8-digit number.
 * The skills are case-sensitive (`chef` and `Chef` are considered different skills).
-* Duplicate volunteers cannot be added to the volunteer list.
-  * A volunteer is considered duplicate if: his phone number **or** email address already exists in the volunteer list (reason being: in the real world, no two users can possess the same phone number or email address).
-  * Volunteers with the same name are not considered as duplicates (reason being: in the real world, you can have users with the same name).
+* Duplicate volunteers cannot be added to the volunteer list (case-sensitive).
+  * A volunteer is considered duplicate if: his name already exists in the volunteer list (`John` and `john` are different volunteers).
+  * Volunteers with the same phone number or email address are not considered as duplicates.
 
 Examples:
 * `vcreate n/John p/91234567 e/john123@gmail.com` creates a volunteer named `John` with a phone number of `91234567` and an email address of `john123@gmail.com`, with no specific skills. The volunteer profile will be appended to the bottom of the volunteer list.
