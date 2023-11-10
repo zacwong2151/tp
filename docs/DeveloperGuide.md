@@ -816,7 +816,7 @@ The following activity diagram summarizes what happens when a user attempts to c
 
 ### Specific error message for duplicate volunteers
 
-Adding on to the proposed change to change the definition of duplicate volunteers, volunteer coordinators may find themselves inadvertently adding duplicate volunteers. With our current implementation, the error message that shows up is `This volunteer already exists in the volunteer list`.
+This fix is a follow up to the proposed change to change the definition of duplicate volunteers. Volunteer coordinators may find themselves inadvertently adding duplicate volunteers. With our current implementation, the error message that shows up is `This volunteer already exists in the volunteer list`.
 
 However, this error message is not descriptive enough. Users would not be able to identify whether the issue is caused by a duplicate email address or a duplicate phone number. Users are also unable to identify which existing user in the volunteer list is causing the error to occur.
 
