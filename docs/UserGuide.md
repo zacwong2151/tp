@@ -375,8 +375,11 @@ Examples:
 
 ### Undo a Command: `undo`
 
-Undoes an undo-able command
+Undoes an undo-able command.
 
+Format: `undo`
+
+Restrictions:
 * Undo-able commands include:
   * vcreate
   * vdelete
@@ -388,11 +391,17 @@ Undoes an undo-able command
   * eaddv
   * eremovev
   * eaddm
-* Only commands that changed the current history stack can be undone (iVolunteer does not remember commands that were executed in the previous run of the app)
+* Only commands that changed the current history stack can be undone (iVolunteer does not remember commands that were executed in the previous run of the app).
 
 ### Redo a Command: `redo`
 
-Redoes the undo command. Only can be executed after an undo command is executed. This command can be thought of as an 'undo' command that can only undo a `undo` command
+Redoes the undo command. 
+
+Format: `redo`
+
+Restrictions:
+* Only can be executed after an undo command is executed.
+* This command can be thought of as an 'undo' command that can only undo a `undo` command.
 
 
     
