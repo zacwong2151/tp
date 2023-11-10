@@ -20,7 +20,7 @@ else ([else])
         added error message;
         stop
     elseif () then ([event is full])
-        :Display event is full 
+        :Display event is full
         error message;
         stop
     else ([else])
