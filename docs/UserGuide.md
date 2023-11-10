@@ -425,29 +425,20 @@ _Details coming soon ..._
 1. Click the Launchpad icon in the Dock, type Terminal in the search field, then click Terminal.
 2. In the Finder, open the `/Applications/Utilities` folder, then double-click Terminal.
 
-<box type="info" seamless>
+**Q**: How do I fill up the *role* information within the UI?<br><br>
+![Adding role in UI](images/user-guide/add-to-roles.png)<br><br>
+**A**: To add a **volunteer** with a certain role, you can use the [`eaddv` command](#adding-a-volunteer-into-an-event-eaddv) as follows:
+1. Ensure that the volunteer's skill matches the role of the event you want to fill up (both role and skills are case-sensitive).
+   * In the example image above, volunteers with skills `chef` or `cooking` can be added. If not, you can use the [`eedit` command](#edit-the-details-of-an-event-eedit) (e.g. `eedit VOLUNTEER_INDEX s/cooking s/other_skill`) to change the volunteer's skills to match the role.
+2. Use the `eaddv eid/EVENT_INDEX vid/VOLUNTEER_INDEX` command to add the volunteer to the event. For example, if the volunteer with skill `cooking` you want to add is in index `3` of the displayed volunteer list, and the event with role `cooking` required is in index `4` of the displayed event list, then you can use `eaddv vid/3 eid/4` to add that volunteer into the event.
+3. You should notice that the `cooking` role would be **incremented by 1** in the UI. In the example above, since `1 / 2 cooking` skills has been filled up, the addition of the new volunteer will cause the role `cooking` to be updated to `2 / 2 cooking`. The role will also turn green since there are already 2 volunteers with role `cooking`.
 
-**How do you fill up the *role* and *material* information within the UI?**
-
-![Role and material in UI](images/user-guide/event-role-material.png)
-
-- To add a **volunteer** with a certain role, you can use the [`eaddv` command](#adding-a-volunteer-into-an-event-eaddv) as follows:
-    1. Ensure that the volunteer's skill matches the role of the event you want to fill up (both role and skills are case-sensitive).
-        - In the example image above, volunteers with skills `chef` or `cooking` can be added. If not, you can use the [`eedit` command](#edit-the-details-of-an-event-eedit)
-          (e.g. `eedit VOLUNTEER_INDEX s/cooking s/other_skill`) to change the volunteer's skills to match the role.
-    2. Use the `eaddv eid/EVENT_INDEX vid/VOLUNTEER_INDEX` command to add the volunteer to the event. For example, if the volunteer with skill `cooking` you want to add is in
-       index `3` of the displayed volunteer list, and the event with role `cooking` required is in index `4` of the displayed event list, then you can use `eaddv vid/3 eid/4`
-       to add that volunteer into the event.
-    3. You should notice that the `cooking` role would be **incremented by 1** in the UI. In the example above, since `1 / 2 cooking` skills has been filled up, the addition of the new volunteer
-       will cause the role `cooking` to be updated to `2 / 2 cooking`. The role will also turn green since there are already 2 volunteers with role `cooking`.
-- To add **materials** to the event, you can use the [`eaddm` command](#adding-and-tracking-quantity-of-materials-into-an-event-eaddm) as follows:
-    1. Find the event to add materials in within the displayed volunteer list. You can use the `elist` command to list all events.
-    2. Take note of the event index and add the appropriate amount of materials to the event. For example, if the event is in index `4` within the displayed event list and since there are `0 / 50 cookwares` in this event, you can run the command
-       `eaddm eid/4 m/50 cookwares` to update the current amount of materials within the event.
-    3. You should notice that the `cookwares` material would be **incremented by the amount specified** in the `eaddm` command within the UI. In the example above, the `eaddm` command would update the material to `50 / 50 cookwares`. The material would also turn
-       green in the UI to indicate that you have fulfilled the material requirement for the event.
-</box>
-
+**Q**: How do I fill up the *material* information within the UI?<br><br>
+![Adding material in UI](images/user-guide/add-to-materials.png)<br><br>
+**A**: To add **materials** to the event, you can use the [`eaddm` command](#adding-and-tracking-quantity-of-materials-into-an-event-eaddm) as follows:
+1. Find the event to add materials in within the displayed volunteer list. You can use the `elist` command to list all events.
+2. Take note of the event index and add the appropriate amount of materials to the event. For example, if the event is in index `4` within the displayed event list and since there are `0 / 50 cookwares` in this event, you can run the command `eaddm eid/4 m/50 cookwares` to update the current amount of materials within the event.
+3. You should notice that the `cookwares` material would be **incremented by the amount specified** in the `eaddm` command within the UI. In the example above, the `eaddm` command would update the material to `50 / 50 cookwares`. The material would also turn green in the UI to indicate that you have fulfilled the material requirement for the event.
 
 --------------------------------------------------------------------------------------------------------------------
 
