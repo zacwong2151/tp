@@ -725,6 +725,25 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 --------------------------------------------------------------------------------------------------------------------
 
+## **Appendix: Effort**
+
+Our project, iVolunteer, was based on and forked from the [AddressBook Level-3](https://github.com/nus-cs2103-AY2324S1/tp) (AB3) project. We have added around 11k lines of code to the application to adapt the program to support our volunteer management features and to evolve it from the original address book concept.
+
+So far, we found evolving the project to its current form as of v1.4 to be of **moderate difficulty**. This included the process of transforming AB3 to a volunteer and event management application, as well as adding more complex features on top of that.
+
+While AB3 had only 1 `Person` model, iVolunteer has expanded AB3 to contain 2 models (`Volunteer` and `Event`), as well as contained interactions between these two through commands like `eaddv` and `eremovev`. Additional complex features include undo/redo, role and material tracking, and `eshow` for showing events in the UI.
+
+We felt that the project overall were quite consistent in terms of effort. While v1.2 was less effort-intensive due to the benefits of code reuse from AB3, we didn't understand the base code as much and project management was less organised as a result. However, v1.3 was also quite hard due to the implementation of new complex features like volunteer-event interactions, as well as roles and materials tracking.
+
+### Code reuse from AB3
+
+We benefitted from a lot of code reuse from AB3, allowing us to focus on more advanced and complex features more quickly. Here are some parts of our project that were made much easier through reuse:
+
+1. **`Volunteer` class, commands like `vcreate`, `vlist`, `vdelete`, `vfind`**: `Volunteer` as a whole was very similar to the `Person` model in AB3 since they both related to people, with some minor modifications. For example, we removed the `Address` class and field from the `Volunteer` model since we didn't feel the need to know the volunteers' addresses. Likewise, the commands were very similar to implement, helping us save a lot of time implementing the create, read, update and delete (CRUD) operations for volunteers.
+2. **`Event` class**: We adapted the `Person` model in AB3 by changing relevant fields in order to create the `Event` model. Some fields like `startDate`, `endDate`, and `budget` introduced new types of validation that we needed to introduce, making implementation non-trivial. However, overall the general `Event` class was quite similar to `Person` so we worked on a clone of the `Person` model to create the `Event` model.
+
+----
+
 ## **Appendix: Instructions for manual testing**
 
 Given below are instructions to test the app manually.
