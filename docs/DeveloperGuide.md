@@ -789,3 +789,42 @@ testers are expected to do more *exploratory* testing.
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
 1. _{ more test cases …​ }_
+
+--------------------------------------------------------------------------------------------------------------------
+
+## **Appendix: Planned Enhancements**
+
+Given below are fixes we propose to add in the future.
+
+### Change definition of duplicate volunteers
+
+The current implementation of the Create Volunteer feature automatically checks for duplicate volunteers if the user is trying to create a new volunteer.
+Below underlines how iVolunteer checks for duplicates.
+- A volunteer is considered duplicate if: he or her name already exists in the volunteer list.
+- A volunteer is considered **not** duplicate if: he or her phone number/email address already exists in the volunteer list.
+
+However, this current logic is flawed as it is not applicable to a real life scenario. In the real world, users generally do not have the same phone number or email addresses as they are unique. However, it is common for two users to have the same name. 
+
+Thus, in order to make iVolunteer more applicable to the real world, we plan to make the following change
+to how iVolunteer checks for duplicates.
+- A volunteer is considered duplicate if: he or her phone number or email address already exists in the volunteer list.
+- A volunteer is considered **not** duplicate if: he or her name already exists in the volunteer list.
+
+The following activity diagram summarizes what happens when a user attempts to create a new volunteer:
+
+<puml src="diagrams/CreateVolunteerActivityDiagram.puml" width="250" />
+
+### Specific error message for duplicate volunteers
+
+Adding on to the proposed change to change the definition of duplicate volunteers, volunteer coordinators may find themselves inadvertently adding duplicate volunteers. With our current implementation, the error message that shows up is `This volunteer already exists in the volunteer list`.
+
+However, this error message is not descriptive enough. Users would not be able to identify whether the issue is caused by a duplicate email address or a duplicate phone number. Users are also unable to identify which existing user in the volunteer list is causing the error to occur.
+
+Thus, we plan to make the error message also mention the reason for the failure, e.g. `The volunteer could not be added because his phone number is held by another volunteer: VOLUNTEER_NAME`.
+
+The following image shows a sample UI of what the error message would look like when you attempt to add a volunteer who has the same phone number as `Alexis Yeoh`
+
+<img src="images/DG-duplicateVolunteerError.png" width="500px">
+
+
+
