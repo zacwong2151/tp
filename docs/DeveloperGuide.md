@@ -421,6 +421,64 @@ Step 6. As a result, the `Material` object will be updated as follows (in the JS
 }
 ```
 
+### Setting maximum number of volunteers in event
+
+#### Implementation
+
+The feature to set the maximum number of volunteers in an event is facilitated by the `maxVolunteerSize` field within `Event`, which is of type `MaxVolunteerSize`. This is an optional field and not all events need to have a maximum volunteer capacity. The `maxVolunteerSize` field is a non-negative integer of type `long`.
+
+This functionality works on the `EventAddVolunteerCommand`, where the addition of a new volunteer is blocked if the current number of volunteers in the event is equal to `maxVolunteerSize`. The current number of volunteers is computed as follows (abstracted from [actual code](https://github.com/AY2324S1-CS2103T-T14-4/tp/blob/master/src/main/java/seedu/address/logic/commands/eventvolunteercommands/EventAddVolunteerCommand.java) lines 72-75 to ease understanding):
+
+```java
+// current volunteer list BEFORE addition of new volunteer
+int volunteerListSize = eventToAssign // event to assign volunteer to
+        .getAssignedVolunteers()      // get current list of assigned volunteers as an unmodifiable java.util.Set
+        .size();                      // get the size of this set (returns an int)
+int maxVolunteerSize = eventToAssign  // event to assign volunteer to
+        .getMaxVolunteerSize()        // the desired MaxVolunteerSize object
+        .maxVolunteerSize;            // get the long value of the maximum volunteer size
+boolean eventIsFull = volunteerListSize >= maxVolunteerSize;
+if (eventIsFull) {
+  // throw an exception that event is full and halt execution
+}
+```
+
+The activity diagram below shows the general workflow when `EventAddVolunteerCommand` is executed using its `execute()` method, including the checks for `maxVolunteerSize`:
+ 
+<puml src="diagrams/EventAddVolunteerActivityDiagram.puml" alt="EventAddVolunteerActivityDiagram" />
+
+The behaviour exhibited in the code block above is represented by the `[event is full]` branch within the activity diagram.
+
+### Process
+
+This is the process by which a user might set and undo an event's maximum volunteer count, using the [`ecreate`](UserGuide.md#creating-an-event-ecreate), [`eedit`](UserGuide.md#edit-the-details-of-an-event-eedit) and [`vcreate`](UserGuide.md#creating-a-new-volunteer-s-profile-vcreate). Assume the user starts from an empty volunteer and event list.
+
+**Situation 1: `vs/` parameter in `ecreate` not specified**
+
+Step 1. The user runs the command `ecreate n/cook for people r/5 chef m/50 potato sd/24/12/2023 1400 l/Singapore dsc/cooking food`. Note that the `vs/` parameter is not specified, thus this event will not have a maximum volunteer capacity. Assume this event has index 1 in the event list.
+
+**Situation 2: `vs/` parameter in `ecreate` is specified**
+
+Step 2. The user runs the command `ecreate n/cook for more people r/5 chef m/50 potato sd/24/12/2023 1500 l/Singapore dsc/cooking food vs/1`. Note that the `vs/` parameter is not specified, thus this event will have a maximum volunteer capacity, in this case 1. Assume this event has index 2 in the event list.
+
+Step 3. The user creates 2 volunteers with 2 distinct `vcreate` commands.
+
+**Demonstrating the maximum volunteer limit**
+
+Step 4. The user runs `eaddv eid/2 vid/1`. This should run smoothly. Then the user runs `eaddv eid/2 vid/2`. Due to the limit, an **error message is displayed** stating that you can't add any more volunteers since the event is full.
+
+**Demonstrating editing the max volunteer capacity**
+
+Step 5. The user runs `eaddv eid/1 vid/1`, then `eaddv eid/1 vid/2`. Note that both `eaddv` commands run smoothly due to the lack of limit.
+
+Step 6. The user runs `eedit 1 vs/1`. Since there are already 2 volunteers in the event, the `eedit` command **displays an error message**, stating that you can't set the maximum volunteer limit since there are more volunteers added to the event than the edited limit of 1.
+
+**Demonstrating removing the max volunteer capacity**
+
+Step 7. The user runs `eedit 2 vs/0`. `vs/0` is a special case that removes the maximum volunteer capacity. The `eedit` command runs successfully.
+
+Step 8. The user runs `eaddv eid/2 vid/2`. The volunteer is added successfully due to the removal of the maximum volunteer limit.
+
 ### \[Proposed\] vfind feature
 
 #### Proposed Implementation
