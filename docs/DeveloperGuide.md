@@ -314,7 +314,7 @@ The following activity diagram summarizes what happens when a user executes a ne
   
 * **Alternative 2:** Selectively save either the volunteer or event storage.
   * Pros: Reduces redundant saves where a state identical to the previous one is saved.
-  * Cons: We must identify the correct storage to save and undo.
+  * Cons: We must identify the correct storage to save, undo, and redo.
 
 * **Alternative 3:** Individual command knows how to undo/redo by itself.
   * Pros: Will use less memory (e.g. for `vdelete`, just save the volunteer being deleted).
