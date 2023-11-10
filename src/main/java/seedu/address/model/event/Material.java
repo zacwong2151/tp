@@ -221,7 +221,9 @@ public class Material {
         Material otherMaterial = (Material) other;
 
         // must be the same material name and quantities
-        return material.equals(otherMaterial.material);
+        return material.equals(otherMaterial.material)
+                && currentQuantity == otherMaterial.currentQuantity
+                && requiredQuantity == otherMaterial.requiredQuantity;
     }
 
     @Override
