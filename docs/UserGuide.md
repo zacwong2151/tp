@@ -230,12 +230,12 @@ Format: `ecreate n/EVENT_NAME r/ROLES_NEEDED… sd/START_DATETIME [ed/END_DATETI
 
 Parameters:
 * n/ - Event name
-* r/ - Roles needed for the event and its quantity
+* r/ - Roles needed for the event and its quantity, in the format `[required quantity] [role name]` (e.g. `30 farmer`)
 * sd/ - Start date and time of the event
 * ed/ - End date and time of the event
 * l/ - Location of the event
 * dsc/ - Description of the event
-* m/ - Materials needed for the event and its quantity
+* m/ - Materials needed for the event and its quantity, in the format `[required quantity] [material name]` (e.g. `30 potatoes`)
 * b/ - Budget for the event
 
 Restrictions:
