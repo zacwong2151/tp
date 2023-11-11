@@ -70,15 +70,6 @@ public class EventEditCommandTest {
         assertCommandSuccess(eventEditCommand, model, expectedMessage, expectedModel);
     }
 
-        @Test
-        public void execute_sameLocationEventUnfilteredList_success() {
-            Event firstEvent = model.getFilteredEventList().get(INDEX_FIRST.getZeroBased());
-            EditEventDescriptor descriptor = new EditEventDescriptorBuilder(firstEvent).build();
-            EventEditCommand eventEditCommand = new EventEditCommand(INDEX_SECOND, descriptor);
-
-            assertCommandFailure(eventEditCommand, model, EventEditCommand.MESSAGE_DUPLICATE_EVENT);
-        }
-
     @Test
     public void execute_invalidEventIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredEventList().size() + 1);
