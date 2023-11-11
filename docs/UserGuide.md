@@ -34,7 +34,7 @@ iVolunteer is your dedicated application for volunteer coordination, designed wi
 
    Some example commands you can try:
 
-   * `elist` 
+   * `elist`
      * Lists all events
 
    * `ecreate n/food donation r/10 chef r/20 packer sd/23/9/2023 1500 l/hougang dsc/help food distribution m/50 potatoes b/50.00`
@@ -54,7 +54,7 @@ iVolunteer is your dedicated application for volunteer coordination, designed wi
 
    * `exit`
      * Exits the app.
-     
+
 
 1. Refer to the [Features](#features) below for details of each command.
 
@@ -115,9 +115,9 @@ Restrictions:
 * The phone number must be a valid 8-digit Singapore phone number.
 
 Examples:
-* `vcreate n/John p/91234567 e/john123@gmail.com` 
+* `vcreate n/John p/91234567 e/john123@gmail.com`
   * creates a volunteer named `John` with a phone number of `91234567` and an email address of `john123@gmail.com`, with no specific skills. The volunteer profile will be appended to the bottom of the volunteer list.
-* `vcreate n/Mary p/92345678 e/mary123@gmail.com s/Cooking s/Carrying heavy goods` 
+* `vcreate n/Mary p/92345678 e/mary123@gmail.com s/Cooking s/Carrying heavy goods`
   * creates a volunteer named `Mary` with a phone number of `92345678` and an email address of `mary123@gmail.com`, with two skills: `Cooking` and `Carrying heavy goods`. The volunteer profile will be appended to the bottom of the volunteer list.
 
 ### Listing all volunteers: `vlist`
@@ -152,9 +152,9 @@ Restrictions:
   e.g. `s/chef s/boxer` will return volunteers that have skills `chef` and `boxer`.
 
 Examples:
-* `vfind n/John` 
+* `vfind n/John`
   * returns `john` and `John Doe`
-* `vfind n/alex n/david` 
+* `vfind n/alex n/david`
   * returns `Alex Yeoh`, `David Li`<br>
 
 
@@ -176,8 +176,8 @@ Parameters:
 * s/ - Volunteer skill
 
 Restrictions:
-* Edits the volunteer at the specified `VOLUNTEER_INDEX`. 
-* `VOLUNTEER_INDEX` refers to the index number shown in the displayed volunteer list. 
+* Edits the volunteer at the specified `VOLUNTEER_INDEX`.
+* `VOLUNTEER_INDEX` refers to the index number shown in the displayed volunteer list.
 * `VOLUNTEER_INDEX` **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
@@ -244,11 +244,11 @@ Restrictions:
 </box>
 
 Examples:
-* `ecreate n/clean beach r/10 cleaner sd/30/11/2023 1200 ed/30/11/2023 1800 l/east coast park dsc/help clean east coast park m/10 pairs of gloves m/10 trash bags b/50.00` 
+* `ecreate n/clean beach r/10 cleaner sd/30/11/2023 1200 ed/30/11/2023 1800 l/east coast park dsc/help clean east coast park m/10 pairs of gloves m/10 trash bags b/50.00`
   * Creates an event with name `clean beach`, roles needed `10 cleaner`, event date from `30th November 2023, 12pm` to `30th November 2023, 6pm`, location `east coast park`, description `help clean east coast park`, materials needed `10 pairs of gloves` and `10 trash bags` and budget `$50.00`
 
 ### Listing all events: `elist`
-Volunteer coordinators can see all the events they are organising. 
+Volunteer coordinators can see all the events they are organising.
 
 For each event, only the most important information will be shown: name, start date and time, end date and time, location, roles needed and materials needed.
 
@@ -282,7 +282,7 @@ Restrictions:
 * First and second parts must be separated by a single space.
 
 Examples:
-* `eshow 7` 
+* `eshow 7`
   * result in a pop-up window appearing, listing all details of the event at index `7`.
 
 ### Deleting an event: `edelete`
@@ -317,7 +317,7 @@ Restrictions:
 * The material name specified must be present within the event.
 
 Examples:
-* `ecreate n/clean beach m/10 trash bags ...` (refer to [ecreate](#creating-an-event-ecreate) above for full command) creates an 
+* `ecreate n/clean beach m/10 trash bags ...` (refer to [ecreate](#creating-an-event-ecreate) above for full command) creates an
   event `clean beach` that requires `20 trash bags`. By performing `efind clean beach`, then `eaddm eid/1 10 trash bags`,
   the event `clean beach` will now contain `10 / 20 trash bags`.
 
@@ -337,7 +337,7 @@ Restrictions:
 * The volunteer must not already be added to the event.
 
 Examples:
-* `eaddv vid/1 eid/1` 
+* `eaddv vid/1 eid/1`
   * adds the volunteer with index 1 to the event with index 1.
 
 ### Listing all volunteers in an event: `elistv`
@@ -351,7 +351,7 @@ Restrictions:
 * The event index must correspond to exactly one of the index of the events currently listed.
 
 Examples:
-* `elistv 1` 
+* `elistv 1`
   * lists the volunteers added to the event with index 1.
 
 ### Listing all events joined by a volunteer: `vliste`
@@ -384,7 +384,7 @@ Restrictions:
 * The volunteer should already be added to the event.
 
 Examples:
-* `eremovev vid/1 eid/1` 
+* `eremovev vid/1 eid/1`
   * removes the volunteer with index 1 from the event with index 1.
 
 ### Exiting the program : `exit`

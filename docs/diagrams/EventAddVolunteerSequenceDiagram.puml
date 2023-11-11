@@ -120,15 +120,3 @@ deactivate EventAddVolunteerCommand
 [<--LogicManager
 deactivate LogicManager
 @enduml
-
-'@startuml
-'participant Alice
-'participant Bob
-'
-'Alice -> Bob: Message 1
-'
-'loop 5 times
-'    Bob -> Alice: Message 2
-'    Alice -> Bob: Message 3
-'end
-'@enduml
