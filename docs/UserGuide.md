@@ -305,10 +305,9 @@ Examples:
 
 Volunteer coordinators can edit the details of the events.
 
-Format: `eedit EVENT_INDEX [n/EVENT_NAME] [r/NUMBER_OF_ROLES ROLES_NEEDED]... [sd/START_DATETIME] [ed/END_DATETIME] [l/LOCATION] [dsc/DESCRIPTION] [m/NUMBER_OF_MATERIALS_AND_LOGISTICS MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET] [vs/MAX_VOLUNTEER_COUNT]`
+Format: `eedit EVENT_INDEX [r/NUMBER_OF_ROLES ROLES_NEEDED]... [sd/START_DATETIME] [ed/END_DATETIME] [l/LOCATION] [dsc/DESCRIPTION] [m/NUMBER_OF_MATERIALS_AND_LOGISTICS MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET] [vs/MAX_VOLUNTEER_COUNT]`
 
 Parameters:
-* n/ - Event name
 * r/ - Roles needed for the event and its quantity
 * sd/ - Start date and time of the event
 * ed/ - End date and time of the event
@@ -321,6 +320,7 @@ Parameters:
 Restrictions:
 * The event index must be valid, i.e. If the list of events displayed is 10 events long, the acceptable values will be from 1-10.
 * All parameters must be separated by a single space.
+* The event name and assigned volunteers cannot be edited.
 * The date and time formats must be exactly `DD/MM/YYYY TTTT`.
 * If the end date and time is specified, it must be the _same time_ or _after_ the start date and time of the event.
 * If the start date and time is specified, it must be the _same time_ or _before_ the end date and time of the event.
