@@ -800,24 +800,3 @@ testers are expected to do more *exploratory* testing.
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
 1. _{ more test cases …​ }_
-
---------------------------------------------------------------------------------------------------------------------
-
-## **Appendix: Planned Enhancements**
-
-Given below are fixes we plan to add in the future 
-
-## Undo/redo: Individual command knows how to undo/redo by itself
-
-
-* **Alternative 1 (current choice):** Saves both the volunteers and events state.
-    * Pros: Easy to implement.
-    * Cons: May have performance issues in terms of memory usage.
-
-* **Alternative 2:** Selectively save either the volunteer or event storage.
-    * Pros: Reduces redundant saves where a state identical to the previous one is saved.
-    * Cons: We must identify the correct storage to save and undo.
-
-* **Alternative 3:** Individual command knows how to undo/redo by itself.
-    * Pros: Will use less memory (e.g. for `vdelete`, just save the volunteer being deleted).
-    * Cons: Complex to implement. We must ensure that the implementation of each individual command is correct.
