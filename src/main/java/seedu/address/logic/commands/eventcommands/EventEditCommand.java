@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_DATE_PARAMS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MAX_VOLUNTEER_SIZE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATETIME;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
@@ -40,7 +39,6 @@ import seedu.address.model.skill.Skill;
 import seedu.address.model.volunteer.Name;
 import seedu.address.model.volunteer.Volunteer;
 
-
 /**
  * Edits the details of an existing event in the event list.
  */
@@ -52,13 +50,12 @@ public class EventEditCommand extends Command {
             + "by the index number used in the displayed event list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_NAME + "EVENT NAME] "
             + "[" + PREFIX_ROLE + "ROLES] "
             + "[" + PREFIX_START_DATETIME + "START DATE] "
             + "[" + PREFIX_LOCATION + "LOCATION]... "
             + "[" + PREFIX_MAX_VOLUNTEER_SIZE + "MAX VOLUNTEER COUNT]\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_ROLE + "Director "
+            + PREFIX_ROLE + "1 Director "
             + PREFIX_LOCATION + "Kent Ridge";
 
     public static final String MESSAGE_EDIT_EVENT_SUCCESS = "Edited Event: %1$s";
@@ -95,8 +92,7 @@ public class EventEditCommand extends Command {
         }
 
         Event eventToEdit = lastShownList.get(index.getZeroBased());
-        Event editedEvent = updateEventRoleQuantities(createEditedEvent(eventToEdit, editEventDescriptor),
-                model);
+        Event editedEvent = updateEventRoleQuantities(createEditedEvent(eventToEdit, editEventDescriptor), model);
 
         if (!eventToEdit.isSameEvent(editedEvent) && model.hasEvent(editedEvent)) {
             throw new CommandException(MESSAGE_DUPLICATE_EVENT);
@@ -112,9 +108,13 @@ public class EventEditCommand extends Command {
     /**
      * Creates and returns a {@code Event} with the details of {@code eventToEdit}
      * edited with {@code editEventDescriptor}.
+     *
+     * @param eventToEdit The original event to be updated.
+     * @param editEventDescriptor The object that contains the detail to update the original event.
+     * @return The updated new event.
      */
-    private static Event createEditedEvent(Event eventToEdit, EditEventDescriptor editEventDescriptor)
-                                                                                    throws CommandException {
+    private static Event createEditedEvent(Event eventToEdit, EditEventDescriptor editEventDescriptor) throws
+            CommandException {
         assert eventToEdit != null;
 
         EventName eventName = eventToEdit.getEventName();
@@ -144,6 +144,7 @@ public class EventEditCommand extends Command {
 
     /**
      * Updates the event's role quantities based on the volunteers currently in the model's volunteer list.
+     *
      * @param event The event to get the set of roles from.
      * @param model The model to get the volunteers in the volunteer list.
      * @return The event with current role quantities updated.
@@ -213,16 +214,13 @@ public class EventEditCommand extends Command {
      * corresponding field value of the event.
      */
     public static class EditEventDescriptor {
-        private EventName eventName;
         private Set<Role> roles;
         private DateTime startDate;
         private DateTime endDate;
-
         private Location location;
         private Description description;
         private Set<Material> materials;
         private Budget budget;
-        private Set<Name> assignedVolunteers;
         private MaxVolunteerSize maxVolunteerSize;
 
         public EditEventDescriptor() {}
@@ -233,7 +231,6 @@ public class EventEditCommand extends Command {
          */
         public EditEventDescriptor(EditEventDescriptor toCopy) {
 
-            setEventName(toCopy.eventName);
             setRoles(toCopy.roles);
             setStartDate(toCopy.startDate);
             setEndDate(toCopy.endDate);
@@ -248,15 +245,8 @@ public class EventEditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(eventName, roles, startDate, endDate, location, description, materials,
-                                                budget, assignedVolunteers, maxVolunteerSize);
-        }
-        public void setEventName(EventName eventName) {
-            this.eventName = eventName;
-        }
-
-        public Optional<EventName> getEventName() {
-            return Optional.ofNullable(eventName);
+            return CollectionUtil.isAnyNonNull(roles, startDate, endDate, location, description, materials,
+                                                budget, maxVolunteerSize);
         }
 
         /**
@@ -353,8 +343,7 @@ public class EventEditCommand extends Command {
             }
 
             EditEventDescriptor otherEditEventDescriptor = (EditEventDescriptor) other;
-            return Objects.equals(eventName, otherEditEventDescriptor.eventName)
-                    && Objects.equals(roles, otherEditEventDescriptor.roles)
+            return Objects.equals(roles, otherEditEventDescriptor.roles)
                     && Objects.equals(startDate, otherEditEventDescriptor.startDate)
                     && Objects.equals(endDate, otherEditEventDescriptor.endDate)
                     && Objects.equals(location, otherEditEventDescriptor.location)
@@ -367,7 +356,6 @@ public class EventEditCommand extends Command {
         @Override
         public String toString() {
             return new ToStringBuilder(this)
-                    .add("event name", eventName)
                     .add("roles", roles)
                     .add("start date", startDate)
                     .add("end date", endDate)
