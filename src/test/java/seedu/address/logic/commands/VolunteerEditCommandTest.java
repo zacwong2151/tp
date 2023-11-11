@@ -20,9 +20,9 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
-import seedu.address.logic.commands.volunteercommands.VolunteerClearCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerEditCommand;
 import seedu.address.logic.commands.volunteercommands.VolunteerEditCommand.EditVolunteerDescriptor;
+import seedu.address.logic.commands.volunteercommands.VolunteerListCommand;
 import seedu.address.model.EventStorage;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -177,7 +177,7 @@ public class VolunteerEditCommandTest {
         assertFalse(standardCommand.equals(null));
 
         // different types -> returns false
-        assertFalse(standardCommand.equals(new VolunteerClearCommand()));
+        assertFalse(standardCommand.equals(new VolunteerListCommand()));
 
         // different index -> returns false
         assertFalse(standardCommand.equals(new VolunteerEditCommand(INDEX_SECOND, DESC_AMY)));
