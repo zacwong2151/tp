@@ -28,6 +28,9 @@ Given below are my contributions to the project.
 * **Project management**:
   * Managed releases `v1.2.1` - `v1.4` (3 releases) on GitHub
 
+<!-- force a page break -->
+<div style="page-break-before:always"></div> 
+
 * **Enhancements to existing features**:
   * Modified label formatting for volunteer skills, event roles, event materials in GUI: [#108](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/108)
 
@@ -37,7 +40,9 @@ Given below are my contributions to the project.
     * Added demonstration on how roles and materials are tracked in iVolunteer in UG, and for `eaddm` command: [#109](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/109), [#204](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/204).
   * Developer Guide:
     * Added use cases for volunteer create, list, delete features: [#80](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/80).
-    * Added implemention details in DG for material and role tracking feature, inclusive of UML class diagram: [#114](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/114)
+    * Added implementation details in DG for material and role tracking feature, inclusive of UML class diagram: [#114](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/114), [#214](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/214)
+    * Added implementation details in DG for maximum volunteer capacity feature: [#214](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/214)
+    * Added Effort section in DG: [#214](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/214)
 
 * **Team-based tasks:**
   * I set up our project's [main repository](https://github.com/ay2324s1-cs2103t-t14-4/tp), forked from the AddressBook Level-3 project found [here](https://github.com/nus-cs2103-ay2324s1/tp). This includes:
