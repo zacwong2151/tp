@@ -161,7 +161,7 @@ This section describes some noteworthy details on how certain features are imple
 ### Create Event Feature
 
 #### Implementation
-To encapsulate the aspects of an event, a new `Event` class is created. The Event class has fields representing the various aspects of an Event, namely `eventName`, `roles`, `startDate`, `endDate`, `location`, `description`, `materials` and `budget`. New classes were also created to facilitate the logic of these fields, which are `EventName`, `Role`, `Location`, `Description`, `Material` and `Budget`.
+To encapsulate the aspects of an event, a new `Event` class is created. The Event class has fields representing the various aspects of an Event, namely `eventName`, `roles`, `startDate`, `endDate`, `location`, `description`, `materials`, `budget`, `assignedVolunteers` and `maxVolunteerSize`. New classes were also created to facilitate the logic of these fields, which are `EventName`, `Role`, `Location`, `Description`, `Material`, `Budget` and `MaxVolunteerSize`.
 
 To store the created events, a new class `EventStorage` is created, which effectively acts as the list storing all created events. A reference to the EventStorage is kept in the ModelManager to facilitate logical operations.
 
@@ -171,7 +171,7 @@ Given below is an example usage scenario and how the create event mechanism beha
 
 Step 1:
 The user launches the application and enters the command to create a new event.
-`ecreate n/Clean up the beach r/cleaner sd/23/10/23 1900 l/East Coast Park dsc/Pick up all litter on the beach m/10 trash bags b/50.00`. After parsing all the arguments, a new `Event` object is created along with its respective fields.
+`ecreate n/Clean up the beach r/10 cleaner sd/23/10/23 1900 l/East Coast Park dsc/Pick up all litter on the beach m/10 trash bags b/50.00 vs/20`. After parsing all the arguments, a new `Event` object is created along with its respective fields.
 <puml src="diagrams/EventClassDiagram.puml" alt="EventClassDiagram" />
 
 Step 2:
@@ -181,12 +181,6 @@ The created `Event` object is passed to `EventCreateCommand` and executed. Durin
 Step 3:
 When the `EventCreateCommand` finishes executing, the updated `EventStorage` is written into `eventStorage.json` file.
 <puml src="diagrams/EventStorageClassDiagram.puml" alt="EventStorageClassDiagram" />
-
-**Aspect: How undo & redo executes:**
-
-* **Alternative 1 (current choice):** Saves the entire address book.
-    * Pros: Easy to implement.
-    * Cons: May have performance issues in terms of memory usage.
 
 ### Design Considerations
 **Aspect: How the individual fields of an Event are stored:**
@@ -220,6 +214,122 @@ When the `EventCreateCommand` finishes executing, the updated `EventStorage` is 
       * The command can be executed quickly as the new `Event` only has to be appended, as compared to saving the entire updated `EventStorage`.
     * Cons:
       * A new method must be created to save data after executing other commands. E.g. The save() method after an edit event command would be different from a create event command as the `Event` would have to be located first in the JSON file and then updated.
+
+### Event Add Volunteer Feature
+
+#### Implementation
+To add volunteers into events, we make use of the `assignedVolunteers`field of an `Event`, as well as the `assignedEvents` field of a `Volunteer`.
+
+Given below is an example usage scenario and how the event add volunteer mechanism behaves at each step.
+
+Step 1: The user launches the application and creates an event and a volunteer who is to be added to that event. The event can be created via the command `ecreate n/Clean up the beach r/10 cleaner sd/23/10/23 1900 l/East Coast Park dsc/Pick up all litter on the beach m/10 trash bags b/50.00 vs/20`. The volunteer can be created via the command `vcreate n/Tom p/12345678 e/tom@gmail.com`.
+<puml src="diagrams/EventVolunteerObjectDiagram.puml" alt="EventVolunteerObjectDiagram" />
+
+Step 2: The user calls the Event Add Volunteer command via `eaddv eid/1 vid/1`.
+
+After checking whether the indexes provided are valid, the `assignedVolunteers` is iterated through to determine if the volunteer is already added to the event.
+
+The maximum number of volunteers is also checked to determine if the event has reached its maximum volunteer capacity.
+
+Next, the volunteer’s assigned events are iterated through to check if any of them clash with the current event.
+
+Lastly, a new `Event` and `Volunteer` object, with the respective updated `assignedVolunteers` and `assignedEvents`, is created to replace their respective counterparts in the `EventStorage` and `VolunteerStorage`.
+<puml src="diagrams/EventAddVolunteerSequenceDiagram.puml" alt="EventAddVolunteerSequenceDiagram" />
+
+Step 3: The updated `EventStorage` and `VolunteerStorage` is written into the eventStorage.json and volunteerStorage.json files respectively.
+
+### Design Considerations
+**Aspect: How to update the relevant event and volunteer in the `EventStorage` and `VolunteerStorage`:**
+
+* **Alternative 1 (current choice):** Create a new `Event` and `Volunteer` object to replace the current ones.
+    * Pros:
+        * Maintains the immutability of the `Event` and `Volunteer` objects.
+    * Cons:
+        * More time is taken to execute the command as new objects must be created.
+
+* **Alternative 2:** Directly update the `assignedVolunteers` and `assignedEvents` field for the respective `Event` and `Volunteer`.
+    * Pros:
+        * More intuitive execution.
+        * The command can be executed quickly as the volunteer and event can simply be added to their respective Sets.
+    * Cons:
+        * Can cause bugs in other methods in the code which depend on the immutability of the `Event` and `Volunteer` classes.
+
+### Event Remove Volunteer Feature
+
+#### Implementation
+To remove volunteers into events, we make use of the `assignedVolunteers`field of an event, as well as the `assignedEvents` field of a volunteer.
+
+Given below is an example usage scenario and how the event remove volunteer mechanism behaves at each step.
+
+Step 1: The user launches the application and creates an event and a volunteer who is to be added to that event. The event can be created via the command `ecreate n/Clean up the beach r/10 cleaner sd/23/10/23 1900 l/East Coast Park dsc/Pick up all litter on the beach m/10 trash bags b/50.00 vs/20`. The volunteer can be created via the command `vcreate n/Tom p/12345678 e/tom@gmail.com`.
+
+The volunteer is then added to the event via the command `eaddv eid/1 vid/1`
+<puml src="diagrams/EventVolunteerAggregationObjectDiagram.puml" alt="EventVolunteerAggregationObjectDiagram" />
+
+
+Step 2: The user calls the Event Remove Volunteer command via `eremovev eid/1 vid/1`.
+
+After checking whether the indexes provided are valid, the `assignedVolunteers` is iterated through to determine if the volunteer is added to the event.
+
+Subsequently, a new `Event` and `Volunteer` object, with the respective updated `assignedVolunteers` and `assignedEvents`, is created to replace their respective counterparts in the `EventStorage` and `VolunteerStorage`.
+<puml src="diagrams/EventRemoveVolunteerSequenceDiagram.puml" alt="EventRemoveVolunteerSequenceDiagram" />
+
+Step 3: The updated `EventStorage` and `VolunteerStorage` is written into the eventStorage.json and volunteerStorage.json files respectively.
+
+### Design Considerations
+**Aspect: How to update the relevant event and volunteer in the EventStorage and VolunteerStorage:**
+
+* **Alternative 1 (current choice):** Create a new `Event` and `Volunteer` object to replace the current ones.
+    * Pros:
+        * Maintains the immutability of the `Event` and `Volunteer` objects.
+    * Cons:
+        * More time is taken to execute the command as new objects must be created.
+
+* **Alternative 2:** Directly update the `assignedVolunteers` and `assignedEvents` field for the respective Event and Volunteer.
+    * Pros:
+        * More intuitive execution.
+        * The command can be executed quickly as the volunteer and event can simply be added to their respective Sets.
+    * Cons:
+        * Can cause bugs in other methods in the code which depend on the immutability of the `Event` and `Volunteer` classes.
+
+
+### Event List Volunteer Feature
+
+#### Implementation
+To list the volunteers added to an event, we make use of the `assignedVolunteers`field of an event, as well as JavaFX’s FilteredList.
+
+Given below is an example usage scenario and how the event list volunteer mechanism behaves at each step.
+
+Step 1: The user launches the application and creates an event and a volunteer who is to be added to that event. The event can be created via the command `ecreate n/Clean up the beach r/10 cleaner sd/23/10/23 1900 l/East Coast Park dsc/Pick up all litter on the beach m/10 trash bags b/50.00 vs/20`. The volunteer can be created via the command `vcreate n/Tom p/12345678 e/tom@gmail.com`.
+
+The volunteer is then added to the event via the command `eaddv eid/1 vid/1`
+<puml src="diagrams/EventVolunteerAggregationObjectDiagram.puml" alt="EventVolunteerAggregationObjectDiagram" />
+
+Step 2: The user calls the Event List Volunteer command via `elistv 1`.
+
+After checking whether the index provided is valid, the `filteredVolunteerList` is updated with a new predicate which returns true for all volunteers with the same name as the `assignedVolunteers`
+<puml src="diagrams/FilteredListClassDiagram.puml" alt="FilteredListClassDiagram" />
+
+Step 3: The UI shows the list of volunteers in the `filteredVolunteerList`.
+
+### Design Considerations
+**Aspect: How to obtain the list of filtered volunteers:**
+
+* **Alternative 1 (current choice):** Use JavaFX’s `FilteredList`.
+    * Pros:
+        * Integration with JavaFX UI controls, such as `ListView`.
+        * Changes in the source list are automatically updated in the `FilteredList`.
+        * Does not duplicate data, which increases memory cost.
+    * Cons:
+        * The code is harder to debug as the inner workings of `FilteredList` must be learned.
+
+* **Alternative 2:** Manually filter the `VolunteerStorage` for the required volunteers.
+    * Pros:
+        * Custom filtering logic can be implemented as there is more control over the filtering process.
+        * Code is easier to debug as the exact implementation of filtering is known.
+    * Cons:
+        * The manually filtered list must be manually synced to the UI to correctly show the list of added volunteers.
+        * When the source data changes, UI synchronization with the manually filtered list must be accounted for.
 
 ### \[Proposed\] Undo/redo feature
 
