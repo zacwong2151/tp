@@ -136,17 +136,15 @@ public class CommandTestUtil {
     }
 
     static {
-        DESC_CLEANUP = new EditEventDescriptorBuilder().withEventName(VALID_EVENTNAME_CLEANUP)
-                .withRoles(VALID_ROLE_CLEANER).withStartDate(VALID_START_DATETIME_CLEANUP)
-                .withEndDate(VALID_END_DATETIME_CLEANUP).withLocation(VALID_LOCATION_CLEANUP)
-                .withDescription(VALID_DESCRIPTION_CLEANUP).withMaterials(VALID_MATERIAL_TRASHBAG)
-                .withBudget(VALID_BUDGET_CLEANUP).build();
+        DESC_CLEANUP = new EditEventDescriptorBuilder().withRoles(VALID_ROLE_CLEANER)
+                .withStartDate(VALID_START_DATETIME_CLEANUP).withEndDate(VALID_END_DATETIME_CLEANUP)
+                .withLocation(VALID_LOCATION_CLEANUP).withDescription(VALID_DESCRIPTION_CLEANUP)
+                .withMaterials(VALID_MATERIAL_TRASHBAG).withBudget(VALID_BUDGET_CLEANUP).build();
 
-        DESC_HELPOUT = new EditEventDescriptorBuilder().withEventName(VALID_EVENTNAME_HELPOUT)
-                .withRoles(VALID_ROLE_BRAIN).withStartDate(VALID_START_DATETIME_HELPOUT)
-                .withEndDate(VALID_END_DATETIME_HELPOUT).withLocation(VALID_LOCATION_HELPOUT)
-                .withDescription(VALID_DESCRIPTION_HELPOUT).withMaterials(VALID_MATERIAL_HANDS)
-                .withBudget(VALID_BUDGET_HELPOUT).build();
+        DESC_HELPOUT = new EditEventDescriptorBuilder().withRoles(VALID_ROLE_BRAIN)
+                .withStartDate(VALID_START_DATETIME_HELPOUT).withEndDate(VALID_END_DATETIME_HELPOUT)
+                .withLocation(VALID_LOCATION_HELPOUT).withDescription(VALID_DESCRIPTION_HELPOUT)
+                .withMaterials(VALID_MATERIAL_HANDS).withBudget(VALID_BUDGET_HELPOUT).build();
     }
 
     /**

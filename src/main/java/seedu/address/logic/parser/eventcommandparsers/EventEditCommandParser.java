@@ -132,8 +132,8 @@ public class EventEditCommandParser implements Parser<EventEditCommand> {
      * {@code Set<Material>} containing zero materials.
      *
      * @param materials The collection of material strings to parse.
-     * @return An Optional containing a set of material objects parsed from the input collection. If the input collection
-     *         is empty or only contains an empty string, an empty Optional is returned.
+     * @return An Optional containing a set of material objects parsed from the input collection. If the input
+     *         collection is empty or only contains an empty string, an empty Optional is returned.
      * @throws ParseException If the material does not comply to a certain format.
      */
     private Optional<Set<Material>> parseMaterialsForEdit(Collection<String> materials) throws ParseException {
