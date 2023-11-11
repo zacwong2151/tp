@@ -94,10 +94,6 @@ public class EventEditCommand extends Command {
         Event eventToEdit = lastShownList.get(index.getZeroBased());
         Event editedEvent = updateEventRoleQuantities(createEditedEvent(eventToEdit, editEventDescriptor), model);
 
-        if (!eventToEdit.isSameEvent(editedEvent) && model.hasEvent(editedEvent)) {
-            throw new CommandException(MESSAGE_DUPLICATE_EVENT);
-        }
-
         model.setEvent(eventToEdit, editedEvent);
         model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
 

@@ -36,22 +36,6 @@ public class EventEditCommandTest {
 
     private Model model = new ModelManager(getTypicalEventStorage(), getTypicalVolunteerStorage(), new UserPrefs());
 
-    //    @Test
-    //    public void execute_allFieldsSpecifiedUnfilteredList_success() {
-    //        Event editedEvent = new EventBuilder().build();
-    //        EditEventDescriptor descriptor = new EditEventDescriptorBuilder(editedEvent).build();
-    //        EventEditCommand eventEditCommand = new EventEditCommand(INDEX_FIRST, descriptor);
-    //
-    //        String expectedMessage = String.format(EventEditCommand.MESSAGE_EDIT_EVENT_SUCCESS,
-    //                Messages.format(editedEvent));
-    //
-    //        Model expectedModel = new ModelManager(new EventStorage(model.getEventStorage()),
-    //                new VolunteerStorage(model.getVolunteerStorage()), new UserPrefs());
-    //        expectedModel.setEvent(model.getFilteredEventList().get(0), editedEvent);
-    //
-    //        assertCommandSuccess(eventEditCommand, model, expectedMessage, expectedModel);
-    //    }
-
     @Test
     public void execute_noFieldSpecifiedUnfilteredList_success() {
         EventEditCommand eventEditCommand = new EventEditCommand(INDEX_FIRST,
@@ -86,27 +70,14 @@ public class EventEditCommandTest {
         assertCommandSuccess(eventEditCommand, model, expectedMessage, expectedModel);
     }
 
-    //    @Test
-    //    public void execute_duplicateEventUnfilteredList_failure() {
-    //        Event firstEvent = model.getFilteredEventList().get(INDEX_FIRST.getZeroBased());
-    //        EditEventDescriptor descriptor = new EditEventDescriptorBuilder(firstEvent).build();
-    //        EventEditCommand eventEditCommand = new EventEditCommand(INDEX_SECOND, descriptor);
-    //
-    //        assertCommandFailure(eventEditCommand, model, EventEditCommand.MESSAGE_DUPLICATE_EVENT);
-    //    }
-    //
-    //    @Test
-    //    public void execute_duplicateEventFilteredList_failure() {
-    //        showEventAtIndex(model, INDEX_FIRST);
-    //
-    //        // edit event in filtered list into a duplicate in Event storage
-    //        Event eventInList = model.getEventStorage().getEventList()
-    //                .get(INDEX_SECOND.getZeroBased());
-    //        EventEditCommand eventEditCommand = new EventEditCommand(INDEX_FIRST,
-    //                new EditEventDescriptorBuilder(eventInList).build());
-    //
-    //        assertCommandFailure(eventEditCommand, model, EventEditCommand.MESSAGE_DUPLICATE_EVENT);
-    //    }
+        @Test
+        public void execute_sameLocationEventUnfilteredList_success() {
+            Event firstEvent = model.getFilteredEventList().get(INDEX_FIRST.getZeroBased());
+            EditEventDescriptor descriptor = new EditEventDescriptorBuilder(firstEvent).build();
+            EventEditCommand eventEditCommand = new EventEditCommand(INDEX_SECOND, descriptor);
+
+            assertCommandFailure(eventEditCommand, model, EventEditCommand.MESSAGE_DUPLICATE_EVENT);
+        }
 
     @Test
     public void execute_invalidEventIndexUnfilteredList_failure() {
@@ -148,9 +119,6 @@ public class EventEditCommandTest {
 
         // null -> returns false
         assertFalse(standardCommand.equals(null));
-
-        // different types -> returns false
-        // assertFalse(standardCommand.equals(new EventClearCommand()));
 
         // different index -> returns false
         assertFalse(standardCommand.equals(new EventEditCommand(INDEX_SECOND, DESC_CLEANUP)));
