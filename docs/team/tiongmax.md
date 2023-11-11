@@ -5,21 +5,21 @@
 
 ### Project: iVolunteer
 
-* **New Feature**: to be added soon
+* **New Feature**: 
 
-* **New Feature**: to be added soon
+* **New Feature**: 
 
 * **Code contributed**: [RepoSense link](https://nus-cs2103-ay2324s1.github.io/tp-dashboard/?search=tiongMax&breakdown=true)
 
-* **Project management**: to be added soon
+* **Project management**: 
 
-* **Enhancements to existing features**: to be added soon
+* **Enhancements to existing features**: 
 
-* **Documentation**: to be added soon
-  * User Guide:
+* **Documentation**: 
+  * User Guide: eaddv eremovev elistv eedit
   * Developer Guide:
 
-* **Community**: to be added soon
+* **Community**: 
 
-* **Tools**: to be added soon
+* **Tools**: 
 
