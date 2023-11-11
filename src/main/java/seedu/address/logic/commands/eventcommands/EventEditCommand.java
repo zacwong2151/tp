@@ -117,7 +117,7 @@ public class EventEditCommand extends Command {
                                                                                     throws CommandException {
         assert eventToEdit != null;
 
-        EventName updatedEventName = editEventDescriptor.getEventName().orElse(eventToEdit.getEventName());
+        EventName eventName = eventToEdit.getEventName();
         Set<Role> updatedRoles = editEventDescriptor.getRoles().orElse(eventToEdit.getRoles());
         Location updatedLocation = editEventDescriptor.getLocation().orElse(eventToEdit.getLocation());
         Description updatedDescription = editEventDescriptor.getDescription().orElse(eventToEdit.getDescription());
@@ -138,7 +138,7 @@ public class EventEditCommand extends Command {
         }
 
         logger.info("Edited event created successfully");
-        return new Event(updatedEventName, updatedRoles, updatedStartTime, updatedEndTime, updatedLocation,
+        return new Event(eventName, updatedRoles, updatedStartTime, updatedEndTime, updatedLocation,
                 updatedDescription, updatedMaterial, updatedBudget, assignedVolunteers, updatedMaxVolunteerSize);
     }
 
