@@ -462,6 +462,18 @@ The following sequence diagram shows how the vfind operation works:
 
 <puml src="diagrams/VolunteerFindSequenceDiagram.puml" width="400" />
 
+#### Design considerations:
+
+**Aspect: The predicate `VolunteerFindCommand` uses to filter volunteers:**
+
+* **Alternative 1 (current choice):** Have a `SkillNameContainsKeyWordsPredicate` class that encapsulates a list of names and a list of skills.
+    * Pros: Easier to implement.
+    * Cons: Results in code duplication. Currently, `EventNameContainsKeywordsPredicate` class and `SkillNameContainsKeyWordsPredicate` class both encapsulate a list of names, whereas that functionality can be extracted out into a single predicate class that solely encapsulates a list of names. This new predicate class can be reused more easily when compared to the aforementioned predicate classes. 
+
+* **Alternative 2:** Have two predicate classes, one encapsulating a list of names and one encapsulating a list of skills.
+    * Pros: Reduces code duplication which increases reusability of code.
+    * Cons: Harder to implement. We must ensure that the predicate class that is extracted out can be used across different objects, such as `Event`, `Volunteer`, and any other object that may be created in future releases.
+
 ### \[Proposed\] Data archiving
 
 _{Explain here how the data archiving feature will be implemented}_
