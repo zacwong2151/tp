@@ -711,16 +711,37 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes from step 2.
 
-**Use case UCV04: Clear all volunteers in volunteer list**
+**Use case UCEV01: List all events joined by a volunteer**
 
 **MSS**
 
-1. User clears all volunteers in volunteer list.
-2. The volunteer list becomes empty.
+1.  User <u>lists all volunteers (UCV02)</u>.
+2.  User requests to see all events joined by a specific volunteer in the volunteer list.
+3.  iVolunteer list out a summarized version of all volunteering events joined by the requested volunteer.
 
     Use case ends.
 
-*{More to be added}*
+**Extensions**
+
+* 1a. The volunteer list is empty.
+
+  Use case ends.
+
+* 1b. The input command is incorrect.
+
+    * 1a1. System prompts the user to provide a valid command.
+
+      Use case resumes from step 1.
+
+* 1c. There are no events joined by volunteer.
+
+  Use case ends.
+
+* 2a. The given index is invalid.
+
+    * 2a1. iVolunteer shows an error message that there is no such volunteer in the given index.
+
+      Use case resumes from step 2.
 
 ### Non-Functional Requirements
 
