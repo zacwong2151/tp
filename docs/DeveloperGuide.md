@@ -643,6 +643,30 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     Steps 2a1-2a2 are repeated until the data entered is correct.
     Use case resumes at step 3.
 
+**Use case UCE05: Add materials to an event**
+
+**MSS**
+
+1. User <u>creates an event (UCE01)</u> with a certain required quantity of material.
+2. User requests to add a certain quantity to one of the materials in the event.
+3. iVolunteer updates the current quantity of the material, and tracks whether the material's current quantity has already reached or exceeded its required quantity the event.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. Invalid event index.
+    * 2a1. iVolunteer requests for the correct command with valid event index.
+    Use case resumes from Step 2.
+
+* 2b. Specified material is not in the event.
+    * 2b1. iVolunteer alerts the user that the material is not currently in the event, and to re-enter the command again.
+    Use case resumes from Step 2.
+
+* 2c. Material quantity is invalid.
+    * 2c1. iVolunteer alerts the user that the material quantity is invalid and to re-enter the command again.
+    Use case resumes from Step 2.
+
 **Use case UCV01: Create a volunteer**
 
 **MSS**
@@ -711,14 +735,111 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes from step 2.
 
-**Use case UCV04: Clear all volunteers in volunteer list**
+**Use case UCEV01: Add volunteer to an event**
 
 **MSS**
 
-1. User clears all volunteers in volunteer list.
-2. The volunteer list becomes empty.
+1. User <u>creates an event (UCE01)</u> with a certain required quantity of roles.
+2. User <u>creates a volunteer (UCV01)</u> with a certain skill.
+3. User requests to add the volunteer to the event.
+4. Volunteer is added to the Event's volunteer list.
+5. Event is added to the Volunteer's events joined list.
+6. If volunteer's skill is the same as the event's role, iVolunteer increments the current quantity of this specific role by 1, and tracks whether the roles' current quantity has already reached or exceeded its required quantity in the event.
 
-    Use case ends.
+   Use case ends.
+
+**Extensions**
+
+* 3a. Invalid event index.
+    * 3a1. iVolunteer requests for the correct command with valid event index.
+      Use case resumes from Step 3.
+
+* 3b. Invalid volunteer index.
+    * 3b1. iVolunteer requests for the correct command with valid volunteer index.
+      Use case resumes from Step 3.
+
+* 4a. Volunteer is already in event.
+    * 4a1. iVolunteer alerts user that the volunteer is already in the event and cannot join again.
+      Use case ends.
+
+* 4b. Volunteer is already in another event that clashes in timing with this event.
+    * 4b1. iVolunteer alerts user that the volunteer is already in another clashing event and cannot join this event.
+      Use case ends.
+
+* 4c. Event has already reached capacity and cannot accommodate any other volunteer.
+    * 4c1. iVolunteer alerts user that the event is already full and the volunteer cannot join the event.
+      Use case ends.
+
+* 6a. None of the volunteer's skills match any of the event's roles.
+    * 6a1. The Event's roles are not incremented.
+      Use case ends.
+
+**Use case UCEV02: Remove volunteer from an event**
+
+**MSS**
+
+1. User <u>lists all volunteering events (UCE02)</u>.
+2. User <u>lists all volunteers (UCV02)</u>.
+3. User requests to remove a volunteer from the event.
+4. Volunteer is removed from the Event's volunteer list.
+5. Event is removed from the Volunteer's events joined list.
+6. If volunteer's skill is the same as the event's role, iVolunteer decrements the current quantity of this specific role by 1, and tracks whether the roles' current quantity no longer reached or exceeded its required quantity in the event.
+
+   Use case ends.
+
+**Extensions**
+
+* 3a. Invalid event index.
+    * 3a1. iVolunteer requests for the correct command with valid event index.
+      Use case resumes from Step 3.
+
+* 3b. Invalid volunteer index.
+    * 3b1. iVolunteer requests for the correct command with valid volunteer index.
+      Use case resumes from Step 3.
+
+* 4a. Volunteer is not already in event.
+    * 4a1. iVolunteer alerts user that the volunteer is not already in the event and cannot be removed.
+      Use case ends.
+
+* 6a. None of the volunteer to remove's skills match any of the event's roles.
+    * 6a1. The Event's roles are not decremented.
+      Use case ends.
+
+**Use case UCEV03: List all volunteers who join an event**
+
+**MSS**
+
+1. User <u>lists all volunteering events (UCE02)</u>.
+2. User requests to list all volunteers in a certain event.
+3. iVolunteer lists all volunteers who joined the event in the volunteer list.
+
+   Use case ends.
+
+**Extensions**
+* 2a. Invalid event index.
+    * 2a1. iVolunteer requests for the correct command with valid event index.
+      Use case resumes from Step 2.
+* 3a. There are no volunteers who joined the event.
+    * 3a1. The volunteer list displayed is empty.
+      Use case ends.
+
+**Use case UCEV04: List all events joined by a volunteer**
+
+**MSS**
+
+1. User <u>lists all volunteers (UCV02)</u>.
+2. User requests to list all events joined by a certain volunteer.
+3. iVolunteer lists all event joined by the volunteer in the event list.
+
+   Use case ends.
+
+**Extensions**
+* 2a. Invalid volunteer index.
+    * 2a1. iVolunteer requests for the correct command with valid volunteer index.
+      Use case resumes from Step 2.
+* 3a. There are no events joined by the volunteer.
+    * 3a1. The event list displayed is empty.
+      Use case ends.
 
 *{More to be added}*
 
