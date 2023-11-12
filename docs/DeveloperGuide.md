@@ -195,7 +195,7 @@ When the `EventCreateCommand` finishes executing, the updated `EventStorage` is 
     * Pros:
         * Improves the overall structure and readability of the code.
     * Cons:
-        * Results in more code. 
+        * Results in more code.
         * More memory usage as objects have to be instantiated for each field.
 
 * **Alternative 2:** Store each field as the relevant substring inputted by the user.
@@ -333,7 +333,7 @@ Command. When the command is then parsed and executed.
 
 Given below is an example usage scenario and how the mechanism of the event delete behaves at each step.
 
-Step 1. When the user input the event delete command, it will be parsed by IVolunteerParser. Then the keyword of the command is noticed and EventDeleteCommandParser is called. 
+Step 1. When the user input the event delete command, it will be parsed by IVolunteerParser. Then the keyword of the command is noticed and EventDeleteCommandParser is called.
 
 <puml src="diagrams/DeleteSequenceDiagram.puml" alt="DeleteSequenceDiagram" />
 
@@ -347,7 +347,7 @@ Step 4. Then the storage will also be updated accordingly by the filtered list.
 
 #### Implementation
 
-The mechanism to track the amount of roles and materials within the `Event` class is handled by the `Quantity` interface's 
+The mechanism to track the amount of roles and materials within the `Event` class is handled by the `Quantity` interface's
 `currentQuantity` and `requiredQuantity` fields. Both fields are positive integers. `Role` and `Material` classes thereby
 implement this `Quantity` interface. In addition, for each class, operations to track, access and update the amount of
 each role/material have been added into the `Quantity` interface as follows:
@@ -390,7 +390,7 @@ This is the process in which a user might track the amount of roles and material
 
 Step 1. The user runs the command `ecreate n/cook for people r/5 chef m/50 potato ...`. Here, a new `Event` object will be created with
 a `Set<Role>` that contains a `Role` object that corresponds to `5 chef` and `Set<Material>` that corresponds to `50 potato`.
-In the constructor to `Role` and `Material` respectively, the `requiredAmount` for the `:Role` object is **5** and the 
+In the constructor to `Role` and `Material` respectively, the `requiredAmount` for the `:Role` object is **5** and the
 `requiredAmount` for the `:Material` object is **50**, while the `currentAmount` are both set to **0**.
 
 **Tracking roles**
@@ -452,7 +452,7 @@ Lastly, `SkillNameContainsKeywordsPredicate` implements the interface `Predicate
 
 Given below is an example usage scenario and how the vfind command behaves at each step.
 
-Step 1. The user launches the application. The user executes `vfind n/Alex` command to find any volunteers named 'Alex' in the volunteer list. The `vfind` command calls `LogicManager#execute`, which attempts to execute the command. 
+Step 1. The user launches the application. The user executes `vfind n/Alex` command to find any volunteers named 'Alex' in the volunteer list. The `vfind` command calls `LogicManager#execute`, which attempts to execute the command.
 
 Step 2. This creates a `VolunteerFindCommandParser` object, which processes the user input's arguments, namely 'Alex'. This creates a `VolunteerFindCommand` object, with its predicate encapsulating a list of `names` and a list of `skills`.
 
@@ -583,7 +583,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1a. The input command is incorrect.
 
     * 1a1. System prompts the user to provide a valid command.
-    
+
       Use case resumes from step 1.
 
 * 1b. There are no events to list.
