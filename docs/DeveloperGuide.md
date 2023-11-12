@@ -328,7 +328,7 @@ Step 3. The user executes `eshow 1` to read more about the first event created.
 
 The `eshow` command obtains the event at index `1` from the last shown list (`filteredEventList`) as the index is based on the most recent event list displayed to the user before he calls the `eshow` command. This event is the one that will be shown to the user in the pop-up window.
 
-The `eshow` command then filters the `eventToShowList` such that it has only one element, which is the event to show previously obtained.
+The `eshow` command then filters the `eventToShowList` such that it has only one element, which is the event previously obtained.
 
 The `eshow` command then returns a `CommandResult` object with its `isShowEvent` field as true.
 
