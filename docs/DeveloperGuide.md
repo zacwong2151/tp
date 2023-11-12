@@ -320,7 +320,11 @@ Given below is an example usage scenario and how the event show mechanism behave
 
 Step 1. The user launches the app for the first time, and executes `ecreate n/first event ...` to create a new event. This called method `Model#updateFilteredEventList()` to update both the `filteredEventList` and the `eventToShowList`.
 
+<puml src="diagrams/EventShowStep1.puml" alt="EventShowStep1" />
+
 Step 2. The user  executes `ecreate n/second event ...` to create another event. This called the method `Model#updateFilteredEventList()` again to update both the `filteredEventlist` and the `eventToShowList`.
+
+<puml src="diagrams/EventShowStep2.puml" alt="EventShowStep2" />
 
 Displayed event list now has two events at index 1 and 2 respectively.
 
@@ -329,6 +333,8 @@ Step 3. The user executes `eshow 1` to read more about the first event created.
 The `eshow` command obtains the event at index `1` from the last shown list (`filteredEventList`) as the index is based on the most recent event list displayed to the user before he calls the `eshow` command. This event is the one that will be shown to the user in the pop-up window.
 
 The `eshow` command then filters the `eventToShowList` such that it has only one element, which is the event previously obtained.
+
+<puml src="diagrams/EventShowStep3.puml" alt="EventShowStep3" />
 
 The `eshow` command then returns a `CommandResult` object with its `isShowEvent` field as true.
 
@@ -342,10 +348,17 @@ User see a pop-up window (`EventShowWindow`), showing all information of the eve
 
 Step 4. The user navigates back to the main window, causing the pop-up window to be unfocused.
 
-Step 5. The user now wants to read more on the second event, so he executes `eshow 2`. Step 3 is repeated with the new given index - `2`.
+Step 5. The user now wants to read more on the second event, so he executes `eshow 2`. 
+
+Step 3 is repeated with the new given index - `2`.
+
+<puml src="diagrams/EventShowStep5.puml" alt="EventShowStep5" />
+
 The pop-up window is now focused, displaying the event information of the event at index `2`.
 
 The following sequence diagram shows how the event show operation works:
+
+<puml src="diagrams/EventShowSequenceDiagram.puml" alt="EventShowSequenceDiagram" />
 
 #### Design considerations:
 

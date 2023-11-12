@@ -8,19 +8,20 @@ skinparam ClassBackgroundColor MODEL_COLOR_T1
 title Step 1:
 
 package filteredEventList <<rectangle>> {
-    class State1 as "<u>e1:Event</u>"
+    class Event1 as "<u>e1:Event</u>"
 }
 
 note top of filteredEventList
-Current event list displayed to the user.
+Current event list
+displayed to the user.
 end note
 
 package eventToShowList <<rectangle>> {
-    class State1 as "<u>e1:Event</u>"
+    class Event1 as "<u>e1:Event</u>"
 }
 
 note top of eventToShowList
-Content is displayed in the pop-up window when user executes `eshow`
+`eshow` not yet executed,
+list is unused.
 end note
-
 @enduml
