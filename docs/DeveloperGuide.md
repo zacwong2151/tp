@@ -953,12 +953,12 @@ testers are expected to do more *exploratory* testing.
 
    2. Test case instructions in order (take note of the `vs/` parameter at the end):
       1. `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy m/100 packets b/100.00 vs/1`
-      2. `eaddv eid/X vid/1` (substitute `X` with the index of the `Food packing` event - e.g. `eaddv eid/1 vid/1`)
-      3. `eaddv eid/X vid/2` (substitute `X` with the index of the `Food packing` event - e.g. `eaddv eid/1 vid/2`)
-      4. `eedit X vs/0` (substitute `X` with the index of the `Food packing` event - e.g. `eaddv 1 vs/0`)      
-      5. `eshow X` (substitute `X` with the index of the `Food packing` event - e.g. `eshow 1`)
+      2. `eaddv eid/X vid/1` (where `X` is the index of the `Food packing` event - e.g. `eaddv eid/1 vid/1`)
+      3. `eaddv eid/X vid/2` (where `X` is the index of the `Food packing` event - e.g. `eaddv eid/1 vid/2`)
+      4. `eedit X vs/0` (where `X` is the index of the `Food packing` event - e.g. `eaddv 1 vs/0`)      
+      5. `eshow X` (where `X` is the index of the `Food packing` event - e.g. `eshow 1`)
       6. Close the `eshow` window either by using the `Esc` key or clicking the close button on the window.
-      7. `eaddv eid/X vid/2` (substitute `X` with the index of the `Food packing` event - e.g. `eaddv eid/1 vid/2`)<br><br>
+      7. `eaddv eid/X vid/2` (where `X` is the index of the `Food packing` event - e.g. `eaddv eid/1 vid/2`)<br><br>
       Expected: 
          - First `eaddv` command (2) runs successfully, and success message that `New volunteer added to event.` with total volunteer count in the event is displayed.
          - Second `eaddv` command (3) does not run. Error message that `This event has already reached a maximum of 1 volunteer(s), and is unable to accept any more volunteers` is displayed as the status message.
@@ -971,18 +971,18 @@ testers are expected to do more *exploratory* testing.
 
    3. Test case instructions in order (take note of the *lack of* `vs/` parameter at the end):
       1. `ecreate n/More food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy m/100 packets b/100.00`
-      2. `eaddv eid/X vid/1` (substitute `X` with the index of the `More food packing` event - e.g. `eaddv eid/2 vid/1`)
-      3. `eaddv eid/X vid/2` (substitute `X` with the index of the `More food packing` event - e.g. `eaddv eid/2 vid/2`)
-      4. `eshow X` (substitute `X` with the index of the `More food packing` event - e.g. `eshow 2`)
+      2. `eaddv eid/X vid/1` (where `X` is the index of the `More food packing` event - e.g. `eaddv eid/2 vid/1`)
+      3. `eaddv eid/X vid/2` (where `X` is the index of the `More food packing` event - e.g. `eaddv eid/2 vid/2`)
+      4. `eshow X` (where `X` is the index of the `More food packing` event - e.g. `eshow 2`)
       5. Close the `eshow` window either by using the `Esc` key or clicking the close button on the window.
-      6. `eedit X vs/1` (substitute `X` with the index of the `More food packing` event - e.g. `eedit 2 vs/1`)<br><br>
+      6. `eedit X vs/1` (where `X` is the index of the `More food packing` event - e.g. `eedit 2 vs/1`)<br><br>
       Expected:
          - Both `eaddv` commands (2, 3) run successfully, and success message that `New volunteer added to event.` with total volunteer count in the event is displayed.
          - `eshow` command (5) runs successfully. A window opens, with one field showing `Maximum number of volunteers in event: No limit`.
          - `eedit` command (6) does not run successfully. Error message that `The maximum number of volunteers in an event should not be less than the number of volunteers currently in the event. To remove the cap on the number of volunteers, you can use vs/0` is displayed as the status message.
 
    4. Test case: `ecreate n/Even more food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy m/100 packets b/100.00 vs/50`, followed by
-      `eshow X` (substitute `X` with the index of the `Even more food packing` event - e.g. `eshow 3`)<br>
+      `eshow X` (where `X` is the index of the `Even more food packing` event - e.g. `eshow 3`)<br>
       Expected: `eshow` command runs successfully. A window opens, with one field showing `Maximum number of volunteers in event: 50`.
 
    5. You can explore further uses of the volunteer capacity and view the maximum volunteer capacity for any event using the `eshow` command. If `vs/0` is used or the `vs/` command is not specified, the maximum volunteer capacity is displayed as `No limit`.
