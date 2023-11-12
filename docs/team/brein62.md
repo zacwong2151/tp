@@ -5,7 +5,7 @@
 
 ### Project: iVolunteer
 
-iVolunteer is an application for volunteer coordinators to manage volunteers, events, and their interactions. The user interacts with it using a CLI, with a GUI created with JavaFX. It is written in Java with about 21 kLoC.
+iVolunteer is an application for volunteer coordinators to manage volunteers, events, and their interactions. The user interacts with it using a CLI, with a GUI created with JavaFX. It is written in Java with about 14 kLoC.
 
 Given below are my contributions to the project.
 
