@@ -782,6 +782,90 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
+### Tracking an event's roles and adding roles to an event
+
+1. Tracking event roles that match a volunteer's skills
+
+   1. Test case instructions in order: 
+      1. `ecreate n/Food packing r/1 chef r/1 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy m/100 packets b/100.00 vs/50`
+      2. `vcreate n/John Tan p/91234567 e/johnt@email.com s/packer`
+      3. `eaddv eid/X vid/Y` (where `X` is the index of the `Food packing` event and `Y` is the index of volunteer `John Tan`)<br>
+      Expected: `eaddv` command runs successfully with the message `New volunteer added to event.`. The `Food packing` event in the UI is updated with role `1 / 1 packer` that turns green.
+
+      4. `eremovev eid/X vid/Y`<br>
+      Expected: `eremovev` command runs successfully with the message `Volunteer removed from event.`. The `Food packing` event in the UI is updated with role `0 / 1 packer` that turns red.
+
+   2. Test case instructions in order:
+      1. `ecreate n/Food packing r/1 chef r/1 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy m/100 packets b/100.00 vs/50`
+      2. `vcreate n/John Tan p/91234567 e/johnt@email.com s/packer`
+      3. `eaddv eid/X vid/Y` (where `X` is the index of the `Food packing` event and `Y` is the index of volunteer `John Tan`)<br>
+      Expected: `eaddv` command runs successfully with the message `New volunteer added to event.`. However, the event roles are not updated in the UI since the volunteer's skills does not match the role.
+
+   3. Explore other cases and ensure that the skills of the volunteer matches the roles required for the event to add a volunteer to the event.
+
+### Tracking an event's materials and adding materials to an event
+
+1. Tracking event materials
+
+   1. Test case: `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy m/100 packets b/100.00 vs/50`, followed by 
+      `eaddm eid/X m/50 packets` (where `X` is the index of the `Food packing` event)<br>
+      Expected: `eaddm` command runs successfully with the message `Amount of material updated in event: ...`. The `Food packing` event in the UI is updated with material `50 / 100 packets`.
+
+   2. Test case: `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy m/100 packets b/100.00 vs/50`, followed by
+      `eaddm eid/X m/100 packets` (where `X` is the index of the `Food packing` event)<br>
+      Expected: `eaddm` command runs successfully with the message `Amount of material updated in event: ...`. The `Food packing` event in the UI is updated with material `100 / 100 packets` that turns green.
+
+   3. Test case: `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy m/100 packets b/100.00 vs/50`, followed by
+      `eaddm eid/X m/100 bananas` (where `X` is the index of the `Food packing` event)<br>
+      Expected: `eaddm` command fails with the error message `Material bananas is not found in the event`.
+
+   4. Test case: `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy m/100 packets b/100.00 vs/50`, followed by
+      `eaddm eid/X m/100` or `eaddm eid/X m/banana` etc. (where `X` is the index of the `Food packing` event)<br>
+      Expected: `eaddm` command fails with the error message `Invalid command format!` with instructions on how to use `eaddm` properly.
+
+### Setting the maximum volunteer capacity
+
+1. Setting maximum volunteer capacity
+
+   1. Prerequisites: 
+      - At least 2 volunteers in the displayed volunteer list
+
+   2. Test case instructions in order (take note of the `vs/` parameter at the end):
+      1. `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy m/100 packets b/100.00 vs/1`
+      2. `eaddv eid/X vid/1` (substitute `X` with the index of the `Food packing` event - e.g. `eaddv eid/1 vid/1`)
+      3. `eaddv eid/X vid/2` (substitute `X` with the index of the `Food packing` event - e.g. `eaddv eid/1 vid/2`)
+      4. `eedit X vs/0` (substitute `X` with the index of the `Food packing` event - e.g. `eaddv 1 vs/0`)      
+      5. `eshow X` (substitute `X` with the index of the `Food packing` event - e.g. `eshow 1`)
+      6. Close the `eshow` window either by using the `Esc` key or clicking the close button on the window.
+      7. `eaddv eid/X vid/2` (substitute `X` with the index of the `Food packing` event - e.g. `eaddv eid/1 vid/2`)<br><br>
+      Expected: 
+         - First `eaddv` command (2) runs successfully, and success message that `New volunteer added to event.` with total volunteer count in the event is displayed.
+         - Second `eaddv` command (3) does not run. Error message that `This event has already reached a maximum of 1 volunteer(s), and is unable to accept any more volunteers` is displayed as the status message.
+         - `eedit` command (4) runs successfully, and success message showing the edited event is displayed.<br>
+           <box type="info" seamless>
+              Since the vs/ parameter is set to 0 (special value), it removes the limit to the number of volunteers added to the event.
+           </box>
+         - `eshow` command (5) runs successfully. A window opens, with one field showing `Maximum number of volunteers in event: No limit`.
+         - Third `eaddv` command (7) runs successfully, and success message that `New volunteer added to event.` with total volunteer count in the event is displayed.
+
+   3. Test case instructions in order (take note of the *lack of* `vs/` parameter at the end):
+      1. `ecreate n/More food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy m/100 packets b/100.00`
+      2. `eaddv eid/X vid/1` (substitute `X` with the index of the `More food packing` event - e.g. `eaddv eid/2 vid/1`)
+      3. `eaddv eid/X vid/2` (substitute `X` with the index of the `More food packing` event - e.g. `eaddv eid/2 vid/2`)
+      4. `eshow X` (substitute `X` with the index of the `More food packing` event - e.g. `eshow 2`)
+      5. Close the `eshow` window either by using the `Esc` key or clicking the close button on the window.
+      6. `eedit X vs/1` (substitute `X` with the index of the `More food packing` event - e.g. `eedit 2 vs/1`)<br><br>
+      Expected:
+         - Both `eaddv` commands (2, 3) run successfully, and success message that `New volunteer added to event.` with total volunteer count in the event is displayed.
+         - `eshow` command (5) runs successfully. A window opens, with one field showing `Maximum number of volunteers in event: No limit`.
+         - `eedit` command (6) does not run successfully. Error message that `The maximum number of volunteers in an event should not be less than the number of volunteers currently in the event. To remove the cap on the number of volunteers, you can use vs/0` is displayed as the status message.
+
+   4. Test case: `ecreate n/Even more food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy m/100 packets b/100.00 vs/50`, followed by
+      `eshow X` (substitute `X` with the index of the `Even more food packing` event - e.g. `eshow 3`)<br>
+      Expected: `eshow` command runs successfully. A window opens, with one field showing `Maximum number of volunteers in event: 50`.
+
+   5. You can explore further uses of the volunteer capacity and view the maximum volunteer capacity for any event using the `eshow` command. If `vs/0` is used or the `vs/` command is not specified, the maximum volunteer capacity is displayed as `No limit`.
+
 ### Saving data
 
 1. Dealing with missing/corrupted data files
