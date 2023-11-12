@@ -20,7 +20,8 @@
       "requiredQuantity" : "50"
     } ],
     "budget" : "120.00",
-    "assignedVolunteers" : [ ]
+    "assignedVolunteers" : [ ],
+    "maxVolunteerSize" : "9223372036854775807"
   }, {
     "eventName" : "picking litter",
     "roles" : [ {
@@ -42,7 +43,8 @@
       "requiredQuantity" : "10"
     } ],
     "budget" : "40.00",
-    "assignedVolunteers" : [ "Ben" ]
+    "assignedVolunteers" : [ "Ben" ],
+    "maxVolunteerSize" : "9223372036854775807"
   }, {
     "eventName" : "food donation",
     "roles" : [ {
@@ -64,7 +66,8 @@
       "requiredQuantity" : "50"
     } ],
     "budget" : "500.00",
-    "assignedVolunteers" : [ ]
+    "assignedVolunteers" : [ ],
+    "maxVolunteerSize" : "9223372036854775807"
   }, {
     "eventName" : "baking cookies",
     "roles" : [ {
@@ -86,7 +89,8 @@
       "requiredQuantity" : "200"
     } ],
     "budget" : "750.00",
-    "assignedVolunteers" : [ ]
+    "assignedVolunteers" : [ ],
+    "maxVolunteerSize" : "9223372036854775807"
   }, {
     "eventName" : "cooking food",
     "roles" : [ {
@@ -108,7 +112,8 @@
       "requiredQuantity" : "50"
     } ],
     "budget" : "500.00",
-    "assignedVolunteers" : [ ]
+    "assignedVolunteers" : [ ],
+    "maxVolunteerSize" : "9223372036854775807"
   }, {
     "eventName" : "teaching kids",
     "roles" : [ {
@@ -130,6 +135,7 @@
       "requiredQuantity" : "100"
     } ],
     "budget" : "500.00",
-    "assignedVolunteers" : [ ]
+    "assignedVolunteers" : [ ],
+    "maxVolunteerSize" : "9223372036854775807"
   } ]
 }
