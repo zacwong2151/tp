@@ -660,8 +660,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. Invalid Command Word.
     * 3a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
-
-      Use case resumes from step 3.
+    * 3a2. User enters correct command.
+      Use case resumes from step 4.
 
 * 3b. Invalid event id or volunteer id or both.
     * 3b1. iVolunteer requests for the correct command with valid event id and valid volunteer id.
@@ -675,8 +675,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1.  User <u>lists all volunteering events (UCE02)</u>.
-2.  User requests to list out all volunteers in the specific event.
-3.  iVolunteer list out all volunteers in the events.
+2.  User requests to view all volunteers added to an event.
+3.  iVolunteer displays all volunteers in the event.
 
     Use case ends.
 
@@ -684,8 +684,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2a. Invalid Command Word.
     * 2a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
-
-      Use case resumes from step 2.
+    * 2a2. User enters correct command.
+      Use case resumes from step 3.
 
 * 2b. Invalid event id.
     * 2b1. iVolunteer requests for the correct command with valid event id.
@@ -694,7 +694,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   
       Use case resumes at step 3.
 
-* 2c. There are no events to list.
+* 2c. There are no volunteer to list.
 
   Use case ends.
 
@@ -704,8 +704,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1.  User <u>lists all volunteering events (UCE02)</u>.
 2.  User <u>lists all volunteers (UCV02)</u>.
-3.  User requests to remove a specific volunteer in the volunteer list into a specific event in the event list
-4.  iVolunteer removes the volunteer in the event.
+3.  User requests to remove a specific volunteer in the volunteer list from a specific event in the event list
+4.  iVolunteer removes the volunteer from the event.
 
     Use case ends.
 
@@ -713,8 +713,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. Invalid Command Word.
     * 3a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
+    * 3a2. User enters correct command.
 
-      Use case resumes from step 3.
+      Use case resumes from step 4.
 
 * 3b. Invalid event id or volunteer id or both.
     * 3b1. iVolunteer requests for the correct command with valid event id or volunteer id or both.
@@ -737,15 +738,17 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1a. Invalid Command Word.
     * 1a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
 
-    Use case resumes from step 1.
+      Use case resumes from step 1.
+  
 * 1b. Missing arguments for mandatory fields.
     * 1b1. System prompts Volunteer Coordinator to provide arguments for all mandatory fields.
 
-  Use case resumes from step 1.
+      Use case resumes from step 1.
+  
 * 1c. Parameters are not separated by a single space.
     * 1c1. System prompts Volunteer Coordinator to separate parameters with a single space.
 
-  Use case resumes from step 1.
+      Use case resumes from step 1.
 * 1d. Invalid email.
     * 1d1. System prompts Volunteer Coordinator to use the correct email format.
 
