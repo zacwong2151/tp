@@ -789,3 +789,9 @@ testers are expected to do more *exploratory* testing.
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
 1. _{ more test cases …​ }_
+
+### Improve error message for Create Event Feature
+The current implementation of the Create Event Feature checks the input command and shows error messages for invalid parameters one at a time.<br>
+However, this is not user-friendly as users can only edit the parameters one at a time, which can be very tedious for a command with so many parameters. For example, `ecreate n/Cle@n beach r/cleaner sd/23/10/2023 2500 l/punggol] dsc/clean the beach] m/trash bag b/50.0`, which has invalid inputs for each parameter, would require 7 tries to successfully execute.<br>
+Hence, to reduce the number of invalid user inputs, we plan to improve our error messages such that they show all invalid inputs from the user, as well as their valid formats.<br>
+This way, users can correct their inputs all at once, reducing their frustration from entering many consecutive invalid commands.
