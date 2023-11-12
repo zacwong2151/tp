@@ -10,6 +10,7 @@ import seedu.address.model.event.Event;
 import seedu.address.model.event.EventName;
 import seedu.address.model.event.Location;
 import seedu.address.model.event.Material;
+import seedu.address.model.event.MaxVolunteerSize;
 import seedu.address.model.event.Role;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.model.volunteer.Name;
@@ -24,6 +25,7 @@ public class EventBuilder {
     public static final String DEFAULT_LOCATION = "Hougang";
     public static final String DEFAULT_DESCRIPTION = "Clean very clean";
     public static final String DEFAULT_BUDGET = "50.00";
+    public static final String DEFAULT_MAX_VOLUNTEER_SIZE = "3";
 
     private EventName eventName;
     private Set<Role> roles;
@@ -34,6 +36,7 @@ public class EventBuilder {
     private Set<Material> materials;
     private Budget budget;
     private Set<Name> assignedVolunteers = new HashSet<>();
+    private MaxVolunteerSize maxVolunteerSize;
 
     /**
      * Creates a {@code EventBuilder} with the default details.
@@ -47,6 +50,7 @@ public class EventBuilder {
         description = new Description(DEFAULT_DESCRIPTION);
         materials = new HashSet<>();
         budget = new Budget(DEFAULT_BUDGET);
+        maxVolunteerSize = new MaxVolunteerSize(DEFAULT_MAX_VOLUNTEER_SIZE);
     }
 
     /**
@@ -61,6 +65,7 @@ public class EventBuilder {
         description = eventToCopy.getDescription();
         materials = new HashSet<>(eventToCopy.getMaterials());
         budget = eventToCopy.getBudget();
+        maxVolunteerSize = eventToCopy.getMaxVolunteerSize();
     }
 
     /**
@@ -128,12 +133,20 @@ public class EventBuilder {
     }
 
     /**
+     * Sets the {@code MaxVolunteerSize} of the {@code Event} that we are building.
+     */
+    public EventBuilder withMaxVolunteerSize(String maxVolunteerSize) {
+        this.maxVolunteerSize = new MaxVolunteerSize(maxVolunteerSize);
+        return this;
+    }
+
+    /**
      * Creates an event object.
      * @return the {@code Event} object
      */
     public Event build() {
         return new Event(eventName, roles, startDate, endDate, location, description, materials, budget,
-                assignedVolunteers);
+                assignedVolunteers, maxVolunteerSize);
     }
 
 }

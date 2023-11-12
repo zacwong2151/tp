@@ -19,6 +19,7 @@ import seedu.address.model.event.Event;
 import seedu.address.model.event.EventName;
 import seedu.address.model.event.Location;
 import seedu.address.model.event.Material;
+import seedu.address.model.event.MaxVolunteerSize;
 import seedu.address.model.event.Role;
 import seedu.address.model.volunteer.Name;
 
@@ -36,6 +37,7 @@ public class JsonAdaptedEvent {
     private final List<JsonAdaptedMaterial> materials = new ArrayList<>();
     private final String budget;
     private final List<JsonAdaptedName> assignedVolunteers = new ArrayList<>();
+    private final String maxVolunteerSize;
 
     /**
      * Constructs a {@code JsonAdaptedEvent} with the given event details.
@@ -49,7 +51,8 @@ public class JsonAdaptedEvent {
                             @JsonProperty("description") String description,
                             @JsonProperty("materials") List<JsonAdaptedMaterial> materials,
                             @JsonProperty("budget") String budget,
-                            @JsonProperty("assignedVolunteers") List<JsonAdaptedName> assignedVolunteers) {
+                            @JsonProperty("assignedVolunteers") List<JsonAdaptedName> assignedVolunteers,
+                            @JsonProperty("maxVolunteerSize") String maxVolunteerSize) {
         this.eventName = eventName;
         if (roles != null) {
             this.roles.addAll(roles);
@@ -65,6 +68,7 @@ public class JsonAdaptedEvent {
         if (assignedVolunteers != null) {
             this.assignedVolunteers.addAll(assignedVolunteers);
         }
+        this.maxVolunteerSize = maxVolunteerSize;
     }
 
     /**
@@ -86,6 +90,7 @@ public class JsonAdaptedEvent {
         assignedVolunteers.addAll(source.getAssignedVolunteers().stream()
                 .map(JsonAdaptedName::new)
                 .collect(Collectors.toList()));
+        maxVolunteerSize = source.getMaxVolunteerSize().toString();
     }
 
     /**
@@ -161,8 +166,21 @@ public class JsonAdaptedEvent {
             modelBudget = new Budget("");
         } else if (!Budget.isValidBudget(budget)) {
             throw new IllegalValueException(Budget.MESSAGE_CONSTRAINTS);
+        } else {
+            modelBudget = new Budget(budget);
         }
-        modelBudget = new Budget(budget);
+
+        MaxVolunteerSize modelMaxVolunteerSize;
+        if (maxVolunteerSize == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    MaxVolunteerSize.class.getSimpleName()));
+        } else if (maxVolunteerSize.isEmpty()) {
+            modelMaxVolunteerSize = new MaxVolunteerSize();
+        } else if (!MaxVolunteerSize.isValidMaxVolunteerSize(maxVolunteerSize)) {
+            throw new IllegalValueException(MaxVolunteerSize.MESSAGE_CONSTRAINTS);
+        } else {
+            modelMaxVolunteerSize = new MaxVolunteerSize(maxVolunteerSize);
+        }
 
         final List<Name> eventVolunteers = new ArrayList<>();
         for (JsonAdaptedName name : assignedVolunteers) {
@@ -173,7 +191,7 @@ public class JsonAdaptedEvent {
         final Set<Material> modelMaterials = new HashSet<>(eventMaterials);
         final Set<Name> modelAssignedVolunteers = new HashSet<>(eventVolunteers);
         return new Event(modelName, modelRoles, modelStartDate, modelEndDate, modelLocation, modelDescription,
-                modelMaterials, modelBudget, modelAssignedVolunteers);
+                modelMaterials, modelBudget, modelAssignedVolunteers, modelMaxVolunteerSize);
     }
 
 }
