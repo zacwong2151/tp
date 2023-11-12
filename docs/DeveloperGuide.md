@@ -318,11 +318,11 @@ When event show command is called, a pop-up window (an `EventShowWindow` object)
 
 Given below is an example usage scenario and how the event show mechanism behaves at each step:
 
-Step 1. The user launches the app for the first time, and executes `ecreate n/first event ...` to create a new event. This called method `Model#updateFilteredEventList()` to update both the `filteredEventList` and the `eventToShowList`.
+Step 1. The user launches the app for the first time, and executes `ecreate n/first event ...` to create a new event. This calls the method `Model#updateFilteredEventList()` to update both the `filteredEventList` and the `eventToShowList`.
 
 <puml src="diagrams/EventShowStep1.puml" alt="EventShowStep1" />
 
-Step 2. The user  executes `ecreate n/second event ...` to create another event. This called the method `Model#updateFilteredEventList()` again to update both the `filteredEventlist` and the `eventToShowList`.
+Step 2. The user  executes `ecreate n/second event ...` to create another event. This calls the method `Model#updateFilteredEventList()` again to update both the `filteredEventlist` and the `eventToShowList`.
 
 <puml src="diagrams/EventShowStep2.puml" alt="EventShowStep2" />
 
