@@ -30,7 +30,6 @@
       </HBox>
       <Label fx:id="dateAndTime" styleClass="cell_small_label" text="\$dateAndTime" />
       <Label fx:id="loc" styleClass="cell_small_label" text="\$loc" />
-      <Label fx:id="description" styleClass="cell_small_label" text="\$description" />
          <FlowPane fx:id="roles" hgap="5.0">
             <children>
                <Label styleClass="cell_small_label" text="Roles:" />

@@ -49,7 +49,6 @@ public class VolunteerFindCommandParser implements Parser<VolunteerFindCommand> 
         Set<Skill> skillKeywords = ParserUtil.parseSkills(argMultimap.getAllValues(PREFIX_SKILL));
         List<Skill> skills = new ArrayList<>(skillKeywords);
 
-        //return new VolunteerFindCommand(new SkillNameContainsKeywordsPredicate(names, skills));
         return new VolunteerFindCommand(new SkillNameContainsKeywordsPredicate(names, skills));
     }
 
