@@ -29,6 +29,7 @@ Given below are my contributions to the project.
     
   * Developer Guide:
     * Added a list of user stories
+    * Added use cases for eaddv, eremovev and elistv
     
 * **Community**: 
   * PRs reviewed and providing feedback based on teammates comments (with non-trivial review comments):
