@@ -319,6 +319,15 @@ The following activity diagram summarizes what happens when a user executes a ne
   * Pros: Will use less memory (e.g. for `vdelete`, just save the volunteer being deleted).
   * Cons: Complex to implement. We must ensure that the implementation of each individual command is correct.
 
+**Aspect: How to handle current state pointers for both `VersionedVolunteerStorage` and `VersionedEventStorage`:**
+
+* **Alternative 1 (current choice):** Have separate pointers for both classes, where both pointers increment and decrement simultaneously.
+    * Pros: Is a more suitable choice if one were to adopt the **Alternative 2** approach mentioned above. This is because both pointers are now selectively modified, and are not modified in unison.
+    * Cons: There is code duplication as the pointers in both classes are handled the same way.
+
+* **Alternative 2:** Have both classes inherit from an abstract `VersionedStorage` class. Thus, they share the same pointer.
+    * Pros: Results in cleaner code as common fields and methods from both classes can be extracted out into a parent class.
+    * Cons: Harder to implement.
 
 ### \[Proposed\] Reading an individual event feature
 
