@@ -57,6 +57,9 @@ Given below are my contributions to the project.
     * **Updating the `Model`** to accept `Volunteer` instead of `Person`.
     * **Changing the writing and reading of data** from `Person` to `Volunteer`.
 
+* **Project management**:
+  * Helped set up the issue tracker and milestone management on GitHub.
+
 * **Documentation**:
     * User Guide:
       * Added the Quick Start portion of the UG (https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/47/files)
@@ -65,8 +68,9 @@ Given below are my contributions to the project.
     * Developer Guide:
       * Added use cases for event create feature. (https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/53/files)
       * Added implementation details for event create feature, inclusive of UML class and sequence diagrams. (https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/115/files)
-      * , event add volunteer, event list volunteer and event remove volunteer features, inclusive of UML class, object and sequence diagrams. (https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/219/files)
+      * Added implementation details for event add volunteer, event list volunteer and event remove volunteer features, inclusive of UML class, object and sequence diagrams. (https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/219/files)
+      * Added instructions for manual testing for event create, event add volunteer, event list volunteer and event remove volunteer features. (https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/232/files)
 
 * **Community**:
-  * Provided feedback on the PRs of team members (https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/52, https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/67, https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/69, https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/82, https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/91)
+  * Provided feedback on the PRs of team members (https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/52, https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/67, https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/69, https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/82, https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/91, https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/229)
   * Responded to feedback given on own PRs (https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/53)
