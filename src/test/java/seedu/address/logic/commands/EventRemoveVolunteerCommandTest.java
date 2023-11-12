@@ -76,8 +76,8 @@ public class EventRemoveVolunteerCommandTest {
                 .get(validVolunteerIndex.getZeroBased());
         Event newEvent = currentEvent.addVolunteer(volunteerToAdd);
         model.setEvent(currentEvent, newEvent);
-        EventRemoveVolunteerCommand command = new EventRemoveVolunteerCommand(validEventIndex, validVolunteerIndex);
 
+        EventRemoveVolunteerCommand command = new EventRemoveVolunteerCommand(validEventIndex, validVolunteerIndex);
         try {
             CommandResult commandResult = command.execute(model);
             Event eventToRemoveFrom = model.getEventStorage().getEventList().get(validEventIndex.getZeroBased());

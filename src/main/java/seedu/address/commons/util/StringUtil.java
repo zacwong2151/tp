@@ -57,7 +57,8 @@ public class StringUtil {
         String preppedSkill = skill.skillName.toLowerCase();
 
         checkArgument(!preppedSkill.equals(""), "Skill cannot be empty string");
-        checkArgument(preppedSkill.split("\\s+").length == 1, "String parameter should be a single word");
+        checkArgument(preppedSkill.split("\\s+").length == 1,
+                "Skill parameter should be a single word");
 
         return preppedSkills.anyMatch(s -> s.contains(preppedSkill));
     }

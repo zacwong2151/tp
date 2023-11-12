@@ -21,7 +21,7 @@ public class VolunteerCreateCommand extends Command {
 
     public static final String COMMAND_WORD = "vcreate";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a volunteer to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a volunteer to the volunteer list.\n"
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
@@ -31,8 +31,8 @@ public class VolunteerCreateCommand extends Command {
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
-            + PREFIX_SKILL + "friends "
-            + PREFIX_SKILL + "owesMoney";
+            + PREFIX_SKILL + "cooking "
+            + PREFIX_SKILL + "cleaning";
 
     public static final String MESSAGE_SUCCESS = "New volunteer added: %1$s";
     public static final String MESSAGE_DUPLICATE_VOLUNTEER = "This volunteer already exists in the volunteer list";
