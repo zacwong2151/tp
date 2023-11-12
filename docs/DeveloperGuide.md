@@ -765,11 +765,95 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
+### Creating an event
+1. Creating an event
+   1. Test case: `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy m/100 packets b/100.00 vs/50`<br>
+      Expected: A new event is created and added to the event list panel. Details of the event are shown in the status message.
+
+   1. Test case: `ecreate`<br>
+      Expected: No change to the event list panel. Invalid command format error is shown in the status message.<br>
+      The outcome is the same when any of the compulsory parameters are missing from the input command.
+
+   1. Test case: `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 l/hougang dsc/`<br>
+      Expected: No change to the event list panel. Error message for the invalid field is shown in the status message<br>
+      The outcome is the same when all compulsory parameters are present and any argument is empty or invalid.
+
+   1. Test case: `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 l/hougang dsc/Packing food for the needy`, followed by
+                 `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 l/hougang dsc/Packing food for the needy`<br>
+      Expected: No change to the event list panel. Error message for duplicate events is shown in the status message<br>
+      The outcome is the same when all compulsory parameters are present, all arguments are valid, and an event with the same name already exists in the event list.
+   
+### Adding a volunteer to an event
+1. Adding a volunteer which is being shown to an event which is being shown
+
+   1. Prerequisites: The event list must contain at least one event and the volunteer list must contain at least one volunteer.
+
+   1. Test case: `eaddv eid/1 vid/1`<br>
+      Additional Prerequisites:
+         1. The indexes provided are valid.
+         1. The volunteer is not already assigned to the event.
+         1. The volunteer's assigned events do not clash with the current event.<br>
+      
+      Expected: The volunteer is added to the event. Details of the updated event and its current number of assigned volunteers are shown in the status message.
+
+   1. Test case: `eaddv`<br>
+      Expected: No change to the event list or volunteer list panels. Invalid command format error is shown in the status message.<br>
+      The outcome is the same when any of the parameters are missing from the input command, or when their arguments are empty or invalid.
+
+   1. Test case: `eaddv eid/1 vid/1`, followed by `eaddv eid/1 vid/1`<br>
+      Expected: No change to the event list or volunteer list panels. Error message for duplicate volunteer is shown in the status message<br>
+      The outcome is the same when any volunteer is added to an event they are already assigned to.
+
+   1. Test case: `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy` and
+                 `ecreate n/Clean park r/20 cleaner sd/23/10/2023 2000 ed/23/10/2023 2300 l/serangoon dsc/Clean the local park`, followed by
+                 `eaddv eid/1 vid/1` and `eaddv eid/2 vid/1`<br>
+      Note that the two events created are clashing with each other.<br>
+      Expected: No change to the event list or volunteer list panels. Error message for clashing events is shown in the status message<br>
+      The outcome is the same when any volunteer is added to an event which clashes with at least one of their pre-existing events.
+
+### Displaying all volunteers added to an event
+1. Listing all volunteers assigned to an event.
+
+   1. Prerequisites: The event list panel must contain at least one event.
+   
+   1. Test case: `elistv 1`<br>
+      Expected: Volunteer list panel shows all volunteers currently assigned to the event. Status message shows a success message as well as the number of volunteers assigned to the event.
+   
+   1. Test case: `elistv`<br>
+      Expected: No change in the volunteer list panel. Error message for invalid command format is shown in the status message.
+      The outcome is the same for input commands with no index specified, or non-positive indexes.
+   
+   1. Test case: `elistv 3`<br>
+      Additional Prerequisites: The event list panel currently has only 2 events.<br>
+      Expected: No change in the volunteer list panel. Error message for invalid event index is shown in the status message.<br>
+      The outcome is the same for input commands where the index specified is larger than the number of events in the event list panel.
+
+### Removing a volunteer from an event
+1. Removing a volunteer which is being shown from an event which is being shown
+
+    1. Prerequisites: The event list must contain at least one event and the volunteer list must contain at least one volunteer.
+
+    1. Test case: `eremovev eid/1 vid/1`<br>
+       Prerequisites:
+        1. The indexes provided are valid
+        1. The volunteer is currently assigned to the event<br>
+           
+       Expected: The volunteer is removed from the event. Details of the updated event and its current number of assigned volunteers are shown in the status message.
+
+    1. Test case: `eremovev eid/ vid/`<br>
+       Expected: No change to the event list or volunteer list panels. Invalid command format error is shown in the status message.<br>
+       The outcome is the same when any of the parameters are missing from the input command, or when their arguments are empty or invalid.
+
+    1. Test case: `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy` and
+                  `vcreate n/tom p/12345678 e/tom@gmail.com`, followed by `eremovev eid/1 vid/1`<br>
+       Expected: No change to the event list or volunteer list panels. Error message for volunteer not currently assigned to event is shown in the status message.<br>
+       The outcome is the same when any volunteer is removed from an event they are not currently assigned to.
+
 ### Deleting a volunteer
 
 1. Deleting a volunteer while all volunteers are being shown
 
-   1. Prerequisites: List all volunteers using the `list` command. Multiple volunteers in the list.
+   1. Prerequisites: List all volunteers using the `list` command. Multiple volunteers in the list. 
 
    1. Test case: `delete 1`<br>
       Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
