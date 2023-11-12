@@ -69,6 +69,7 @@ Given below are my contributions to the project.
       * Added use cases for event create feature. (https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/53/files)
       * Added implementation details for event create feature, inclusive of UML class and sequence diagrams. (https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/115/files)
       * Added implementation details for event add volunteer, event list volunteer and event remove volunteer features, inclusive of UML class, object and sequence diagrams. (https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/219/files)
+      * Added planned enhancements for the event create feature. (https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/233/files)
       * Added instructions for manual testing for event create, event add volunteer, event list volunteer and event remove volunteer features. (https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/232/files)
 
 * **Community**:
