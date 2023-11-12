@@ -324,24 +324,39 @@ EventShowWindow consists of ListView displaying the eventToShowList in Model, an
 
 In summary, when the app is initialized, EventShowWindow will be initialized with its contents being the list of all events obtained from the EventStorage. However, user will not see it as without receiving its command, EventShowWindow will not be shown.
 
-### \[In progress\] Delete the event from a list of event
+### Delete the event from a list of event
 
-### Implementation
+### Implementation 
+can just delete from the storage as it is faster, but due to consistency
 
-To facilitate the event delete command, the class EventDeleteCommand is created. The class extends from the interface
-Command. When the command is then parsed and executed.
+When deleting an event, the event in the EventStorage will also be deleted. The new event list is then written into the 
+JSON file, `eventStorage.json`.
 
 Given below is an example usage scenario and how the mechanism of the event delete behaves at each step.
 
-Step 1. When the user input the event delete command, it will be parsed by IVolunteerParser. Then the keyword of the command is noticed and EventDeleteCommandParser is called. 
+Step 1. The user launches the application and enters the command to delete an event. For example, `edelete 1`. When 
+iVolunteer receives the input, it will parse the input and split it into command word and detail, which is the index. 
+The index will then be checked if it is valid by parsing it from String to an integer.
 
-<puml src="diagrams/DeleteSequenceDiagram.puml" alt="DeleteSequenceDiagram" />
+Step 2. If the index is valid, a new EventDeleteCommand will be created and executed. During its execution, 
+the application will find for the event in `EventStorage` in the `ModelManager` and delete it. Then, the application 
+will go through the volunteers in `VolunteerStorage` in `ModelManager` as well to remove the volunteers that were 
+participating in the event.
 
-Step 2. When the command is parsed, the index of the event in the event list is then determined by parsing from String to an integer.
+Step 3. When the `EventDeleteCommand` finishes executing, the updated `EventStorage` is written into `eventStorage.json` 
+file.
 
-Step 3. The command is then executed and with the index and the event is deleted from the filtered list.
+#### Design considerations:
 
-Step 4. Then the storage will also be updated accordingly by the filtered list.
+**Aspect: Prefix for the event id:**
+
+* **Alternative 1 (current choice):** Proceed without prefix.
+    * Pros: Easy to implement.
+    * Cons: Lack of consistency.
+
+* **Alternative 2:** Include prefix. 
+    * Pros: Consistency is adhered.
+    * Cons: More steps will be taken to implement and it is redundant since the index is the only field.
 
 ### \[In progress\] Tracking amount of roles and materials
 
@@ -427,13 +442,6 @@ Step 6. As a result, the `Material` object will be updated as follows (in the JS
 }
 ```
 
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
-
---------------------------------------------------------------------------------------------------------------------
-
 ### \[Proposed\] vfind feature
 
 #### Proposed Implementation
@@ -460,6 +468,7 @@ Step 2. This creates a `VolunteerFindCommandParser` object, which processes the 
 
 _{Explain here how the data archiving feature will be implemented}_
 
+--------------------------------------------------------------------------------------------------------------------
 
 
 ## **Documentation, logging, testing, configuration, dev-ops**
