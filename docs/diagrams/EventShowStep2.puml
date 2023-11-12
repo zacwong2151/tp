@@ -1,0 +1,28 @@
+@startuml
+!include style.puml
+skinparam ClassFontColor #000000
+skinparam ClassBorderColor #000000
+skinparam arrowColor MODEL_COLOR_T1
+skinparam ClassBackgroundColor MODEL_COLOR_T1
+
+title Step 1:
+
+package filteredEventList <<rectangle>> {
+    class State1 as "<u>e1:Event</u>"
+}
+
+note top of filteredEventList
+Current event list
+displayed to the user.
+end note
+
+package eventToShowList <<rectangle>> {
+    class State1 as "<u>e1:Event</u>"
+}
+
+note top of eventToShowList
+Contents of `eshow` pop-up window
+ is obtained here.
+end note
+
+@enduml
