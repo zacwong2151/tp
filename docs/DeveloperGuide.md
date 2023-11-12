@@ -257,7 +257,7 @@ Step 3: The updated `EventStorage` and `VolunteerStorage` is written into the ev
 ### Event Remove Volunteer Feature
 
 #### Implementation
-To remove volunteers into events, we make use of the `assignedVolunteers`field of an event, as well as the `assignedEvents` field of a volunteer.
+To remove volunteers into events, we make use of the `assignedVolunteers` field of an event, as well as the `assignedEvents` field of a volunteer.
 
 Given below is an example usage scenario and how the event remove volunteer mechanism behaves at each step.
 
