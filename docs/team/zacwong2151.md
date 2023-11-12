@@ -3,9 +3,9 @@ layout: default.md
 title: "Zac's Project Portfolio Page"
 ---
 
-### Project: AddressBook Level 3
+### Project: iVolunteer
 
-iVolunteer is an application for volunteer coordinators to manage volunteers, events, and their interactions. The user interacts with it using a CLI, with a GUI created with JavaFX. It is written in Java with about 21 kLoC.
+iVolunteer is an application for volunteer coordinators to manage volunteers, events, and their interactions. The user interacts with it using a CLI, with a GUI created with JavaFX. It is written in Java with about 14 kLoC.
 
 Given below are my contributions to the project.
 
@@ -48,3 +48,4 @@ Given below are my contributions to the project.
 
 * **Community**:
     * PRs reviewed (with non-trivial review comments): [\#122](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/122), [\#69](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/69), [\#113](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/113), [\#82](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/82)
+    * PE dry run bugs found: [(1)](https://github.com/AY2324S1-CS2103T-W11-3/tp/issues/186), [(2)](https://github.com/AY2324S1-CS2103T-W11-3/tp/issues/162), 
