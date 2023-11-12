@@ -24,7 +24,7 @@ Given below are my contributions to the project.
 
 * **New Feature**: Event Add Volunteer Feature
   * Implemented the functionality of **assigning volunteers to events**. This is important as it helps volunteer coordinators **easily keep track** of which volunteers are participating in which event, easing the volunteer management process. The following shows the aspects involved when implementing this feature.
-    * **Creating a new field** for `Event`: `assignedVolunteers` which is a Set<Name> which stores the names of volunteers assigned to the event. I also created a `assignedEvents` field for `Volunteer` which works the same way.
+    * **Creating a new field** for `Event`: `assignedVolunteers` which is a `Set<Name>` which stores the names of volunteers assigned to the event. I also created a `assignedEvents` field for `Volunteer` which works the same way.
     * **Parsing of parameter arguments**, such as ensuring that the `Event` and `Volunteer` indexes provided are valid.
     * **Implementing the logic** for adding a volunteer to an event, such as checking if the volunteer is already assigned to the event and checking if any of the volunteer's assigned events clashes with the current event.
     * **Updating the `Model`** with the updated `Event` and `Volunteer`.
@@ -68,5 +68,5 @@ Given below are my contributions to the project.
       * , event add volunteer, event list volunteer and event remove volunteer features, inclusive of UML class, object and sequence diagrams. (https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/219/files)
 
 * **Community**:
-  * Provided feedback on the PRs of team members (https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/67, https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/52, https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/67, https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/69, https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/82, https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/91)
+  * Provided feedback on the PRs of team members (https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/52, https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/67, https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/69, https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/82, https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/91)
   * Responded to feedback given on own PRs (https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/53)
