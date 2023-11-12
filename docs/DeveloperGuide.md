@@ -769,14 +769,14 @@ testers are expected to do more *exploratory* testing.
 
 1. Prerequisites: NIL.
 
-    1. Test case: `vcreate n/Little Johnny p/98765432 e/ben@example.com s/chef`<br>
+    1. Test case: `vcreate n/Little Johnny p/98765432 e/littlejohnny@example.com s/little`<br>
        Expected: Volunteer is created and added to the bottom of the volunteer list. Details of the volunteer shown in the status message.
 
-    1. Test case: `vcreate n/Ben p/98765432 e/ben@example.com s/chef`<br>
-       Expected: Volunteer is not created as there already exists a 'Ben' in the volunteer list. Error details shown in the status message.
+    1. Test case: `vcreate n/Little Johnny p/91234567 e/bigjohnny@example.com s/little`<br>
+       Expected: Volunteer is not created as there already exists a 'Little Johnny' in the volunteer list. Error details shown in the status message.
 
     1. Other incorrect delete commands to try: `vcreate`, `vcreate n/`, `...` <br>
-       Expected: `Invalid commat format!` error message shown in the status message. Instructions on the correct format are shown as well.
+       Expected: `Invalid command format!` error message shown in the status message. Instructions on the correct format are shown as well.
 
 ### Deleting a volunteer
 
@@ -798,31 +798,30 @@ testers are expected to do more *exploratory* testing.
     1. Test case: `vfind n/George s/chef`<br>
        Expected: Volunteer list is updated to show `George`, who is a `chef`. Number of matching volunteers shown in the status message.
    
-    1. Test case: `vfind s/amazing`<br>
+    1. Test case: `vfind s/no one has this skill`<br>
        Expected: Volunteer list displays nothing. `0 volunteers listed!` shown in the status message.
 
     1. Test case: `vfind n/!@#`<br>
        Expected: Volunteer list displays nothing. `Names should only contain alphanumeric characters and spaces, and it should not be blank` shown in the status message.
 
     1. Other incorrect delete commands to try: `vfind`, `vfind randomwordshere n/ben`, `...` <br>
-       Expected: `Invalid commat format!` error message shown in the status message. Instructions on the correct format are shown as well.
+       Expected: `Invalid command format!` error message shown in the status message. Instructions on the correct format are shown as well.
 
 ### Finding an event
-
 
 1. Prerequisites: List all events using the `elist` command. Multiple events in the list.
 
     1. Test case: `efind n/fixing computers`<br>
-       Expected: First event is deleted from the list..
+       Expected: Event list is updated to show `fixing computers` event. Number of matching events shown in the status message.
 
-    1. Test case: `efind n/random event`<br>
+    1. Test case: `efind n/this event does not exist`<br>
        Expected: Event list displays nothing. `0 events listed!` shown in the status message.
 
     1. Test case: `efind n/!@#`<br>
        Expected: Event list displays nothing. `Names should only contain alphanumeric characters and spaces, and it should not be blank` shown in the status message.
 
     1. Other incorrect delete commands to try: `efind`, `efind randomwordshere n/baking cookies`, `...` <br>
-       Expected: `Invalid commat format!` error message shown in the status message. Instructions on the correct format are shown as well.
+       Expected: `Invalid command format!` error message shown in the status message. Instructions on the correct format are shown as well.
    
 ### Undoing/redoing a command
 
@@ -837,7 +836,7 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `vdelete 1`<br>
       Expected: First volunteer is deleted from the list. Details of the deleted volunteer shown in the status message.
 
-   1. Test case: `ecreate n/eating food r/50 chef r/50 packer sd/26/9/2023 1500 ed/28/9/2023 1800 l/hougang dsc/picking litter m/50 potatoes b/50.00`<br>
+   1. Test case: `ecreate n/eating food r/5 cooker r/5 eaters sd/12/5/2023 0900 ed/14/5/2023 1200 l/punggol dsc/eating food m/50 burgers b/100.00`<br>
       Expected: Event is created and added to the event list. Details of the event shown in the status message.
 
    1. Test case: `undo` (run it twice)<br>
