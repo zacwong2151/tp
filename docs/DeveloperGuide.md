@@ -233,13 +233,12 @@ The proposed undo/redo mechanism is facilitated by `VersionedVolunteerStorage` a
 * `VersionedEventStorage#saveNewState()` — Saves the current events state in its history.
 * `VersionedEventStorage#undo()` — Restores the previous events state from its history.
 * `VersionedEventStorage#redo()` — Restores a previously undone events state from its history.
-* 
 
 These operations are exposed in the `Model` interface as `Model#commitToBothVersionedStorages()`, `Model#undoBothStorages()` and `Model#redoBothStorages()` respectively.
 
 <box type="info" seamless>
 
-**Note:** Any command that changes the volunteers state or events state will trigger the `saveNewState()` method for both `VersionedVolunteerStorage` and `VersionedEventStorage`. Similarly, a `undo` or `redo` command will trigger the `undo()` and `redo()` method for both `VersionedVolunteerStorage` and `VersionedEventStorage`. To avoid diagram repetition, I will mainly refer to `VersionedVolunteerStorage` in the following illustrations. However, take note that whatever happens at `VersionedVolunteerStorage` occurs for `VersionedEventStorage` as well.
+**Note:** Any command that changes the volunteers state or events state will trigger the `saveNewState()` method for both `VersionedVolunteerStorage` and `VersionedEventStorage`. Similarly, a `undo` or `redo` command will trigger the `undo()` and `redo()` method for both `VersionedVolunteerStorage` and `VersionedEventStorage`. To avoid diagram repetition, `VersionedVolunteerStorage` will be mainly referred to in the following illustrations. However, take note that whatever happens at `VersionedVolunteerStorage` occurs for `VersionedEventStorage` as well.
 
 </box>
 
