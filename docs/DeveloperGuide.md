@@ -880,7 +880,7 @@ testers are expected to do more *exploratory* testing.
 
       1. The list of events should have at least 1 event. Otherwise, add in some events using the `ecreate` command.
 
-      2. Perform `efind n/abc` to get a filtered event list panel (can consist of 0 or more events).
+      2. Performed an event find command (e.g. `efind n/abc`) to get a filtered event list panel (can consist of 0 or more events).
 
    2. Test case: `elist` <br> Expected: Event list panel displays all events. Success message is shown in the result display.
 
