@@ -854,7 +854,7 @@ testers are expected to do more *exploratory* testing.
        Expected: No volunteer is deleted. Error details shown in the status message.
 
     1. Other incorrect delete commands to try: `vdelete`, `vdelete x`, `...` (where x is larger than the list size or a non-integer)<br>
-       Expected: Similar to previous.
+       Expected: Similar to previous test case.
 
 ### Deleting an event
 
@@ -870,7 +870,7 @@ testers are expected to do more *exploratory* testing.
        Expected: No change to the event list panel. Invalid command format error is shown in the status message.<br>
 
     1. Test case: `edele`
-       Expected: No change to the event list panel. Invalid command format error is shown in the status message.<br>
+       Expected: Similar to previous test case.<br>
 
 ### Editing an event
 1. Editing the detail of an event.
@@ -891,10 +891,13 @@ testers are expected to do more *exploratory* testing.
        Detail is shown in the status message.
 
     1. Test case: `eedit 1 l/`
-       Expected: No change to the event list panel. Invalid command format error is shown in the status message.<br>
+       Expected: Similar to previous test case.<br>
 
-    1. Test case: `eeit`
-       Expected: No change to the event list panel. Invalid command format error is shown in the status message.<br>
+   1. Test case: `edelete`
+      Expected: No change to the event list panel. Invalid command format error is shown in the status message.<br>
+   
+   1. Test case: `eeit`
+      Expected: Similar to previous test case.<br>
 
 1. _{ more test cases …​ }_
 
