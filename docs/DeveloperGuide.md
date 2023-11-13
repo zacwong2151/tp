@@ -338,7 +338,9 @@ The `eshow` command then filters the `eventToShowList` such that it has only one
 
 The `eshow` command then returns a `CommandResult` object with its `isShowEvent` field as true.
 
-The `MainWindow` received the `CommandResult`, identifies that its `isShowEvent` field is true, hence executing the `MainWindow#handleShowEvent()` method, which shows/focuses the `EventShowWindow`, after loading its contents by calling `EventShowWindow#loadContents()`.
+The `MainWindow` received the `CommandResult`. Upon identifying that its `isShowEvent` field is true, `MainWindow#handleShowEvent()` method is executed. 
+
+The `MainWindow#handleShowEvent()` method hows/focuses the `EventShowWindow`, after loading its contents by calling `EventShowWindow#loadContents()`.
 
 `EventShowWindow` has `eventToShowList` as one of its fields, `eventToShowList` here is the same object as the one we use in `ModelManager`.
 
@@ -348,9 +350,7 @@ User see a pop-up window (`EventShowWindow`), showing all information of the eve
 
 Step 4. The user navigates back to the main window, causing the pop-up window to be unfocused.
 
-Step 5. The user now wants to read more on the second event, so he executes `eshow 2`. 
-
-Step 3 is repeated with the new given index - `2`.
+Step 5. The user now wants to read more on the second event, so he executes `eshow 2`. Step 3 is repeated with the new given index - `2`.
 
 <puml src="diagrams/EventShowStep5.puml" alt="EventShowStep5" />
 
@@ -387,6 +387,7 @@ The following sequence diagram shows how the event show operation works:
 * **Alternative 2:** Shown in `EventListPanel`.
   * Pros: Might be easier to implement as the `EventListPanel` will already have access to the event information as it has `filteredEventList` as one of its fields.
   * Cons: Depletes the user experience as they will have to use the `elist` command, followed by the `eshow` command if they want to see the event information of another event.
+
 ### \[In progress\] Delete the event from a list of event
 
 ### Implementation
