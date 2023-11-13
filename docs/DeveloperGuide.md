@@ -691,86 +691,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   
     Use case resumes at step 3.
 
-**Use case UCE05: Add a volunteer into an event**
-
-**MSS**
-
-1.  User <u>lists all volunteering events (UCE02)</u>.
-2.  User <u>lists all volunteers (UCV02)</u>.
-3.  User requests to add a specific volunteer in the volunteer list into a specific event in the event list.
-4.  iVolunteer adds the volunteer into the event.
-
-    Use case ends.
-
-**Extensions**
-
-* 3a. Invalid Command Word.
-    * 3a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
-    * 3a2. User enters correct command.
-      Use case resumes from step 4.
-
-* 3b. Invalid event id or volunteer id or both.
-    * 3b1. iVolunteer requests for the correct command with valid event id and valid volunteer id.
-    * 3b2. User enters correct command.
-      Steps 3b1-3b2 are repeated until the data entered is correct.
-
-      Use case resumes at step 4.
-
-**Use case UCE06: List out all volunteers in an event**
-
-**MSS**
-
-1.  User <u>lists all volunteering events (UCE02)</u>.
-2.  User requests to view all volunteers added to an event.
-3.  iVolunteer displays all volunteers in the event.
-
-    Use case ends.
-
-**Extensions**
-
-* 2a. Invalid Command Word.
-    * 2a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
-    * 2a2. User enters correct command.
-      Use case resumes from step 3.
-
-* 2b. Invalid event id.
-    * 2b1. iVolunteer requests for the correct command with valid event id.
-    * 2b2. User enters correct command.
-      Steps 2b1-2b2 are repeated until the data entered is correct.
-  
-      Use case resumes at step 3.
-
-* 2c. There are no volunteer to list.
-
-  Use case ends.
-
-**Use case UCE07: Remove a volunteer from an event**
-
-**MSS**
-
-1.  User <u>lists all volunteering events (UCE02)</u>.
-2.  User <u>lists all volunteers (UCV02)</u>.
-3.  User requests to remove a specific volunteer in the volunteer list from a specific event in the event list
-4.  iVolunteer removes the volunteer from the event.
-
-    Use case ends.
-
-**Extensions**
-
-* 3a. Invalid Command Word.
-    * 3a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
-    * 3a2. User enters correct command.
-
-      Use case resumes from step 4.
-
-* 3b. Invalid event id or volunteer id or both.
-    * 3b1. iVolunteer requests for the correct command with valid event id or volunteer id or both.
-    * 3b2. User enters correct command.
-      Steps 3b1-3b2 are repeated until the data entered is correct.
-
-      Use case resumes at step 4.
-
-**Use case UCE08: Edit an event**
+**Use case UCE05: Edit an event**
 
 **MSS**
 
@@ -804,13 +725,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 2d. Invalid Date and Time.
     * 2d1. System prompts Volunteer Coordinator to use the correct date and time format.
     * 2d2. User enters correct command.
-  
+
       Use case resumes from step 3.
 
 * 2e. Start date/time is after end date/time.
     * 2e1. System prompts Volunteer Coordinator to ensure that start date/time is before end date/time.
     * 2e2. User enters correct command.
-  
+
       Use case resumes from step 3.
 
 * 2f. Invalid Budget Argument
@@ -818,6 +739,85 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 2f2. User enters correct command.
 
       Use case resumes from step 3.
+
+**Use case UCEV01: Add a volunteer into an event**
+
+**MSS**
+
+1.  User <u>lists all volunteering events (UCE02)</u>.
+2.  User <u>lists all volunteers (UCV02)</u>.
+3.  User requests to add a specific volunteer in the volunteer list into a specific event in the event list.
+4.  iVolunteer adds the volunteer into the event.
+
+    Use case ends.
+
+**Extensions**
+
+* 3a. Invalid Command Word.
+    * 3a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
+    * 3a2. User enters correct command.
+      Use case resumes from step 4.
+
+* 3b. Invalid event id or volunteer id or both.
+    * 3b1. iVolunteer requests for the correct command with valid event id and valid volunteer id.
+    * 3b2. User enters correct command.
+      Steps 3b1-3b2 are repeated until the data entered is correct.
+
+      Use case resumes at step 4.
+
+**Use case UCEV02: List out all volunteers in an event**
+
+**MSS**
+
+1.  User <u>lists all volunteering events (UCE02)</u>.
+2.  User requests to view all volunteers added to an event.
+3.  iVolunteer displays all volunteers in the event.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. Invalid Command Word.
+    * 2a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
+    * 2a2. User enters correct command.
+      Use case resumes from step 3.
+
+* 2b. Invalid event id.
+    * 2b1. iVolunteer requests for the correct command with valid event id.
+    * 2b2. User enters correct command.
+      Steps 2b1-2b2 are repeated until the data entered is correct.
+  
+      Use case resumes at step 3.
+
+* 2c. There are no volunteer to list.
+
+  Use case ends.
+
+**Use case UCEV03: Remove a volunteer from an event**
+
+**MSS**
+
+1.  User <u>lists all volunteering events (UCE02)</u>.
+2.  User <u>lists all volunteers (UCV02)</u>.
+3.  User requests to remove a specific volunteer in the volunteer list from a specific event in the event list
+4.  iVolunteer removes the volunteer from the event.
+
+    Use case ends.
+
+**Extensions**
+
+* 3a. Invalid Command Word.
+    * 3a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
+    * 3a2. User enters correct command.
+
+      Use case resumes from step 4.
+
+* 3b. Invalid event id or volunteer id or both.
+    * 3b1. iVolunteer requests for the correct command with valid event id or volunteer id or both.
+    * 3b2. User enters correct command.
+      Steps 3b1-3b2 are repeated until the data entered is correct.
+
+      Use case resumes at step 4.
 
 **Use case UCV01: Create a volunteer**
 
