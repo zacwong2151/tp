@@ -42,7 +42,8 @@ To further improve on user experience, I have added the ability to close this po
         * Updated UiClassDiagram: [#118](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/118)
         * Added implementation details for show individual event feature, inclusive of UML class diagrams: [#231](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/231)
         * Added use cases for event show and event list feature: [82](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/82)
-        * Added use case for volunter list event feature: [#236](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/236)
+        * Added use case for volunteer list event feature: [#236](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/236)
+        * Added test cases under the `Appendix: Instructions for manual testing` for event list, event show and volunteer list event commands: [#240](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/240) 
 
 * **Team-based tasks**
     * Added FAQ, Known issues, Command summary section of the UserGuide: [#70](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/70)
