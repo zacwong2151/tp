@@ -1408,8 +1408,44 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
+--------------------------------------------------------------------------------------------------------------------
+
 ## **Appendix: Planned Enhancements**
-1. Currently, the duplicate detection for roles and materials within the Event model are not very effective: roles and materials with the same name but different quantities are *not counted* as duplicates (e.g. `2 / 50 farmers` and `3 / 100 farmers` are not considered duplicate roles). While the program works perfectly fine with the duplicate roles/materials, we are planning to:
+
+Given below are fixes we propose to add in the future.
+
+### Change definition of duplicate volunteers
+
+The current implementation of the Create Volunteer feature automatically checks for duplicate volunteers if the user is trying to create a new volunteer.
+Below underlines how iVolunteer checks for duplicates.
+- A volunteer is considered duplicate if: their name already exists in the volunteer list.
+- A volunteer is considered **not** duplicate if: their phone number/email address already exists in the volunteer list.
+
+However, this current logic is flawed as it is not applicable to a real life scenario. In the real world, users generally do not have the same phone number or email addresses as they are unique. However, it is common for two users to have the same name. 
+
+Thus, in order to make iVolunteer more applicable to the real world, we plan to make the following change
+to how iVolunteer checks for duplicates.
+- A volunteer is considered duplicate if: their phone number or email address already exists in the volunteer list.
+- A volunteer is considered **not** duplicate if: their name already exists in the volunteer list.
+
+The following activity diagram summarizes what happens when a user attempts to create a new volunteer:
+
+<puml src="diagrams/CreateVolunteerActivityDiagram.puml" width="250" />
+
+### Specific error message for duplicate volunteers
+
+This fix is a follow up to the proposed change to change the definition of duplicate volunteers. Volunteer coordinators may find themselves inadvertently adding duplicate volunteers. With our current implementation, the error message that shows up is `This volunteer already exists in the volunteer list`.
+
+However, this error message is not descriptive enough. Users would not be able to identify whether the issue is caused by a duplicate email address or a duplicate phone number. Users are also unable to identify which existing user in the volunteer list is causing the error to occur.
+
+Thus, we plan to make the error message also mention the reason for the failure, e.g. `The volunteer could not be added because his phone number is held by another volunteer: VOLUNTEER_NAME`.
+
+The following image shows a sample UI of what the error message would look like when you attempt to add a volunteer who has the same phone number as `Alexis Yeoh`
+
+<img src="images/DG-duplicateVolunteerError.png" width="500px">
+
+### Improve Event roles and materials duplicate detection
+Currently, the duplicate detection for roles and materials within the Event model are not very effective: roles and materials with the same name but different quantities are *not counted* as duplicates (e.g. `2 / 50 farmers` and `3 / 100 farmers` are not considered duplicate roles). While the program works perfectly fine with the duplicate roles/materials, we are planning to:
    - strengthen the duplicate detection such that any two roles or materials with the same name are counted as duplicates (e.g. `2 / 50 farmers` and `3 / 40 farmers` will now be considered duplicates)
    - produce an error message `There is more than 1 role/material with the same name: [ROLE/MATERIAL NAME]!` whenever there is a duplicate role/material such that volunteer coordinators are aware of these duplicates and fix the respective `ecreate` or `eedit` command.
    - **Example:** With these changes, the command `ecreate n/Learn farming r/30 farmers r/40 farmers r/100 participants sd/18/11/2023 1230 l/lim chu kang dsc/learn farming` will produce the error message `There is more than 1 role with the same name: farmers!` since `r/30 farmers` and `r/40 farmers` are duplicates.
