@@ -809,6 +809,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     Use case ends.
 
 **Extensions**
+
 * 1a. Invalid Command Word.
     * 1a1. System prompts user to provide a valid command.
   
@@ -831,14 +832,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   
 * 1e. Start date/time is after end date/time.
     * 1e1. System prompts user to ensure that start date/time is before end date/time.
-  
+
       Use case resumes from step 1.
   
 * 1f. Invalid Budget Argument
     * 1f1. System prompts user to use the correct budget format.
   
       Use case resumes from step 1.
-
 <br>
 
 **Use case UCE02: List all volunteering events**
@@ -855,12 +855,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1a. User did not input a valid command.
 
     * 1a1. System prompts user to provide a valid command.
-    
+
       Use case resumes from step 1.
 
 * 1b. There are no events to list.
 
-  Use case ends.
+    Use case ends.
 
 <br>
 
@@ -889,13 +889,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       Use case resumes from step 2.
 
 * 2c. User did not input a valid index after the command.
-
     * 2c1. System prompts user to input a valid index.
 
       Use case resumes from step 2.
 
 * 2d. User did not leave a single space between the command and the index.
-
     * 2d1. System prompts user to separate parameters with a single space.
 
       Use case resumes from step 2.
@@ -920,7 +918,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes from step 2.
   
-* 2b. Invalid event id.
+* 2b. Invalid event index.
 
     * 2b1. System prompts user to input a valid event index.
   
@@ -960,6 +958,134 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 <br>
 
+**Use case UCE06: Edit an event**
+
+**MSS**
+
+1.  User <u>lists all volunteering events (UCE02)</u>.
+2.  User requests to edit a specific event in the event list.
+3.  iVolunteer edits the event.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. Invalid Command Word.
+    * 2a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
+    * 2a2. User enters correct command.
+
+      Use case resumes from step 3.
+
+* 2b. Invalid event id.
+    * 2b1. iVolunteer requests for the correct command with valid event index.
+    * 2b2. User enters correct command.
+      Steps 2b1-2b2 are repeated until the data entered is correct.
+
+      Use case resumes at step 3.
+
+* 2c. Invalid format for roles and materials.
+    * 2c1. System prompts Volunteer Coordinator to use the correct the format for roles or materials or both.
+    * 2c2. User enters correct command.
+
+      Use case resumes from step 3.
+
+* 2d. Invalid Date and Time.
+    * 2d1. System prompts Volunteer Coordinator to use the correct date and time format.
+    * 2d2. User enters correct command.
+
+      Use case resumes from step 3.
+
+* 2e. Start date/time is after end date/time.
+    * 2e1. System prompts Volunteer Coordinator to ensure that start date/time is before end date/time.
+    * 2e2. User enters correct command.
+
+      Use case resumes from step 3.
+
+* 2f. Invalid Budget Argument
+    * 2f1. System prompts Volunteer Coordinator to use the correct budget format.
+    * 2f2. User enters correct command.
+
+      Use case resumes from step 3.
+
+**Use case UCEV01: Add a volunteer into an event**
+
+**MSS**
+
+1.  User <u>lists all volunteering events (UCE02)</u>.
+2.  User <u>lists all volunteers (UCV02)</u>.
+3.  User requests to add a specific volunteer in the volunteer list into a specific event in the event list.
+4.  iVolunteer adds the volunteer into the event.
+
+    Use case ends.
+
+**Extensions**
+
+* 3a. Invalid Command Word.
+    * 3a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
+    * 3a2. User enters correct command.
+      Use case resumes from step 4.
+
+* 3b. Invalid event index or volunteer index or both.
+    * 3b1. iVolunteer requests for the correct command with valid event index and valid volunteer index.
+    * 3b2. User enters correct command.
+      Steps 3b1-3b2 are repeated until the data entered is correct.
+
+      Use case resumes at step 4.
+
+**Use case UCEV02: List out all volunteers in an event**
+
+**MSS**
+
+1.  User <u>lists all volunteering events (UCE02)</u>.
+2.  User requests to view all volunteers added to an event.
+3.  iVolunteer displays all volunteers in the event.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. Invalid Command Word.
+    * 2a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
+    * 2a2. User enters correct command.
+      Use case resumes from step 3.
+
+* 2b. Invalid event index.
+    * 2b1. iVolunteer requests for the correct command with valid event index.
+    * 2b2. User enters correct command.
+      Steps 2b1-2b2 are repeated until the data entered is correct.
+  
+      Use case resumes at step 3.
+
+* 2c. There are no volunteer to list.
+
+  Use case ends.
+
+**Use case UCEV03: Remove a volunteer from an event**
+
+**MSS**
+
+1.  User <u>lists all volunteering events (UCE02)</u>.
+2.  User <u>lists all volunteers (UCV02)</u>.
+3.  User requests to remove a specific volunteer in the volunteer list from a specific event in the event list
+4.  iVolunteer removes the volunteer from the event.
+
+    Use case ends.
+
+**Extensions**
+
+* 3a. Invalid Command Word.
+    * 3a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
+    * 3a2. User enters correct command.
+
+      Use case resumes from step 4.
+
+* 3b. Invalid event index or volunteer index or both.
+    * 3b1. iVolunteer requests for the correct command with valid event index or volunteer index or both.
+    * 3b2. User enters correct command.
+      Steps 3b1-3b2 are repeated until the data entered is correct.
+
+      Use case resumes at step 4.
+
 **Use case UCV01: Create a volunteer**
 
 **MSS**
@@ -988,7 +1114,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 1c1. System prompts user to separate parameters with a single space.
 
       Use case resumes from step 1.
-  
+
 * 1d. Invalid email.
 
     * 1d1. System prompts user to use the correct email format.
