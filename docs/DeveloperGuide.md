@@ -36,7 +36,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/AY2324S1-CS2103T-T14-4/tp/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/AY2324S1-CS2103T-T14-4/tp/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -51,7 +51,7 @@ The bulk of the app's work is done by the following four components:
 
 **How the architecture components interact with each other**
 
-The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
+The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `vdelete 1`, then `edelete 1`. For each command, take note that the `Logic` component will call *both* `saveVolunteerStorage` and `saveEventStorage` since there are some commands that modify both the `eventStorage` and `volunteerStorage`, such as [`eaddv`](UserGuide.md#adding-a-volunteer-into-an-event-eaddv).
 
 <puml src="diagrams/ArchitectureSequenceDiagram.puml" width="574" />
 
@@ -68,42 +68,42 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2324S1-CS2103T-T14-4/tp/tree/master/src/main/java/seedu/address/ui/Ui.java)
 
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `VolunteerListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2324S1-CS2103T-T14-4/tp/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2324S1-CS2103T-T14-4/tp/tree/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
 * executes user commands using the `Logic` component.
 * listens for changes to `Model` data so that the UI can be updated with the modified data.
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
-* depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
+* depends on some classes in the `Model` component, as it displays both `Volunteer` and `Event` objects residing in the `Model`.
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2324S1-CS2103T-T14-4/tp/tree/master/src/main/java/seedu/address/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
 <puml src="diagrams/LogicClassDiagram.puml" width="550"/>
 
-The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete 1")` API call as an example.
+The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("vdelete 1")` API call as an example.
 
 <puml src="diagrams/DeleteSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete 1` Command" />
 
 <box type="info" seamless>
 
-**Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+**Note:** The lifeline for `VolunteerDeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </box>
 
 How the `Logic` component works:
 
-1. When `Logic` is called upon to execute a command, it is passed to an `AddressBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
-1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteCommand`) which is executed by the `LogicManager`.
+1. When `Logic` is called upon to execute a command, it is passed to an `iVolunteerParser` object which in turn creates a parser that matches the command (e.g., `VolunteerDeleteCommandParser`) and uses it to parse the command.
+1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `VolunteerDeleteCommand`) which is executed by the `LogicManager`.
 1. The command can communicate with the `Model` when it is executed (e.g. to delete a volunteer).
 1. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
 
@@ -112,40 +112,32 @@ Here are the other classes in `Logic` (omitted from the class diagram above) tha
 <puml src="diagrams/ParserClasses.puml" width="600"/>
 
 How the parsing works:
-* When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
-* All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
+* When called upon to parse a user command, the `iVolunteerParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `EventCreateCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `EventCreateCommand`) which the `iVolunteerParser` returns back as a `Command` object.
+* All `XYZCommandParser` classes (e.g., `VolunteerCreateCommandParser`, `EventDeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2324S1-CS2103T-T14-4/tp/tree/master/src/main/java/seedu/address/model/Model.java)
 
 <puml src="diagrams/ModelClassDiagram.puml" width="450" />
 
+<puml src="diagrams/EventClassDiagram.puml" width="574" />
 
 The `Model` component,
 
-* stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
-* stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores iVolunteer's volunteer and event data i.e., all `Volunteer` objects (which are contained in a `UniqueVolunteerList` object) and all `Event` objects (which can contained in a `UniqueEventList` object).
+* stores the currently 'selected' `Volunteer` and `Event` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Volunteer>` and `ObservableList<Event>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
-<box type="info" seamless>
-
-**Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
-
-<puml src="diagrams/BetterModelClassDiagram.puml" width="450" />
-
-</box>
-
-
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2324S1-CS2103T-T14-4/tp/tree/master/src/main/java/seedu/address/storage/Storage.java)
 
 <puml src="diagrams/StorageClassDiagram.puml" width="550" />
 
 The `Storage` component,
-* can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
-* inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
+* can save volunteer data, event data, and user preference data in JSON format, and read them back into corresponding objects.
+* inherits from `EventStorage`, `VolunteerStorage`, and `UserPrefsStorage`, which means it can be treated as any one of them (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
 ### Common classes
@@ -161,7 +153,7 @@ This section describes some noteworthy details on how certain features are imple
 ### Create Event Feature
 
 #### Implementation
-To encapsulate the aspects of an event, a new `Event` class is created. The Event class has fields representing the various aspects of an Event, namely `eventName`, `roles`, `startDate`, `endDate`, `location`, `description`, `materials` and `budget`. New classes were also created to facilitate the logic of these fields, which are `EventName`, `Role`, `Location`, `Description`, `Material` and `Budget`.
+To encapsulate the aspects of an event, a new `Event` class is created. The Event class has fields representing the various aspects of an Event, namely `eventName`, `roles`, `startDate`, `endDate`, `location`, `description`, `materials`, `budget`, and `maxVolunteerSize`. New classes were also created to facilitate the logic of these fields, which are `EventName`, `Role`, `Location`, `Description`, `Material`, `Budget`, and `maxVolunteerSize`.
 
 To store the created events, a new class `EventStorage` is created, which effectively acts as the list storing all created events. A reference to the EventStorage is kept in the ModelManager to facilitate logical operations.
 
@@ -343,24 +335,26 @@ Step 3. The command is then executed and with the index and the event is deleted
 
 Step 4. Then the storage will also be updated accordingly by the filtered list.
 
-### \[In progress\] Tracking amount of roles and materials
+### Tracking amount of roles and materials
 
 #### Implementation
 
-The mechanism to track the amount of roles and materials within the `Event` class is handled by the `Quantity` interface's 
-`currentQuantity` and `requiredQuantity` fields. Both fields are positive integers. `Role` and `Material` classes thereby
-implement this `Quantity` interface. In addition, for each class, operations to track, access and update the amount of
-each role/material have been added into the `Quantity` interface as follows:
+The mechanism to track the amount of roles and materials within the `Event` class is handled by the `Material` and `Role` classes' `currentQuantity` and `requiredQuantity` fields. Both fields are non-negative integers. In addition, for each class, operations to track, access and update the amount of
+each role/material have been added as follows:
 
-- `Quantity#isValidQuantity(int test)` — Checks if `test` is a valid quantity.
-- `Quantity#addToQuantity(int addedQuantity)` — Adds `addedQuantity` to the current quantity.
-- `Quantity#hasEnough()` — Checks if the current quantity ≥ the required quantity.
-- `Quantity#toUiString()` — Returns the string representation to be shown to users in the UI.
+- `Role#addRoleManpower()` — Adds 1 to the current quantity of manpower.
+- `Role#decreaseRoleManpower()` — Subtracts 1 from the current quantity of manpower.
+- `Material#addItems(int addedQuantity)` — Adds `addedQuantity` to the current quantity.
+- `Role#hasEnoughManpower()` and `Material#hasEnoughItems()` — Checks if the current quantity ≥ the required quantity.
 
-To reflect the `currentQuantity` and `requiredQuantity` fields as required in the `Quantity` interface in `EventStorage`,
+Like all classes in `Event` and `Volunteer`, `Material` and `Role` classes are **immutable** and any methods that want to modify the behaviour of either object will return a new `Material` or `Role` object with the modified information.
+
+To reflect the `currentQuantity` and `requiredQuantity` fields in `EventStorage`,
 every `Role` and `Material` instance will be expressed as a JSON object with the following format:
 
 **Material:**
+
+Relevant Jackson storage class adapted for JSON: [`JsonAdaptedMaterial.java`](https://github.com/AY2324S1-CS2103T-T14-4/tp/blob/master/src/main/java/seedu/address/storage/event/JsonAdaptedMaterial.java)
 
 ```json
 {
@@ -372,6 +366,8 @@ every `Role` and `Material` instance will be expressed as a JSON object with the
 
 **Role:**
 
+Relevant Jackson storage class adapted for JSON: [`JsonAdaptedRole.java`](https://github.com/AY2324S1-CS2103T-T14-4/tp/blob/master/src/main/java/seedu/address/storage/event/JsonAdaptedRole.java)
+
 ```json
 {
   "role" : "chef",
@@ -380,18 +376,18 @@ every `Role` and `Material` instance will be expressed as a JSON object with the
 }
 ```
 
-This class diagram shows the interface relationship between `Role`, `Material` and `Quantity`:
+This class diagram shows the relationship between `Role`, `Material` and `Event`:
 
 <puml src="diagrams/QuantityClassDiagram.puml" width="400" />
 
 #### Process
 
-This is the process in which a user might track the amount of roles and materials as needed:
+This is the process in which a user might track the amount of roles and materials. In this example, the user first adds to the roles, then adds to the materials. Take note that [`ecreate`](UserGuide.md#creating-an-event-ecreate) and [`vcreate`](UserGuide.md#creating-a-new-volunteer-s-profile-vcreate) formats are incomplete for sake of brevity; check their respective user guide entries for the full command.
 
-Step 1. The user runs the command `ecreate n/cook for people r/5 chef m/50 potato ...`. Here, a new `Event` object will be created with
-a `Set<Role>` that contains a `Role` object that corresponds to `5 chef` and `Set<Material>` that corresponds to `50 potato`.
-In the constructor to `Role` and `Material` respectively, the `requiredAmount` for the `:Role` object is **5** and the 
-`requiredAmount` for the `:Material` object is **50**, while the `currentAmount` are both set to **0**.
+Step 1. The user runs the command `ecreate n/cook for people r/5 chef m/50 potato ...`. Here, a new `Event` object will be created with a `Set<Role>` that contains 1 `Role` object corresponding to `5 chef` and `Set<Material>` that contains 1 `Material` object corresponding to `50 potato`.
+
+In the constructor to `Role` and `Material` respectively, the `requiredQuantity` for the `:Role` object is **5** and the 
+`requiredQuantity` for the `:Material` object is **50**, while the `currentQuantity` are both set to **0**.
 
 **Tracking roles**
 
@@ -400,8 +396,7 @@ with name `John` that contains a skill with name `chef`.
 
 Step 3. Assuming both the `Event` and `Volunteer` objects are at the top of their respective lists, the user runs the
 command `eaddv eid/1 vid/1` to add the volunteer named `John` to the event named `cook for people`. Given that the `cook for people`
-event has a role `chef` and the volunteer `John` has a skill `chef`, iVolunteer will notice and **increment** the current quantity
-within the `Role` object using `Quantity#addToQuantity()`.
+event has a role `chef` and the volunteer `John` has a skill `chef`, iVolunteer will notice and return a new `Role` object with the current quantity **incremented by 1** using `Role#addRoleManpower()`.
 
 Step 4. As a result, the `Role` object will be updated as follows (in the JSON-serialised format):
 ```json
@@ -415,8 +410,7 @@ Step 4. As a result, the `Role` object will be updated as follows (in the JSON-s
 **Tracking materials**
 
 Step 5. Assuming the `Event` object is at the top of the event list, the user runs command `eaddm eid/1 m/20 potato`. This
-results in a `EventAddMaterialCommand` created and then executed, which triggers the change in current quantity within the
-`Material` object using `Quantity#addToQuantity()`.
+results in a `EventAddMaterialCommand` created and then executed, which causes a new `Material` object to be created with the updated current quantity using `Material#addItems()`.
 
 Step 6. As a result, the `Material` object will be updated as follows (in the JSON-serialised format):
 ```json
@@ -427,12 +421,63 @@ Step 6. As a result, the `Material` object will be updated as follows (in the JS
 }
 ```
 
-### \[Proposed\] Data archiving
+### Setting maximum number of volunteers in event
 
-_{Explain here how the data archiving feature will be implemented}_
+#### Implementation
 
+The feature to set the maximum number of volunteers in an event is facilitated by the `maxVolunteerSize` field within `Event`, which is of type `MaxVolunteerSize`. This is an optional field and not all events need to have a maximum volunteer capacity. The `maxVolunteerSize` field is a non-negative integer of type `long`.
 
---------------------------------------------------------------------------------------------------------------------
+This functionality works on the `EventAddVolunteerCommand`, where the addition of a new volunteer is blocked if the current number of volunteers in the event is equal to `maxVolunteerSize`. The current number of volunteers is computed as follows (abstracted from [actual code](https://github.com/AY2324S1-CS2103T-T14-4/tp/blob/master/src/main/java/seedu/address/logic/commands/eventvolunteercommands/EventAddVolunteerCommand.java) lines 72-75 to ease understanding):
+
+```java
+// current volunteer list BEFORE addition of new volunteer
+int volunteerListSize = eventToAssign // event to assign volunteer to
+        .getAssignedVolunteers()      // get current list of assigned volunteers as an unmodifiable java.util.Set
+        .size();                      // get the size of this set (returns an int)
+int maxVolunteerSize = eventToAssign  // event to assign volunteer to
+        .getMaxVolunteerSize()        // the desired MaxVolunteerSize object
+        .maxVolunteerSize;            // get the long value of the maximum volunteer size
+boolean eventIsFull = volunteerListSize >= maxVolunteerSize;
+if (eventIsFull) {
+  // throw an exception that event is full and halt execution
+}
+```
+
+The activity diagram below shows the general workflow when `EventAddVolunteerCommand` is executed using its `execute()` method, including the checks for `maxVolunteerSize`:
+ 
+<puml src="diagrams/EventAddVolunteerActivityDiagram.puml" alt="EventAddVolunteerActivityDiagram" />
+
+The behaviour exhibited in the code block above is represented by the `[event is full]` branch within the activity diagram.
+
+#### Process
+
+This is the process by which a user might set and undo an event's maximum volunteer count, using the [`ecreate`](UserGuide.md#creating-an-event-ecreate), [`eedit`](UserGuide.md#edit-the-details-of-an-event-eedit) and [`vcreate`](UserGuide.md#creating-a-new-volunteer-s-profile-vcreate). Assume the user starts from an empty volunteer and event list.
+
+**Situation 1: `vs/` parameter in `ecreate` not specified**
+
+Step 1. The user runs the command `ecreate n/cook for people r/5 chef m/50 potato sd/24/12/2023 1400 l/Singapore dsc/cooking food`. Note that the `vs/` parameter is not specified, thus this event will not have a maximum volunteer capacity. Assume this event has index 1 in the event list.
+
+**Situation 2: `vs/` parameter in `ecreate` is specified**
+
+Step 2. The user runs the command `ecreate n/cook for more people r/5 chef m/50 potato sd/24/12/2023 1500 l/Singapore dsc/cooking food vs/1`. Note that the `vs/` parameter is not specified, thus this event will have a maximum volunteer capacity, in this case 1. Assume this event has index 2 in the event list.
+
+Step 3. The user creates 2 volunteers with 2 distinct `vcreate` commands.
+
+**Demonstrating the maximum volunteer limit**
+
+Step 4. The user runs `eaddv eid/2 vid/1`. This should run smoothly. Then the user runs `eaddv eid/2 vid/2`. Due to the limit, an **error message is displayed** stating that you can't add any more volunteers since the event is full.
+
+**Demonstrating editing the max volunteer capacity**
+
+Step 5. The user runs `eaddv eid/1 vid/1`, then `eaddv eid/1 vid/2`. Note that both `eaddv` commands run smoothly due to the lack of limit.
+
+Step 6. The user runs `eedit 1 vs/1`. Since there are already 2 volunteers in the event, the `eedit` command **displays an error message**, stating that you can't set the maximum volunteer limit since there are more volunteers added to the event than the edited limit of 1.
+
+**Demonstrating removing the max volunteer capacity**
+
+Step 7. The user runs `eedit 2 vs/0`. `vs/0` is a special case that removes the maximum volunteer capacity. The `eedit` command runs successfully.
+
+Step 8. The user runs `eaddv eid/2 vid/2`. The volunteer is added successfully due to the removal of the maximum volunteer limit.
 
 ### \[Proposed\] vfind feature
 
@@ -461,6 +506,7 @@ Step 2. This creates a `VolunteerFindCommandParser` object, which processes the 
 _{Explain here how the data archiving feature will be implemented}_
 
 
+--------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
 
@@ -858,6 +904,25 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 --------------------------------------------------------------------------------------------------------------------
 
+## **Appendix: Effort**
+
+Our project, iVolunteer, was based on and forked from the [AddressBook Level-3](https://github.com/nus-cs2103-AY2324S1/tp) (AB3) project. We have added around 11k lines of code to the application to adapt the program to support our volunteer management features and to evolve it from the original address book concept.
+
+So far, we found evolving the project to its current form as of v1.4 to be of **moderate difficulty**. This included the process of transforming AB3 to a volunteer and event management application, as well as adding more complex features on top of that.
+
+While AB3 had only 1 `Person` model, iVolunteer has expanded AB3 to contain 2 models (`Volunteer` and `Event`), as well as contained interactions between these two through commands like `eaddv` and `eremovev`. Additional complex features include undo/redo, role and material tracking, and `eshow` for showing events in the UI.
+
+We felt that the project overall were quite consistent in terms of effort. While v1.2 was less effort-intensive due to the benefits of code reuse from AB3, we didn't understand the base code as much and project management was less organised as a result. However, v1.3 was also quite hard due to the implementation of new complex features like volunteer-event interactions, as well as roles and materials tracking.
+
+### Code reuse from AB3
+
+We benefitted from a lot of code reuse from AB3, allowing us to focus on more advanced and complex features more quickly. Here are some parts of our project that were made much easier through reuse:
+
+1. **`Volunteer` class, commands like `vcreate`, `vlist`, `vdelete`, `vfind`**: `Volunteer` as a whole was very similar to the `Person` model in AB3 since they both related to people, with some minor modifications. Likewise, the commands were very similar to implement, helping us save a lot of time implementing the create, read, update and delete (CRUD) operations for volunteers. However, we removed the `Address` class and field from the `Volunteer` model which took quite a bit of refactoring to implement.
+2. **`Event` class**: We adapted the `Person` model in AB3 by changing relevant fields in order to create the `Event` model. Some fields like `startDate`, `endDate`, and `budget` introduced new types of validation that we needed to introduce, making implementation non-trivial. However, overall the general `Event` class was quite similar to `Person` so we worked on a clone of the `Person` model to create the `Event` model.
+
+----
+
 ## **Appendix: Instructions for manual testing**
 
 Given below are instructions to test the app manually.
@@ -875,7 +940,7 @@ testers are expected to do more *exploratory* testing.
 
    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   1. Double-click the jar file Expected: Shows the GUI with a set of sample events and volunteers. The window size may not be optimum.
 
 1. Saving window preferences
 
@@ -886,22 +951,91 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
+### Creating a volunteer
+
+1. Prerequisites: NIL.
+
+    1. Test case: `vcreate n/Little Johnny p/98765432 e/littlejohnny@example.com s/little`<br>
+       Expected: Volunteer is created and added to the bottom of the volunteer list. Details of the volunteer shown in the status message.
+
+    1. Test case: `vcreate n/Little Johnny p/91234567 e/bigjohnny@example.com s/little`<br>
+       Expected: Volunteer is not created as there already exists a 'Little Johnny' in the volunteer list. Error details shown in the status message.
+
+    1. Other incorrect delete commands to try: `vcreate`, `vcreate n/`, `...` <br>
+       Expected: `Invalid command format!` error message shown in the status message. Instructions on the correct format are shown as well.
+
 ### Deleting a volunteer
 
-1. Deleting a volunteer while all volunteers are being shown
+1. Prerequisites: List all volunteers using the `vlist` command. Multiple volunteers in the list.
 
-   1. Prerequisites: List all volunteers using the `list` command. Multiple volunteers in the list.
+    1. Test case: `vdelete 1`<br>
+       Expected: First volunteer is deleted from the list. Details of the deleted volunteer shown in the status message.
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+    1. Test case: `vdelete 0`<br>
+       Expected: No volunteer is deleted. Error details shown in the status message.
 
-   1. Test case: `delete 0`<br>
-      Expected: No volunteer is deleted. Error details shown in the status message. Status bar remains the same.
+    1. Other incorrect delete commands to try: `vdelete`, `vdelete x`, `...` (where x is larger than the list size or a non-integer)<br>
+       Expected: Similar to previous.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+### Finding a volunteer
 
-1. _{ more test cases …​ }_
+1. Prerequisites: List all volunteers using the `vlist` command. Multiple volunteers in the list.
+
+    1. Test case: `vfind n/George s/chef`<br>
+       Expected: Volunteer list is updated to show `George`, who is a `chef`. Number of matching volunteers shown in the status message.
+   
+    1. Test case: `vfind s/no one has this skill`<br>
+       Expected: Volunteer list displays nothing. `0 volunteers listed!` shown in the status message.
+
+    1. Test case: `vfind n/!@#`<br>
+       Expected: Volunteer list displays nothing. `Names should only contain alphanumeric characters and spaces, and it should not be blank` shown in the status message.
+
+    1. Other incorrect delete commands to try: `vfind`, `vfind randomwordshere n/ben`, `...` <br>
+       Expected: `Invalid command format!` error message shown in the status message. Instructions on the correct format are shown as well.
+
+### Finding an event
+
+1. Prerequisites: List all events using the `elist` command. Multiple events in the list.
+
+    1. Test case: `efind n/fixing computers`<br>
+       Expected: Event list is updated to show `fixing computers` event. Number of matching events shown in the status message.
+
+    1. Test case: `efind n/this event does not exist`<br>
+       Expected: Event list displays nothing. `0 events listed!` shown in the status message.
+
+    1. Test case: `efind n/!@#`<br>
+       Expected: Event list displays nothing. `Names should only contain alphanumeric characters and spaces, and it should not be blank` shown in the status message.
+
+    1. Other incorrect delete commands to try: `efind`, `efind randomwordshere n/baking cookies`, `...` <br>
+       Expected: `Invalid command format!` error message shown in the status message. Instructions on the correct format are shown as well.
+   
+### Undoing/redoing a command
+
+<box type="info" seamless>
+
+**Note:** To simulate a scenario where undo/redo can be used, the test cases below are ran sequentially.
+
+</box>
+
+1. Prerequisites: List all events and volunteers. Multiple events and volunteers in the list.
+
+   1. Test case: `vdelete 1`<br>
+      Expected: First volunteer is deleted from the list. Details of the deleted volunteer shown in the status message.
+
+   1. Test case: `ecreate n/eating food r/5 cooker r/5 eaters sd/12/5/2023 0900 ed/14/5/2023 1200 l/punggol dsc/eating food m/50 burgers b/100.00`<br>
+      Expected: Event is created and added to the event list. Details of the event shown in the status message.
+
+   1. Test case: `undo` (run it twice)<br>
+      Expected: First, `eating food` event is removed from the event list. Then, the first volunteer is added back to the volunteer list. `Undo command success` shown in the status message.
+   
+   1. Test case: `undo`<br>
+      Expected: Nothing happens. `Cannot undo any further` shown in the status message.
+
+   1. Test case: `redo` (run it twice)<br>
+      Expected: First, the first volunteer is deleted from the volunteer list. Then, the `eating food` event is added back to the event list. `Redo command success` shown in the status message.
+
+   1. Test case: `redo`<br>
+      Expected: Nothing happens. `Unable to redo` shown in the status message.
 
 ### Tracking an event's roles and adding roles to an event
 
