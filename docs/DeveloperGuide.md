@@ -800,15 +800,15 @@ Given below are fixes we propose to add in the future.
 
 The current implementation of the Create Volunteer feature automatically checks for duplicate volunteers if the user is trying to create a new volunteer.
 Below underlines how iVolunteer checks for duplicates.
-- A volunteer is considered duplicate if: he or her name already exists in the volunteer list.
-- A volunteer is considered **not** duplicate if: he or her phone number/email address already exists in the volunteer list.
+- A volunteer is considered duplicate if: their name already exists in the volunteer list.
+- A volunteer is considered **not** duplicate if: their phone number/email address already exists in the volunteer list.
 
 However, this current logic is flawed as it is not applicable to a real life scenario. In the real world, users generally do not have the same phone number or email addresses as they are unique. However, it is common for two users to have the same name. 
 
 Thus, in order to make iVolunteer more applicable to the real world, we plan to make the following change
 to how iVolunteer checks for duplicates.
-- A volunteer is considered duplicate if: he or her phone number or email address already exists in the volunteer list.
-- A volunteer is considered **not** duplicate if: he or her name already exists in the volunteer list.
+- A volunteer is considered duplicate if: their phone number or email address already exists in the volunteer list.
+- A volunteer is considered **not** duplicate if: their name already exists in the volunteer list.
 
 The following activity diagram summarizes what happens when a user attempts to create a new volunteer:
 
