@@ -539,17 +539,10 @@ Step 4. Then the storage will also be updated accordingly by the filtered list.
 The mechanism to track the amount of roles and materials within the `Event` class is handled by the `Material` and `Role` classes' `currentQuantity` and `requiredQuantity` fields. Both fields are non-negative integers. In addition, for each class, operations to track, access and update the amount of
 each role/material have been added as follows:
 
-<<<<<<< HEAD
-The mechanism to track the amount of roles and materials within the `Event` class is handled by the `Quantity` interface's
-`currentQuantity` and `requiredQuantity` fields. Both fields are positive integers. `Role` and `Material` classes thereby
-implement this `Quantity` interface. In addition, for each class, operations to track, access and update the amount of
-each role/material have been added into the `Quantity` interface as follows:
-=======
 - `Role#addRoleManpower()` — Adds 1 to the current quantity of manpower.
 - `Role#decreaseRoleManpower()` — Subtracts 1 from the current quantity of manpower.
 - `Material#addItems(int addedQuantity)` — Adds `addedQuantity` to the current quantity.
 - `Role#hasEnoughManpower()` and `Material#hasEnoughItems()` — Checks if the current quantity ≥ the required quantity.
->>>>>>> 20900492f4c47f134226e8bd1f0c5bb29ca17677
 
 Like all classes in `Event` and `Volunteer`, `Material` and `Role` classes are **immutable** and any methods that want to modify the behaviour of either object will return a new `Material` or `Role` object with the modified information.
 
@@ -701,11 +694,7 @@ Lastly, `SkillNameContainsKeywordsPredicate` implements the interface `Predicate
 
 Given below is an example usage scenario and how the vfind command behaves at each step.
 
-<<<<<<< HEAD
-Step 1. The user launches the application. The user executes `vfind n/Alex` command to find any volunteers named 'Alex' in the volunteer list. The `vfind` command calls `LogicManager#execute`, which attempts to execute the command.
-=======
 Step 1. The user launches the application. The user executes the `vfind n/Alex s/chef` command to find any volunteers named 'Alex' with the skill 'chef' in the volunteer list. The `vfind` command calls `LogicManager#execute()`, which attempts to execute the command. 
->>>>>>> 20900492f4c47f134226e8bd1f0c5bb29ca17677
 
 Step 2. This calls `IVolunteerParser#parseCommand()`, which creates a `VolunteerFindCommandParser` object. It processes the user input's arguments, namely `n/Alex` and `s/chef`, and returns a `VolunteerFindCommand` object with its predicate encapsulating a list of `names` and a list of `skills`.
 
@@ -1310,6 +1299,91 @@ testers are expected to do more *exploratory* testing.
    1. Navigate back to the main window and exit from it using the `exit` command. <br> 
    Expected: The main window and all minimized windows should close automatically.
 
+### Creating an event
+1. Creating an event
+   1. Test case: `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy m/100 packets b/100.00 vs/50`<br>
+      Expected: A new event is created and added to the event list panel. Details of the event are shown in the status message.
+
+   1. Test case: `ecreate`<br>
+      Expected: No change to the event list panel. Invalid command format error is shown in the status message.<br>
+      The outcome is the same when any of the compulsory parameters are missing from the input command.
+
+   1. Test case: `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 l/hougang dsc/`<br>
+      Expected: No change to the event list panel. Error message for the invalid field is shown in the status message<br>
+      The outcome is the same when all compulsory parameters are present and any argument is empty or invalid.
+
+   1. Test case: `ecreate n/Food distrubting r/10 chef r/10 packer sd/23/10/2023 1900 l/hougang dsc/Packing food for the needy`, followed by
+                 `ecreate n/Food distributing r/10 chef r/10 packer sd/23/10/2023 1900 l/hougang dsc/Packing food for the needy`<br>
+      Expected: No change to the event list panel. Error message for duplicate events is shown in the status message<br>
+      The outcome is the same when all compulsory parameters are present, all arguments are valid, and an event with the same name already exists in the event list.
+   
+### Adding a volunteer to an event
+1. Adding a volunteer which is being shown to an event which is being shown
+
+   1. Prerequisites: The event list panel must contain at least one event and the volunteer list panel must contain at least one volunteer.
+
+   1. Test case: `eaddv eid/1 vid/1`<br>
+      Additional Prerequisites:
+         1. The indexes provided are valid.
+         1. The volunteer is not already assigned to the event.
+         1. The volunteer's assigned events do not clash with the current event.<br>
+      
+      Expected: The volunteer is added to the event. Details of the updated event and its current number of assigned volunteers are shown in the status message.
+
+   1. Test case: `eaddv`<br>
+      Expected: No change to the event list or volunteer list panels. Invalid command format error is shown in the status message.<br>
+      The outcome is the same when any of the parameters are missing from the input command, or when their arguments are empty or invalid.
+
+   1. Test case: `eaddv eid/1 vid/1`, followed by `eaddv eid/1 vid/1`<br>
+      Additional Prerequisites: The volunteer at index 1 is not already added to the event at index 1.<br>
+      Expected: No change to the event list or volunteer list panels. Error message for duplicate volunteer is shown in the status message<br>
+      The outcome is the same when any volunteer is added to an event they are already assigned to.
+
+   1. Test case: `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy` and
+                 `ecreate n/Clean park r/20 cleaner sd/23/10/2023 2000 ed/23/10/2023 2300 l/serangoon dsc/Clean the local park`, followed by
+                 `eaddv eid/1 vid/1` and `eaddv eid/2 vid/1`<br>
+      Additional Prerequisites: For this test case, ensure that the event list panel and volunteer list panel are empty before executing the command.<br>
+      Note that the two events created are clashing with each other.<br>
+      Expected: No change to the event list or volunteer list panels. Error message for clashing events is shown in the status message<br>
+      The outcome is the same when any volunteer is added to an event which clashes with at least one of their pre-existing events.
+
+### Displaying all volunteers added to an event
+1. Listing all volunteers assigned to an event.
+
+   1. Prerequisites: The event list panel must contain at least one event.
+   
+   1. Test case: `elistv 1`<br>
+      Expected: Volunteer list panel shows all volunteers currently assigned to the event. Status message shows a success message as well as the number of volunteers assigned to the event.
+   
+   1. Test case: `elistv`<br>
+      Expected: No change in the volunteer list panel. Error message for invalid command format is shown in the status message.
+      The outcome is the same for input commands with no index specified, or non-positive indexes.
+   
+   1. Test case: eshow x (where x is larger than the list size)
+      Expected: No change in the volunteer list panel. Error message for invalid event index is shown in the status message.<br>
+
+### Removing a volunteer from an event
+1. Removing a volunteer which is being shown from an event which is being shown
+
+    1. Prerequisites: The event list must contain at least one event and the volunteer list must contain at least one volunteer.
+
+    1. Test case: `eremovev eid/1 vid/1`<br>
+       Additional Prerequisites:
+        1. The indexes provided are valid
+        1. The volunteer is currently assigned to the event<br>
+           
+       Expected: The volunteer is removed from the event. Details of the updated event and its current number of assigned volunteers are shown in the status message.
+
+    1. Test case: `eremovev eid/ vid/`<br>
+       Expected: No change to the event list or volunteer list panels. Invalid command format error is shown in the status message.<br>
+       The outcome is the same when any of the parameters are missing from the input command, or when their arguments are empty or invalid.
+
+    1. Test case: `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy` and
+                  `vcreate n/tom p/12345678 e/tom@gmail.com`, followed by `eremovev eid/1 vid/1`<br>
+       Additional Prerequisites: For this test case, ensure that the event list panel and volunteer list panel are empty before executing the commands.
+       Expected: No change to the event list or volunteer list panels. Error message for invalid volunteer is shown in the status message.<br>
+       The outcome is the same when any volunteer is removed from an event they are not currently assigned to.
+
 ### Creating a volunteer
 
 1. Test case: `vcreate n/Little Johnny p/98765432 e/littlejohnny@example.com s/little`<br>
@@ -1325,20 +1399,20 @@ testers are expected to do more *exploratory* testing.
 
 1. Deleting a volunteer while all volunteers are being shown
 
-  1. Prerequisites: List all volunteers using the `vlist` command. Multiple volunteers in the list.
+   1. Prerequisites: List all volunteers using the `vlist` command. Multiple volunteers in the list.
 
-  1. Test case: `vdelete 1`<br>
-     Expected: First volunteer is deleted from the list. Details of the deleted volunteer shown in the result display.
+   1. Test case: `vdelete 1`<br>
+      Expected: First volunteer is deleted from the list. Details of the deleted volunteer shown in the result display.
 
-  1. Test case: `vdelete 0`<br>
-     Expected: No volunteer is deleted. Error details for invalid command format is shown in the result display.
-     The outcome is the same whenever the volunteer index parameter is a non-positive integer.
+   1. Test case: `vdelete 0`<br>
+      Expected: No volunteer is deleted. Error details for invalid command format is shown in the result display.
+      The outcome is the same whenever the volunteer index parameter is a non-positive integer.
 
-  1. Test case: `vdelete` <br>
-     Expected: Similar to previous.
+   1. Test case: `vdelete` <br>
+      Expected: Similar to previous.
 
-  1. Test case: `vdelete x` (where x is a positive integer, larger than the list size) <br>
-     Expected: No volunteer is deleted. Error details for invalid volunteer index is shown in the result display.
+   1. Test case: `vdelete x` (where x is a positive integer that is larger than the list size) <br>
+      Expected: No volunteer is deleted. Error details for invalid volunteer index is shown in the result display.
 
 ### Listing all events
 
@@ -1405,7 +1479,7 @@ testers are expected to do more *exploratory* testing.
     1. Test case: `vfind n/!@#`<br>
        Expected: Volunteer list displays nothing. `Names should only contain alphanumeric characters and spaces, and it should not be blank` shown in the status message.
 
-    1. Other incorrect delete commands to try: `vfind`, `vfind randomwordshere n/ben`, `...` <br>
+    1. Other incorrect `vfind` commands to try: `vfind`, `vfind randomwordshere n/ben`, `...` <br>
        Expected: `Invalid command format!` error message shown in the status message. Instructions on the correct format are shown as well.
 
 ### Finding an event
@@ -1421,7 +1495,7 @@ testers are expected to do more *exploratory* testing.
     1. Test case: `efind n/!@#`<br>
        Expected: Event list displays nothing. `Names should only contain alphanumeric characters and spaces, and it should not be blank` shown in the status message.
 
-    1. Other incorrect delete commands to try: `efind`, `efind randomwordshere n/baking cookies`, `...` <br>
+    1. Other incorrect `efind` commands to try: `efind`, `efind randomwordshere n/baking cookies`, `...` <br>
        Expected: `Invalid command format!` error message shown in the status message. Instructions on the correct format are shown as well.
    
 ### Undoing/redoing a command
@@ -1460,16 +1534,50 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
+--------------------------------------------------------------------------------------------------------------------
+
+## **Appendix: Planned Enhancements**
+
+Given below are fixes we propose to add in the future.
+
+### Change definition of duplicate volunteers
+
+The current implementation of the Create Volunteer feature automatically checks for duplicate volunteers if the user is trying to create a new volunteer.
+Below underlines how iVolunteer checks for duplicates.
+- A volunteer is considered duplicate if: their name already exists in the volunteer list.
+- A volunteer is considered **not** duplicate if: their phone number/email address already exists in the volunteer list.
+
+However, this current logic is flawed as it is not applicable to a real life scenario. In the real world, users generally do not have the same phone number or email addresses as they are unique. However, it is common for two users to have the same name. 
+
+Thus, in order to make iVolunteer more applicable to the real world, we plan to make the following change
+to how iVolunteer checks for duplicates.
+- A volunteer is considered duplicate if: their phone number or email address already exists in the volunteer list.
+- A volunteer is considered **not** duplicate if: their name already exists in the volunteer list.
+
+The following activity diagram summarizes what happens when a user attempts to create a new volunteer:
+
+<puml src="diagrams/CreateVolunteerActivityDiagram.puml" width="250" />
+
+### Specific error message for duplicate volunteers
+
+This fix is a follow up to the proposed change to change the definition of duplicate volunteers. Volunteer coordinators may find themselves inadvertently adding duplicate volunteers. With our current implementation, the error message that shows up is `This volunteer already exists in the volunteer list`.
+
+However, this error message is not descriptive enough. Users would not be able to identify whether the issue is caused by a duplicate email address or a duplicate phone number. Users are also unable to identify which existing user in the volunteer list is causing the error to occur.
+
+Thus, we plan to make the error message also mention the reason for the failure, e.g. `The volunteer could not be added because his phone number is held by another volunteer: VOLUNTEER_NAME`.
+
+The following image shows a sample UI of what the error message would look like when you attempt to add a volunteer who has the same phone number as `Alexis Yeoh`
+
+<img src="images/DG-duplicateVolunteerError.png" width="500px">
+
+### Improve Event roles and materials duplicate detection
+Currently, the duplicate detection for roles and materials within the Event model are not very effective: roles and materials with the same name but different quantities are *not counted* as duplicates (e.g. `2 / 50 farmers` and `3 / 100 farmers` are not considered duplicate roles). While the program works perfectly fine with the duplicate roles/materials, we are planning to:
+   - strengthen the duplicate detection such that any two roles or materials with the same name are counted as duplicates (e.g. `2 / 50 farmers` and `3 / 40 farmers` will now be considered duplicates)
+   - produce an error message `There is more than 1 role/material with the same name: [ROLE/MATERIAL NAME]!` whenever there is a duplicate role/material such that volunteer coordinators are aware of these duplicates and fix the respective `ecreate` or `eedit` command.
+   - **Example:** With these changes, the command `ecreate n/Learn farming r/30 farmers r/40 farmers r/100 participants sd/18/11/2023 1230 l/lim chu kang dsc/learn farming` will produce the error message `There is more than 1 role with the same name: farmers!` since `r/30 farmers` and `r/40 farmers` are duplicates.
+
 ### Improve error message for Create Event Feature
 The current implementation of the Create Event Feature checks the input command and shows error messages for invalid parameters one at a time.<br>
 However, this is not user-friendly as users can only edit the parameters one at a time, which can be very tedious for a command with so many parameters. For example, `ecreate n/Cle@n beach r/cleaner sd/23/10/2023 2500 l/punggol] dsc/clean the beach] m/trash bag b/50.0`, which has invalid inputs for each parameter, would require 7 tries to successfully execute.<br>
 Hence, to reduce the number of invalid user inputs, we plan to improve our error messages such that they show all invalid inputs from the user, as well as their valid formats.<br>
 This way, users can correct their inputs all at once, reducing their frustration from entering many consecutive invalid commands.
-
-----
-
-## **Appendix: Planned Enhancements**
-1. Currently, the duplicate detection for roles and materials within the Event model are not very effective: roles and materials with the same name but different quantities are *not counted* as duplicates (e.g. `2 / 50 farmers` and `3 / 100 farmers` are not considered duplicate roles). While the program works perfectly fine with the duplicate roles/materials, we are planning to:
-   - strengthen the duplicate detection such that any two roles or materials with the same name are counted as duplicates (e.g. `2 / 50 farmers` and `3 / 40 farmers` will now be considered duplicates)
-   - produce an error message `There is more than 1 role/material with the same name: [ROLE/MATERIAL NAME]!` whenever there is a duplicate role/material such that volunteer coordinators are aware of these duplicates and fix the respective `ecreate` or `eedit` command.
-   - **Example:** With these changes, the command `ecreate n/Learn farming r/30 farmers r/40 farmers r/100 participants sd/18/11/2023 1230 l/lim chu kang dsc/learn farming` will produce the error message `There is more than 1 role with the same name: farmers!` since `r/30 farmers` and `r/40 farmers` are duplicates.
