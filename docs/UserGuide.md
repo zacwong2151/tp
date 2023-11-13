@@ -34,7 +34,7 @@ iVolunteer is your dedicated application for volunteer coordination, designed wi
 
    Some example commands you can try:
 
-   * `elist` 
+   * `elist`
      * Lists all events
 
    * `ecreate n/food donation r/10 chef r/20 packer sd/23/9/2023 1500 l/hougang dsc/help food distribution m/50 potatoes b/50.00`
@@ -54,7 +54,7 @@ iVolunteer is your dedicated application for volunteer coordination, designed wi
 
    * `exit`
      * Exits the app.
-     
+
 
 1. Refer to the [Features](#features) below for details of each command.
 
@@ -110,14 +110,18 @@ Parameters:
 </box>
 
 Restrictions:
-* The maximum number of characters of a volunteer name is 30.
+* The name is case-sensitive (`John` and `john` are considered different volunteers)
 * The email must be in a valid format.
-* The phone number must be a valid 8-digit Singapore phone number.
+* The phone number must be a 8-digit number.
+* The skills are case-sensitive (`chef` and `Chef` are considered different skills).
+* Duplicate volunteers cannot be added to the volunteer list (case-sensitive).
+  * A volunteer is considered duplicate if: his name already exists in the volunteer list.
+  * Volunteers with the same phone number or email address are not considered as duplicates.
 
 Examples:
-* `vcreate n/John p/91234567 e/john123@gmail.com` 
+* `vcreate n/John p/91234567 e/john123@gmail.com`
   * creates a volunteer named `John` with a phone number of `91234567` and an email address of `john123@gmail.com`, with no specific skills. The volunteer profile will be appended to the bottom of the volunteer list.
-* `vcreate n/Mary p/92345678 e/mary123@gmail.com s/Cooking s/Carrying heavy goods` 
+* `vcreate n/Mary p/92345678 e/mary123@gmail.com s/Cooking s/Carrying heavy goods`
   * creates a volunteer named `Mary` with a phone number of `92345678` and an email address of `mary123@gmail.com`, with two skills: `Cooking` and `Carrying heavy goods`. The volunteer profile will be appended to the bottom of the volunteer list.
 
 ### Listing all volunteers: `vlist`
@@ -128,7 +132,7 @@ Format: `vlist`
 
 ### Locating volunteers by name and skill: `vfind`
 
-Finds volunteers whose names contain any of the given keywords.
+Finds volunteers whose name or skills contain any of the given keywords.
 
 Format: `vfind [n/NAME]…​ [s/SKILL]…​`
 
@@ -144,24 +148,23 @@ Parameters:
 Restrictions:
 * At least one of the optional fields must be provided.
 * The search is case-insensitive. e.g `n/hans` will match `Hans`.
-* The order of the keywords does not matter. e.g. `s/chef n/Hans` and `n/Hans s/chef` are valid inputs.
 * Allows partial matching of keywords e.g. `n/Han` will match `Hans`.
-* Volunteers matching **at least one** NAME keyword will be returned (i.e. `OR` search).
-  e.g. `n/Hans n/Bo` will return `Hans Gruber`, `Bo Yang`.
-* Volunteers matching **both** SKILL keywords will be returned (i.e. `AND` search).
-  e.g. `s/chef s/boxer` will return volunteers that have skills `chef` and `boxer`.
+* Both the volunteer name and corresponding skills can be searched.
+* The order of the keywords does not matter. e.g. `s/chef n/Hans` and `n/Hans s/chef` are valid inputs.
 
 Examples:
-* `vfind n/John` 
-  * returns `john` and `John Doe`
-* `vfind n/alex n/david` 
-  * returns `Alex Yeoh`, `David Li`<br>
-
-
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
-
-
-* `vfind s/chef` returns volunteers who are chefs
+* `vfind n/David` (user searches for **one** name)
+  * returns `David Li` and `David Tan`. (volunteers who have that NAME keyword will be returned)
+* `vfind n/alex n/roy` (user searches for **more than one** names)
+  * returns `Alexis Yeoh` and `Roy Balakrishnan`. (volunteers who have **at least one** of the NAME keywords will be returned, i.e. `OR` search)
+* `vfind s/chef` (user searches for **one** skill)
+  * returns `George` and `Ben`. (volunteers who have that SKILL keyword will be returned)
+  
+![result for 'find alex david'](images/findChefs.png)
+* `vfind s/intelligent s/smart` (user searches for **more than one** skills)
+  * returns `Bernice Yu`. (volunteers who have **both** SKILL keywords will be returned, i.e. `AND` search)
+* `vfind n/charlotte s/mechanic` (user searches for **one** name and **one** skill)
+  * returns `Charlotte Oliveiro`. (volunteers who have **both** NAME and SKILL keyword will be returned, i.e. `AND` search)
 
 ### Editing a volunteer profile: `vedit`
 
@@ -176,8 +179,8 @@ Parameters:
 * s/ - Volunteer skill
 
 Restrictions:
-* Edits the volunteer at the specified `VOLUNTEER_INDEX`. 
-* `VOLUNTEER_INDEX` refers to the index number shown in the displayed volunteer list. 
+* Edits the volunteer at the specified `VOLUNTEER_INDEX`.
+* `VOLUNTEER_INDEX` refers to the index number shown in the displayed volunteer list.
 * `VOLUNTEER_INDEX` **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
@@ -221,12 +224,12 @@ Format: `ecreate n/EVENT_NAME r/ROLES_NEEDED… sd/START_DATETIME [ed/END_DATETI
 
 Parameters:
 * n/ - Event name
-* r/ - Roles needed for the event and its quantity
+* r/ - Roles needed for the event and its quantity, in the format `[required quantity] [role name]` (e.g. `30 farmer`)
 * sd/ - Start date and time of the event
 * ed/ - End date and time of the event
 * l/ - Location of the event
 * dsc/ - Description of the event
-* m/ - Materials needed for the event and its quantity
+* m/ - Materials needed for the event and its quantity, in the format `[required quantity] [material name]` (e.g. `30 potatoes`)
 * b/ - Budget for the event
 * vs/ - Maximum number of volunteers allowed in the event
 
@@ -235,8 +238,15 @@ Restrictions:
 * All arguments cannot be blank.
 * The date and time formats must be exactly `DD/MM/YYYY TTTT`.
 * If the end date and time is specified, it must be the _same time_ or _after_ the start date and time of the event.
-* The material argument must be an integer, followed by a space, and then the name of material required.
-* The role argument must be an integer, followed by a space, and then the name of role required.
+* The material argument must be a non-negative integer, followed by a space, and then the name of the material required.
+  * **Example of valid materials:** `m/30 potato`, `m/0 apples`
+* The role argument must be a non-negative integer, followed by a space, and then the name of the role required.
+  * **Example of valid roles:** `r/20 teachers`, `r/0 farmer`
+* If there are any duplicated materials or roles, only the first duplicated material or role will show up.
+  * Duplicated materials are materials with the same material name and quantity. As a result, `m/23 potatoes` and `m/50 potatoes` are not duplicates.
+  * Duplicated roles are materials with the same role name and quantity. For example, `r/23 farmers` and `r/50 farmers` are not duplicates.
+  * Take note that duplicated materials and roles are case-sensitive: `m/23 Potatoes` and `m/23 potatoes` are not duplicates.
+  * To remove duplicates, you can use the [`eedit` command](#edit-the-details-of-an-event-eedit) and re-build the entire role or material list. Examples: `eedit EVENT_INDEX r/23 farmers r/50 cleaners` or `eedit EVENT_INDEX m/23 potatoes m/3 fields`.
 * The budget argument must be a number in 2 decimal places.
 * The maximum number of volunteers argument must be a non-negative integer.
 
@@ -251,11 +261,11 @@ Restrictions:
 </box>
 
 Examples:
-* `ecreate n/clean beach r/10 cleaner sd/30/11/2023 1200 ed/30/11/2023 1800 l/east coast park dsc/help clean east coast park m/10 pairs of gloves m/10 trash bags b/50.00` 
+* `ecreate n/clean beach r/10 cleaner sd/30/11/2023 1200 ed/30/11/2023 1800 l/east coast park dsc/help clean east coast park m/10 pairs of gloves m/10 trash bags b/50.00`
   * Creates an event with name `clean beach`, roles needed `10 cleaner`, event date from `30th November 2023, 12pm` to `30th November 2023, 6pm`, location `east coast park`, description `help clean east coast park`, materials needed `10 pairs of gloves` and `10 trash bags` and budget `$50.00`
 
 ### Listing all events: `elist`
-Volunteer coordinators can see all the events they are organising. 
+Volunteer coordinators can see all the events they are organising.
 
 For each event, only the most important information will be shown: name, start date and time, end date and time, location, roles needed and materials needed.
 
@@ -308,7 +318,7 @@ Restrictions:
 * First and second parts must be separated by a single space.
 
 Examples:
-* `eshow 7` 
+* `eshow 7`
   * result in a pop-up window appearing, listing all details of the event at index `7`.
 
 ### Deleting an event: `edelete`
@@ -411,7 +421,7 @@ Restrictions:
     [`eedit` command](#edit-the-details-of-an-event-eedit).
 
 Examples:
-* `eaddv vid/1 eid/1` 
+* `eaddv vid/1 eid/1`
   * adds the volunteer with index 1 to the event with index 1.
 
 ### Listing all volunteers in an event: `elistv`
@@ -425,7 +435,7 @@ Restrictions:
 * The event index must correspond to exactly one of the index of the events currently listed.
 
 Examples:
-* `elistv 1` 
+* `elistv 1`
   * lists the volunteers added to the event with index 1.
 
 ### Listing all events joined by a volunteer: `vliste`
@@ -458,7 +468,7 @@ Restrictions:
 * The volunteer should already be added to the event.
 
 Examples:
-* `eremovev vid/1 eid/1` 
+* `eremovev vid/1 eid/1`
   * removes the volunteer with index 1 from the event with index 1.
 
 ### Undo a Command: `undo`

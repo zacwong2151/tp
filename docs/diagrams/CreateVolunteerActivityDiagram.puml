@@ -3,16 +3,15 @@ skin rose
 skinparam ActivityFontSize 15
 skinparam ArrowFontSize 12
 start
-:User executes command;
+:User creates new volunteer;
 
 'Since the beta syntax does not support placing the condition outside the
 'diamond we place it as the true branch instead.
 
-if () then ([command commits both VersionedStorages])
-    :Purge redundant states;
-    :Save new state to both
-     VersionedStorages;
-else ([else])
+if () then ([else])
+    :New volunteer added
+    to volunteer list;
+else ([duplicate phone/email detected])
 endif
 stop
 @enduml
