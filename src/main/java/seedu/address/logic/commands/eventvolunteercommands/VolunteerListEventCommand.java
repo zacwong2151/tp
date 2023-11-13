@@ -42,7 +42,7 @@ public class VolunteerListEventCommand extends Command {
         requireNonNull(model);
         List<Volunteer> lastShownVolunteerList = model.getFilteredVolunteerList();
         if (volunteerIndex.getZeroBased() >= lastShownVolunteerList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_VOLUNTEER_DISPLAYED_INDEX);
         }
 
         Volunteer volunteerToList = lastShownVolunteerList.get(volunteerIndex.getZeroBased());

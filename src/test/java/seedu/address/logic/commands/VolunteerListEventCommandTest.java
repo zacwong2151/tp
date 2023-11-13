@@ -38,7 +38,7 @@ public class VolunteerListEventCommandTest {
 
         Index invalidIndex = Index.fromOneBased(model.getFilteredVolunteerList().size() + 1);
         VolunteerListEventCommand command = new VolunteerListEventCommand(invalidIndex);
-        assertThrows(CommandException.class, Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX, ()
+        assertThrows(CommandException.class, Messages.MESSAGE_INVALID_VOLUNTEER_DISPLAYED_INDEX, ()
                 -> command.execute(model));
     }
     @Test
