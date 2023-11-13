@@ -11,7 +11,7 @@
       "requiredQuantity" : "4"
     } ],
     "startDate" : "10/1/2023 1600",
-    "endDate" : "14/5/2023 1500",
+    "endDate" : "14/1/2023 1500",
     "location" : "home",
     "description" : "fix computers",
     "materials" : [ {
@@ -21,7 +21,7 @@
     } ],
     "budget" : "120.00",
     "assignedVolunteers" : [ ],
-    "maxVolunteerSize" : "12"
+    "maxVolunteerSize" : "9223372036854775807"
   }, {
     "eventName" : "picking litter",
     "roles" : [ {
@@ -67,7 +67,7 @@
     } ],
     "budget" : "500.00",
     "assignedVolunteers" : [ ],
-    "maxVolunteerSize" : "6"
+    "maxVolunteerSize" : "9223372036854775807"
   }, {
     "eventName" : "baking cookies",
     "roles" : [ {
