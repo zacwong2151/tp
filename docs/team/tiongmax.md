@@ -40,12 +40,13 @@ Given below are my contributions to the project.
     * Added use cases for eaddv, eremovev, eedit and elistv: [#229](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/229).
     * Added implementation details for event delete and event edit features and planned enhancement: 
       [#234](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/234).
-    * Added instructions for Manual Testing section to give testers guidance on using our app:
+    * Added instructions for Manual Testing section to give testers guidance on using our app: 
+      [#238](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/238).
     
 * **Community**: 
-  * PRs reviewed and providing feedback based on teammates comments (with non-trivial review comments):
+  * Some PRs reviewed (with non-trivial review comments): [#131](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/131), 
+    [#218](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/218), [#236](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/236), 
+    [#240](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/240).
     
-  * Reported bugs for other teams in the cohort:
-
-* **Tools**: 
-
+  * Reported bugs for other teams in the cohort: [#1](https://github.com/AY2324S1-CS2103T-T13-0/tp/issues/217),
+    [#2](https://github.com/AY2324S1-CS2103T-T13-0/tp/issues/215).
