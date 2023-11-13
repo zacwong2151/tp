@@ -513,7 +513,7 @@ Meanwhile, the activity diagram below shows the general workflow when a `Volunte
 
 #### Design considerations:
 
-**Aspect: The predicate `VolunteerFindCommand` uses to filter volunteers:**
+**Aspect: Which predicate `VolunteerFindCommand` uses to filter volunteers:**
 
 * **Alternative 1 (current choice):** Have a `SkillNameContainsKeyWordsPredicate` class that encapsulates a list of names and a list of skills.
     * Pros: Easier to implement.
