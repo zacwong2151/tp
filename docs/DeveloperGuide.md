@@ -153,7 +153,7 @@ This section describes some noteworthy details on how certain features are imple
 ### Create Event Feature
 
 #### Implementation
-To encapsulate the aspects of an event, a new `Event` class is created. The Event class has fields representing the various aspects of an Event, namely `eventName`, `roles`, `startDate`, `endDate`, `location`, `description`, `materials`, `budget`, and `maxVolunteerSize`. New classes were also created to facilitate the logic of these fields, which are `EventName`, `Role`, `Location`, `Description`, `Material`, `Budget`, and `maxVolunteerSize`.
+To encapsulate the aspects of an event, a new `Event` class is created. The Event class has fields representing the various aspects of an Event, namely `eventName`, `roles`, `startDate`, `endDate`, `location`, `description`, `materials`, `budget`, `assignedVolunteers` and `maxVolunteerSize`. New classes were also created to facilitate the logic of these fields, which are `EventName`, `Role`, `Location`, `Description`, `Material`, `Budget` and `MaxVolunteerSize`.
 
 To store the created events, a new class `EventStorage` is created, which effectively acts as the list storing all created events. A reference to the EventStorage is kept in the ModelManager to facilitate logical operations.
 
@@ -163,7 +163,7 @@ Given below is an example usage scenario and how the create event mechanism beha
 
 Step 1:
 The user launches the application and enters the command to create a new event.
-`ecreate n/Clean up the beach r/cleaner sd/23/10/23 1900 l/East Coast Park dsc/Pick up all litter on the beach m/10 trash bags b/50.00`. After parsing all the arguments, a new `Event` object is created along with its respective fields.
+`ecreate n/Clean up the beach r/10 cleaner sd/23/10/23 1900 l/East Coast Park dsc/Pick up all litter on the beach m/10 trash bags b/50.00 vs/20`. After parsing all the arguments, a new `Event` object is created along with its respective fields.
 <puml src="diagrams/EventClassDiagram.puml" alt="EventClassDiagram" />
 
 Step 2:
@@ -174,7 +174,6 @@ Step 3:
 When the `EventCreateCommand` finishes executing, the updated `EventStorage` is written into `eventStorage.json` file.
 <puml src="diagrams/EventStorageClassDiagram.puml" alt="EventStorageClassDiagram" />
 
-
 ### Design Considerations
 **Aspect: How the individual fields of an Event are stored:**
 
@@ -182,7 +181,7 @@ When the `EventCreateCommand` finishes executing, the updated `EventStorage` is 
     * Pros:
         * Improves the overall structure and readability of the code.
     * Cons:
-        * Results in more code. 
+        * Results in more code.
         * More memory usage as objects have to be instantiated for each field.
 
 * **Alternative 2:** Store each field as the relevant substring inputted by the user.
@@ -207,6 +206,122 @@ When the `EventCreateCommand` finishes executing, the updated `EventStorage` is 
       * The command can be executed quickly as the new `Event` only has to be appended, as compared to saving the entire updated `EventStorage`.
     * Cons:
       * A new method must be created to save data after executing other commands. E.g. The save() method after an edit event command would be different from a create event command as the `Event` would have to be located first in the JSON file and then updated.
+
+### Event Add Volunteer Feature
+
+#### Implementation
+To add volunteers into events, we make use of the `assignedVolunteers`field of an `Event`, as well as the `assignedEvents` field of a `Volunteer`.
+
+Given below is an example usage scenario and how the event add volunteer mechanism behaves at each step.
+
+Step 1: The user launches the application and creates an event and a volunteer who is to be added to that event. The event can be created via the command `ecreate n/Clean up the beach r/10 cleaner sd/23/10/23 1900 l/East Coast Park dsc/Pick up all litter on the beach m/10 trash bags b/50.00 vs/20`. The volunteer can be created via the command `vcreate n/Tom p/12345678 e/tom@gmail.com`.
+<puml src="diagrams/EventVolunteerObjectDiagram.puml" alt="EventVolunteerObjectDiagram" />
+
+Step 2: The user calls the Event Add Volunteer command via `eaddv eid/1 vid/1`.
+
+After checking whether the indexes provided are valid, the `assignedVolunteers` is iterated through to determine if the volunteer is already added to the event.
+
+The maximum number of volunteers is also checked to determine if the event has reached its maximum volunteer capacity.
+
+Next, the volunteer’s assigned events are iterated through to check if any of them clash with the current event.
+
+Lastly, a new `Event` and `Volunteer` object, with the respective updated `assignedVolunteers` and `assignedEvents`, is created to replace their respective counterparts in the `EventStorage` and `VolunteerStorage`.
+<puml src="diagrams/EventAddVolunteerSequenceDiagram.puml" alt="EventAddVolunteerSequenceDiagram" />
+
+Step 3: The updated `EventStorage` and `VolunteerStorage` is written into the eventStorage.json and volunteerStorage.json files respectively.
+
+### Design Considerations
+**Aspect: How to update the relevant event and volunteer in the `EventStorage` and `VolunteerStorage`:**
+
+* **Alternative 1 (current choice):** Create a new `Event` and `Volunteer` object to replace the current ones.
+    * Pros:
+        * Maintains the immutability of the `Event` and `Volunteer` objects.
+    * Cons:
+        * More time is taken to execute the command as new objects must be created.
+
+* **Alternative 2:** Directly update the `assignedVolunteers` and `assignedEvents` field for the respective `Event` and `Volunteer`.
+    * Pros:
+        * More intuitive execution.
+        * The command can be executed quickly as the volunteer and event can simply be added to their respective Sets.
+    * Cons:
+        * Can cause bugs in other methods in the code which depend on the immutability of the `Event` and `Volunteer` classes.
+
+### Event Remove Volunteer Feature
+
+#### Implementation
+To remove volunteers into events, we make use of the `assignedVolunteers` field of an event, as well as the `assignedEvents` field of a volunteer.
+
+Given below is an example usage scenario and how the event remove volunteer mechanism behaves at each step.
+
+Step 1: The user launches the application and creates an event and a volunteer who is to be added to that event. The event can be created via the command `ecreate n/Clean up the beach r/10 cleaner sd/23/10/23 1900 l/East Coast Park dsc/Pick up all litter on the beach m/10 trash bags b/50.00 vs/20`. The volunteer can be created via the command `vcreate n/Tom p/12345678 e/tom@gmail.com`.
+
+The volunteer is then added to the event via the command `eaddv eid/1 vid/1`
+<puml src="diagrams/EventVolunteerAggregationObjectDiagram.puml" alt="EventVolunteerAggregationObjectDiagram" />
+
+
+Step 2: The user calls the Event Remove Volunteer command via `eremovev eid/1 vid/1`.
+
+After checking whether the indexes provided are valid, the `assignedVolunteers` is iterated through to determine if the volunteer is added to the event.
+
+Subsequently, a new `Event` and `Volunteer` object, with the respective updated `assignedVolunteers` and `assignedEvents`, is created to replace their respective counterparts in the `EventStorage` and `VolunteerStorage`.
+<puml src="diagrams/EventRemoveVolunteerSequenceDiagram.puml" alt="EventRemoveVolunteerSequenceDiagram" />
+
+Step 3: The updated `EventStorage` and `VolunteerStorage` is written into the eventStorage.json and volunteerStorage.json files respectively.
+
+### Design Considerations
+**Aspect: How to update the relevant event and volunteer in the EventStorage and VolunteerStorage:**
+
+* **Alternative 1 (current choice):** Create a new `Event` and `Volunteer` object to replace the current ones.
+    * Pros:
+        * Maintains the immutability of the `Event` and `Volunteer` objects.
+    * Cons:
+        * More time is taken to execute the command as new objects must be created.
+
+* **Alternative 2:** Directly update the `assignedVolunteers` and `assignedEvents` field for the respective Event and Volunteer.
+    * Pros:
+        * More intuitive execution.
+        * The command can be executed quickly as the volunteer and event can simply be added to their respective Sets.
+    * Cons:
+        * Can cause bugs in other methods in the code which depend on the immutability of the `Event` and `Volunteer` classes.
+
+
+### Event List Volunteer Feature
+
+#### Implementation
+To list the volunteers added to an event, we make use of the `assignedVolunteers`field of an event, as well as JavaFX’s FilteredList.
+
+Given below is an example usage scenario and how the event list volunteer mechanism behaves at each step.
+
+Step 1: The user launches the application and creates an event and a volunteer who is to be added to that event. The event can be created via the command `ecreate n/Clean up the beach r/10 cleaner sd/23/10/23 1900 l/East Coast Park dsc/Pick up all litter on the beach m/10 trash bags b/50.00 vs/20`. The volunteer can be created via the command `vcreate n/Tom p/12345678 e/tom@gmail.com`.
+
+The volunteer is then added to the event via the command `eaddv eid/1 vid/1`
+<puml src="diagrams/EventVolunteerAggregationObjectDiagram.puml" alt="EventVolunteerAggregationObjectDiagram" />
+
+Step 2: The user calls the Event List Volunteer command via `elistv 1`.
+
+After checking whether the index provided is valid, the `filteredVolunteerList` is updated with a new predicate which returns true for all volunteers with the same name as the `assignedVolunteers`
+<puml src="diagrams/FilteredListClassDiagram.puml" alt="FilteredListClassDiagram" />
+
+Step 3: The UI shows the list of volunteers in the `filteredVolunteerList`.
+
+### Design Considerations
+**Aspect: How to obtain the list of filtered volunteers:**
+
+* **Alternative 1 (current choice):** Use JavaFX’s `FilteredList`.
+    * Pros:
+        * Integration with JavaFX UI controls, such as `ListView`.
+        * Changes in the source list are automatically updated in the `FilteredList`.
+        * Does not duplicate data, which increases memory cost.
+    * Cons:
+        * The code is harder to debug as the inner workings of `FilteredList` must be learned.
+
+* **Alternative 2:** Manually filter the `VolunteerStorage` for the required volunteers.
+    * Pros:
+        * Custom filtering logic can be implemented as there is more control over the filtering process.
+        * Code is easier to debug as the exact implementation of filtering is known.
+    * Cons:
+        * The manually filtered list must be manually synced to the UI to correctly show the list of added volunteers.
+        * When the source data changes, UI synchronization with the manually filtered list must be accounted for.
 
 ### Undo/redo feature
 
@@ -321,19 +436,83 @@ The following activity diagram summarizes what happens when a user executes a ne
     * Pros: Results in cleaner code as common fields and methods from both classes can be extracted out into a parent class.
     * Cons: Harder to implement.
 
-### \[Proposed\] Reading an individual event feature
+### Reading an individual event feature
 
-#### Proposed Implementation
+#### Implementation
 
-When the app is initialized, the MainApp will first initialize all key components of the app. Specifically in this case:
+When event show command is called, a pop-up window (an `EventShowWindow` object) will show, displaying the information of the event that corresponds to the given index. The event to show is obtained from the `eventToShowList` instantiated in `ModelManager`.
 
-First, eventToShowList in ModelManager will be initialized, with the list of all events currently in the EventStorage.
+Given below is an example usage scenario and how the event show mechanism behaves at each step:
 
-Then, when MainWindow is being initialized, the EventShowWindow will also be initialized.
+Step 1. The user launches the app for the first time, and executes `ecreate n/first event ...` to create a new event. This calls the method `Model#updateFilteredEventList()` to update both the `filteredEventList` and the `eventToShowList`.
 
-EventShowWindow consists of ListView displaying the eventToShowList in Model, and its contents are obtained by calling Logic.getEventToShowList(), which will call Model.getEventToShowList().
+<puml src="diagrams/EventShowStep1.puml" alt="EventShowStep1" />
 
-In summary, when the app is initialized, EventShowWindow will be initialized with its contents being the list of all events obtained from the EventStorage. However, user will not see it as without receiving its command, EventShowWindow will not be shown.
+Step 2. The user  executes `ecreate n/second event ...` to create another event. This calls the method `Model#updateFilteredEventList()` again to update both the `filteredEventlist` and the `eventToShowList`.
+
+<puml src="diagrams/EventShowStep2.puml" alt="EventShowStep2" />
+
+Displayed event list now has two events at index 1 and 2 respectively.
+
+Step 3. The user executes `eshow 1` to read more about the first event created.
+
+The `eshow` command obtains the event at index `1` from the last shown list (`filteredEventList`) as the index is based on the most recent event list displayed to the user before he calls the `eshow` command. This event is the one that will be shown to the user in the pop-up window.
+
+The `eshow` command then filters the `eventToShowList` such that it has only one element, which is the event previously obtained.
+
+<puml src="diagrams/EventShowStep3.puml" alt="EventShowStep3" />
+
+The `eshow` command then returns a `CommandResult` object with its `isShowEvent` field as true.
+
+The `MainWindow` received the `CommandResult`. Upon identifying that its `isShowEvent` field is true, `MainWindow#handleShowEvent()` method is executed. 
+
+The `MainWindow#handleShowEvent()` method hows/focuses the `EventShowWindow`, after loading its contents by calling `EventShowWindow#loadContents()`.
+
+`EventShowWindow` has `eventToShowList` as one of its fields, `eventToShowList` here is the same object as the one we use in `ModelManager`.
+
+The `EventShowWindow#loadContents()` method obtains the event to show by getting the first element in the `eventToShowList`.
+
+User see a pop-up window (`EventShowWindow`), showing all information of the event at index `1`.
+
+Step 4. The user navigates back to the main window, causing the pop-up window to be unfocused.
+
+Step 5. The user now wants to read more on the second event, so he executes `eshow 2`. Step 3 is repeated with the new given index - `2`.
+
+<puml src="diagrams/EventShowStep5.puml" alt="EventShowStep5" />
+
+The pop-up window is now focused, displaying the event information of the event at index `2`.
+
+The following sequence diagram shows how the event show operation works:
+
+<puml src="diagrams/EventShowSequenceDiagram.puml" alt="EventShowSequenceDiagram" />
+
+#### Design considerations:
+
+**Aspect: How `EventShowWindow` obtains the event to show:**
+
+* **Alternative 1 (current choice):** Obtain the event from `eventToShowList`.
+    * Pros: Leaves current implementation (mainly `filteredEventList` and `CommandResult`) untouched.
+    
+    <box type="info" seamless>
+  
+    **Note:** This excludes adding an `isShowEvent` field in `CommandResult`. This is necessary regardless of the type of implementation chosen as `MainWindow` has to be able to identify an `eshow` command so that it can show the `EventShowWindow`.
+    </box>
+
+    * Cons: Tedious implementation, `ModelManager` need to manage one more field.
+* **Alternative 2:** Obtain the event from `CommandResult`. Since `MainWindow` listens to the `CommandResult` to determine the UI to display, we can pass the event to show to the `MainWindow`, and then to the `EventShowWindow`, through `CommandResult` by adding an `eventToShow` field that stores the event to show.
+    * Pros: Implementation is simplest out of all options.
+    * Cons: Might not be the best solution as we have established that `Event` is guaranteed not null, yet we are passing null as the `eventToShow` field for non-`eshow` commands, can be confusing to other developers. Moreover, this is a flawed logic as non-`eshow` commands should not even have an `eventToShow` field.
+* **Alternative 3:** Obtain the event from `filteredEventList`. Same implementation but filtering is done on the `filteredEventList` instead of the `eventToShowList`.
+    * Pros: Easier implementation, no need to create a new field - `eventToShowList` in `ModelManager`.
+    * Cons: Since `filteredEventList` is the event list that is displayed the user, filtering it will affect users view of the displayed list. Users cannot continue with where they left off, which depletes the user experience.
+
+**Aspect: How event information is shown:**
+* **Alternative 1 (current choice):** Shown in a pop-up window (`EventShowWindow`).
+    * Pros: User can refer to both the pop-up window and the main window at the same time, which makes the event planning process more efficient.
+    * Cons: Harder to implement as `EventShowWindow` must have access to the event information but `iVolunteer` uses a Facade to separate the component internals and users of the component.
+* **Alternative 2:** Shown in `EventListPanel`.
+  * Pros: Might be easier to implement as the `EventListPanel` will already have access to the event information as it has `filteredEventList` as one of its fields.
+  * Cons: Depletes the user experience as they will have to use the `elist` command, followed by the `eshow` command if they want to see the event information of another event.
 
 ### \[In progress\] Delete the event from a list of event
 
@@ -344,7 +523,7 @@ Command. When the command is then parsed and executed.
 
 Given below is an example usage scenario and how the mechanism of the event delete behaves at each step.
 
-Step 1. When the user input the event delete command, it will be parsed by IVolunteerParser. Then the keyword of the command is noticed and EventDeleteCommandParser is called. 
+Step 1. When the user input the event delete command, it will be parsed by IVolunteerParser. Then the keyword of the command is noticed and EventDeleteCommandParser is called.
 
 <puml src="diagrams/DeleteSequenceDiagram.puml" alt="DeleteSequenceDiagram" />
 
@@ -357,7 +536,6 @@ Step 4. Then the storage will also be updated accordingly by the filtered list.
 ### Tracking amount of roles and materials
 
 #### Implementation
-
 The mechanism to track the amount of roles and materials within the `Event` class is handled by the `Material` and `Role` classes' `currentQuantity` and `requiredQuantity` fields. Both fields are non-negative integers. In addition, for each class, operations to track, access and update the amount of
 each role/material have been added as follows:
 
@@ -498,7 +676,7 @@ Step 7. The user runs `eedit 2 vs/0`. `vs/0` is a special case that removes the 
 
 Step 8. The user runs `eaddv eid/2 vid/2`. The volunteer is added successfully due to the removal of the maximum volunteer limit.
 
-### \[Proposed\] vfind feature
+### Find Volunteer feature
 
 #### Proposed Implementation
 
@@ -512,13 +690,35 @@ Meanwhile, `VolunteerFindCommand` extends the abstract class `Command`, and impl
 
 Lastly, `SkillNameContainsKeywordsPredicate` implements the interface `Predicate`, and implements the following operation:
 
-* `SkillNameContainsKeywordsPredicate#test` — Checks if any `skill` or `name` matches the user input.
+* `SkillNameContainsKeywordsPredicate#test` — Checks if the volunteer's skills and/or name matches the user input.
 
 Given below is an example usage scenario and how the vfind command behaves at each step.
 
-Step 1. The user launches the application. The user executes `vfind n/Alex` command to find any volunteers named 'Alex' in the volunteer list. The `vfind` command calls `LogicManager#execute`, which attempts to execute the command. 
+Step 1. The user launches the application. The user executes the `vfind n/Alex s/chef` command to find any volunteers named 'Alex' with the skill 'chef' in the volunteer list. The `vfind` command calls `LogicManager#execute()`, which attempts to execute the command. 
 
-Step 2. This creates a `VolunteerFindCommandParser` object, which processes the user input's arguments, namely 'Alex'. This creates a `VolunteerFindCommand` object, with its predicate encapsulating a list of `names` and a list of `skills`.
+Step 2. This calls `IVolunteerParser#parseCommand()`, which creates a `VolunteerFindCommandParser` object. It processes the user input's arguments, namely `n/Alex` and `s/chef`, and returns a `VolunteerFindCommand` object with its predicate encapsulating a list of `names` and a list of `skills`.
+
+Step 3. The `VolunteerFindCommand#execute()` method is called, and the filtered volunteer list is updated to display all volunteers named 'Alex' with the skill 'chef'.
+
+The following sequence diagram shows how the vfind operation works:
+
+<puml src="diagrams/VolunteerFindSequenceDiagram.puml" width="400" />
+
+Meanwhile, the activity diagram below shows the general workflow when a `VolunteerFindCommand` with a `n/` and `s/` prefix is executed:
+
+<puml src="diagrams/VolunteerFindActivityDiagram.puml" width="400" />
+
+#### Design considerations:
+
+**Aspect: Which predicate `VolunteerFindCommand` uses to filter volunteers:**
+
+* **Alternative 1 (current choice):** Have a `SkillNameContainsKeyWordsPredicate` class that encapsulates a list of names and a list of skills.
+    * Pros: Easier to implement.
+    * Cons: Results in code duplication. Currently, `EventNameContainsKeywordsPredicate` class and `SkillNameContainsKeyWordsPredicate` class both encapsulate a list of names, whereas that functionality can be extracted out into a single predicate class that solely encapsulates a list of names. This new predicate class can be reused more easily when compared to the aforementioned predicate classes. 
+
+* **Alternative 2:** Have two predicate classes, one encapsulating a list of names and one encapsulating a list of skills.
+    * Pros: Reduces code duplication which increases reusability of code.
+    * Cons: Harder to implement. We must ensure that the predicate class that is extracted out can be used across different objects, such as `Event`, `Volunteer`, and any other object that may be created in future releases.
 
 ### \[Proposed\] Data archiving
 
@@ -944,13 +1144,13 @@ testers are expected to do more *exploratory* testing.
 
 </box>
 
-### Launch and shutdown
+### Launching and exiting the iVolunteer application
 
 1. Initial launch
 
    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample events and volunteers. The window size may not be optimum.
+   1. Double-click the jar file Expected: Shows the GUI with a set of sample events and volunteers. The window size may not be optimized for your screen.
 
 1. Saving window preferences
 
@@ -958,12 +1158,107 @@ testers are expected to do more *exploratory* testing.
 
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
+   
+1. Exiting iVolunteer
 
-1. _{ more test cases …​ }_
+   1. Launch the jar file <br> 
+   Expected: Shows the GUI with a set of sample volunteers and events. The window size may not be optimized for your screen.
+   
+   1. Open the help window using the `help` command and minimize it.
+   
+   1. Navigate back to the main window.
+
+   1. Open the event show window of the first event using `eshow 1` and minimize it.
+
+   1. Navigate back to the main window and exit from it using the `exit` command. <br> 
+   Expected: The main window and all minimized windows should close automatically.
+
+### Creating an event
+1. Creating an event
+   1. Test case: `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy m/100 packets b/100.00 vs/50`<br>
+      Expected: A new event is created and added to the event list panel. Details of the event are shown in the status message.
+
+   1. Test case: `ecreate`<br>
+      Expected: No change to the event list panel. Invalid command format error is shown in the status message.<br>
+      The outcome is the same when any of the compulsory parameters are missing from the input command.
+
+   1. Test case: `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 l/hougang dsc/`<br>
+      Expected: No change to the event list panel. Error message for the invalid field is shown in the status message<br>
+      The outcome is the same when all compulsory parameters are present and any argument is empty or invalid.
+
+   1. Test case: `ecreate n/Food distrubting r/10 chef r/10 packer sd/23/10/2023 1900 l/hougang dsc/Packing food for the needy`, followed by
+                 `ecreate n/Food distributing r/10 chef r/10 packer sd/23/10/2023 1900 l/hougang dsc/Packing food for the needy`<br>
+      Expected: No change to the event list panel. Error message for duplicate events is shown in the status message<br>
+      The outcome is the same when all compulsory parameters are present, all arguments are valid, and an event with the same name already exists in the event list.
+   
+### Adding a volunteer to an event
+1. Adding a volunteer which is being shown to an event which is being shown
+
+   1. Prerequisites: The event list panel must contain at least one event and the volunteer list panel must contain at least one volunteer.
+
+   1. Test case: `eaddv eid/1 vid/1`<br>
+      Additional Prerequisites:
+         1. The indexes provided are valid.
+         1. The volunteer is not already assigned to the event.
+         1. The volunteer's assigned events do not clash with the current event.<br>
+      
+      Expected: The volunteer is added to the event. Details of the updated event and its current number of assigned volunteers are shown in the status message.
+
+   1. Test case: `eaddv`<br>
+      Expected: No change to the event list or volunteer list panels. Invalid command format error is shown in the status message.<br>
+      The outcome is the same when any of the parameters are missing from the input command, or when their arguments are empty or invalid.
+
+   1. Test case: `eaddv eid/1 vid/1`, followed by `eaddv eid/1 vid/1`<br>
+      Additional Prerequisites: The volunteer at index 1 is not already added to the event at index 1.<br>
+      Expected: No change to the event list or volunteer list panels. Error message for duplicate volunteer is shown in the status message<br>
+      The outcome is the same when any volunteer is added to an event they are already assigned to.
+
+   1. Test case: `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy` and
+                 `ecreate n/Clean park r/20 cleaner sd/23/10/2023 2000 ed/23/10/2023 2300 l/serangoon dsc/Clean the local park`, followed by
+                 `eaddv eid/1 vid/1` and `eaddv eid/2 vid/1`<br>
+      Additional Prerequisites: For this test case, ensure that the event list panel and volunteer list panel are empty before executing the command.<br>
+      Note that the two events created are clashing with each other.<br>
+      Expected: No change to the event list or volunteer list panels. Error message for clashing events is shown in the status message<br>
+      The outcome is the same when any volunteer is added to an event which clashes with at least one of their pre-existing events.
+
+### Displaying all volunteers added to an event
+1. Listing all volunteers assigned to an event.
+
+   1. Prerequisites: The event list panel must contain at least one event.
+   
+   1. Test case: `elistv 1`<br>
+      Expected: Volunteer list panel shows all volunteers currently assigned to the event. Status message shows a success message as well as the number of volunteers assigned to the event.
+   
+   1. Test case: `elistv`<br>
+      Expected: No change in the volunteer list panel. Error message for invalid command format is shown in the status message.
+      The outcome is the same for input commands with no index specified, or non-positive indexes.
+   
+   1. Test case: eshow x (where x is larger than the list size)
+      Expected: No change in the volunteer list panel. Error message for invalid event index is shown in the status message.<br>
+
+### Removing a volunteer from an event
+1. Removing a volunteer which is being shown from an event which is being shown
+
+    1. Prerequisites: The event list must contain at least one event and the volunteer list must contain at least one volunteer.
+
+    1. Test case: `eremovev eid/1 vid/1`<br>
+       Additional Prerequisites:
+        1. The indexes provided are valid
+        1. The volunteer is currently assigned to the event<br>
+           
+       Expected: The volunteer is removed from the event. Details of the updated event and its current number of assigned volunteers are shown in the status message.
+
+    1. Test case: `eremovev eid/ vid/`<br>
+       Expected: No change to the event list or volunteer list panels. Invalid command format error is shown in the status message.<br>
+       The outcome is the same when any of the parameters are missing from the input command, or when their arguments are empty or invalid.
+
+    1. Test case: `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy` and
+                  `vcreate n/tom p/12345678 e/tom@gmail.com`, followed by `eremovev eid/1 vid/1`<br>
+       Additional Prerequisites: For this test case, ensure that the event list panel and volunteer list panel are empty before executing the commands.
+       Expected: No change to the event list or volunteer list panels. Error message for invalid volunteer is shown in the status message.<br>
+       The outcome is the same when any volunteer is removed from an event they are not currently assigned to.
 
 ### Creating a volunteer
-
-1. Prerequisites: NIL.
 
    1. Test case: `vcreate n/Little Johnny p/98765432 e/littlejohnny@example.com s/little`<br>
       Expected: Volunteer is created and added to the bottom of the volunteer list. Details of the volunteer shown in the status message.
@@ -976,8 +1271,9 @@ testers are expected to do more *exploratory* testing.
 
 ### Deleting a volunteer
 
-1. Prerequisites: List all volunteers using the `vlist` command. Multiple volunteers in the list.
+1. Deleting a volunteer while all volunteers are being shown
 
+<<<<<<< HEAD
    1. Test case: `vdelete 1`<br>
       Expected: First volunteer is deleted from the list. Details of the deleted volunteer shown in the status message.
 
@@ -1025,6 +1321,74 @@ testers are expected to do more *exploratory* testing.
       Expected: Similar to previous test case.<br>
 
 1. _{ more test cases …​ }_
+=======
+   1. Prerequisites: List all volunteers using the `vlist` command. Multiple volunteers in the list.
+
+   1. Test case: `vdelete 1`<br>
+      Expected: First volunteer is deleted from the list. Details of the deleted volunteer shown in the result display.
+
+   1. Test case: `vdelete 0`<br>
+      Expected: No volunteer is deleted. Error details for invalid command format is shown in the result display.
+      The outcome is the same whenever the volunteer index parameter is a non-positive integer.
+
+   1. Test case: `vdelete` <br>
+      Expected: Similar to previous.
+
+   1. Test case: `vdelete x` (where x is a positive integer that is larger than the list size) <br>
+      Expected: No volunteer is deleted. Error details for invalid volunteer index is shown in the result display.
+
+### Listing all events
+
+1. Listing all events when current event list panel is filtered.
+
+   1. Prerequisites:
+
+      1. The list of events should have at least 1 event. Otherwise, add in some events using the `ecreate` command.
+
+      2. Performed an event find command (e.g. `efind n/abc`) to get a filtered event list panel (can consist of 0 or more events).
+
+   2. Test case: `elist` <br> Expected: Event list panel displays all events. Success message is shown in the result display.
+
+   3. Test case: `elist abc` <br> Expected: Similar to previous.
+
+### Reading an individual event feature
+
+1. Showing an event for the first time.
+
+   1. Prerequisite: The event list panel should be displaying at least 1 event.
+
+   2. Test case: `eshow 1` <br> 
+      Expected: A pop-up window appears, showing all information of the event. Result display shows the name of event being shown.
+
+   3. Test case: `eshow` <br> 
+      Expected: Error message for invalid command format is shown in the result display.  
+      The outcome is the same whenever the event index parameter is a non-positive integer.
+
+   4. Test case: `eshow 0` <br> 
+      Expected: Similar to previous.
+   
+   5. Test case: `eshow x` (where x is a positive integer, larger than the list size) <br> 
+      Expected: Error message for invalid event index is shown in the result display.
+
+### Listing all events joined by a volunteer
+
+1. Listing all events joined by a volunteer when all events are being shown.
+
+   1. Prerequisite: The volunteer list panel should be displaying at least 1 volunteer.
+   
+   2. Test case: `vliste 1` <br> 
+      Expected: Event list panel displays all events joined by volunteer at index 1. Name of volunteer and number of events joined is shown in the result display.
+   
+   3. Test case: `vliste` <br> 
+      Expected: No change in event list panel. Error message for invalid command format is shown in the result display.
+   
+   4. Test case: `vliste 0` <br> 
+      Expected: Similar to previous.
+      The outcome is the same whenever the volunteer index parameter is a non-positive integer.
+   
+   5. Test case: `vliste x` (where x is a positive integer, larger than the list size) <br> 
+      Expected: No change in event list panel. Error message for invalid volunteer index is shown in the result display. 
+>>>>>>> master
 
 ### Finding a volunteer
 
@@ -1039,8 +1403,8 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `vfind n/!@#`<br>
       Expected: Volunteer list displays nothing. `Names should only contain alphanumeric characters and spaces, and it should not be blank` shown in the status message.
 
-   1. Other incorrect delete commands to try: `vfind`, `vfind randomwordshere n/ben`, `...` <br>
-      Expected: `Invalid command format!` error message shown in the status message. Instructions on the correct format are shown as well.
+    1. Other incorrect `vfind` commands to try: `vfind`, `vfind randomwordshere n/ben`, `...` <br>
+       Expected: `Invalid command format!` error message shown in the status message. Instructions on the correct format are shown as well.
 
 ### Finding an event
 
@@ -1055,8 +1419,8 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `efind n/!@#`<br>
       Expected: Event list displays nothing. `Names should only contain alphanumeric characters and spaces, and it should not be blank` shown in the status message.
 
-   1. Other incorrect delete commands to try: `efind`, `efind randomwordshere n/baking cookies`, `...` <br>
-      Expected: `Invalid command format!` error message shown in the status message. Instructions on the correct format are shown as well.
+    1. Other incorrect `efind` commands to try: `efind`, `efind randomwordshere n/baking cookies`, `...` <br>
+       Expected: `Invalid command format!` error message shown in the status message. Instructions on the correct format are shown as well.
    
 ### Undoing/redoing a command
 
@@ -1094,10 +1458,50 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
-----
+--------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Planned Enhancements**
-1. Currently, the duplicate detection for roles and materials within the Event model are not very effective: roles and materials with the same name but different quantities are *not counted* as duplicates (e.g. `2 / 50 farmers` and `3 / 100 farmers` are not considered duplicate roles). While the program works perfectly fine with the duplicate roles/materials, we are planning to:
+
+Given below are fixes we propose to add in the future.
+
+### Change definition of duplicate volunteers
+
+The current implementation of the Create Volunteer feature automatically checks for duplicate volunteers if the user is trying to create a new volunteer.
+Below underlines how iVolunteer checks for duplicates.
+- A volunteer is considered duplicate if: their name already exists in the volunteer list.
+- A volunteer is considered **not** duplicate if: their phone number/email address already exists in the volunteer list.
+
+However, this current logic is flawed as it is not applicable to a real life scenario. In the real world, users generally do not have the same phone number or email addresses as they are unique. However, it is common for two users to have the same name. 
+
+Thus, in order to make iVolunteer more applicable to the real world, we plan to make the following change
+to how iVolunteer checks for duplicates.
+- A volunteer is considered duplicate if: their phone number or email address already exists in the volunteer list.
+- A volunteer is considered **not** duplicate if: their name already exists in the volunteer list.
+
+The following activity diagram summarizes what happens when a user attempts to create a new volunteer:
+
+<puml src="diagrams/CreateVolunteerActivityDiagram.puml" width="250" />
+
+### Specific error message for duplicate volunteers
+
+This fix is a follow up to the proposed change to change the definition of duplicate volunteers. Volunteer coordinators may find themselves inadvertently adding duplicate volunteers. With our current implementation, the error message that shows up is `This volunteer already exists in the volunteer list`.
+
+However, this error message is not descriptive enough. Users would not be able to identify whether the issue is caused by a duplicate email address or a duplicate phone number. Users are also unable to identify which existing user in the volunteer list is causing the error to occur.
+
+Thus, we plan to make the error message also mention the reason for the failure, e.g. `The volunteer could not be added because his phone number is held by another volunteer: VOLUNTEER_NAME`.
+
+The following image shows a sample UI of what the error message would look like when you attempt to add a volunteer who has the same phone number as `Alexis Yeoh`
+
+<img src="images/DG-duplicateVolunteerError.png" width="500px">
+
+### Improve Event roles and materials duplicate detection
+Currently, the duplicate detection for roles and materials within the Event model are not very effective: roles and materials with the same name but different quantities are *not counted* as duplicates (e.g. `2 / 50 farmers` and `3 / 100 farmers` are not considered duplicate roles). While the program works perfectly fine with the duplicate roles/materials, we are planning to:
    - strengthen the duplicate detection such that any two roles or materials with the same name are counted as duplicates (e.g. `2 / 50 farmers` and `3 / 40 farmers` will now be considered duplicates)
    - produce an error message `There is more than 1 role/material with the same name: [ROLE/MATERIAL NAME]!` whenever there is a duplicate role/material such that volunteer coordinators are aware of these duplicates and fix the respective `ecreate` or `eedit` command.
    - **Example:** With these changes, the command `ecreate n/Learn farming r/30 farmers r/40 farmers r/100 participants sd/18/11/2023 1230 l/lim chu kang dsc/learn farming` will produce the error message `There is more than 1 role with the same name: farmers!` since `r/30 farmers` and `r/40 farmers` are duplicates.
+
+### Improve error message for Create Event Feature
+The current implementation of the Create Event Feature checks the input command and shows error messages for invalid parameters one at a time.<br>
+However, this is not user-friendly as users can only edit the parameters one at a time, which can be very tedious for a command with so many parameters. For example, `ecreate n/Cle@n beach r/cleaner sd/23/10/2023 2500 l/punggol] dsc/clean the beach] m/trash bag b/50.0`, which has invalid inputs for each parameter, would require 7 tries to successfully execute.<br>
+Hence, to reduce the number of invalid user inputs, we plan to improve our error messages such that they show all invalid inputs from the user, as well as their valid formats.<br>
+This way, users can correct their inputs all at once, reducing their frustration from entering many consecutive invalid commands.
