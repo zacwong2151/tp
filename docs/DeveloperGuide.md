@@ -865,13 +865,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1a. User did not input a valid command.
 
-<<<<<<< HEAD
-    * 1a1. System prompts the user to provide a valid command.
-
-=======
     * 1a1. System prompts user to provide a valid command.
-    
->>>>>>> 20900492f4c47f134226e8bd1f0c5bb29ca17677
+
       Use case resumes from step 1.
 
 * 1b. There are no events to list.
@@ -934,7 +929,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes from step 2.
   
-* 2b. Invalid event id.
+* 2b. Invalid event index.
 
     * 2b1. System prompts user to input a valid event index.
   
@@ -993,7 +988,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       Use case resumes from step 3.
 
 * 2b. Invalid event id.
-    * 2b1. iVolunteer requests for the correct command with valid event id.
+    * 2b1. iVolunteer requests for the correct command with valid event index.
     * 2b2. User enters correct command.
       Steps 2b1-2b2 are repeated until the data entered is correct.
 
@@ -1041,8 +1036,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 3a2. User enters correct command.
       Use case resumes from step 4.
 
-* 3b. Invalid event id or volunteer id or both.
-    * 3b1. iVolunteer requests for the correct command with valid event id and valid volunteer id.
+* 3b. Invalid event index or volunteer index or both.
+    * 3b1. iVolunteer requests for the correct command with valid event index and valid volunteer index.
     * 3b2. User enters correct command.
       Steps 3b1-3b2 are repeated until the data entered is correct.
 
@@ -1065,8 +1060,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 2a2. User enters correct command.
       Use case resumes from step 3.
 
-* 2b. Invalid event id.
-    * 2b1. iVolunteer requests for the correct command with valid event id.
+* 2b. Invalid event index.
+    * 2b1. iVolunteer requests for the correct command with valid event index.
     * 2b2. User enters correct command.
       Steps 2b1-2b2 are repeated until the data entered is correct.
   
@@ -1095,8 +1090,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes from step 4.
 
-* 3b. Invalid event id or volunteer id or both.
-    * 3b1. iVolunteer requests for the correct command with valid event id or volunteer id or both.
+* 3b. Invalid event index or volunteer index or both.
+    * 3b1. iVolunteer requests for the correct command with valid event index or volunteer index or both.
     * 3b2. User enters correct command.
       Steps 3b1-3b2 are repeated until the data entered is correct.
 
@@ -1465,13 +1460,12 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
-<<<<<<< HEAD
 ### Improve error message for Create Event Feature
 The current implementation of the Create Event Feature checks the input command and shows error messages for invalid parameters one at a time.<br>
 However, this is not user-friendly as users can only edit the parameters one at a time, which can be very tedious for a command with so many parameters. For example, `ecreate n/Cle@n beach r/cleaner sd/23/10/2023 2500 l/punggol] dsc/clean the beach] m/trash bag b/50.0`, which has invalid inputs for each parameter, would require 7 tries to successfully execute.<br>
 Hence, to reduce the number of invalid user inputs, we plan to improve our error messages such that they show all invalid inputs from the user, as well as their valid formats.<br>
 This way, users can correct their inputs all at once, reducing their frustration from entering many consecutive invalid commands.
-=======
+
 ----
 
 ## **Appendix: Planned Enhancements**
@@ -1479,4 +1473,3 @@ This way, users can correct their inputs all at once, reducing their frustration
    - strengthen the duplicate detection such that any two roles or materials with the same name are counted as duplicates (e.g. `2 / 50 farmers` and `3 / 40 farmers` will now be considered duplicates)
    - produce an error message `There is more than 1 role/material with the same name: [ROLE/MATERIAL NAME]!` whenever there is a duplicate role/material such that volunteer coordinators are aware of these duplicates and fix the respective `ecreate` or `eedit` command.
    - **Example:** With these changes, the command `ecreate n/Learn farming r/30 farmers r/40 farmers r/100 participants sd/18/11/2023 1230 l/lim chu kang dsc/learn farming` will produce the error message `There is more than 1 role with the same name: farmers!` since `r/30 farmers` and `r/40 farmers` are duplicates.
->>>>>>> 20900492f4c47f134226e8bd1f0c5bb29ca17677
