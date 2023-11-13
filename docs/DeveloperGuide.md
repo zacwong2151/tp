@@ -906,33 +906,6 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
-### eedit eaddm
-### Deleting an event
-1. Deleting an event.
-   1. Prerequisites: List all events using the `elist` command. Multiple events in the list.
-   
-   1. Test case: `edelete 1`
-      Expected: The first event in the displayed event list is deleted successfully. Detail is shown in the status message.
-       
-   1. Test case: `edelete`
-      Expected: No change to the event list panel. Invalid command format error is shown in the status message.<br>
-
-   1. Test case: `edele`
-      Expected: No change to the event list panel. Invalid command format error is shown in the status message.<br>
-
-### Editing an event
-1. Editing the detail of an event.
-    1. Prerequisites: List all events using the `elist` command. Multiple events in the list.
-
-    1. Test case: `eedit 1`
-       Expected: The first event in the displayed event list is deleted successfully. Detail is shown in the status message.
-
-    1. Test case: `edelete`
-       Expected: No change to the event list panel. Invalid command format error is shown in the status message.<br>
-
-    1. Test case: `edele`
-       Expected: No change to the event list panel. Invalid command format error is shown in the status message.<br>
-
 ### Saving data
 
 1. Dealing with missing/corrupted data files
