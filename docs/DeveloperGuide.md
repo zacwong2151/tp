@@ -539,17 +539,10 @@ Step 4. Then the storage will also be updated accordingly by the filtered list.
 The mechanism to track the amount of roles and materials within the `Event` class is handled by the `Material` and `Role` classes' `currentQuantity` and `requiredQuantity` fields. Both fields are non-negative integers. In addition, for each class, operations to track, access and update the amount of
 each role/material have been added as follows:
 
-<<<<<<< HEAD
-The mechanism to track the amount of roles and materials within the `Event` class is handled by the `Quantity` interface's
-`currentQuantity` and `requiredQuantity` fields. Both fields are positive integers. `Role` and `Material` classes thereby
-implement this `Quantity` interface. In addition, for each class, operations to track, access and update the amount of
-each role/material have been added into the `Quantity` interface as follows:
-=======
 - `Role#addRoleManpower()` — Adds 1 to the current quantity of manpower.
 - `Role#decreaseRoleManpower()` — Subtracts 1 from the current quantity of manpower.
 - `Material#addItems(int addedQuantity)` — Adds `addedQuantity` to the current quantity.
 - `Role#hasEnoughManpower()` and `Material#hasEnoughItems()` — Checks if the current quantity ≥ the required quantity.
->>>>>>> 20900492f4c47f134226e8bd1f0c5bb29ca17677
 
 Like all classes in `Event` and `Volunteer`, `Material` and `Role` classes are **immutable** and any methods that want to modify the behaviour of either object will return a new `Material` or `Role` object with the modified information.
 
@@ -701,11 +694,7 @@ Lastly, `SkillNameContainsKeywordsPredicate` implements the interface `Predicate
 
 Given below is an example usage scenario and how the vfind command behaves at each step.
 
-<<<<<<< HEAD
-Step 1. The user launches the application. The user executes `vfind n/Alex` command to find any volunteers named 'Alex' in the volunteer list. The `vfind` command calls `LogicManager#execute`, which attempts to execute the command.
-=======
 Step 1. The user launches the application. The user executes the `vfind n/Alex s/chef` command to find any volunteers named 'Alex' with the skill 'chef' in the volunteer list. The `vfind` command calls `LogicManager#execute()`, which attempts to execute the command. 
->>>>>>> 20900492f4c47f134226e8bd1f0c5bb29ca17677
 
 Step 2. This calls `IVolunteerParser#parseCommand()`, which creates a `VolunteerFindCommandParser` object. It processes the user input's arguments, namely `n/Alex` and `s/chef`, and returns a `VolunteerFindCommand` object with its predicate encapsulating a list of `names` and a list of `skills`.
 
@@ -865,13 +854,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1a. User did not input a valid command.
 
-<<<<<<< HEAD
     * 1a1. System prompts the user to provide a valid command.
 
-=======
-    * 1a1. System prompts user to provide a valid command.
-    
->>>>>>> 20900492f4c47f134226e8bd1f0c5bb29ca17677
       Use case resumes from step 1.
 
 * 1b. There are no events to list.
@@ -1339,18 +1323,21 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
-<<<<<<< HEAD
-### Improve error message for Create Event Feature
-The current implementation of the Create Event Feature checks the input command and shows error messages for invalid parameters one at a time.<br>
-However, this is not user-friendly as users can only edit the parameters one at a time, which can be very tedious for a command with so many parameters. For example, `ecreate n/Cle@n beach r/cleaner sd/23/10/2023 2500 l/punggol] dsc/clean the beach] m/trash bag b/50.0`, which has invalid inputs for each parameter, would require 7 tries to successfully execute.<br>
-Hence, to reduce the number of invalid user inputs, we plan to improve our error messages such that they show all invalid inputs from the user, as well as their valid formats.<br>
-This way, users can correct their inputs all at once, reducing their frustration from entering many consecutive invalid commands.
-=======
 ----
 
 ## **Appendix: Planned Enhancements**
-1. Currently, the duplicate detection for roles and materials within the Event model are not very effective: roles and materials with the same name but different quantities are *not counted* as duplicates (e.g. `2 / 50 farmers` and `3 / 100 farmers` are not considered duplicate roles). While the program works perfectly fine with the duplicate roles/materials, we are planning to:
+
+### Improve Event roles and materials duplicate detection
+   Currently, the duplicate detection for roles and materials within the Event model are not very effective: roles and materials with the same name but different quantities are *not counted* as duplicates (e.g. `2 / 50 farmers` and `3 / 100 farmers` are not considered duplicate roles). While the program works perfectly fine with the duplicate roles/materials, we are planning to:
    - strengthen the duplicate detection such that any two roles or materials with the same name are counted as duplicates (e.g. `2 / 50 farmers` and `3 / 40 farmers` will now be considered duplicates)
    - produce an error message `There is more than 1 role/material with the same name: [ROLE/MATERIAL NAME]!` whenever there is a duplicate role/material such that volunteer coordinators are aware of these duplicates and fix the respective `ecreate` or `eedit` command.
    - **Example:** With these changes, the command `ecreate n/Learn farming r/30 farmers r/40 farmers r/100 participants sd/18/11/2023 1230 l/lim chu kang dsc/learn farming` will produce the error message `There is more than 1 role with the same name: farmers!` since `r/30 farmers` and `r/40 farmers` are duplicates.
->>>>>>> 20900492f4c47f134226e8bd1f0c5bb29ca17677
+
+### Improve error message for Create Event Feature
+   The current implementation of the Create Event Feature checks the input command and shows error messages for invalid parameters one at a time.<br>
+   However, this is not user-friendly as users can only edit the parameters one at a time, which can be very tedious for a command with so many parameters. For example, `ecreate n/Cle@n beach r/cleaner sd/23/10/2023 2500 l/ dsc/ m/trash bag b/-50.0`, which has invalid inputs for each parameter, would require 7 tries to successfully execute.<br>
+   Hence, to reduce the number of invalid user inputs, we plan to improve our error messages such that they show all invalid inputs from the user, as well as their valid formats.<br>
+   This way, users can correct their inputs all at once, reducing their frustration from entering many consecutive invalid commands.
+
+### Improve name format to support special characters
+   The current implementation of the name format feature only supports alphanumeric characters and spaces like `Alexis Yeoh` or `Tan Ah Meng 8`. However, this is not realistic as there are other names out there that may include characters like `.`, `,` or `/`, such as names like `John Doe Jr.` or `Tan Ah Meng, John` etc. Hence, to allow for more flexibility in name formats, we will allow names to contain any valid character (except possibly `/` due to limitations in iVolunteer's command parsing causing, for example, `s/o` in names to create a skill named `o` instead).
