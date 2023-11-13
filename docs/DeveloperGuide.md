@@ -1269,20 +1269,6 @@ testers are expected to do more *exploratory* testing.
    1. Other incorrect delete commands to try: `vcreate`, `vcreate n/`, `...` <br>
       Expected: `Invalid command format!` error message shown in the status message. Instructions on the correct format are shown as well.
 
-### Deleting a volunteer
-
-1. Deleting a volunteer while all volunteers are being shown
-
-<<<<<<< HEAD
-   1. Test case: `vdelete 1`<br>
-      Expected: First volunteer is deleted from the list. Details of the deleted volunteer shown in the status message.
-
-   1. Test case: `vdelete 0`<br>
-      Expected: No volunteer is deleted. Error details shown in the status message.
-
-   1. Other incorrect delete commands to try: `vdelete`, `vdelete x`, `...` (where x is larger than the list size or a non-integer)<br>
-      Expected: Similar to previous test case.
-
 ### Deleting an event
 
 1. Prerequisites: List all events using the `elist` command. Multiple events in the list. 
@@ -1320,8 +1306,10 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `eedit 1 l/`
       Expected: Similar to previous test case.<br>
 
-1. _{ more test cases …​ }_
-=======
+### Deleting a volunteer
+
+1. Deleting a volunteer while all volunteers are being shown
+
    1. Prerequisites: List all volunteers using the `vlist` command. Multiple volunteers in the list.
 
    1. Test case: `vdelete 1`<br>
