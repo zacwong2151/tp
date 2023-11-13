@@ -854,7 +854,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1a. User did not input a valid command.
 
-    * 1a1. System prompts user to provide a valid command.
+    * 1a1. System prompts the user to provide a valid command.
 
       Use case resumes from step 1.
 
@@ -1754,6 +1754,12 @@ Currently, the duplicate detection for roles and materials within the Event mode
 
 ### Improve error message for Create Event Feature
 The current implementation of the Create Event Feature checks the input command and shows error messages for invalid parameters one at a time.<br>
-However, this is not user-friendly as users can only edit the parameters one at a time, which can be very tedious for a command with so many parameters. For example, `ecreate n/Cle@n beach r/cleaner sd/23/10/2023 2500 l/punggol] dsc/clean the beach] m/trash bag b/50.0`, which has invalid inputs for each parameter, would require 7 tries to successfully execute.<br>
+However, this is not user-friendly as users can only edit the parameters one at a time, which can be very tedious for a command with so many parameters. For example, `ecreate n/Cle@n beach r/cleaner sd/23/10/2023 2500 l/ dsc/ m/trash bag b/-50.0`, which has invalid inputs for each parameter, would require 7 tries to successfully execute.<br>
 Hence, to reduce the number of invalid user inputs, we plan to improve our error messages such that they show all invalid inputs from the user, as well as their valid formats.<br>
 This way, users can correct their inputs all at once, reducing their frustration from entering many consecutive invalid commands.
+
+### Improve name format to support special characters
+The current implementation of the name format feature only supports alphanumeric characters and spaces like `Alexis Yeoh` or `Tan Ah Meng 8`. However, this is not realistic as there are other names out there that may include characters like `.`, `,` or `/`, such as names like `John Doe Jr.` or `Tan Ah Meng, John` etc. Hence, to allow for more flexibility in name formats, we will allow names to contain any valid character (except possibly `/` due to limitations in iVolunteer's command parsing causing, for example, `s/o` in names to create a skill named `o` instead).
+
+### Change `eaddm` command format to maintain consistency
+The current implementation of `eaddm` is as follows: `eaddm eid/EVENT_INDEX m/MATERIALS_AND_LOGISTICS_NEEDED`. However, this is inconsistent with other Event commands that only involve a single event, like `edelete` or `eshow`, where the index is directly stated instead of using the `eid/` parameter. This will be fixed eventually to improve usability for the app and prevent inconsistency in command formats for features.
