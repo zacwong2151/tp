@@ -884,7 +884,7 @@ testers are expected to do more *exploratory* testing.
 
    3. Test case: `elist abc` <br> Expected: Similar to previous.
 
-### Reading an individual feature
+### Reading an individual event feature
 
 1. Showing an event for the first time.
 
