@@ -266,6 +266,25 @@ Format: `elist`
 **Tip:** Events are sorted automatically in chronological order!
 </box>
 
+### Locating events by name: `efind`
+
+Finds events whose name contain any of the given keywords.
+
+Format: `efind n/NAME…​`
+
+* At least one NAME keyword must be provided.
+* The search is case-insensitive. e.g `n/fixING comPUTErs` will match `fixing computers`.
+* Allows partial matching of keywords e.g. `n/fix` will match `fixing computers`.
+* Events matching **at least one** NAME keyword will be returned (i.e. `OR` search).
+
+Examples:
+* `efind n/food` returns `food donaton` and `cooking food`
+* `efind n/litter n/teaching` returns `picking litter` and `teaching kids`<br>
+
+
+![result for 'find picking litter and teaching kids event'](images/findEventsResult.png)
+
+
 ### Reading an individual event: `eshow`
 Volunteer coordinators can read up more about an individual event, to familiarize themselves with its requirements while planning for it.
 
@@ -306,6 +325,50 @@ Restrictions:
 Examples:
 * `elist` followed by `edelete 2` deletes the 2nd event in the event list.
 * `efind n/Beach cleaning` followed by `edelete 1` deletes the 1st event in the results of the `efind` command
+* `efind Beach cleaning` followed by `edelete 1` deletes the 1st event in the results of the `find` command (tentative feature)
+
+### Edit the details of an event: `eedit`
+
+Volunteer coordinators can edit the details of the events.
+
+Format: `eedit EVENT_INDEX [r/NUMBER_OF_ROLES ROLES_NEEDED]... [sd/START_DATETIME] [ed/END_DATETIME] [l/LOCATION] [dsc/DESCRIPTION] [m/NUMBER_OF_MATERIALS_AND_LOGISTICS MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET] [vs/MAX_VOLUNTEER_COUNT]`
+
+Parameters:
+* r/ - Roles needed for the event and its quantity
+* sd/ - Start date and time of the event
+* ed/ - End date and time of the event
+* l/ - Location of the event
+* dsc/ - Description of the event
+* m/ - Materials needed for the event and its quantity
+* b/ - Budget for the event
+* vs/ - Maximum number of volunteers in the event
+
+Restrictions:
+* The event index must be valid, i.e. If the list of events displayed is 10 events long, the acceptable values will be from 1-10.
+* All parameters must be separated by a single space.
+* The event name and assigned volunteers cannot be edited.
+* The date and time formats must be exactly `DD/MM/YYYY TTTT`.
+* If the end date and time is specified, it must be the _same time_ or _after_ the start date and time of the event.
+* If the start date and time is specified, it must be the _same time_ or _before_ the end date and time of the event.
+* The material argument must be a positive integer, followed by a space, and then the name of material required.
+* If there is nothing follow by the role prefix in the input, the roles of the event will be overwritten and reset to empty.
+* The role argument must be a positive integer, followed by a space, and then the name of role required.
+* If there is nothing follow by the material prefix in the input, the materials of the event will be overwritten and reset to empty.
+* The budget argument must be a number in 2 decimal places.
+
+**Tips:** 
+* At least 1 optional fields must be provided.
+* The assigned volunteers cannot be edited with eedit, to do so, refer to [eaddv](#adding-a-volunteer-into-an-event-eaddv) and [eremovev](#removing-a-volunteer-from-an-event-eremovev) for more detail information.
+
+Examples:
+* `eedit 1 n/clean beach r/10 cleaner sd/30/11/2023 1200 l/east coast park dsc/help clean east coast park m/ `
+    * Edits the event to name `clean beach`, roles needed `10 cleaner`, event date from `30th November 2023, 12pm`, location `east coast park`, description `help clean east coast park` and materials needed to empty.
+
+### Clearing all event entries: `eclear`
+
+Clears all entries from the event list.
+
+Format: `eclear`
 
 ### Adding and tracking quantity of materials into an event: `eaddm`
 
