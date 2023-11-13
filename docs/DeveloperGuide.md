@@ -845,7 +845,44 @@ testers are expected to do more *exploratory* testing.
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
-1. 
+### Deleting an event
+1. Deleting an event.
+    1. Prerequisites: List all events using the `elist` command. Multiple events in the list. If the list is empty,
+       create it with the following example,
+       `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy m/100 packets b/100.00 vs/50`
+
+    1. Test case: `edelete 1`
+       Expected: The first event in the displayed event list is deleted successfully. Detail is shown in the status message.
+
+    1. Test case: `edelete`
+       Expected: No change to the event list panel. Invalid command format error is shown in the status message.<br>
+
+    1. Test case: `edele`
+       Expected: No change to the event list panel. Invalid command format error is shown in the status message.<br>
+
+### Editing an event
+1. Editing the detail of an event.
+    1. Prerequisites: List all events using the `elist` command. Multiple events in the list. If the list is empty, 
+       create one with the following example, 
+       `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy m/100 packets b/100.00 vs/50`
+
+    1. Test case: `eedit 1 l/NUS`
+       Expected: The location of the first event in the displayed event list is edited from to NUS successfully. 
+       Detail is shown in the status message.
+
+    1. Test case: `eedit 1 sd/22/10/2023 1900`
+       Expected: The start date of the first event in the displayed event list is edited to 22/10/2023 1900 successfully.
+       Detail is shown in the status message.
+
+    1. Test case: `eedit 1 r/`
+       Expected: The roles of the first event in the displayed event list is replaced to empty successfully.
+       Detail is shown in the status message.
+
+    1. Test case: `eedit 1 l/`
+       Expected: No change to the event list panel. Invalid command format error is shown in the status message.<br>
+
+    1. Test case: `eeit`
+       Expected: No change to the event list panel. Invalid command format error is shown in the status message.<br>
 
 1. _{ more test cases …​ }_
 
