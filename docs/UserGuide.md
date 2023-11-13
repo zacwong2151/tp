@@ -227,12 +227,12 @@ Format: `ecreate n/EVENT_NAME r/ROLES_NEEDED… sd/START_DATETIME [ed/END_DATETI
 
 Parameters:
 * n/ - Event name
-* r/ - Roles needed for the event and its quantity
+* r/ - Roles needed for the event and its quantity, in the format `[required quantity] [role name]` (e.g. `30 farmer`)
 * sd/ - Start date and time of the event
 * ed/ - End date and time of the event
 * l/ - Location of the event
 * dsc/ - Description of the event
-* m/ - Materials needed for the event and its quantity
+* m/ - Materials needed for the event and its quantity, in the format `[required quantity] [material name]` (e.g. `30 potatoes`)
 * b/ - Budget for the event
 * vs/ - Maximum number of volunteers allowed in the event
 
@@ -241,8 +241,15 @@ Restrictions:
 * All arguments cannot be blank.
 * The date and time formats must be exactly `DD/MM/YYYY TTTT`.
 * If the end date and time is specified, it must be the _same time_ or _after_ the start date and time of the event.
-* The material argument must be an integer, followed by a space, and then the name of material required.
-* The role argument must be an integer, followed by a space, and then the name of role required.
+* The material argument must be a non-negative integer, followed by a space, and then the name of the material required.
+  * **Example of valid materials:** `m/30 potato`, `m/0 apples`
+* The role argument must be a non-negative integer, followed by a space, and then the name of the role required.
+  * **Example of valid roles:** `r/20 teachers`, `r/0 farmer`
+* If there are any duplicated materials or roles, only the first duplicated material or role will show up.
+  * Duplicated materials are materials with the same material name and quantity. As a result, `m/23 potatoes` and `m/50 potatoes` are not duplicates.
+  * Duplicated roles are materials with the same role name and quantity. For example, `r/23 farmers` and `r/50 farmers` are not duplicates.
+  * Take note that duplicated materials and roles are case-sensitive: `m/23 Potatoes` and `m/23 potatoes` are not duplicates.
+  * To remove duplicates, you can use the [`eedit` command](#edit-the-details-of-an-event-eedit) and re-build the entire role or material list. Examples: `eedit EVENT_INDEX r/23 farmers r/50 cleaners` or `eedit EVENT_INDEX m/23 potatoes m/3 fields`.
 * The budget argument must be a number in 2 decimal places.
 * The maximum number of volunteers argument must be a non-negative integer.
 
@@ -331,6 +338,50 @@ Restrictions:
 Examples:
 * `elist` followed by `edelete 2` deletes the 2nd event in the event list.
 * `efind n/Beach cleaning` followed by `edelete 1` deletes the 1st event in the results of the `efind` command
+* `efind Beach cleaning` followed by `edelete 1` deletes the 1st event in the results of the `find` command (tentative feature)
+
+### Edit the details of an event: `eedit`
+
+Volunteer coordinators can edit the details of the events.
+
+Format: `eedit EVENT_INDEX [r/NUMBER_OF_ROLES ROLES_NEEDED]... [sd/START_DATETIME] [ed/END_DATETIME] [l/LOCATION] [dsc/DESCRIPTION] [m/NUMBER_OF_MATERIALS_AND_LOGISTICS MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET] [vs/MAX_VOLUNTEER_COUNT]`
+
+Parameters:
+* r/ - Roles needed for the event and its quantity
+* sd/ - Start date and time of the event
+* ed/ - End date and time of the event
+* l/ - Location of the event
+* dsc/ - Description of the event
+* m/ - Materials needed for the event and its quantity
+* b/ - Budget for the event
+* vs/ - Maximum number of volunteers in the event
+
+Restrictions:
+* The event index must be valid, i.e. If the list of events displayed is 10 events long, the acceptable values will be from 1-10.
+* All parameters must be separated by a single space.
+* The event name and assigned volunteers cannot be edited.
+* The date and time formats must be exactly `DD/MM/YYYY TTTT`.
+* If the end date and time is specified, it must be the _same time_ or _after_ the start date and time of the event.
+* If the start date and time is specified, it must be the _same time_ or _before_ the end date and time of the event.
+* The material argument must be a positive integer, followed by a space, and then the name of material required.
+* If there is nothing follow by the role prefix in the input, the roles of the event will be overwritten and reset to empty.
+* The role argument must be a positive integer, followed by a space, and then the name of role required.
+* If there is nothing follow by the material prefix in the input, the materials of the event will be overwritten and reset to empty.
+* The budget argument must be a number in 2 decimal places.
+
+**Tips:** 
+* At least 1 optional fields must be provided.
+* The assigned volunteers cannot be edited with eedit, to do so, refer to [eaddv](#adding-a-volunteer-into-an-event-eaddv) and [eremovev](#removing-a-volunteer-from-an-event-eremovev) for more detail information.
+
+Examples:
+* `eedit 1 n/clean beach r/10 cleaner sd/30/11/2023 1200 l/east coast park dsc/help clean east coast park m/ `
+    * Edits the event to name `clean beach`, roles needed `10 cleaner`, event date from `30th November 2023, 12pm`, location `east coast park`, description `help clean east coast park` and materials needed to empty.
+
+### Clearing all event entries: `eclear`
+
+Clears all entries from the event list.
+
+Format: `eclear`
 
 ### Adding and tracking quantity of materials into an event: `eaddm`
 
@@ -423,6 +474,39 @@ Examples:
 * `eremovev vid/1 eid/1` 
   * removes the volunteer with index 1 from the event with index 1.
 
+### Undo a Command: `undo`
+
+Undoes an undo-able command.
+
+Format: `undo`
+
+Restrictions:
+* Undo-able commands include:
+  * vcreate
+  * vdelete
+  * vedit
+  * vclear
+  * ecreate
+  * edelete
+  * eedit
+  * eaddv
+  * eremovev
+  * eaddm
+* Only commands that changed the current history stack can be undone (iVolunteer does not remember commands that were executed in the previous run of the app).
+
+### Redo a Command: `redo`
+
+Redoes the undo command. 
+
+Format: `redo`
+
+Restrictions:
+* Only can be executed after an undo command is executed.
+* This command can be thought of as an 'undo' command that can only undo a `undo` command.
+
+
+    
+
 ### Exiting the program : `exit`
 
 Exits the program.
@@ -431,11 +515,11 @@ Format: `exit`
 
 ### Saving the data
 
-iVolunteer data are saved in the hard disk automatically after any command executed. There is no need to save manually.
+iVolunteer data is automatically saved in the hard disk after any command is executed. There is no need to manually save your data.
 
 ### Editing the data file
 
-iVolunteer data are saved automatically as two JSON files, `[JAR file location]/data/volunteerStorage.json` (volunteer storage) and `[JAR file location]/data/eventStorage.json` (event storage and _event-volunteer interactions_). Advanced users are welcome to update data directly by editing both data files.
+iVolunteer data is saved automatically as two JSON files, `[JAR file location]/data/volunteerStorage.json` (volunteer storage) and `[JAR file location]/data/eventStorage.json` (event storage and _event-volunteer interactions_). Advanced users are welcome to update data directly by editing both data files.
 
 <box type="warning" seamless>
 
