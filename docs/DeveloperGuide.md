@@ -174,7 +174,7 @@ Step 3:
 When the `EventCreateCommand` finishes executing, the updated `EventStorage` is written into `eventStorage.json` file.
 <puml src="diagrams/EventStorageClassDiagram.puml" alt="EventStorageClassDiagram" />
 
-### Design Considerations
+#### Design Considerations
 **Aspect: How the individual fields of an Event are stored:**
 
 * **Alternative 1 (current choice):** Create new classes to represent the fields.
@@ -230,7 +230,7 @@ Lastly, a new `Event` and `Volunteer` object, with the respective updated `assig
 
 Step 3: The updated `EventStorage` and `VolunteerStorage` is written into the eventStorage.json and volunteerStorage.json files respectively.
 
-### Design Considerations
+#### Design Considerations
 **Aspect: How to update the relevant event and volunteer in the `EventStorage` and `VolunteerStorage`:**
 
 * **Alternative 1 (current choice):** Create a new `Event` and `Volunteer` object to replace the current ones.
@@ -268,7 +268,7 @@ Subsequently, a new `Event` and `Volunteer` object, with the respective updated 
 
 Step 3: The updated `EventStorage` and `VolunteerStorage` is written into the eventStorage.json and volunteerStorage.json files respectively.
 
-### Design Considerations
+#### Design Considerations
 **Aspect: How to update the relevant event and volunteer in the EventStorage and VolunteerStorage:**
 
 * **Alternative 1 (current choice):** Create a new `Event` and `Volunteer` object to replace the current ones.
@@ -304,7 +304,7 @@ After checking whether the index provided is valid, the `filteredVolunteerList` 
 
 Step 3: The UI shows the list of volunteers in the `filteredVolunteerList`.
 
-### Design Considerations
+#### Design Considerations
 **Aspect: How to obtain the list of filtered volunteers:**
 
 * **Alternative 1 (current choice):** Use JavaFX’s `FilteredList`.
@@ -323,11 +323,11 @@ Step 3: The UI shows the list of volunteers in the `filteredVolunteerList`.
         * The manually filtered list must be manually synced to the UI to correctly show the list of added volunteers.
         * When the source data changes, UI synchronization with the manually filtered list must be accounted for.
 
-### Undo/redo feature
+### Undo/Redo feature
 
-#### Proposed Implementation
+#### Implementation
 
-The proposed undo/redo mechanism is facilitated by `VersionedVolunteerStorage` and `VersionedEventStorage`. It extends `VolunteerStorage` and `EventStorage` respectively with an undo/redo history, stored internally as a `versionedVolunteers`, `versionedEvents` and `currentStatePointer`. 
+The undo/redo mechanism is facilitated by `VersionedVolunteerStorage` and `VersionedEventStorage`. It extends `VolunteerStorage` and `EventStorage` respectively with an undo/redo history, stored internally as a `versionedVolunteers`, `versionedEvents` and `currentStatePointer`. 
 
 `VersionedVolunteerStorage` implements the following operations:
 
@@ -514,9 +514,9 @@ The following sequence diagram shows how the event show operation works:
   * Pros: Might be easier to implement as the `EventListPanel` will already have access to the event information as it has `filteredEventList` as one of its fields.
   * Cons: Depletes the user experience as they will have to use the `elist` command, followed by the `eshow` command if they want to see the event information of another event.
 
-### \[In progress\] Delete the event from a list of event
+### Delete the event from a list of event
 
-### Implementation
+#### Implementation
 
 To facilitate the event delete command, the class EventDeleteCommand is created. The class extends from the interface
 Command. When the command is then parsed and executed.
@@ -678,9 +678,9 @@ Step 8. The user runs `eaddv eid/2 vid/2`. The volunteer is added successfully d
 
 ### Find Volunteer feature
 
-#### Proposed Implementation
+#### Implementation
 
-The proposed vfind mechanism is facilitated by `VolunteerFindCommand`, `VolunteerFindCommandParser` and `SkillNameContainsKeywordsPredicate`. `VolunteerFindCommandParser` extends the interface `Parser`, and it implements the following operation:
+The vfind mechanism is facilitated by `VolunteerFindCommand`, `VolunteerFindCommandParser` and `SkillNameContainsKeywordsPredicate`. `VolunteerFindCommandParser` extends the interface `Parser`, and it implements the following operation:
 
 * `VolunteerFindCommandParser#parse()` — Processes the user input's arguments.
 
@@ -793,7 +793,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* *`    | volunteer coordinator  | be able to remove volunteers from events quickly                                      | save time on the volunteer removal process                      |
 | `* *`    | volunteer coordinator  | be able to filter through the event list                                              | quickly find the event I am interested in                       |
 
-*{More to be added}*
 
 ### Use cases
 
@@ -1661,7 +1660,7 @@ testers are expected to do more *exploratory* testing.
 
 Given below are fixes we propose to add in the future.
 
-### Change definition of duplicate volunteers
+### Change the definition of duplicate volunteers
 
 The current implementation of the Create Volunteer feature automatically checks for duplicate volunteers if the user is trying to create a new volunteer.
 Below underlines how iVolunteer checks for duplicates.
