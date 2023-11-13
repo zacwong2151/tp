@@ -797,49 +797,55 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `iVolunteer` and the **Actor** is the `Volunteer Coordinator`, unless specified otherwise)
+For all the use cases below, the **System** is `iVolunteer` and the **Actor** is a `Volunteer Coordinator`, unless specified otherwise.
 
 **Use case UCE01: Create an event**
 
 **MSS**
 
 1.  User creates an event.
-2.  iVolunteer shows the event created.
+2.  iVolunteer shows the created event.
 
     Use case ends.
 
 **Extensions**
 
-* 1a. Invalid Command Word.
+* 1a. User did not input a valid command.
+
     * 1a1. System prompts user to provide a valid command.
   
       Use case resumes from step 1.
   
-* 1b. Missing arguments for mandatory fields.
+* 1b. There are missing arguments for mandatory fields.
+
     * 1b1. System prompts user to provide arguments for all mandatory fields.
   
       Use case resumes from step 1.
   
-* 1c. Parameters are not separated by a single space.
+* 1c. The parameters are not separated by a single space.
+
     * 1c1. System prompts user to separate parameters with a single space.
   
       Use case resumes from step 1.
   
-* 1d. Invalid Date and Time.
+* 1d. User did not input a valid Date and Time.
+
     * 1d1. System prompts user to use the correct date and time format.
   
       Use case resumes from step 1.
   
-* 1e. Start date/time is after end date/time.
+* 1e. The start date/time is after end date/time.
+
     * 1e1. System prompts user to ensure that start date/time is before end date/time.
 
       Use case resumes from step 1.
   
-* 1f. Invalid Budget Argument
+* 1f. User did not input a valid Budget argument
+
     * 1f1. System prompts user to use the correct budget format.
   
       Use case resumes from step 1.
-<br>
+
 
 **Use case UCE02: List all volunteering events**
 
@@ -862,7 +868,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-<br>
 
 **Use case UCE03: Read an individual event**
 
@@ -888,17 +893,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes from step 2.
 
-* 2c. User did not input a valid index after the command.
-    * 2c1. System prompts user to input a valid index.
-
-      Use case resumes from step 2.
-
 * 2d. User did not leave a single space between the command and the index.
+
     * 2d1. System prompts user to separate parameters with a single space.
 
       Use case resumes from step 2.
 
-<br>
 
 **Use case UCE04: Delete an event**
 
@@ -918,13 +918,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes from step 2.
   
-* 2b. Invalid event index.
+* 2b. User did not input a valid event index.
 
     * 2b1. System prompts user to input a valid event index.
   
       Use case resumes from step 2.
 
-<br>
 
 **Use case UCE05: Find an event**
 
@@ -944,19 +943,18 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   
       Use case resumes from step 2.
   
-* 2b. Missing arguments for the optional fields.
+* 2b. There are missing arguments for the mandatory fields.
 
-    * 2b1. System prompts user to provide arguments for at least one of the optional fields.
+    * 2b1. System prompts user to provide arguments for the mandatory fields.
 
       Use case resumes from step 2.
   
-* 2c. Parameters are not separated by a single space.
+* 2c. The parameters are not separated by a single space.
 
     * 2c1. System prompts user to separate parameters with a single space. 
   
       Use case resumes from step 2.
 
-<br>
 
 **Use case UCE06: Edit an event**
 
@@ -970,121 +968,42 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 2a. Invalid Command Word.
-    * 2a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
-    * 2a2. User enters correct command.
+* 2a. User did not input a valid command.
 
-      Use case resumes from step 3.
-
-* 2b. Invalid event id.
-    * 2b1. iVolunteer requests for the correct command with valid event index.
-    * 2b2. User enters correct command.
-      Steps 2b1-2b2 are repeated until the data entered is correct.
-
-      Use case resumes at step 3.
-
-* 2c. Invalid format for roles and materials.
-    * 2c1. System prompts Volunteer Coordinator to use the correct the format for roles or materials or both.
-    * 2c2. User enters correct command.
-
-      Use case resumes from step 3.
-
-* 2d. Invalid Date and Time.
-    * 2d1. System prompts Volunteer Coordinator to use the correct date and time format.
-    * 2d2. User enters correct command.
-
-      Use case resumes from step 3.
-
-* 2e. Start date/time is after end date/time.
-    * 2e1. System prompts Volunteer Coordinator to ensure that start date/time is before end date/time.
-    * 2e2. User enters correct command.
-
-      Use case resumes from step 3.
-
-* 2f. Invalid Budget Argument
-    * 2f1. System prompts Volunteer Coordinator to use the correct budget format.
-    * 2f2. User enters correct command.
-
-      Use case resumes from step 3.
-
-**Use case UCEV01: Add a volunteer into an event**
-
-**MSS**
-
-1.  User <u>lists all volunteering events (UCE02)</u>.
-2.  User <u>lists all volunteers (UCV02)</u>.
-3.  User requests to add a specific volunteer in the volunteer list into a specific event in the event list.
-4.  iVolunteer adds the volunteer into the event.
-
-    Use case ends.
-
-**Extensions**
-
-* 3a. Invalid Command Word.
-    * 3a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
-    * 3a2. User enters correct command.
-      Use case resumes from step 4.
-
-* 3b. Invalid event index or volunteer index or both.
-    * 3b1. iVolunteer requests for the correct command with valid event index and valid volunteer index.
-    * 3b2. User enters correct command.
-      Steps 3b1-3b2 are repeated until the data entered is correct.
-
-      Use case resumes at step 4.
-
-**Use case UCEV02: List out all volunteers in an event**
-
-**MSS**
-
-1.  User <u>lists all volunteering events (UCE02)</u>.
-2.  User requests to view all volunteers added to an event.
-3.  iVolunteer displays all volunteers in the event.
-
-    Use case ends.
-
-**Extensions**
-
-* 2a. Invalid Command Word.
-    * 2a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
-    * 2a2. User enters correct command.
-      Use case resumes from step 3.
-
-* 2b. Invalid event index.
-    * 2b1. iVolunteer requests for the correct command with valid event index.
-    * 2b2. User enters correct command.
-      Steps 2b1-2b2 are repeated until the data entered is correct.
+    * 2a1. System prompts user to provide a valid command.
   
-      Use case resumes at step 3.
+    * Use case resumes from step 2.
 
-* 2c. There are no volunteer to list.
+* 2b. User did not input a valid event index.
 
-  Use case ends.
+    * 2b1. System prompts user to input a valid event index.
+  
+      Use case resumes from step 2.
 
-**Use case UCEV03: Remove a volunteer from an event**
+* 2c. User did not input a valid format for roles and materials.
 
-**MSS**
+    * 2c1. System prompts user to use the correct the format for roles and materials.
 
-1.  User <u>lists all volunteering events (UCE02)</u>.
-2.  User <u>lists all volunteers (UCV02)</u>.
-3.  User requests to remove a specific volunteer in the volunteer list from a specific event in the event list
-4.  iVolunteer removes the volunteer from the event.
+      Use case resumes from step 2.
 
-    Use case ends.
+* 2d. User did not input a valid Date and Time.
 
-**Extensions**
+    * 2d1. System prompts user to use the correct date and time format.
+  
+      Use case resumes from step 2.
 
-* 3a. Invalid Command Word.
-    * 3a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
-    * 3a2. User enters correct command.
+* 2e. The start date/time is after the end date/time.
 
-      Use case resumes from step 4.
+    * 2e1. System prompts user to input a start date/time that is after the end date/time.
+  
+      Use case resumes from step 2.
 
-* 3b. Invalid event index or volunteer index or both.
-    * 3b1. iVolunteer requests for the correct command with valid event index or volunteer index or both.
-    * 3b2. User enters correct command.
-      Steps 3b1-3b2 are repeated until the data entered is correct.
+* 2f. User did not input a valid Budget argument.
+* 
+    * 2f1. System prompts user to use the correct budget format.
 
-      Use case resumes at step 4.
+      Use case resumes from step 2.
+
 
 **Use case UCV01: Create a volunteer**
 
@@ -1097,43 +1016,42 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 1a. Invalid Command Word.
+* 1a. User did not input a valid command.
 
     * 1a1. System prompts user to provide a valid command.
 
       Use case resumes from step 1.
   
-* 1b. Missing arguments for mandatory fields.
+* 1b. There are missing arguments for mandatory fields.
 
     * 1b1. System prompts user to provide arguments for all mandatory fields.
 
       Use case resumes from step 1.
   
-* 1c. Parameters are not separated by a single space.
+* 1c. The parameters are not separated by a single space.
 
     * 1c1. System prompts user to separate parameters with a single space.
 
       Use case resumes from step 1.
 
-* 1d. Invalid email.
+* 1d. User did not input a valid email.
 
     * 1d1. System prompts user to use the correct email format.
 
       Use case resumes from step 1.
   
-* 1e. Invalid phone number.
+* 1e. Use did not input a valid phone number.
 
     * 1e1. System prompts user to use a valid 8-digit phone number.
 
       Use case resumes from step 1.
   
-* 1f. Invalid volunteer name.
+* 1f. User did not input a valid volunteer name.
 
     * 1f1. System prompts user to use a valid name.
 
       Use case resumes from step 1.
 
-<br>
 
 **Use case UCV02: List all volunteers**
 
@@ -1156,7 +1074,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   Use case ends.
 
-<br>
 
 **Use case UCV03: Delete a volunteer**
 
@@ -1171,21 +1088,126 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 1a. The list is empty.
-
-  Use case ends.
-
 * 2a. User did not input a valid command.
 
     * 2a1. System prompts user to provide a valid command.
 
       Use case resumes from step 2.
   
-* 2b. The given index is invalid.
+* 2b. User did not input a valid volunteer index.
 
-    * 2b1. System shows an error message that there is no such volunteer in the given index.
+    * 2b1. System prompts user to input a valid volunteer index.
 
       Use case resumes from step 2.
+
+**Use case UCV04: Find a volunteer**
+
+**MSS**
+
+1.  User <u>lists all volunteers (UCV02)</u>.
+2.  User requests to find a specific volunteer(s) in the list.
+3.  iVolunteer filters the volunteer list and displays the appropriate volunteer(s).
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. User did not input a valid command.
+
+    * 2a1. System prompts user to provide a valid command.
+
+      Use case resumes from step 2.
+
+* 2b. There are missing arguments for the optional fields.
+
+    * 2b1. System prompts user to provide arguments for the optional fields.
+
+      Use case resumes from step 2.
+
+* 2c. The parameters are not separated by a single space.
+
+    * 2c1. System prompts user to separate parameters with a single space.
+
+      Use case resumes from step 2.
+  
+**Use case UCEV01: Add a volunteer into an event**
+
+**MSS**
+
+1.  User <u>lists all volunteering events (UCE02)</u>.
+2.  User <u>lists all volunteers (UCV02)</u>.
+3.  User requests to add a specific volunteer in the volunteer list into a specific event in the event list.
+4.  iVolunteer adds the volunteer into the event.
+
+    Use case ends.
+
+**Extensions**
+
+* 3a. User did not input a valid command.
+
+    * 3a1. System prompts user to provide a valid command.
+  
+      Use case resumes from step 3.
+
+* 3b. User did not input a valid event index or volunteer index or both.
+
+    * 3b1. System prompts user for the correct command with valid event index and valid volunteer index.
+  
+      Use case resumes from step 3.
+
+**Use case UCEV02: List out all volunteers in an event**
+
+**MSS**
+
+1.  User <u>lists all volunteering events (UCE02)</u>.
+2.  User requests to view all volunteers added to an event.
+3.  iVolunteer displays all volunteers in the event.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. User did not input a valid command.
+
+    * 2a1. System prompts user to provide a valid command.
+  
+      Use case resumes from step 2.
+
+* 2b. User did not input a valid event index.
+
+    * 2b1. System prompts user for the correct command with valid event index.
+  
+      Use case resumes from step 2.
+
+* 2c. There are no volunteers to list.
+
+  Use case ends.
+
+**Use case UCEV03: Remove a volunteer from an event**
+
+**MSS**
+
+1.  User <u>lists all volunteering events (UCE02)</u>.
+2.  User <u>lists all volunteers (UCV02)</u>.
+3.  User requests to remove a specific volunteer in the volunteer list from a specific event in the event list
+4.  iVolunteer removes the volunteer from the event.
+
+    Use case ends.
+
+**Extensions**
+
+* 3a. User did not input a valid command.
+
+    * 3a1. System prompts user to provide a valid command.
+  
+      Use case resumes from step 4.
+
+* 3b. User did not input a valid event index or volunteer index or both.
+
+    * 3b1. System prompts user for the correct command with valid event index and valid volunteer index.
+
+      Use case resumes from step 3.
+
 
 **Use case UCEV04: List all events joined by a volunteer**
 
@@ -1199,39 +1221,27 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 1a. The volunteer list is empty.
-
-  Use case ends.
-
-* 1b. The input command is incorrect.
-
-    * 1b1. System prompts the user to provide a valid command.
-
-      Use case resumes from step 1.
-
-* 1c. There are no events joined by volunteer.
-
-  Use case ends.
-
 * 2a. User did not input a valid command.
 
     * 2a1. System prompts user to provide a valid command.
 
       Use case resumes from step 2.
   
-* 2b. The given index is invalid.
+* 2b. User did not input a valid volunteer index.
 
-    * 2b1. iVolunteer shows an error message that there is no such volunteer in the given index.
+    * 2b1. System prompts user for the correct command with valid volunteer index.
 
       Use case resumes from step 2.
+
+* 2c. There are no events joined by volunteer.
+
+  Use case ends.
 
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
 2.  Should be able to hold up to 1000 volunteers without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-*{More to be added}*
 
 ### Glossary
 
