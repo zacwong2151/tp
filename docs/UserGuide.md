@@ -221,12 +221,12 @@ Format: `ecreate n/EVENT_NAME r/ROLES_NEEDED… sd/START_DATETIME [ed/END_DATETI
 
 Parameters:
 * n/ - Event name
-* r/ - Roles needed for the event and its quantity
+* r/ - Roles needed for the event and its quantity, in the format `[required quantity] [role name]` (e.g. `30 farmer`)
 * sd/ - Start date and time of the event
 * ed/ - End date and time of the event
 * l/ - Location of the event
 * dsc/ - Description of the event
-* m/ - Materials needed for the event and its quantity
+* m/ - Materials needed for the event and its quantity, in the format `[required quantity] [material name]` (e.g. `30 potatoes`)
 * b/ - Budget for the event
 * vs/ - Maximum number of volunteers allowed in the event
 
@@ -235,8 +235,15 @@ Restrictions:
 * All arguments cannot be blank.
 * The date and time formats must be exactly `DD/MM/YYYY TTTT`.
 * If the end date and time is specified, it must be the _same time_ or _after_ the start date and time of the event.
-* The material argument must be an integer, followed by a space, and then the name of material required.
-* The role argument must be an integer, followed by a space, and then the name of role required.
+* The material argument must be a non-negative integer, followed by a space, and then the name of the material required.
+  * **Example of valid materials:** `m/30 potato`, `m/0 apples`
+* The role argument must be a non-negative integer, followed by a space, and then the name of the role required.
+  * **Example of valid roles:** `r/20 teachers`, `r/0 farmer`
+* If there are any duplicated materials or roles, only the first duplicated material or role will show up.
+  * Duplicated materials are materials with the same material name and quantity. As a result, `m/23 potatoes` and `m/50 potatoes` are not duplicates.
+  * Duplicated roles are materials with the same role name and quantity. For example, `r/23 farmers` and `r/50 farmers` are not duplicates.
+  * Take note that duplicated materials and roles are case-sensitive: `m/23 Potatoes` and `m/23 potatoes` are not duplicates.
+  * To remove duplicates, you can use the [`eedit` command](#edit-the-details-of-an-event-eedit) and re-build the entire role or material list. Examples: `eedit EVENT_INDEX r/23 farmers r/50 cleaners` or `eedit EVENT_INDEX m/23 potatoes m/3 fields`.
 * The budget argument must be a number in 2 decimal places.
 * The maximum number of volunteers argument must be a non-negative integer.
 
@@ -461,6 +468,39 @@ Examples:
 * `eremovev vid/1 eid/1` 
   * removes the volunteer with index 1 from the event with index 1.
 
+### Undo a Command: `undo`
+
+Undoes an undo-able command.
+
+Format: `undo`
+
+Restrictions:
+* Undo-able commands include:
+  * vcreate
+  * vdelete
+  * vedit
+  * vclear
+  * ecreate
+  * edelete
+  * eedit
+  * eaddv
+  * eremovev
+  * eaddm
+* Only commands that changed the current history stack can be undone (iVolunteer does not remember commands that were executed in the previous run of the app).
+
+### Redo a Command: `redo`
+
+Redoes the undo command. 
+
+Format: `redo`
+
+Restrictions:
+* Only can be executed after an undo command is executed.
+* This command can be thought of as an 'undo' command that can only undo a `undo` command.
+
+
+    
+
 ### Exiting the program : `exit`
 
 Exits the program.
@@ -469,11 +509,11 @@ Format: `exit`
 
 ### Saving the data
 
-iVolunteer data are saved in the hard disk automatically after any command executed. There is no need to save manually.
+iVolunteer data is automatically saved in the hard disk after any command is executed. There is no need to manually save your data.
 
 ### Editing the data file
 
-iVolunteer data are saved automatically as two JSON files, `[JAR file location]/data/volunteerStorage.json` (volunteer storage) and `[JAR file location]/data/eventStorage.json` (event storage and _event-volunteer interactions_). Advanced users are welcome to update data directly by editing both data files.
+iVolunteer data is saved automatically as two JSON files, `[JAR file location]/data/volunteerStorage.json` (volunteer storage) and `[JAR file location]/data/eventStorage.json` (event storage and _event-volunteer interactions_). Advanced users are welcome to update data directly by editing both data files.
 
 <box type="warning" seamless>
 
