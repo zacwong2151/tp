@@ -778,15 +778,15 @@ testers are expected to do more *exploratory* testing.
       Expected: No change to the event list panel. Error message for the invalid field is shown in the status message<br>
       The outcome is the same when all compulsory parameters are present and any argument is empty or invalid.
 
-   1. Test case: `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 l/hougang dsc/Packing food for the needy`, followed by
-                 `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 l/hougang dsc/Packing food for the needy`<br>
+   1. Test case: `ecreate n/Food distrubting r/10 chef r/10 packer sd/23/10/2023 1900 l/hougang dsc/Packing food for the needy`, followed by
+                 `ecreate n/Food distributing r/10 chef r/10 packer sd/23/10/2023 1900 l/hougang dsc/Packing food for the needy`<br>
       Expected: No change to the event list panel. Error message for duplicate events is shown in the status message<br>
       The outcome is the same when all compulsory parameters are present, all arguments are valid, and an event with the same name already exists in the event list.
    
 ### Adding a volunteer to an event
 1. Adding a volunteer which is being shown to an event which is being shown
 
-   1. Prerequisites: The event list must contain at least one event and the volunteer list must contain at least one volunteer.
+   1. Prerequisites: The event list panel must contain at least one event and the volunteer list panel must contain at least one volunteer.
 
    1. Test case: `eaddv eid/1 vid/1`<br>
       Additional Prerequisites:
@@ -823,10 +823,8 @@ testers are expected to do more *exploratory* testing.
       Expected: No change in the volunteer list panel. Error message for invalid command format is shown in the status message.
       The outcome is the same for input commands with no index specified, or non-positive indexes.
    
-   1. Test case: `elistv 3`<br>
-      Additional Prerequisites: The event list panel currently has only 2 events.<br>
+   1. Test case: eshow x (where x is larger than the list size)
       Expected: No change in the volunteer list panel. Error message for invalid event index is shown in the status message.<br>
-      The outcome is the same for input commands where the index specified is larger than the number of events in the event list panel.
 
 ### Removing a volunteer from an event
 1. Removing a volunteer which is being shown from an event which is being shown
@@ -846,7 +844,7 @@ testers are expected to do more *exploratory* testing.
 
     1. Test case: `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy` and
                   `vcreate n/tom p/12345678 e/tom@gmail.com`, followed by `eremovev eid/1 vid/1`<br>
-       Expected: No change to the event list or volunteer list panels. Error message for volunteer not currently assigned to event is shown in the status message.<br>
+       Expected: No change to the event list or volunteer list panels. Error message for invalid volunteer is shown in the status message.<br>
        The outcome is the same when any volunteer is removed from an event they are not currently assigned to.
 
 ### Deleting a volunteer
