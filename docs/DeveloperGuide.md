@@ -1160,13 +1160,13 @@ testers are expected to do more *exploratory* testing.
 
 </box>
 
-### Launch and shutdown
+### Launching and exiting the iVolunteer application
 
 1. Initial launch
 
    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample events and volunteers. The window size may not be optimum.
+   1. Double-click the jar file Expected: Shows the GUI with a set of sample events and volunteers. The window size may not be optimized for your screen.
 
 1. Saving window preferences
 
@@ -1174,34 +1174,102 @@ testers are expected to do more *exploratory* testing.
 
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
+   
+1. Exiting iVolunteer
 
-1. _{ more test cases …​ }_
+   1. Launch the jar file <br> 
+   Expected: Shows the GUI with a set of sample volunteers and events. The window size may not be optimized for your screen.
+   
+   1. Open the help window using the `help` command and minimize it.
+   
+   1. Navigate back to the main window.
+
+   1. Open the event show window of the first event using `eshow 1` and minimize it.
+
+   1. Navigate back to the main window and exit from it using the `exit` command. <br> 
+   Expected: The main window and all minimized windows should close automatically.
 
 ### Creating a volunteer
 
-1. Prerequisites: NIL.
+1. Test case: `vcreate n/Little Johnny p/98765432 e/littlejohnny@example.com s/little`<br>
+   Expected: Volunteer is created and added to the bottom of the volunteer list. Details of the volunteer shown in the status message.
 
-    1. Test case: `vcreate n/Little Johnny p/98765432 e/littlejohnny@example.com s/little`<br>
-       Expected: Volunteer is created and added to the bottom of the volunteer list. Details of the volunteer shown in the status message.
+1. Test case: `vcreate n/Little Johnny p/91234567 e/bigjohnny@example.com s/little`<br>
+   Expected: Volunteer is not created as there already exists a 'Little Johnny' in the volunteer list. Error details shown in the status message.
 
-    1. Test case: `vcreate n/Little Johnny p/91234567 e/bigjohnny@example.com s/little`<br>
-       Expected: Volunteer is not created as there already exists a 'Little Johnny' in the volunteer list. Error details shown in the status message.
-
-    1. Other incorrect delete commands to try: `vcreate`, `vcreate n/`, `...` <br>
-       Expected: `Invalid command format!` error message shown in the status message. Instructions on the correct format are shown as well.
+1. Other incorrect delete commands to try: `vcreate`, `vcreate n/`, `...` <br>
+   Expected: `Invalid command format!` error message shown in the status message. Instructions on the correct format are shown as well.
 
 ### Deleting a volunteer
 
-1. Prerequisites: List all volunteers using the `vlist` command. Multiple volunteers in the list.
+1. Deleting a volunteer while all volunteers are being shown
 
-    1. Test case: `vdelete 1`<br>
-       Expected: First volunteer is deleted from the list. Details of the deleted volunteer shown in the status message.
+  1. Prerequisites: List all volunteers using the `vlist` command. Multiple volunteers in the list.
 
-    1. Test case: `vdelete 0`<br>
-       Expected: No volunteer is deleted. Error details shown in the status message.
+  1. Test case: `vdelete 1`<br>
+     Expected: First volunteer is deleted from the list. Details of the deleted volunteer shown in the result display.
 
-    1. Other incorrect delete commands to try: `vdelete`, `vdelete x`, `...` (where x is larger than the list size or a non-integer)<br>
-       Expected: Similar to previous.
+  1. Test case: `vdelete 0`<br>
+     Expected: No volunteer is deleted. Error details for invalid command format is shown in the result display.
+     The outcome is the same whenever the volunteer index parameter is a non-positive integer.
+
+  1. Test case: `vdelete` <br>
+     Expected: Similar to previous.
+
+  1. Test case: `vdelete x` (where x is a positive integer, larger than the list size) <br>
+     Expected: No volunteer is deleted. Error details for invalid volunteer index is shown in the result display.
+
+### Listing all events
+
+1. Listing all events when current event list panel is filtered.
+
+   1. Prerequisites:
+
+      1. The list of events should have at least 1 event. Otherwise, add in some events using the `ecreate` command.
+
+      2. Performed an event find command (e.g. `efind n/abc`) to get a filtered event list panel (can consist of 0 or more events).
+
+   2. Test case: `elist` <br> Expected: Event list panel displays all events. Success message is shown in the result display.
+
+   3. Test case: `elist abc` <br> Expected: Similar to previous.
+
+### Reading an individual event feature
+
+1. Showing an event for the first time.
+
+   1. Prerequisite: The event list panel should be displaying at least 1 event.
+
+   2. Test case: `eshow 1` <br> 
+      Expected: A pop-up window appears, showing all information of the event. Result display shows the name of event being shown.
+
+   3. Test case: `eshow` <br> 
+      Expected: Error message for invalid command format is shown in the result display.  
+      The outcome is the same whenever the event index parameter is a non-positive integer.
+
+   4. Test case: `eshow 0` <br> 
+      Expected: Similar to previous.
+   
+   5. Test case: `eshow x` (where x is a positive integer, larger than the list size) <br> 
+      Expected: Error message for invalid event index is shown in the result display.
+
+### Listing all events joined by a volunteer
+
+1. Listing all events joined by a volunteer when all events are being shown.
+
+   1. Prerequisite: The volunteer list panel should be displaying at least 1 volunteer.
+   
+   2. Test case: `vliste 1` <br> 
+      Expected: Event list panel displays all events joined by volunteer at index 1. Name of volunteer and number of events joined is shown in the result display.
+   
+   3. Test case: `vliste` <br> 
+      Expected: No change in event list panel. Error message for invalid command format is shown in the result display.
+   
+   4. Test case: `vliste 0` <br> 
+      Expected: Similar to previous.
+      The outcome is the same whenever the volunteer index parameter is a non-positive integer.
+   
+   5. Test case: `vliste x` (where x is a positive integer, larger than the list size) <br> 
+      Expected: No change in event list panel. Error message for invalid volunteer index is shown in the result display. 
 
 ### Finding a volunteer
 
@@ -1262,8 +1330,7 @@ testers are expected to do more *exploratory* testing.
 
    1. Test case: `redo`<br>
       Expected: Nothing happens. `Unable to redo` shown in the status message.
-
-   
+ 
 ### Saving data
 
 1. Dealing with missing/corrupted data files
