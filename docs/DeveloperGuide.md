@@ -762,8 +762,18 @@ testers are expected to do more *exploratory* testing.
 
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
+   
+1. Shutdown
+   1. Launch the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   
+   1. Open the help window using the `help` command and minimize it.
+   
+   1. Navigate back to the main window.
 
-1. _{ more test cases …​ }_
+   1. Open the event show window of the first event using `eshow 1` and minimize it.
+
+   1. Navigate back to the main window and exit from it using the `exit` command.
+        Expected: The main window and all minimized windows should close at the same time.
 
 ### Deleting a volunteer
 
