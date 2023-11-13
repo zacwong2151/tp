@@ -1133,12 +1133,14 @@ testers are expected to do more *exploratory* testing.
       The outcome is the same when any of the parameters are missing from the input command, or when their arguments are empty or invalid.
 
    1. Test case: `eaddv eid/1 vid/1`, followed by `eaddv eid/1 vid/1`<br>
+      Additional Prerequisites: The volunteer at index 1 is not already added to the event at index 1.<br>
       Expected: No change to the event list or volunteer list panels. Error message for duplicate volunteer is shown in the status message<br>
       The outcome is the same when any volunteer is added to an event they are already assigned to.
 
    1. Test case: `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy` and
                  `ecreate n/Clean park r/20 cleaner sd/23/10/2023 2000 ed/23/10/2023 2300 l/serangoon dsc/Clean the local park`, followed by
                  `eaddv eid/1 vid/1` and `eaddv eid/2 vid/1`<br>
+      Additional Prerequisites: For this test case, ensure that the event list panel and volunteer list panel are empty before executing the command.<br>
       Note that the two events created are clashing with each other.<br>
       Expected: No change to the event list or volunteer list panels. Error message for clashing events is shown in the status message<br>
       The outcome is the same when any volunteer is added to an event which clashes with at least one of their pre-existing events.
@@ -1176,6 +1178,7 @@ testers are expected to do more *exploratory* testing.
 
     1. Test case: `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy` and
                   `vcreate n/tom p/12345678 e/tom@gmail.com`, followed by `eremovev eid/1 vid/1`<br>
+       Additional Prerequisites: For this test case, ensure that the event list panel and volunteer list panel are empty before executing the commands.
        Expected: No change to the event list or volunteer list panels. Error message for invalid volunteer is shown in the status message.<br>
        The outcome is the same when any volunteer is removed from an event they are not currently assigned to.
 
