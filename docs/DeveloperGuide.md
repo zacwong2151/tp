@@ -493,19 +493,23 @@ Meanwhile, `VolunteerFindCommand` extends the abstract class `Command`, and impl
 
 Lastly, `SkillNameContainsKeywordsPredicate` implements the interface `Predicate`, and implements the following operation:
 
-* `SkillNameContainsKeywordsPredicate#test` — Checks if the volunteer's skills or name matches the user input.
+* `SkillNameContainsKeywordsPredicate#test` — Checks if the volunteer's skills and/or name matches the user input.
 
 Given below is an example usage scenario and how the vfind command behaves at each step.
 
 Step 1. The user launches the application. The user executes the `vfind n/Alex s/chef` command to find any volunteers named 'Alex' with the skill 'chef' in the volunteer list. The `vfind` command calls `LogicManager#execute()`, which attempts to execute the command. 
 
-Step 2. This calls `IVolunteerParser#parseCommand()`, which creates a `VolunteerFindCommandParser` object. It processes the user input's arguments, namely 'n/Alex' and 's/chef', and returns a `VolunteerFindCommand` object with its predicate encapsulating a list of `names` and a list of `skills`.
+Step 2. This calls `IVolunteerParser#parseCommand()`, which creates a `VolunteerFindCommandParser` object. It processes the user input's arguments, namely `n/Alex` and `s/chef`, and returns a `VolunteerFindCommand` object with its predicate encapsulating a list of `names` and a list of `skills`.
 
 Step 3. The `VolunteerFindCommand#execute()` method is called, and the filtered volunteer list is updated to display all volunteers named 'Alex' with the skill 'chef'.
 
 The following sequence diagram shows how the vfind operation works:
 
 <puml src="diagrams/VolunteerFindSequenceDiagram.puml" width="400" />
+
+Meanwhile, the activity diagram below shows the general workflow when a `VolunteerFindCommand` with a `n/` and `s/` prefix is executed:
+
+<puml src="diagrams/VolunteerFindActivityDiagram.puml" width="400" />
 
 #### Design considerations:
 
