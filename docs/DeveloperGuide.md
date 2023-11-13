@@ -612,7 +612,7 @@ Step 7. The user runs `eedit 2 vs/0`. `vs/0` is a special case that removes the 
 
 Step 8. The user runs `eaddv eid/2 vid/2`. The volunteer is added successfully due to the removal of the maximum volunteer limit.
 
-### \[Proposed\] vfind feature
+### Find Volunteer feature
 
 #### Proposed Implementation
 
@@ -626,13 +626,35 @@ Meanwhile, `VolunteerFindCommand` extends the abstract class `Command`, and impl
 
 Lastly, `SkillNameContainsKeywordsPredicate` implements the interface `Predicate`, and implements the following operation:
 
-* `SkillNameContainsKeywordsPredicate#test` — Checks if any `skill` or `name` matches the user input.
+* `SkillNameContainsKeywordsPredicate#test` — Checks if the volunteer's skills and/or name matches the user input.
 
 Given below is an example usage scenario and how the vfind command behaves at each step.
 
-Step 1. The user launches the application. The user executes `vfind n/Alex` command to find any volunteers named 'Alex' in the volunteer list. The `vfind` command calls `LogicManager#execute`, which attempts to execute the command.
+Step 1. The user launches the application. The user executes the `vfind n/Alex s/chef` command to find any volunteers named 'Alex' with the skill 'chef' in the volunteer list. The `vfind` command calls `LogicManager#execute()`, which attempts to execute the command. 
 
-Step 2. This creates a `VolunteerFindCommandParser` object, which processes the user input's arguments, namely 'Alex'. This creates a `VolunteerFindCommand` object, with its predicate encapsulating a list of `names` and a list of `skills`.
+Step 2. This calls `IVolunteerParser#parseCommand()`, which creates a `VolunteerFindCommandParser` object. It processes the user input's arguments, namely `n/Alex` and `s/chef`, and returns a `VolunteerFindCommand` object with its predicate encapsulating a list of `names` and a list of `skills`.
+
+Step 3. The `VolunteerFindCommand#execute()` method is called, and the filtered volunteer list is updated to display all volunteers named 'Alex' with the skill 'chef'.
+
+The following sequence diagram shows how the vfind operation works:
+
+<puml src="diagrams/VolunteerFindSequenceDiagram.puml" width="400" />
+
+Meanwhile, the activity diagram below shows the general workflow when a `VolunteerFindCommand` with a `n/` and `s/` prefix is executed:
+
+<puml src="diagrams/VolunteerFindActivityDiagram.puml" width="400" />
+
+#### Design considerations:
+
+**Aspect: Which predicate `VolunteerFindCommand` uses to filter volunteers:**
+
+* **Alternative 1 (current choice):** Have a `SkillNameContainsKeyWordsPredicate` class that encapsulates a list of names and a list of skills.
+    * Pros: Easier to implement.
+    * Cons: Results in code duplication. Currently, `EventNameContainsKeywordsPredicate` class and `SkillNameContainsKeyWordsPredicate` class both encapsulate a list of names, whereas that functionality can be extracted out into a single predicate class that solely encapsulates a list of names. This new predicate class can be reused more easily when compared to the aforementioned predicate classes. 
+
+* **Alternative 2:** Have two predicate classes, one encapsulating a list of names and one encapsulating a list of skills.
+    * Pros: Reduces code duplication which increases reusability of code.
+    * Cons: Harder to implement. We must ensure that the predicate class that is extracted out can be used across different objects, such as `Event`, `Volunteer`, and any other object that may be created in future releases.
 
 ### \[Proposed\] Data archiving
 
