@@ -266,6 +266,25 @@ Format: `elist`
 **Tip:** Events are sorted automatically in chronological order!
 </box>
 
+### Locating events by name: `efind`
+
+Finds events whose name contain any of the given keywords.
+
+Format: `efind n/NAME…​`
+
+* At least one NAME keyword must be provided.
+* The search is case-insensitive. e.g `n/fixING comPUTErs` will match `fixing computers`.
+* Allows partial matching of keywords e.g. `n/fix` will match `fixing computers`.
+* Events matching **at least one** NAME keyword will be returned (i.e. `OR` search).
+
+Examples:
+* `efind n/food` returns `food donaton` and `cooking food`
+* `efind n/litter n/teaching` returns `picking litter` and `teaching kids`<br>
+
+
+![result for 'find picking litter and teaching kids event'](images/findEventsResult.png)
+
+
 ### Reading an individual event: `eshow`
 Volunteer coordinators can read up more about an individual event, to familiarize themselves with its requirements while planning for it.
 
