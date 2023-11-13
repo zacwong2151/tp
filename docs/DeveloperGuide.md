@@ -754,7 +754,7 @@ testers are expected to do more *exploratory* testing.
 
    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   1. Double-click the jar file Expected: Shows the GUI with a set of sample volunteers and events. The window size may not be optimum.
 
 1. Saving window preferences
 
@@ -764,7 +764,9 @@ testers are expected to do more *exploratory* testing.
        Expected: The most recent window size and location is retained.
    
 1. Shutdown
-   1. Launch the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+
+   1. Launch the jar file <br> 
+   Expected: Shows the GUI with a set of sample volunteers and events. The window size may not be optimum.
    
    1. Open the help window using the `help` command and minimize it.
    
@@ -772,25 +774,65 @@ testers are expected to do more *exploratory* testing.
 
    1. Open the event show window of the first event using `eshow 1` and minimize it.
 
-   1. Navigate back to the main window and exit from it using the `exit` command.
-        Expected: The main window and all minimized windows should close at the same time.
+   1. Navigate back to the main window and exit from it using the `exit` command. <br> 
+   Expected: The main window and all minimized windows should close automatically.
 
 ### Deleting a volunteer
 
 1. Deleting a volunteer while all volunteers are being shown
 
-   1. Prerequisites: List all volunteers using the `list` command. Multiple volunteers in the list.
+   1. Prerequisites: List all volunteers using the `vlist` command. Multiple volunteers in the list.
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+   2. Test case: `vdelete 1`<br>
+      Expected: First volunteer is deleted from the list. Details of the deleted volunteer shown in the result display.
 
-   1. Test case: `delete 0`<br>
+   3. Test case: `vdelete 0`<br>
       Expected: No volunteer is deleted. Error details shown in the status message. Status bar remains the same.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
+   4. Other incorrect delete commands to try: `vdelete`, `vdelete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
+### Listing all events
+
+1. Listing all events when current event list panel is filtered.
+
+   1. Prerequisites:
+
+      1. The list of events should have at least 1 event. Otherwise, add in some events using the `ecreate` command.
+
+      2. Perform `efind n/abc` to get a filtered event list panel (can consist of 0 or more events).
+
+   2. Test case: `elist` <br> Expected: Event list panel displays all events. Success message is shown in the result display.
+
+   3. Test case: `elist abc` <br> Expected: Similar to previous.
+
+### Reading an individual feature
+
+1. Showing an event for the first time.
+
+   1. Prerequisite: The event list panel should be displaying at least 1 event.
+
+   2. Test case: `eshow 1` <br> Expected: A pop-up window appears, showing all information of the event. Result display shows the name of event being shown.
+
+   3. Test case: `eshow` <br> Expected: Error message for invalid command format is shown in the result display.
+   
+   4. Test case: `eshow 0` <br> Expected: Similar to previous.
+   
+   5. Test case: `eshow x` (where x is larger than the list size) <br> Expected: Error message for invalid event index is shown in the result display.
+
+### Listing all events joined by a volunteer
+
+1. Listing all events joined by a volunteer when all events are being shown.
+
+   1. Prerequisite: The volunteer list panel should be displaying at least 1 volunteer.
+   
+   2. Test case: `vliste 1` <br> Expected: Event list panel displays all events joined by volunteer at index 1. Name of volunteer and number of events joined is shown in the result display.
+   
+   3. Test case: `vliste` <br> Expected: No change in event list panel. Error message for invalid command format is shown in the result display.
+   
+   4. Test case: `vliste 0` <br> Expected: Similar to previous.
+   
+   5. Test case: `vlist x` (where x is larger than the list size) <br> Expected: No change in event list panel. Error message for invalid volunteer index is shown in the result display. 
 
 ### Saving data
 
