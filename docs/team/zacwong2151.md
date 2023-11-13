@@ -23,7 +23,7 @@ Given below are my contributions to the project.
     * Justification: This feature improves the product significantly because a user can make mistakes in commands and the app should provide a convenient way to rectify them.
     * Highlights: 
       * This enhancement affects existing commands and commands to be added in the future. This is because only certain commands are undo-able, and new undo-able commands that are added in the future will also have to adopt code from the undo feature.
-      * It required an in-depth analysis of design alternatives (further elaboration on pros and cons in the Developer Guide). During implementation, I had to determine which approach was the most suitable given the project constraints. 
+      * It required an in-depth analysis of design alternatives (further elaboration on pros and cons in the Developer Guide). During implementation, I had to experiment with and determine which approach was the most suitable given the project constraints. 
         * **Alternative 1 (current choice):** Saves both the volunteers and events state.
         * **Alternative 2:** Selectively save either the volunteer or event storage.
         * **Alternative 3:** Individual command knows how to undo/redo by itself.
@@ -48,4 +48,4 @@ Given below are my contributions to the project.
 
 * **Community**:
     * PRs reviewed (with non-trivial review comments): [\#122](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/122), [\#69](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/69), [\#113](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/113), [\#82](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/82)
-    * PE dry run bugs found: [(1)](https://github.com/AY2324S1-CS2103T-W11-3/tp/issues/186), [(2)](https://github.com/AY2324S1-CS2103T-W11-3/tp/issues/162), 
+    * PE dry run bugs found: [(1)](https://github.com/AY2324S1-CS2103T-W11-3/tp/issues/186), [(2)](https://github.com/AY2324S1-CS2103T-W11-3/tp/issues/162)
