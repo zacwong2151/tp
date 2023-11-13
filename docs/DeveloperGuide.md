@@ -788,8 +788,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1. User <u>creates an event (UCE01)</u> with a certain required quantity of roles.
 2. User <u>creates a volunteer (UCV01)</u> with a certain skill.
 3. User requests to add the volunteer to the event.
-4. Volunteer is added to the Event's volunteer list.
-5. Event is added to the Volunteer's events joined list.
+4. System adds the Volunteer to the Event's volunteer list.
+5. System adds the Event to the Volunteer's events joined list.
 6. If volunteer's skill is the same as the event's role, iVolunteer increments the current quantity of this specific role by 1, and tracks whether the roles' current quantity has already reached or exceeded its required quantity in the event.
 
    Use case ends.
@@ -827,8 +827,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1. User <u>lists all volunteering events (UCE02)</u>.
 2. User <u>lists all volunteers (UCV02)</u>.
 3. User requests to remove a volunteer from the event.
-4. Volunteer is removed from the Event's volunteer list.
-5. Event is removed from the Volunteer's events joined list.
+4. System removes the Volunteer from the Event's volunteer list.
+5. System removes the Event from the Volunteer's events joined list.
 6. If volunteer's skill is the same as the event's role, iVolunteer decrements the current quantity of this specific role by 1, and tracks whether the roles' current quantity no longer reached or exceeded its required quantity in the event.
 
    Use case ends.
@@ -875,7 +875,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. User <u>lists all volunteers (UCV02)</u>.
 2. User requests to list all events joined by a certain volunteer.
-3. iVolunteer lists all event joined by the volunteer in the event list.
+3. iVolunteer lists all events joined by the volunteer in the event list.
 
    Use case ends.
 
