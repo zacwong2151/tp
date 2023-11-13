@@ -1166,7 +1166,7 @@ testers are expected to do more *exploratory* testing.
     1. Prerequisites: The event list must contain at least one event and the volunteer list must contain at least one volunteer.
 
     1. Test case: `eremovev eid/1 vid/1`<br>
-       Prerequisites:
+       Additional Prerequisites:
         1. The indexes provided are valid
         1. The volunteer is currently assigned to the event<br>
            
