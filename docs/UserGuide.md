@@ -154,17 +154,17 @@ Restrictions:
 
 Examples:
 * `vfind n/David` (user searches for **one** name)
-  * returns `David Li` and `David Tan`. (Volunteers who have that NAME keyword will be returned)
+  * returns `David Li` and `David Tan`. (volunteers who have that NAME keyword will be returned)
 * `vfind n/alex n/roy` (user searches for **more than one** names)
-  * returns `Alexis Yeoh` and `Roy Balakrishnan`. (Volunteers who have **at least one** of the NAME keywords will be returned, i.e. `OR` search)
+  * returns `Alexis Yeoh` and `Roy Balakrishnan`. (volunteers who have **at least one** of the NAME keywords will be returned, i.e. `OR` search)
 * `vfind s/chef` (user searches for **one** skill)
-  * returns `George` and `Ben`. (Volunteers who have that SKILL keyword will be returned)
+  * returns `George` and `Ben`. (volunteers who have that SKILL keyword will be returned)
   
 ![result for 'find alex david'](images/findChefs.png)
 * `vfind s/intelligent s/smart` (user searches for **more than one** skills)
-  * returns `Bernice Yu`. (Volunteers who have **both** SKILL keywords will be returned, i.e. `AND` search)
+  * returns `Bernice Yu`. (volunteers who have **both** SKILL keywords will be returned, i.e. `AND` search)
 * `vfind n/charlotte s/mechanic` (user searches for **one** name and **one** skill)
-  * returns `Charlotte Oliveiro`. (Volunteers who have **both** NAME and SKILL keyword will be returned (i.e. `AND` search)
+  * returns `Charlotte Oliveiro`. (volunteers who have **both** NAME and SKILL keyword will be returned, i.e. `AND` search)
 
 
 
