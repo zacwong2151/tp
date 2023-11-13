@@ -711,7 +711,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes from step 2.
 
-**Use case UCEV01: List all events joined by a volunteer**
+**Use case UCEV04: List all events joined by a volunteer**
 
 **MSS**
 
@@ -729,7 +729,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1b. The input command is incorrect.
 
-    * 1a1. System prompts the user to provide a valid command.
+    * 1b1. System prompts the user to provide a valid command.
 
       Use case resumes from step 1.
 
