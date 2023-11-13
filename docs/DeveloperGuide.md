@@ -926,7 +926,7 @@ We felt that the project overall were quite consistent in terms of effort. While
 
 ### Code reuse from AB3
 
-We benefitted from a lot of code reuse from AB3, allowing us to focus on more advanced and complex features more quickly. Here are some parts of our project that were made much easier through reuse:
+We benefited from a lot of code reuse from AB3, allowing us to focus on more advanced and complex features more quickly. Here are some parts of our project that were made much easier through reuse:
 
 1. **`Volunteer` class, commands like `vcreate`, `vlist`, `vdelete`, `vfind`**: `Volunteer` as a whole was very similar to the `Person` model in AB3 since they both related to people, with some minor modifications. Likewise, the commands were very similar to implement, helping us save a lot of time implementing the create, read, update and delete (CRUD) operations for volunteers. However, we removed the `Address` class and field from the `Volunteer` model which took quite a bit of refactoring to implement.
 2. **`Event` class**: We adapted the `Person` model in AB3 by changing relevant fields in order to create the `Event` model. Some fields like `startDate`, `endDate`, and `budget` introduced new types of validation that we needed to introduce, making implementation non-trivial. However, overall the general `Event` class was quite similar to `Person` so we worked on a clone of the `Person` model to create the `Event` model.
@@ -965,69 +965,63 @@ testers are expected to do more *exploratory* testing.
 
 1. Prerequisites: NIL.
 
-    1. Test case: `vcreate n/Little Johnny p/98765432 e/littlejohnny@example.com s/little`<br>
-       Expected: Volunteer is created and added to the bottom of the volunteer list. Details of the volunteer shown in the status message.
+   1. Test case: `vcreate n/Little Johnny p/98765432 e/littlejohnny@example.com s/little`<br>
+      Expected: Volunteer is created and added to the bottom of the volunteer list. Details of the volunteer shown in the status message.
 
-    1. Test case: `vcreate n/Little Johnny p/91234567 e/bigjohnny@example.com s/little`<br>
-       Expected: Volunteer is not created as there already exists a 'Little Johnny' in the volunteer list. Error details shown in the status message.
+   1. Test case: `vcreate n/Little Johnny p/91234567 e/bigjohnny@example.com s/little`<br>
+      Expected: Volunteer is not created as there already exists a 'Little Johnny' in the volunteer list. Error details shown in the status message.
 
-    1. Other incorrect delete commands to try: `vcreate`, `vcreate n/`, `...` <br>
-       Expected: `Invalid command format!` error message shown in the status message. Instructions on the correct format are shown as well.
+   1. Other incorrect delete commands to try: `vcreate`, `vcreate n/`, `...` <br>
+      Expected: `Invalid command format!` error message shown in the status message. Instructions on the correct format are shown as well.
 
 ### Deleting a volunteer
 
 1. Prerequisites: List all volunteers using the `vlist` command. Multiple volunteers in the list.
 
-    1. Test case: `vdelete 1`<br>
-       Expected: First volunteer is deleted from the list. Details of the deleted volunteer shown in the status message.
+   1. Test case: `vdelete 1`<br>
+      Expected: First volunteer is deleted from the list. Details of the deleted volunteer shown in the status message.
 
-    1. Test case: `vdelete 0`<br>
-       Expected: No volunteer is deleted. Error details shown in the status message.
+   1. Test case: `vdelete 0`<br>
+      Expected: No volunteer is deleted. Error details shown in the status message.
 
-    1. Other incorrect delete commands to try: `vdelete`, `vdelete x`, `...` (where x is larger than the list size or a non-integer)<br>
-       Expected: Similar to previous test case.
+   1. Other incorrect delete commands to try: `vdelete`, `vdelete x`, `...` (where x is larger than the list size or a non-integer)<br>
+      Expected: Similar to previous test case.
 
 ### Deleting an event
 
-1. Deleting an event.
-    1. Prerequisites: List all events using the `elist` command. Multiple events in the list. If the list is empty,
-       create it with the following example,
-       `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy m/100 packets b/100.00 vs/50`
+1. Prerequisites: List all events using the `elist` command. Multiple events in the list. 
+   
+   1. Test case: `edelete 1`<br>
+     Expected: First event is deleted from the list. Details of the deleted event shown in the status message.
 
-    1. Test case: `edelete 1`
-       Expected: The first event in the displayed event list is deleted successfully. Detail is shown in the status message.
+   1. Test case: `edelete 0`<br>
+     Expected: No event is deleted. Error details shown in the status message.
 
-    1. Test case: `edelete`
-       Expected: No change to the event list panel. Invalid command format error is shown in the status message.<br>
-
-    1. Test case: `edele`
-       Expected: Similar to previous test case.<br>
+   1. Other incorrect delete commands to try: `edelete`, `edelete x`, `...` (where x is larger than the list size or a non-integer)<br>
+     Expected: Similar to previous test case.
 
 ### Editing an event
-1. Editing the detail of an event.
-    1. Prerequisites: List all events using the `elist` command. Multiple events in the list. If the list is empty, 
-       create one with the following example, 
-       `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy m/100 packets b/100.00 vs/50`
+1. Prerequisites: List all events using the `elist` command. Multiple events in the list. 
 
-    1. Test case: `eedit 1 l/NUS`
-       Expected: The location of the first event in the displayed event list is edited from to NUS successfully. 
-       Detail is shown in the status message.
+   1. Test case: `eedit 1 l/NUS`
+      Expected: The location of the first event in the displayed event list is edited to NUS successfully. 
+                Detail is shown in the status message.
 
-    1. Test case: `eedit 1 sd/22/10/2023 1900`
-       Expected: The start date of the first event in the displayed event list is edited to 22/10/2023 1900 successfully.
-       Detail is shown in the status message.
+   1. Test case: `eedit 0 l/NUS`
+      Expected: No event is edited. Error details shown in the status message.
 
-    1. Test case: `eedit 1 r/`
-       Expected: The roles of the first event in the displayed event list is replaced to empty successfully.
-       Detail is shown in the status message.
+   1. Other incorrect edit commands to try: `eedit`, `eedit x l/NUS`, `...` (where x is larger than the list size or a non-integer)<br>
+       Expected: Similar to previous test case.
 
-    1. Test case: `eedit 1 l/`
-       Expected: Similar to previous test case.<br>
+   1. Test case: `eedit 1 sd/22/10/2023 1900`
+      Expected: The start date of the first event in the displayed event list is edited to 22/10/2023 1900 successfully
+                if the end date is not earlier than the edited start date. Detail is shown in the status message.
 
-   1. Test case: `edelete`
-      Expected: No change to the event list panel. Invalid command format error is shown in the status message.<br>
-   
-   1. Test case: `eeit`
+   1. Test case: `eedit 1 r/`
+      Expected: The roles of the first event in the displayed event list is replaced to empty successfully.
+      Detail is shown in the status message.
+
+   1. Test case: `eedit 1 l/`
       Expected: Similar to previous test case.<br>
 
 1. _{ more test cases …​ }_
@@ -1036,33 +1030,33 @@ testers are expected to do more *exploratory* testing.
 
 1. Prerequisites: List all volunteers using the `vlist` command. Multiple volunteers in the list.
 
-    1. Test case: `vfind n/George s/chef`<br>
-       Expected: Volunteer list is updated to show `George`, who is a `chef`. Number of matching volunteers shown in the status message.
+   1. Test case: `vfind n/George s/chef`<br>
+      Expected: Volunteer list is updated to show `George`, who is a `chef`. Number of matching volunteers shown in the status message.
    
-    1. Test case: `vfind s/no one has this skill`<br>
-       Expected: Volunteer list displays nothing. `0 volunteers listed!` shown in the status message.
+   1. Test case: `vfind s/no one has this skill`<br>
+      Expected: Volunteer list displays nothing. `0 volunteers listed!` shown in the status message.
 
-    1. Test case: `vfind n/!@#`<br>
-       Expected: Volunteer list displays nothing. `Names should only contain alphanumeric characters and spaces, and it should not be blank` shown in the status message.
+   1. Test case: `vfind n/!@#`<br>
+      Expected: Volunteer list displays nothing. `Names should only contain alphanumeric characters and spaces, and it should not be blank` shown in the status message.
 
-    1. Other incorrect delete commands to try: `vfind`, `vfind randomwordshere n/ben`, `...` <br>
-       Expected: `Invalid command format!` error message shown in the status message. Instructions on the correct format are shown as well.
+   1. Other incorrect delete commands to try: `vfind`, `vfind randomwordshere n/ben`, `...` <br>
+      Expected: `Invalid command format!` error message shown in the status message. Instructions on the correct format are shown as well.
 
 ### Finding an event
 
 1. Prerequisites: List all events using the `elist` command. Multiple events in the list.
 
-    1. Test case: `efind n/fixing computers`<br>
-       Expected: Event list is updated to show `fixing computers` event. Number of matching events shown in the status message.
+   1. Test case: `efind n/fixing computers`<br>
+      Expected: Event list is updated to show `fixing computers` event. Number of matching events shown in the status message.
 
-    1. Test case: `efind n/this event does not exist`<br>
-       Expected: Event list displays nothing. `0 events listed!` shown in the status message.
+   1. Test case: `efind n/this event does not exist`<br>
+      Expected: Event list displays nothing. `0 events listed!` shown in the status message.
 
-    1. Test case: `efind n/!@#`<br>
-       Expected: Event list displays nothing. `Names should only contain alphanumeric characters and spaces, and it should not be blank` shown in the status message.
+   1. Test case: `efind n/!@#`<br>
+      Expected: Event list displays nothing. `Names should only contain alphanumeric characters and spaces, and it should not be blank` shown in the status message.
 
-    1. Other incorrect delete commands to try: `efind`, `efind randomwordshere n/baking cookies`, `...` <br>
-       Expected: `Invalid command format!` error message shown in the status message. Instructions on the correct format are shown as well.
+   1. Other incorrect delete commands to try: `efind`, `efind randomwordshere n/baking cookies`, `...` <br>
+      Expected: `Invalid command format!` error message shown in the status message. Instructions on the correct format are shown as well.
    
 ### Undoing/redoing a command
 
@@ -1092,7 +1086,6 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `redo`<br>
       Expected: Nothing happens. `Unable to redo` shown in the status message.
 
-   
 ### Saving data
 
 1. Dealing with missing/corrupted data files
