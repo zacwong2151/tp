@@ -110,9 +110,13 @@ Parameters:
 </box>
 
 Restrictions:
-* The maximum number of characters of a volunteer name is 30.
+* The name is case-sensitive (`John` and `john` are considered different volunteers)
 * The email must be in a valid format.
-* The phone number must be a valid 8-digit Singapore phone number.
+* The phone number must be a 8-digit number.
+* The skills are case-sensitive (`chef` and `Chef` are considered different skills).
+* Duplicate volunteers cannot be added to the volunteer list (case-sensitive).
+  * A volunteer is considered duplicate if: his name already exists in the volunteer list.
+  * Volunteers with the same phone number or email address are not considered as duplicates.
 
 Examples:
 * `vcreate n/John p/91234567 e/john123@gmail.com` 
@@ -128,7 +132,7 @@ Format: `vlist`
 
 ### Locating volunteers by name and skill: `vfind`
 
-Finds volunteers whose names contain any of the given keywords.
+Finds volunteers whose name or skills contain any of the given keywords.
 
 Format: `vfind [n/NAME]…​ [s/SKILL]…​`
 
@@ -144,24 +148,26 @@ Parameters:
 Restrictions:
 * At least one of the optional fields must be provided.
 * The search is case-insensitive. e.g `n/hans` will match `Hans`.
-* The order of the keywords does not matter. e.g. `s/chef n/Hans` and `n/Hans s/chef` are valid inputs.
 * Allows partial matching of keywords e.g. `n/Han` will match `Hans`.
-* Volunteers matching **at least one** NAME keyword will be returned (i.e. `OR` search).
-  e.g. `n/Hans n/Bo` will return `Hans Gruber`, `Bo Yang`.
-* Volunteers matching **both** SKILL keywords will be returned (i.e. `AND` search).
-  e.g. `s/chef s/boxer` will return volunteers that have skills `chef` and `boxer`.
+* Both the volunteer name and corresponding skills can be searched.
+* The order of the keywords does not matter. e.g. `s/chef n/Hans` and `n/Hans s/chef` are valid inputs.
 
 Examples:
-* `vfind n/John` 
-  * returns `john` and `John Doe`
-* `vfind n/alex n/david` 
-  * returns `Alex Yeoh`, `David Li`<br>
+* `vfind n/David` (user searches for **one** name)
+  * returns `David Li` and `David Tan`. (volunteers who have that NAME keyword will be returned)
+* `vfind n/alex n/roy` (user searches for **more than one** names)
+  * returns `Alexis Yeoh` and `Roy Balakrishnan`. (volunteers who have **at least one** of the NAME keywords will be returned, i.e. `OR` search)
+* `vfind s/chef` (user searches for **one** skill)
+  * returns `George` and `Ben`. (volunteers who have that SKILL keyword will be returned)
+  
+![result for 'find alex david'](images/findChefs.png)
+* `vfind s/intelligent s/smart` (user searches for **more than one** skills)
+  * returns `Bernice Yu`. (volunteers who have **both** SKILL keywords will be returned, i.e. `AND` search)
+* `vfind n/charlotte s/mechanic` (user searches for **one** name and **one** skill)
+  * returns `Charlotte Oliveiro`. (volunteers who have **both** NAME and SKILL keyword will be returned, i.e. `AND` search)
 
 
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
 
-
-* `vfind s/chef` returns volunteers who are chefs
 
 ### Editing a volunteer profile: `vedit`
 
@@ -217,30 +223,44 @@ Examples:
 
 Volunteer coordinators can create new events.
 
-Format: `ecreate n/EVENT_NAME r/ROLES_NEEDED… sd/START_DATETIME [ed/END_DATETIME] l/LOCATION dsc/DESCRIPTION [m/MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET]`
+Format: `ecreate n/EVENT_NAME r/ROLES_NEEDED… sd/START_DATETIME [ed/END_DATETIME] l/LOCATION dsc/DESCRIPTION [m/MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET] [vs/MAX_VOLUNTEER_COUNT]`
 
 Parameters:
 * n/ - Event name
-* r/ - Roles needed for the event and its quantity
+* r/ - Roles needed for the event and its quantity, in the format `[required quantity] [role name]` (e.g. `30 farmer`)
 * sd/ - Start date and time of the event
 * ed/ - End date and time of the event
 * l/ - Location of the event
 * dsc/ - Description of the event
-* m/ - Materials needed for the event and its quantity
+* m/ - Materials needed for the event and its quantity, in the format `[required quantity] [material name]` (e.g. `30 potatoes`)
 * b/ - Budget for the event
+* vs/ - Maximum number of volunteers allowed in the event
 
 Restrictions:
 * All parameters must be separated by a single space.
 * All arguments cannot be blank.
 * The date and time formats must be exactly `DD/MM/YYYY TTTT`.
 * If the end date and time is specified, it must be the _same time_ or _after_ the start date and time of the event.
-* The material argument must be an integer, followed by a space, and then the name of material required.
-* The role argument must be an integer, followed by a space, and then the name of role required.
+* The material argument must be a non-negative integer, followed by a space, and then the name of the material required.
+  * **Example of valid materials:** `m/30 potato`, `m/0 apples`
+* The role argument must be a non-negative integer, followed by a space, and then the name of the role required.
+  * **Example of valid roles:** `r/20 teachers`, `r/0 farmer`
+* If there are any duplicated materials or roles, only the first duplicated material or role will show up.
+  * Duplicated materials are materials with the same material name and quantity. As a result, `m/23 potatoes` and `m/50 potatoes` are not duplicates.
+  * Duplicated roles are materials with the same role name and quantity. For example, `r/23 farmers` and `r/50 farmers` are not duplicates.
+  * Take note that duplicated materials and roles are case-sensitive: `m/23 Potatoes` and `m/23 potatoes` are not duplicates.
+  * To remove duplicates, you can use the [`eedit` command](#edit-the-details-of-an-event-eedit) and re-build the entire role or material list. Examples: `eedit EVENT_INDEX r/23 farmers r/50 cleaners` or `eedit EVENT_INDEX m/23 potatoes m/3 fields`.
 * The budget argument must be a number in 2 decimal places.
+* The maximum number of volunteers argument must be a non-negative integer.
 
 <box type="tip" seamless>
 
-**Tip:** If the end date and time is not specified, iVolunteer will automatically set the end date and time to **exactly 3 hours** after the start date and time.
+**Tips:** 
+- If the end date and time is not specified, iVolunteer will automatically set the end date and time to **exactly 3 hours** after the start date and time.
+- If the maximum number of volunteers argument is not specified, iVolunteer will not set a limit to the number of volunteers within the event.
+  - Alternatively, if the maximum number of volunteers is set to 0 (e.g. `ecreate ... vs/0`), iVolunteer will remove a limit to the number of volunteer within the event.
+- Roles needed can be fulfilled by adding the volunteer of that specific skill into the event. Refer to the [FAQ](#faq) for more information.
+- Materials needed can be fulfilled using the `eaddm` command. Refer to the [FAQ](#faq) for more information.
 </box>
 
 Examples:
@@ -258,6 +278,25 @@ Format: `elist`
 
 **Tip:** Events are sorted automatically in chronological order!
 </box>
+
+### Locating events by name: `efind`
+
+Finds events whose name contain any of the given keywords.
+
+Format: `efind n/NAME…​`
+
+* At least one NAME keyword must be provided.
+* The search is case-insensitive. e.g `n/fixING comPUTErs` will match `fixing computers`.
+* Allows partial matching of keywords e.g. `n/fix` will match `fixing computers`.
+* Events matching **at least one** NAME keyword will be returned (i.e. `OR` search).
+
+Examples:
+* `efind n/food` returns `food donaton` and `cooking food`
+* `efind n/litter n/teaching` returns `picking litter` and `teaching kids`<br>
+
+
+![result for 'find picking litter and teaching kids event'](images/findEventsResult.png)
+
 
 ### Reading an individual event: `eshow`
 Volunteer coordinators can read up more about an individual event, to familiarize themselves with its requirements while planning for it.
@@ -299,6 +338,50 @@ Restrictions:
 Examples:
 * `elist` followed by `edelete 2` deletes the 2nd event in the event list.
 * `efind n/Beach cleaning` followed by `edelete 1` deletes the 1st event in the results of the `efind` command
+* `efind Beach cleaning` followed by `edelete 1` deletes the 1st event in the results of the `find` command (tentative feature)
+
+### Edit the details of an event: `eedit`
+
+Volunteer coordinators can edit the details of the events.
+
+Format: `eedit EVENT_INDEX [r/NUMBER_OF_ROLES ROLES_NEEDED]... [sd/START_DATETIME] [ed/END_DATETIME] [l/LOCATION] [dsc/DESCRIPTION] [m/NUMBER_OF_MATERIALS_AND_LOGISTICS MATERIALS_AND_LOGISTICS_NEEDED]... [b/BUDGET] [vs/MAX_VOLUNTEER_COUNT]`
+
+Parameters:
+* r/ - Roles needed for the event and its quantity
+* sd/ - Start date and time of the event
+* ed/ - End date and time of the event
+* l/ - Location of the event
+* dsc/ - Description of the event
+* m/ - Materials needed for the event and its quantity
+* b/ - Budget for the event
+* vs/ - Maximum number of volunteers in the event
+
+Restrictions:
+* The event index must be valid, i.e. If the list of events displayed is 10 events long, the acceptable values will be from 1-10.
+* All parameters must be separated by a single space.
+* The event name and assigned volunteers cannot be edited.
+* The date and time formats must be exactly `DD/MM/YYYY TTTT`.
+* If the end date and time is specified, it must be the _same time_ or _after_ the start date and time of the event.
+* If the start date and time is specified, it must be the _same time_ or _before_ the end date and time of the event.
+* The material argument must be a positive integer, followed by a space, and then the name of material required.
+* If there is nothing follow by the role prefix in the input, the roles of the event will be overwritten and reset to empty.
+* The role argument must be a positive integer, followed by a space, and then the name of role required.
+* If there is nothing follow by the material prefix in the input, the materials of the event will be overwritten and reset to empty.
+* The budget argument must be a number in 2 decimal places.
+
+**Tips:** 
+* At least 1 optional fields must be provided.
+* The assigned volunteers cannot be edited with eedit, to do so, refer to [eaddv](#adding-a-volunteer-into-an-event-eaddv) and [eremovev](#removing-a-volunteer-from-an-event-eremovev) for more detail information.
+
+Examples:
+* `eedit 1 n/clean beach r/10 cleaner sd/30/11/2023 1200 l/east coast park dsc/help clean east coast park m/ `
+    * Edits the event to name `clean beach`, roles needed `10 cleaner`, event date from `30th November 2023, 12pm`, location `east coast park`, description `help clean east coast park` and materials needed to empty.
+
+### Clearing all event entries: `eclear`
+
+Clears all entries from the event list.
+
+Format: `eclear`
 
 ### Adding and tracking quantity of materials into an event: `eaddm`
 
@@ -318,7 +401,7 @@ Restrictions:
 
 Examples:
 * `ecreate n/clean beach m/10 trash bags ...` (refer to [ecreate](#creating-an-event-ecreate) above for full command) creates an 
-  event `clean beach` that requires `20 trash bags`. By performing `efind clean beach`, then `eaddm eid/1 10 trash bags`,
+  event `clean beach` that requires `20 trash bags`. By performing `efind n/clean beach`, then `eaddm eid/1 m/10 trash bags`,
   the event `clean beach` will now contain `10 / 20 trash bags`.
 
 ### Adding a volunteer into an event: `eaddv`
@@ -335,6 +418,10 @@ Restrictions:
 * The event index must be positive and must correspond to exactly one of the index of the events currently listed.
 * The volunteer index must be positive and must correspond to exactly one of the index of the volunteers currently listed.
 * The volunteer must not already be added to the event.
+* The number of volunteers within the event should not be equal to the maximum number of volunteers allowed for the event, since adding a new volunteer
+  at that point would result in the number of volunteers exceeding the maximum allowed. 
+  * **Tip:** To change the limit on the maximum number of volunteers for a certain event, use the
+    [`eedit` command](#edit-the-details-of-an-event-eedit).
 
 Examples:
 * `eaddv vid/1 eid/1` 
@@ -387,6 +474,39 @@ Examples:
 * `eremovev vid/1 eid/1` 
   * removes the volunteer with index 1 from the event with index 1.
 
+### Undo a Command: `undo`
+
+Undoes an undo-able command.
+
+Format: `undo`
+
+Restrictions:
+* Undo-able commands include:
+  * vcreate
+  * vdelete
+  * vedit
+  * vclear
+  * ecreate
+  * edelete
+  * eedit
+  * eaddv
+  * eremovev
+  * eaddm
+* Only commands that changed the current history stack can be undone (iVolunteer does not remember commands that were executed in the previous run of the app).
+
+### Redo a Command: `redo`
+
+Redoes the undo command. 
+
+Format: `redo`
+
+Restrictions:
+* Only can be executed after an undo command is executed.
+* This command can be thought of as an 'undo' command that can only undo a `undo` command.
+
+
+    
+
 ### Exiting the program : `exit`
 
 Exits the program.
@@ -395,11 +515,11 @@ Format: `exit`
 
 ### Saving the data
 
-iVolunteer data are saved in the hard disk automatically after any command executed. There is no need to save manually.
+iVolunteer data is automatically saved in the hard disk after any command is executed. There is no need to manually save your data.
 
 ### Editing the data file
 
-iVolunteer data are saved automatically as two JSON files, `[JAR file location]/data/volunteerStorage.json` (volunteer storage) and `[JAR file location]/data/eventStorage.json` (event storage and _event-volunteer interactions_). Advanced users are welcome to update data directly by editing both data files.
+iVolunteer data is saved automatically as two JSON files, `[JAR file location]/data/volunteerStorage.json` (volunteer storage) and `[JAR file location]/data/eventStorage.json` (event storage and _event-volunteer interactions_). Advanced users are welcome to update data directly by editing both data files.
 
 <box type="warning" seamless>
 
@@ -425,6 +545,21 @@ _Details coming soon ..._
 **A**: On your Mac, do one of the following:
 1. Click the Launchpad icon in the Dock, type Terminal in the search field, then click Terminal.
 2. In the Finder, open the `/Applications/Utilities` folder, then double-click Terminal.
+
+**Q**: How do I fill up the *role* information within the UI?<br><br>
+![Adding role in UI](images/user-guide/add-to-roles.png)<br><br>
+**A**: To add a **volunteer** with a certain role, you can use the [`eaddv` command](#adding-a-volunteer-into-an-event-eaddv) as follows:
+1. Ensure that the volunteer's skill matches the role of the event you want to fill up (both role and skills are case-sensitive).
+   * In the example image above, volunteers with skills `chef` or `cooking` can be added. If not, you can use the [`eedit` command](#edit-the-details-of-an-event-eedit) (e.g. `eedit VOLUNTEER_INDEX s/cooking s/other_skill`) to change the volunteer's skills to match the role.
+2. Use the `eaddv eid/EVENT_INDEX vid/VOLUNTEER_INDEX` command to add the volunteer to the event. For example, if the volunteer with skill `cooking` you want to add is in index `3` of the displayed volunteer list, and the event with role `cooking` required is in index `4` of the displayed event list, then you can use `eaddv vid/3 eid/4` to add that volunteer into the event.
+3. You should notice that the `cooking` role would be **incremented by 1** in the UI. In the example above, since `1 / 2 cooking` skills has been filled up, the addition of the new volunteer will cause the role `cooking` to be updated to `2 / 2 cooking`. The role will also turn green since there are already 2 volunteers with role `cooking`.
+
+**Q**: How do I fill up the *material* information within the UI?<br><br>
+![Adding material in UI](images/user-guide/add-to-materials.png)<br><br>
+**A**: To add **materials** to the event, you can use the [`eaddm` command](#adding-and-tracking-quantity-of-materials-into-an-event-eaddm) as follows:
+1. Find the event to add materials in within the displayed volunteer list. You can use the `elist` command to list all events.
+2. Take note of the event index and add the appropriate amount of materials to the event. For example, if the event is in index `4` within the displayed event list and since there are `0 / 50 cookwares` in this event, you can run the command `eaddm eid/4 m/50 cookwares` to update the current amount of materials within the event.
+3. You should notice that the `cookwares` material would be **incremented by the amount specified** in the `eaddm` command within the UI. In the example above, the `eaddm` command would update the material to `50 / 50 cookwares`. The material would also turn green in the UI to indicate that you have fulfilled the material requirement for the event.
 
 --------------------------------------------------------------------------------------------------------------------
 
