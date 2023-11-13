@@ -334,8 +334,14 @@ the application will find for the event in `EventStorage` in the `ModelManager` 
 will go through the volunteers in `VolunteerStorage` in `ModelManager` as well to remove the volunteers that were 
 participating in the event.
 
+<puml src="diagrams/EventDeleteSequenceDiagram.puml" alt="EventDeleteSequenceDiagram" />
+
 Step 3. When the `EventDeleteCommand` finishes executing, the updated `EventStorage` is written into `eventStorage.json` 
 file.
+
+The following the activity diagram for this feature.
+
+<puml src="diagrams/EventDeleteActivityDiagram.puml" alt="EventActivitySequenceDiagram" />
 
 #### Design considerations:
 
@@ -371,8 +377,12 @@ a `EventEditCommand` object. During the execution of `EventEditCommand`, the app
 in `EventStorage` in the `ModelManager` and replace it with a new `Event` with the details from `EditEventDescriptor`.
 If the field of the event is not updated, the previous detail will be used.
 
+<puml src="diagrams/EventEditSequenceDiagram.puml" alt="EventEditSequenceDiagram" />
+
 Step 3. When the `EventEditCommand` finishes executing, the updated `EventStorage` is written into `eventStorage.json`
 file.
+
+<puml src="diagrams/EventStorageClassDiagram.puml" alt="EventStorageClassDiagram" />
 
 #### Design considerations:
 
