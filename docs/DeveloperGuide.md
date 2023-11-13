@@ -887,9 +887,9 @@ For all the use cases below, the **System** is `iVolunteer` and the **Actor** is
 
       Use case resumes from step 2.
 
-* 2b. User did not input an index after the command.
+* 2b. User did not input an event index after the command.
 
-    * 2b1. System prompts user to input an index.
+    * 2b1. System prompts user to input an event index.
 
       Use case resumes from step 2.
 
@@ -1326,7 +1326,7 @@ testers are expected to do more *exploratory* testing.
       Expected: No change to the event list panel. Error message for the invalid field is shown in the status message<br>
       The outcome is the same when all compulsory parameters are present and any argument is empty or invalid.
 
-   1. Test case: `ecreate n/Food distrubting r/10 chef r/10 packer sd/23/10/2023 1900 l/hougang dsc/Packing food for the needy`, followed by
+   1. Test case: `ecreate n/Food distributing r/10 chef r/10 packer sd/23/10/2023 1900 l/hougang dsc/Packing food for the needy`, followed by
                  `ecreate n/Food distributing r/10 chef r/10 packer sd/23/10/2023 1900 l/hougang dsc/Packing food for the needy`<br>
       Expected: No change to the event list panel. Error message for duplicate events is shown in the status message<br>
       The outcome is the same when all compulsory parameters are present, all arguments are valid, and an event with the same name already exists in the event list.
@@ -1353,11 +1353,10 @@ testers are expected to do more *exploratory* testing.
       Expected: No change to the event list or volunteer list panels. Error message for duplicate volunteer is shown in the status message<br>
       The outcome is the same when any volunteer is added to an event they are already assigned to.
 
-   1. Test case: `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy` and
+   1. Test case: `ecreate n/Dish washing r/10 washer r/10 cleaner sd/23/10/2023 1900 ed/23/10/2023 2200 l/admiralty dsc/Washing food for people` and
                  `ecreate n/Clean park r/20 cleaner sd/23/10/2023 2000 ed/23/10/2023 2300 l/serangoon dsc/Clean the local park`, followed by
-                 `eaddv eid/1 vid/1` and `eaddv eid/2 vid/1`<br>
-      Additional Prerequisites: For this test case, ensure that the event list panel and volunteer list panel are empty before executing the command.<br>
-      Note that the two events created are clashing with each other.<br>
+                 `eaddv eid/X vid/1` and `eaddv eid/X vid/1` (where `X` is the respective indexes of the events)<br>
+      **Note:** the two events created have clashing dates.<br>
       Expected: No change to the event list or volunteer list panels. Error message for clashing events is shown in the status message<br>
       The outcome is the same when any volunteer is added to an event which clashes with at least one of their pre-existing events.
 
@@ -1392,9 +1391,8 @@ testers are expected to do more *exploratory* testing.
        Expected: No change to the event list or volunteer list panels. Invalid command format error is shown in the status message.<br>
        The outcome is the same when any of the parameters are missing from the input command, or when their arguments are empty or invalid.
 
-    1. Test case: `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy` and
-                  `vcreate n/tom p/12345678 e/tom@gmail.com`, followed by `eremovev eid/1 vid/1`<br>
-       Additional Prerequisites: For this test case, ensure that the event list panel and volunteer list panel are empty before executing the commands.
+    1. Test case: `ecreate n/Fund Raising r/10 money collector sd/1/5/2023 1900 ed/3/5/2023 2200 l/Bedok dsc/Raising funds for the needy` and
+                  `vcreate n/Tom p/12345678 e/tom@gmail.com`, followed by `eremovev eid/X vid/Y` (where `X` and `Y` are the indexes for the `Fund Raising` event and the volunteer `Tom` respectively <br>
        Expected: No change to the event list or volunteer list panels. Error message for invalid volunteer is shown in the status message.<br>
        The outcome is the same when any volunteer is removed from an event they are not currently assigned to.
 
@@ -1413,7 +1411,7 @@ testers are expected to do more *exploratory* testing.
 
 1. Deleting a volunteer while all volunteers are being shown
 
-   1. Prerequisites: List all volunteers using the `vlist` command. Multiple volunteers in the list.
+   1. Prerequisites: List all volunteers using the `vlist` command. At least one volunteer in the list.
 
    1. Test case: `vdelete 1`<br>
       Expected: First volunteer is deleted from the list. Details of the deleted volunteer shown in the result display.
@@ -1440,7 +1438,7 @@ testers are expected to do more *exploratory* testing.
 
    2. Test case: `elist` <br> Expected: Event list panel displays all events. Success message is shown in the result display.
 
-   3. Test case: `elist abc` <br> Expected: Similar to previous.
+   3. Test case: `elist randomwordshere` <br> Expected: Similar to previous.
 
 ### Reading an individual event feature
 
@@ -1493,7 +1491,7 @@ testers are expected to do more *exploratory* testing.
     1. Test case: `vfind n/!@#`<br>
        Expected: Volunteer list displays nothing. `Names should only contain alphanumeric characters and spaces, and it should not be blank` shown in the status message.
 
-    1. Other incorrect `vfind` commands to try: `vfind`, `vfind randomwordshere n/ben`, `...` <br>
+    1. Other incorrect `vfind` commands to try: `vfind`, `vfind randomwordshere n/ben`<br>
        Expected: `Invalid command format!` error message shown in the status message. Instructions on the correct format are shown as well.
 
 ### Finding an event
@@ -1509,7 +1507,7 @@ testers are expected to do more *exploratory* testing.
     1. Test case: `efind n/!@#`<br>
        Expected: Event list displays nothing. `Names should only contain alphanumeric characters and spaces, and it should not be blank` shown in the status message.
 
-    1. Other incorrect `efind` commands to try: `efind`, `efind randomwordshere n/baking cookies`, `...` <br>
+    1. Other incorrect `efind` commands to try: `efind`, `efind randomwordshere n/baking cookies`<br>
        Expected: `Invalid command format!` error message shown in the status message. Instructions on the correct format are shown as well.
    
 ### Undoing/redoing a command
@@ -1520,7 +1518,7 @@ testers are expected to do more *exploratory* testing.
 
 </box>
 
-1. Prerequisites: List all events and volunteers. Multiple events and volunteers in the list.
+1. Prerequisites: List all events and volunteers. At least one volunteer in the list.
 
    1. Test case: `vdelete 1`<br>
       Expected: First volunteer is deleted from the list. Details of the deleted volunteer shown in the status message.
