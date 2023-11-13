@@ -110,9 +110,13 @@ Parameters:
 </box>
 
 Restrictions:
-* The maximum number of characters of a volunteer name is 30.
+* The name is case-sensitive (`John` and `john` are considered different volunteers)
 * The email must be in a valid format.
-* The phone number must be a valid 8-digit Singapore phone number.
+* The phone number must be a 8-digit number.
+* The skills are case-sensitive (`chef` and `Chef` are considered different skills).
+* Duplicate volunteers cannot be added to the volunteer list (case-sensitive).
+  * A volunteer is considered duplicate if: his name already exists in the volunteer list.
+  * Volunteers with the same phone number or email address are not considered as duplicates.
 
 Examples:
 * `vcreate n/John p/91234567 e/john123@gmail.com` 
@@ -128,7 +132,7 @@ Format: `vlist`
 
 ### Locating volunteers by name and skill: `vfind`
 
-Finds volunteers whose names contain any of the given keywords.
+Finds volunteers whose name or skills contain any of the given keywords.
 
 Format: `vfind [n/NAME]…​ [s/SKILL]…​`
 
@@ -144,24 +148,26 @@ Parameters:
 Restrictions:
 * At least one of the optional fields must be provided.
 * The search is case-insensitive. e.g `n/hans` will match `Hans`.
-* The order of the keywords does not matter. e.g. `s/chef n/Hans` and `n/Hans s/chef` are valid inputs.
 * Allows partial matching of keywords e.g. `n/Han` will match `Hans`.
-* Volunteers matching **at least one** NAME keyword will be returned (i.e. `OR` search).
-  e.g. `n/Hans n/Bo` will return `Hans Gruber`, `Bo Yang`.
-* Volunteers matching **both** SKILL keywords will be returned (i.e. `AND` search).
-  e.g. `s/chef s/boxer` will return volunteers that have skills `chef` and `boxer`.
+* Both the volunteer name and corresponding skills can be searched.
+* The order of the keywords does not matter. e.g. `s/chef n/Hans` and `n/Hans s/chef` are valid inputs.
 
 Examples:
-* `vfind n/John` 
-  * returns `john` and `John Doe`
-* `vfind n/alex n/david` 
-  * returns `Alex Yeoh`, `David Li`<br>
+* `vfind n/David` (user searches for **one** name)
+  * returns `David Li` and `David Tan`. (volunteers who have that NAME keyword will be returned)
+* `vfind n/alex n/roy` (user searches for **more than one** names)
+  * returns `Alexis Yeoh` and `Roy Balakrishnan`. (volunteers who have **at least one** of the NAME keywords will be returned, i.e. `OR` search)
+* `vfind s/chef` (user searches for **one** skill)
+  * returns `George` and `Ben`. (volunteers who have that SKILL keyword will be returned)
+  
+![result for 'find alex david'](images/findChefs.png)
+* `vfind s/intelligent s/smart` (user searches for **more than one** skills)
+  * returns `Bernice Yu`. (volunteers who have **both** SKILL keywords will be returned, i.e. `AND` search)
+* `vfind n/charlotte s/mechanic` (user searches for **one** name and **one** skill)
+  * returns `Charlotte Oliveiro`. (volunteers who have **both** NAME and SKILL keyword will be returned, i.e. `AND` search)
 
 
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
 
-
-* `vfind s/chef` returns volunteers who are chefs
 
 ### Editing a volunteer profile: `vedit`
 
