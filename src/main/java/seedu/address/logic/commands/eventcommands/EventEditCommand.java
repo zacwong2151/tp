@@ -139,51 +139,6 @@ public class EventEditCommand extends Command {
                 updatedDescription, updatedMaterial, updatedBudget, assignedVolunteers, updatedMaxVolunteerSize);
     }
 
-    /**
-     * Updates the event's role quantities based on the volunteers currently in the model's volunteer list.
-     *
-     * @param event The event to get the set of roles from.
-     * @param model The model to get the volunteers in the volunteer list.
-     * @return The event with current role quantities updated.
-     */
-    private static Event updateEventRoleQuantities(Event event, Model model) {
-        Set<Role> roles = event.getRoles();
-        // mutable version of roles to be updated
-        Set<Role> updatedRoles = new HashSet<>();
-        Set<Name> volunteerNames = event.getVolunteerNames();
-        // filteredVolunteerList is the list of volunteers in event
-        List<Volunteer> filteredVolunteerList = model
-                .getVolunteerStorage()
-                .getVolunteerList()
-                .stream()
-                .filter(volunteer -> volunteerNames.contains(volunteer.getName()))
-                .collect(Collectors.toList());
-        for (Role role : roles) {
-            Role updatedRole = role;
-            for (Volunteer volunteer : filteredVolunteerList) {
-                for (Skill skill : volunteer.getSkills()) {
-                    if (role.roleName.equals(skill.skillName)) {
-                        updatedRole = updatedRole.addRoleManpower();
-                    }
-                }
-            }
-            updatedRoles.add(updatedRole);
-        }
-        return new Event(
-                event.getEventName(),
-                updatedRoles,
-                event.getStartDate(),
-                event.getEndDate(),
-                event.getLocation(),
-                event.getDescription(),
-                event.getMaterials(),
-                event.getBudget(),
-                event.getAssignedVolunteers(),
-                event.getMaxVolunteerSize());
-    }
-
-=======
->>>>>>> master
     @Override
     public boolean equals(Object other) {
         if (other == this) {
