@@ -139,7 +139,6 @@ public class EventEditCommand extends Command {
                 updatedDescription, updatedMaterial, updatedBudget, assignedVolunteers, updatedMaxVolunteerSize);
     }
 
-<<<<<<< HEAD
     /**
      * Updates the event's role quantities based on the volunteers currently in the model's volunteer list.
      *
