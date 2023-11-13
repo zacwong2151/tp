@@ -107,6 +107,8 @@ public class MainWindow extends UiPart<Stage> {
          */
         getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (event.getTarget() instanceof TextInputControl && keyCombination.match(event)) {
+                logger.info(keyCombination.getDisplayText()
+                        + " key pressed triggers " + menuItem.getId());
                 menuItem.getOnAction().handle(new ActionEvent());
                 event.consume();
             }
@@ -152,8 +154,10 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     public void handleHelp() {
         if (!helpWindow.isShowing()) {
+            logger.fine("Showing help window");
             helpWindow.show();
         } else {
+            logger.fine("Help window is already opened, focusing on help window");
             helpWindow.focus();
         }
     }
@@ -164,9 +168,11 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     public void handleShowEvent() {
         if (!eventShowWindow.isShowing()) {
+            logger.fine("Showing event show window");
             eventShowWindow.loadContents();
             eventShowWindow.show();
         } else {
+            logger.fine("Event show window is already opened, focusing on event show window");
             eventShowWindow.loadContents();
             eventShowWindow.focus();
         }
@@ -187,10 +193,6 @@ public class MainWindow extends UiPart<Stage> {
         helpWindow.hide();
         eventShowWindow.hide();
         primaryStage.hide();
-    }
-
-    public VolunteerListPanel getPersonListPanel() {
-        return volunteerListPanel;
     }
 
     /**
