@@ -15,7 +15,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
@@ -35,9 +34,7 @@ import seedu.address.model.event.Location;
 import seedu.address.model.event.Material;
 import seedu.address.model.event.MaxVolunteerSize;
 import seedu.address.model.event.Role;
-import seedu.address.model.skill.Skill;
 import seedu.address.model.volunteer.Name;
-import seedu.address.model.volunteer.Volunteer;
 
 /**
  * Edits the details of an existing event in the event list.
@@ -92,7 +89,11 @@ public class EventEditCommand extends Command {
         }
 
         Event eventToEdit = lastShownList.get(index.getZeroBased());
-        Event editedEvent = updateEventRoleQuantities(createEditedEvent(eventToEdit, editEventDescriptor), model);
+        Event editedEvent = model.updateEventRoleQuantities(createEditedEvent(eventToEdit, editEventDescriptor));
+
+        if (!eventToEdit.isSameEvent(editedEvent) && model.hasEvent(editedEvent)) {
+            throw new CommandException(MESSAGE_DUPLICATE_EVENT);
+        }
 
         model.setEvent(eventToEdit, editedEvent);
         model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
@@ -138,6 +139,7 @@ public class EventEditCommand extends Command {
                 updatedDescription, updatedMaterial, updatedBudget, assignedVolunteers, updatedMaxVolunteerSize);
     }
 
+<<<<<<< HEAD
     /**
      * Updates the event's role quantities based on the volunteers currently in the model's volunteer list.
      *
@@ -181,6 +183,8 @@ public class EventEditCommand extends Command {
                 event.getMaxVolunteerSize());
     }
 
+=======
+>>>>>>> master
     @Override
     public boolean equals(Object other) {
         if (other == this) {
