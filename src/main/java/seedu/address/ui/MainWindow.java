@@ -169,9 +169,11 @@ public class MainWindow extends UiPart<Stage> {
     public void handleShowEvent() {
         if (!eventShowWindow.isShowing()) {
             logger.fine("Showing event show window");
+            eventShowWindow.loadContents();
             eventShowWindow.show();
         } else {
             logger.fine("Event show window is already opened, focusing on event show window");
+            eventShowWindow.loadContents();
             eventShowWindow.focus();
         }
     }
@@ -189,6 +191,7 @@ public class MainWindow extends UiPart<Stage> {
                 (int) primaryStage.getX(), (int) primaryStage.getY());
         logic.setGuiSettings(guiSettings);
         helpWindow.hide();
+        eventShowWindow.hide();
         primaryStage.hide();
     }
 
