@@ -1458,3 +1458,6 @@ This way, users can correct their inputs all at once, reducing their frustration
 
 ### Improve name format to support special characters
 The current implementation of the name format feature only supports alphanumeric characters and spaces like `Alexis Yeoh` or `Tan Ah Meng 8`. However, this is not realistic as there are other names out there that may include characters like `.`, `,` or `/`, such as names like `John Doe Jr.` or `Tan Ah Meng, John` etc. Hence, to allow for more flexibility in name formats, we will allow names to contain any valid character (except possibly `/` due to limitations in iVolunteer's command parsing causing, for example, `s/o` in names to create a skill named `o` instead).
+
+### Change `eaddm` command format to maintain consistency
+The current implementation of `eaddm` is as follows: `eaddm eid/EVENT_INDEX m/MATERIALS_AND_LOGISTICS_NEEDED`. However, this is inconsistent with other Event commands that only involve a single event, like `edelete` or `eshow`, where the index is directly stated instead of using the `eid/` parameter. This will be fixed eventually to improve usability for the app and prevent inconsistency in command formats for features.
