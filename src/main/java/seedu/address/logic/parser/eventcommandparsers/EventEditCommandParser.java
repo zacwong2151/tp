@@ -9,7 +9,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATETIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MATERIAL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MAX_VOLUNTEER_SIZE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATETIME;
 
@@ -38,12 +37,13 @@ public class EventEditCommandParser implements Parser<EventEditCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the EditCommand
      * and returns an EditCommand object for execution.
+     *
+     * @param args The fields from user to update the event.
      * @throws ParseException if the user input does not conform the expected format
      */
     public EventEditCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_ROLE, PREFIX_START_DATETIME,
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_ROLE, PREFIX_START_DATETIME,
                         PREFIX_END_DATETIME, PREFIX_LOCATION, PREFIX_DESCRIPTION, PREFIX_MATERIAL, PREFIX_BUDGET,
                         PREFIX_MAX_VOLUNTEER_SIZE);
 
@@ -54,18 +54,15 @@ public class EventEditCommandParser implements Parser<EventEditCommand> {
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    EventEditCommand.MESSAGE_USAGE), pe);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EventEditCommand.MESSAGE_USAGE), pe);
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_START_DATETIME, PREFIX_END_DATETIME,
-                    PREFIX_LOCATION, PREFIX_DESCRIPTION, PREFIX_BUDGET);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_START_DATETIME, PREFIX_END_DATETIME, PREFIX_LOCATION,
+                PREFIX_DESCRIPTION, PREFIX_BUDGET);
 
         EditEventDescriptor editEventDescriptor = new EditEventDescriptor();
 
-        if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-            editEventDescriptor.setEventName(ParserUtil.parseEventName(argMultimap.getValue(PREFIX_NAME).get()));
-        }
+        // Check if there is update for certain field
         if (argMultimap.getValue(PREFIX_LOCATION).isPresent()) {
             editEventDescriptor.setLocation(ParserUtil.parseLocation(argMultimap.getValue(PREFIX_LOCATION).get()));
         }
@@ -112,7 +109,12 @@ public class EventEditCommandParser implements Parser<EventEditCommand> {
     /**
      * Parses {@code Collection<String> roles} into a {@code Set<Role>} if {@code roles} is non-empty.
      * If {@code roles} contain only one element which is an empty string, it will be parsed into a
-     * {@code Set<Role>} containing zero skills.
+     * {@code Set<Role>} containing zero roles.
+     *
+     * @param roles The collection of role strings to parse.
+     * @return An Optional containing a set of role objects parsed from the input collection. If the input collection
+     *         is empty or only contains an empty string, an empty optional is returned.
+     * @throws ParseException If the role does not comply to a certain format.
      */
     private Optional<Set<Role>> parseRolesForEdit(Collection<String> roles) throws ParseException {
         assert roles != null;
@@ -128,6 +130,11 @@ public class EventEditCommandParser implements Parser<EventEditCommand> {
      * Parses {@code Collection<String> materials} into a {@code Set<Material>} if {@code materials} is non-empty.
      * If {@code materials} contain only one element which is an empty string, it will be parsed into a
      * {@code Set<Material>} containing zero materials.
+     *
+     * @param materials The collection of material strings to parse.
+     * @return An Optional containing a set of material objects parsed from the input collection. If the input
+     *         collection is empty or only contains an empty string, an empty Optional is returned.
+     * @throws ParseException If the material does not comply to a certain format.
      */
     private Optional<Set<Material>> parseMaterialsForEdit(Collection<String> materials) throws ParseException {
         assert materials != null;
