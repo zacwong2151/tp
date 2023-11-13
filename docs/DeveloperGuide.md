@@ -1100,6 +1100,7 @@ For all the use cases below, the **System** is `iVolunteer` and the **Actor** is
 
       Use case resumes from step 2.
 
+
 **Use case UCV04: Find a volunteer**
 
 **MSS**
@@ -1130,6 +1131,7 @@ For all the use cases below, the **System** is `iVolunteer` and the **Actor** is
 
       Use case resumes from step 2.
   
+
 **Use case UCEV01: Add a volunteer into an event**
 
 **MSS**
@@ -1154,6 +1156,7 @@ For all the use cases below, the **System** is `iVolunteer` and the **Actor** is
     * 3b1. System prompts user for the correct command with valid event index and valid volunteer index.
   
       Use case resumes from step 3.
+
 
 **Use case UCEV02: List out all volunteers in an event**
 
@@ -1182,6 +1185,7 @@ For all the use cases below, the **System** is `iVolunteer` and the **Actor** is
 * 2c. There are no volunteers to list.
 
   Use case ends.
+
 
 **Use case UCEV03: Remove a volunteer from an event**
 
