@@ -951,7 +951,7 @@ testers are expected to do more *exploratory* testing.
 
    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   1. Double-click the jar file Expected: Shows the GUI with a set of sample events and volunteers. The window size may not be optimum.
 
 1. Saving window preferences
 
@@ -962,23 +962,93 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
+### Creating a volunteer
+
+1. Prerequisites: NIL.
+
+    1. Test case: `vcreate n/Little Johnny p/98765432 e/littlejohnny@example.com s/little`<br>
+       Expected: Volunteer is created and added to the bottom of the volunteer list. Details of the volunteer shown in the status message.
+
+    1. Test case: `vcreate n/Little Johnny p/91234567 e/bigjohnny@example.com s/little`<br>
+       Expected: Volunteer is not created as there already exists a 'Little Johnny' in the volunteer list. Error details shown in the status message.
+
+    1. Other incorrect delete commands to try: `vcreate`, `vcreate n/`, `...` <br>
+       Expected: `Invalid command format!` error message shown in the status message. Instructions on the correct format are shown as well.
+
 ### Deleting a volunteer
 
-1. Deleting a volunteer while all volunteers are being shown
+1. Prerequisites: List all volunteers using the `vlist` command. Multiple volunteers in the list.
 
-   1. Prerequisites: List all volunteers using the `list` command. Multiple volunteers in the list.
+    1. Test case: `vdelete 1`<br>
+       Expected: First volunteer is deleted from the list. Details of the deleted volunteer shown in the status message.
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+    1. Test case: `vdelete 0`<br>
+       Expected: No volunteer is deleted. Error details shown in the status message.
 
-   1. Test case: `delete 0`<br>
-      Expected: No volunteer is deleted. Error details shown in the status message. Status bar remains the same.
+    1. Other incorrect delete commands to try: `vdelete`, `vdelete x`, `...` (where x is larger than the list size or a non-integer)<br>
+       Expected: Similar to previous.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+### Finding a volunteer
 
-1. _{ more test cases …​ }_
+1. Prerequisites: List all volunteers using the `vlist` command. Multiple volunteers in the list.
 
+    1. Test case: `vfind n/George s/chef`<br>
+       Expected: Volunteer list is updated to show `George`, who is a `chef`. Number of matching volunteers shown in the status message.
+   
+    1. Test case: `vfind s/no one has this skill`<br>
+       Expected: Volunteer list displays nothing. `0 volunteers listed!` shown in the status message.
+
+    1. Test case: `vfind n/!@#`<br>
+       Expected: Volunteer list displays nothing. `Names should only contain alphanumeric characters and spaces, and it should not be blank` shown in the status message.
+
+    1. Other incorrect delete commands to try: `vfind`, `vfind randomwordshere n/ben`, `...` <br>
+       Expected: `Invalid command format!` error message shown in the status message. Instructions on the correct format are shown as well.
+
+### Finding an event
+
+1. Prerequisites: List all events using the `elist` command. Multiple events in the list.
+
+    1. Test case: `efind n/fixing computers`<br>
+       Expected: Event list is updated to show `fixing computers` event. Number of matching events shown in the status message.
+
+    1. Test case: `efind n/this event does not exist`<br>
+       Expected: Event list displays nothing. `0 events listed!` shown in the status message.
+
+    1. Test case: `efind n/!@#`<br>
+       Expected: Event list displays nothing. `Names should only contain alphanumeric characters and spaces, and it should not be blank` shown in the status message.
+
+    1. Other incorrect delete commands to try: `efind`, `efind randomwordshere n/baking cookies`, `...` <br>
+       Expected: `Invalid command format!` error message shown in the status message. Instructions on the correct format are shown as well.
+   
+### Undoing/redoing a command
+
+<box type="info" seamless>
+
+**Note:** To simulate a scenario where undo/redo can be used, the test cases below are ran sequentially.
+
+</box>
+
+1. Prerequisites: List all events and volunteers. Multiple events and volunteers in the list.
+
+   1. Test case: `vdelete 1`<br>
+      Expected: First volunteer is deleted from the list. Details of the deleted volunteer shown in the status message.
+
+   1. Test case: `ecreate n/eating food r/5 cooker r/5 eaters sd/12/5/2023 0900 ed/14/5/2023 1200 l/punggol dsc/eating food m/50 burgers b/100.00`<br>
+      Expected: Event is created and added to the event list. Details of the event shown in the status message.
+
+   1. Test case: `undo` (run it twice)<br>
+      Expected: First, `eating food` event is removed from the event list. Then, the first volunteer is added back to the volunteer list. `Undo command success` shown in the status message.
+   
+   1. Test case: `undo`<br>
+      Expected: Nothing happens. `Cannot undo any further` shown in the status message.
+
+   1. Test case: `redo` (run it twice)<br>
+      Expected: First, the first volunteer is deleted from the volunteer list. Then, the `eating food` event is added back to the event list. `Redo command success` shown in the status message.
+
+   1. Test case: `redo`<br>
+      Expected: Nothing happens. `Unable to redo` shown in the status message.
+
+   
 ### Saving data
 
 1. Dealing with missing/corrupted data files
