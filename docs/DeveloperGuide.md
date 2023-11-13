@@ -641,7 +641,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       Use case resumes from step 1.
 <br>
 
-
 **Use case UCE02: List all volunteering events**
 
 **MSS**
@@ -759,7 +758,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 <br>
 
-**Use case UCE05: Edit an event**
+**Use case UCE06: Edit an event**
 
 **MSS**
 
