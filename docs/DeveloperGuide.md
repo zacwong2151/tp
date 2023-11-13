@@ -633,7 +633,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 1a. User did not input a correct command.
+* 1a. User did not input a valid command.
 
     * 1a1. System prompts user to provide a valid command.
     
@@ -657,7 +657,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 2a. User did not input a correct command.
+* 2a. User did not input a valid command.
 
     * 2a1. System prompts user to input a valid command.
 
@@ -695,7 +695,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 2a. User did not input a correct command.
+* 2a. User did not input a valid command.
 
     * 2a1. System prompts user to input a valid command.
 
@@ -721,7 +721,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 2a. User did not input a correct command.
+* 2a. User did not input a valid command.
 
     * 2a1. System prompts user to provide a valid command.
   
@@ -801,7 +801,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 1a. User did not input a correct command.
+* 1a. User did not input a valid command.
 
     * 1a1. System prompts user to provide a valid command.
 
@@ -830,7 +830,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   Use case ends.
 
-* 2a. User did not input a correct command.
+* 2a. User did not input a valid command.
 
     * 2a1. System prompts user to provide a valid command.
 
@@ -856,7 +856,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 2a. User did not input a correct command.
+* 2a. User did not input a valid command.
 
     * 2a1. System prompts user to provide a valid command.
   
