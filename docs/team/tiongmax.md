@@ -12,24 +12,22 @@ Given below are my contributions to the project.
 
 * **New Feature**: Enhanced functionality for Event Delete command. [#89](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/89).
   * Description: Delete event with index from the event list.
-  * How it is done: adapted the AB3 code to suit iVolunteer.
   * Highlights: The implementation itself is not too difficult but tedious due to the refactor of every related file
     including test cases.
 
 * **New Feature**: Edit event detail feature [#113](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/113).
-  * Description: Edit the detail of an event. 
-  * How it is done: adapted the AB3 code with major changes to suit iVolunteer.
+  * Description: Edit the detail of an event.
   * Highlights: The implementation itself is not too difficult since it is adapted from AB3. However, for some parts like 
     start and end date, I have to figure it out myself on how to validate the update of start time and end time before
     editing the event. Other than that, it was tedious and challenging as I have to refactor the every file that are 
     related to this feature including test cases when our team decided to add on or remove fields from the command as 
-    time goes on.
+    time goes on. [#221](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/221).
 
 * **Code contributed**: [RepoSense link](https://nus-cs2103-ay2324s1.github.io/tp-dashboard/?search=tiongMax&breakdown=true)
 
 * **Project management**: 
     * Help set up the issue tracker and milestone management on GitHub.
-    * Held group meetings on Zoom.
+    * Help initiating group meetings on Zoom.
 
 * **Documentation**: 
   * User Guide: 
