@@ -174,11 +174,6 @@ Step 3:
 When the `EventCreateCommand` finishes executing, the updated `EventStorage` is written into `eventStorage.json` file.
 <puml src="diagrams/EventStorageClassDiagram.puml" alt="EventStorageClassDiagram" />
 
-**Aspect: How undo & redo executes:**
-
-* **Alternative 1 (current choice):** Saves the entire address book.
-    * Pros: Easy to implement.
-    * Cons: May have performance issues in terms of memory usage.
 
 ### Design Considerations
 **Aspect: How the individual fields of an Event are stored:**
@@ -213,47 +208,60 @@ When the `EventCreateCommand` finishes executing, the updated `EventStorage` is 
     * Cons:
       * A new method must be created to save data after executing other commands. E.g. The save() method after an edit event command would be different from a create event command as the `Event` would have to be located first in the JSON file and then updated.
 
-### \[Proposed\] Undo/redo feature
+### Undo/redo feature
 
 #### Proposed Implementation
 
-The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
+The proposed undo/redo mechanism is facilitated by `VersionedVolunteerStorage` and `VersionedEventStorage`. It extends `VolunteerStorage` and `EventStorage` respectively with an undo/redo history, stored internally as a `versionedVolunteers`, `versionedEvents` and `currentStatePointer`. 
 
-* `VersionedAddressBook#commit()` — Saves the current address book state in its history.
-* `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
-* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
+`VersionedVolunteerStorage` implements the following operations:
 
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
+* `VersionedVolunteerStorage#saveNewState()` — Saves the current volunteers state in its history.
+* `VersionedVolunteerStorage#undo()` — Restores the previous volunteers state from its history.
+* `VersionedVolunteerStorage#redo()` — Restores a previously undone volunteers state from its history.
+
+`VersionedEventStorage` implements the following operations:
+
+* `VersionedEventStorage#saveNewState()` — Saves the current events state in its history.
+* `VersionedEventStorage#undo()` — Restores the previous events state from its history.
+* `VersionedEventStorage#redo()` — Restores a previously undone events state from its history.
+
+These operations are exposed in the `Model` interface as `Model#commitToBothVersionedStorages()`, `Model#undoBothStorages()` and `Model#redoBothStorages()` respectively.
+
+<box type="info" seamless>
+
+**Note:** Any command that changes the volunteers state or events state will trigger the `saveNewState()` method for both `VersionedVolunteerStorage` and `VersionedEventStorage`. Similarly, a `undo` or `redo` command will trigger the `undo()` and `redo()` method for both `VersionedVolunteerStorage` and `VersionedEventStorage`. To avoid diagram repetition, `VersionedVolunteerStorage` will be mainly referred to in the following illustrations. However, take note that whatever happens at `VersionedVolunteerStorage` occurs for `VersionedEventStorage` as well.
+
+</box>
 
 Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
 
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
+Step 1. The user launches the application for the first time. The `VersionedVolunteerStorage` will be initialized with the initial volunteers state, and the `currentStatePointer` pointing to that `versionedVolunteers` state. Similarly, the `VersionedEventStorage` will be initialized with the initial events state, and the `currentStatePointer` pointing to that `versionedEvents` state.
 
 <puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
 
-Step 2. The user executes `delete 5` command to delete the 5th volunteer in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+Step 2. The user executes `vdelete 5` command to delete the 5th volunteer in the volunteer list. The `vdelete` command calls `Model#commitToBothVersionedStorages()`, causing the modified state of the volunteer list after the `vdelete 5` command executes to be saved in the `versionedVolunteers`, and the `currentStatePointer` is shifted to the newly inserted `versionedVolunteers` state. Similarly, a new state of the event list will be saved in the `versionedEvents` (although this new state is identical to the previous events state), and the `currentStatePointer` is shifted to the newly inserted `versionedEvents` state.
 
 <puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
 
-Step 3. The user executes `add n/David …​` to add a new volunteer. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
+Step 3. The user executes `vcreate n/David …​` to add a new volunteer. The `vcreate` command also calls `Model#commitToBothVersionedStorages()`, causing another modified volunteers state to be saved into the `versionedVolunteers`. Similarly, another events state is saved into `versionedEvents`.
 
 <puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
 
 <box type="info" seamless>
 
-**Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
+**Note:** If a command fails its execution, it will not call `Model#commitToBothVersionedStorages()`, so the volunteers and events state will not be saved into the `versionedVolunteers` and `versionedEvents`.
 
 </box>
 
-Step 4. The user now decides that adding the volunteer was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
+Step 4. The user now decides that adding the volunteer was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoBothStorages()`, which will shift the `currentStatePointer` once to the left, pointing to the previous volunteers and events state, and restores the volunteer and event list to that state.
 
 <puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
 
 
 <box type="info" seamless>
 
-**Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
+**Note:** If the `currentStatePointer` is at index 0, pointing to the initial state, then there are no previous states to restore. The `undo` command uses `VersionedVolunteerStorage#canUndoVersionedVolunteers()` and `VersionedEventStorage#canUndoVersionedEvents()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the undo.
 
 </box>
 
@@ -267,19 +275,19 @@ The following sequence diagram shows how the undo operation works:
 
 </box>
 
-The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
+The `redo` command does the opposite — it calls `Model#redoBothStorages()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the volunteer and event list to that state.
 
 <box type="info" seamless>
 
-**Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+**Note:** If the `currentStatePointer` is at index `versionedVolunteers.size() - 1`, pointing to the latest volunteers and events state, then there are no undone states to restore. The `redo` command uses `VersionedVolunteerStorage#canRedoVersionedVolunteers()` and `VersionedEventStorage#canRedoVersionedEvents()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
 
 </box>
 
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
+Step 5. The user then decides to execute the command `vlist`. Commands that do not modify the volunteers or events state, such as `vlist`, will not call `Model#commitToBothVersionedStorages()`, `Model#undoBothStorages()` or `Model#redoBothStorages()`. Thus, the `versionedVolunteers` and `versionedEvents` remains unchanged.
 
 <puml src="diagrams/UndoRedoState4.puml" alt="UndoRedoState4" />
 
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
+Step 6. The user executes `vdelete 1`, which calls `Model#commitToBothVersionedStorages()`. Since the `currentStatePointer` is not pointing at the latest volunteers and events state, all states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
 
 <puml src="diagrams/UndoRedoState5.puml" alt="UndoRedoState5" />
 
@@ -291,16 +299,27 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 **Aspect: How undo & redo executes:**
 
-* **Alternative 1 (current choice):** Saves the entire address book.
+* **Alternative 1 (current choice):** Saves both the volunteers and events state.
   * Pros: Easy to implement.
   * Cons: May have performance issues in terms of memory usage.
+  
+* **Alternative 2:** Selectively save either the volunteer or event storage.
+  * Pros: Reduces redundant saves where a state identical to the previous one is saved.
+  * Cons: We must identify the correct storage to save, undo, and redo.
 
-* **Alternative 2:** Individual command knows how to undo/redo by
-  itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the volunteer being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
+* **Alternative 3:** Individual command knows how to undo/redo by itself.
+  * Pros: Will use less memory (e.g. for `vdelete`, just save the volunteer being deleted).
+  * Cons: Complex to implement. We must ensure that the implementation of each individual command is correct.
 
-_{more aspects and alternatives to be added}_
+**Aspect: How to handle current state pointers for both `VersionedVolunteerStorage` and `VersionedEventStorage`:**
+
+* **Alternative 1 (current choice):** Have separate pointers for both classes, where both pointers increment and decrement simultaneously.
+    * Pros: Is a more suitable choice if one were to adopt the **Alternative 2** approach mentioned above. This is because both pointers are now selectively modified, and are not modified in unison.
+    * Cons: There is code duplication as the pointers in both classes are handled the same way.
+
+* **Alternative 2:** Have both classes inherit from an abstract `VersionedStorage` class. Thus, they share the same pointer.
+    * Pros: Results in cleaner code as common fields and methods from both classes can be extracted out into a parent class.
+    * Cons: Harder to implement.
 
 ### \[Proposed\] Reading an individual event feature
 
