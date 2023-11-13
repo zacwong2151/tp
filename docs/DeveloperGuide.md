@@ -993,7 +993,7 @@ testers are expected to do more *exploratory* testing.
     1. Test case: `vcreate n/Little Johnny p/91234567 e/bigjohnny@example.com s/little`<br>
        Expected: Volunteer is not created as there already exists a 'Little Johnny' in the volunteer list. Error details shown in the status message.
 
-    1. Other incorrect vcreate commands to try: `vcreate`, `vcreate n/`, `...` <br>
+    1. Other incorrect `vcreate` commands to try: `vcreate`, `vcreate n/`, `...` <br>
        Expected: `Invalid command format!` error message shown in the status message. Instructions on the correct format are shown as well.
 
 ### Deleting a volunteer
@@ -1006,7 +1006,7 @@ testers are expected to do more *exploratory* testing.
     1. Test case: `vdelete 0`<br>
        Expected: No volunteer is deleted. Error details shown in the status message.
 
-    1. Other incorrect vdelete commands to try: `vdelete`, `vdelete x`, `...` (where x is larger than the list size or a non-integer)<br>
+    1. Other incorrect `vdelete` commands to try: `vdelete`, `vdelete x`, `...` (where x is larger than the list size or a non-integer)<br>
        Expected: Similar to previous.
 
 ### Finding a volunteer
@@ -1022,7 +1022,7 @@ testers are expected to do more *exploratory* testing.
     1. Test case: `vfind n/!@#`<br>
        Expected: Volunteer list displays nothing. `Names should only contain alphanumeric characters and spaces, and it should not be blank` shown in the status message.
 
-    1. Other incorrect vfind commands to try: `vfind`, `vfind randomwordshere n/ben`, `...` <br>
+    1. Other incorrect `vfind` commands to try: `vfind`, `vfind randomwordshere n/ben`, `...` <br>
        Expected: `Invalid command format!` error message shown in the status message. Instructions on the correct format are shown as well.
 
 ### Finding an event
@@ -1038,7 +1038,7 @@ testers are expected to do more *exploratory* testing.
     1. Test case: `efind n/!@#`<br>
        Expected: Event list displays nothing. `Names should only contain alphanumeric characters and spaces, and it should not be blank` shown in the status message.
 
-    1. Other incorrect efind commands to try: `efind`, `efind randomwordshere n/baking cookies`, `...` <br>
+    1. Other incorrect `efind` commands to try: `efind`, `efind randomwordshere n/baking cookies`, `...` <br>
        Expected: `Invalid command format!` error message shown in the status message. Instructions on the correct format are shown as well.
    
 ### Undoing/redoing a command
