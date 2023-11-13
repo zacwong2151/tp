@@ -41,11 +41,12 @@ Given below are my contributions to the project.
         * Added documentation for the features `efind`: [\#207](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/207) and `vfind`: [\#103](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/103)
         * Added documentation for the features `undo` and `redo`: [\#206](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/206)
     * Developer Guide:
-        * Added use cases for event delete feature: [\#67](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/67)
+        * Added use cases for event delete, event find, and volunteer find features: [\#67](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/67), [\#239](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/239)
         * Added implementation details for undo and redo features, inclusive of UML class diagrams: [#216](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/216)
         * Added a Planned Enhancements section to propose fixes to add in the future: [\#215](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/215)
         * Added a Instructions for Manual Testing section to give testers guidance on using our app: [\#218](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/218)
+        * Standardised format for all use cases, and verified that all test cases in `Appendix: Instructions for manual testing` works as intended [\#244](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/244)
 
 * **Community**:
     * PRs reviewed (with non-trivial review comments): [\#122](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/122), [\#69](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/69), [\#113](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/113), [\#82](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/82)
-    * PE dry run bugs found: [(1)](https://github.com/AY2324S1-CS2103T-W11-3/tp/issues/186), [(2)](https://github.com/AY2324S1-CS2103T-W11-3/tp/issues/162)
+    * Reported bugs for other teams in the cohort: [(1)](https://github.com/AY2324S1-CS2103T-W11-3/tp/issues/186), [(2)](https://github.com/AY2324S1-CS2103T-W11-3/tp/issues/162)
