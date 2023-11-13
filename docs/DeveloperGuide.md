@@ -1375,8 +1375,7 @@ testers are expected to do more *exploratory* testing.
       The outcome is the same whenever the volunteer index parameter is a non-positive integer.
    
    5. Test case: `vliste x` (where x is a positive integer, larger than the list size) <br> 
-      Expected: No change in event list panel. Error message for invalid volunteer index is shown in the result display. 
->>>>>>> master
+      Expected: No change in event list panel. Error message for invalid volunteer index is shown in the result display.
 
 ### Finding a volunteer
 
