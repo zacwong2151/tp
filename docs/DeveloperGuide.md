@@ -1135,6 +1135,6 @@ testers are expected to do more *exploratory* testing.
 
 2. Improve uniqueness of the volunteers and events with the same name
    The current implementation of the iVolunteer can only accept volunteer and event with different name.
-   However, this is not the best option as volunteer and event with name existed in the storage must change in order to be
+   However, this is not the best option as new volunteer and event with name existed in the storage must change in order to be
    added into iVolunteer. In order to have volunteer and event with the same name, we plan to implement unique id to
    distinguish them in the coming version. 
