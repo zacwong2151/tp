@@ -56,7 +56,6 @@ public class EventUtil {
      */
     public static String getEditEventDescriptorDetails(EditEventDescriptor descriptor) {
         StringBuilder sb = new StringBuilder();
-        descriptor.getEventName().ifPresent(name -> sb.append(PREFIX_NAME).append(name.eventName).append(" "));
         if (descriptor.getRoles().isPresent()) {
             Set<Role> roles = descriptor.getRoles().get();
             if (roles.isEmpty()) {
