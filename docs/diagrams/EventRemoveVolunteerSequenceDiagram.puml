@@ -54,34 +54,34 @@ destroy EventAddVolunteerCommandParser
 IVolunteerParser --> LogicManager : c
 deactivate IVolunteerParser
 
-LogicManager -> EventAddVolunteerCommand : execute()
+LogicManager -> EventAddVolunteerCommand : execute(model)
 activate EventAddVolunteerCommand
 
-EventAddVolunteerCommand -> Event : hasVolunteer(v)
+EventAddVolunteerCommand -> Event : hasVolunteer(volunteerToAssign)
 activate Event
 
 Event --> EventAddVolunteerCommand
 deactivate Event
 
-EventAddVolunteerCommand -> Volunteer : removeEvent(e)
+EventAddVolunteerCommand -> Volunteer : removeEvent(eventToRemove)
 activate Volunteer
 
 Volunteer --> EventAddVolunteerCommand
 deactivate Volunteer
 
-EventAddVolunteerCommand -> Event : removeVolunteer(v)
+EventAddVolunteerCommand -> Event : removeVolunteer(volunteerToRemove)
 activate Event
 
 Event --> EventAddVolunteerCommand
 deactivate Event
 
-EventAddVolunteerCommand -> Model : setVolunteer(oldv, v)
+EventAddVolunteerCommand -> Model : setVolunteer(oldVolunteer, newVolunteer)
 activate Model
 
 Model --> EventAddVolunteerCommand
 deactivate Model
 
-EventAddVolunteerCommand -> Model : setEvent(olde, e)
+EventAddVolunteerCommand -> Model : setEvent(oldEvent, newEvent)
 activate Model
 
 Model --> EventAddVolunteerCommand

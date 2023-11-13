@@ -54,10 +54,10 @@ destroy EventAddVolunteerCommandParser
 IVolunteerParser --> LogicManager : c
 deactivate IVolunteerParser
 
-LogicManager -> EventAddVolunteerCommand : execute()
+LogicManager -> EventAddVolunteerCommand : execute(model)
 activate EventAddVolunteerCommand
 
-EventAddVolunteerCommand -> Event : hasVolunteer(v)
+EventAddVolunteerCommand -> Event : hasVolunteer(volunteerToAssign)
 activate Event
 
 Event --> EventAddVolunteerCommand
@@ -83,25 +83,25 @@ loop while there are no clashing events and there are still events left in the v
     deactivate EventAddVolunteerCommand
 end
 
-EventAddVolunteerCommand -> Volunteer : addEvent(e)
+EventAddVolunteerCommand -> Volunteer : addEvent(newEvent)
 activate Volunteer
 
 Volunteer --> EventAddVolunteerCommand
 deactivate Volunteer
 
-EventAddVolunteerCommand -> Event : addVolunteer(v)
+EventAddVolunteerCommand -> Event : addVolunteer(newVolunteer)
 activate Event
 
 Event --> EventAddVolunteerCommand
 deactivate Event
 
-EventAddVolunteerCommand -> Model : setVolunteer(oldv, v)
+EventAddVolunteerCommand -> Model : setVolunteer(oldVolunteer, newVolunteer)
 activate Model
 
 Model --> EventAddVolunteerCommand
 deactivate Model
 
-EventAddVolunteerCommand -> Model : setEvent(olde, e)
+EventAddVolunteerCommand -> Model : setEvent(oldEvent, newEvent)
 activate Model
 
 Model --> EventAddVolunteerCommand
