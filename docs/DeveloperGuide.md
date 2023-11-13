@@ -770,6 +770,55 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 4.
 
+**Use case UCE08: Edit an event**
+
+**MSS**
+
+1.  User <u>lists all volunteering events (UCE02)</u>.
+2.  User requests to edit a specific event in the event list.
+3.  iVolunteer edits the event.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. Invalid Command Word.
+    * 2a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
+    * 2a2. User enters correct command.
+
+      Use case resumes from step 3.
+
+* 2b. Invalid event id.
+    * 2b1. iVolunteer requests for the correct command with valid event id.
+    * 2b2. User enters correct command.
+      Steps 2b1-2b2 are repeated until the data entered is correct.
+
+      Use case resumes at step 3.
+
+* 2c. Invalid format for roles and materials.
+    * 2c1. System prompts Volunteer Coordinator to use the correct the format for roles or materials or both.
+    * 2c2. User enters correct command.
+
+      Use case resumes from step 3.
+
+* 2d. Invalid Date and Time.
+    * 2d1. System prompts Volunteer Coordinator to use the correct date and time format.
+    * 2d2. User enters correct command.
+  
+      Use case resumes from step 3.
+
+* 2e. Start date/time is after end date/time.
+    * 2e1. System prompts Volunteer Coordinator to ensure that start date/time is before end date/time.
+    * 2e2. User enters correct command.
+  
+      Use case resumes from step 3.
+
+* 2f. Invalid Budget Argument
+    * 2f1. System prompts Volunteer Coordinator to use the correct budget format.
+    * 2f2. User enters correct command.
+
+      Use case resumes from step 3.
+
 **Use case UCV01: Create a volunteer**
 
 **MSS**
