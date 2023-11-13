@@ -40,7 +40,7 @@ Given below are my contributions to the project.
     * Added demonstration on how roles and materials are tracked in iVolunteer in UG, and for `eaddm` command: [#109](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/109), [#204](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/204).
     * Added UG command formats for `eaddm` and `eedit` commands: [#242](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/242) 
   * Developer Guide:
-    * Added use cases for volunteer create, list, delete features: [#80](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/80).
+    * Added use cases for volunteer create, list, delete features: [#80](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/80)
     * Updated DG design section to match iVolunteer: [#214](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/214)
     * Added implementation details in DG for material and role tracking feature, inclusive of UML class diagram: [#114](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/114), [#214](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/214)
     * Added implementation details in DG for maximum volunteer capacity feature: [#214](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/214)
