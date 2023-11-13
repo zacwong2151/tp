@@ -436,19 +436,83 @@ The following activity diagram summarizes what happens when a user executes a ne
     * Pros: Results in cleaner code as common fields and methods from both classes can be extracted out into a parent class.
     * Cons: Harder to implement.
 
-### \[Proposed\] Reading an individual event feature
+### Reading an individual event feature
 
-#### Proposed Implementation
+#### Implementation
 
-When the app is initialized, the MainApp will first initialize all key components of the app. Specifically in this case:
+When event show command is called, a pop-up window (an `EventShowWindow` object) will show, displaying the information of the event that corresponds to the given index. The event to show is obtained from the `eventToShowList` instantiated in `ModelManager`.
 
-First, eventToShowList in ModelManager will be initialized, with the list of all events currently in the EventStorage.
+Given below is an example usage scenario and how the event show mechanism behaves at each step:
 
-Then, when MainWindow is being initialized, the EventShowWindow will also be initialized.
+Step 1. The user launches the app for the first time, and executes `ecreate n/first event ...` to create a new event. This calls the method `Model#updateFilteredEventList()` to update both the `filteredEventList` and the `eventToShowList`.
 
-EventShowWindow consists of ListView displaying the eventToShowList in Model, and its contents are obtained by calling Logic.getEventToShowList(), which will call Model.getEventToShowList().
+<puml src="diagrams/EventShowStep1.puml" alt="EventShowStep1" />
 
-In summary, when the app is initialized, EventShowWindow will be initialized with its contents being the list of all events obtained from the EventStorage. However, user will not see it as without receiving its command, EventShowWindow will not be shown.
+Step 2. The user  executes `ecreate n/second event ...` to create another event. This calls the method `Model#updateFilteredEventList()` again to update both the `filteredEventlist` and the `eventToShowList`.
+
+<puml src="diagrams/EventShowStep2.puml" alt="EventShowStep2" />
+
+Displayed event list now has two events at index 1 and 2 respectively.
+
+Step 3. The user executes `eshow 1` to read more about the first event created.
+
+The `eshow` command obtains the event at index `1` from the last shown list (`filteredEventList`) as the index is based on the most recent event list displayed to the user before he calls the `eshow` command. This event is the one that will be shown to the user in the pop-up window.
+
+The `eshow` command then filters the `eventToShowList` such that it has only one element, which is the event previously obtained.
+
+<puml src="diagrams/EventShowStep3.puml" alt="EventShowStep3" />
+
+The `eshow` command then returns a `CommandResult` object with its `isShowEvent` field as true.
+
+The `MainWindow` received the `CommandResult`. Upon identifying that its `isShowEvent` field is true, `MainWindow#handleShowEvent()` method is executed. 
+
+The `MainWindow#handleShowEvent()` method hows/focuses the `EventShowWindow`, after loading its contents by calling `EventShowWindow#loadContents()`.
+
+`EventShowWindow` has `eventToShowList` as one of its fields, `eventToShowList` here is the same object as the one we use in `ModelManager`.
+
+The `EventShowWindow#loadContents()` method obtains the event to show by getting the first element in the `eventToShowList`.
+
+User see a pop-up window (`EventShowWindow`), showing all information of the event at index `1`.
+
+Step 4. The user navigates back to the main window, causing the pop-up window to be unfocused.
+
+Step 5. The user now wants to read more on the second event, so he executes `eshow 2`. Step 3 is repeated with the new given index - `2`.
+
+<puml src="diagrams/EventShowStep5.puml" alt="EventShowStep5" />
+
+The pop-up window is now focused, displaying the event information of the event at index `2`.
+
+The following sequence diagram shows how the event show operation works:
+
+<puml src="diagrams/EventShowSequenceDiagram.puml" alt="EventShowSequenceDiagram" />
+
+#### Design considerations:
+
+**Aspect: How `EventShowWindow` obtains the event to show:**
+
+* **Alternative 1 (current choice):** Obtain the event from `eventToShowList`.
+    * Pros: Leaves current implementation (mainly `filteredEventList` and `CommandResult`) untouched.
+    
+    <box type="info" seamless>
+  
+    **Note:** This excludes adding an `isShowEvent` field in `CommandResult`. This is necessary regardless of the type of implementation chosen as `MainWindow` has to be able to identify an `eshow` command so that it can show the `EventShowWindow`.
+    </box>
+
+    * Cons: Tedious implementation, `ModelManager` need to manage one more field.
+* **Alternative 2:** Obtain the event from `CommandResult`. Since `MainWindow` listens to the `CommandResult` to determine the UI to display, we can pass the event to show to the `MainWindow`, and then to the `EventShowWindow`, through `CommandResult` by adding an `eventToShow` field that stores the event to show.
+    * Pros: Implementation is simplest out of all options.
+    * Cons: Might not be the best solution as we have established that `Event` is guaranteed not null, yet we are passing null as the `eventToShow` field for non-`eshow` commands, can be confusing to other developers. Moreover, this is a flawed logic as non-`eshow` commands should not even have an `eventToShow` field.
+* **Alternative 3:** Obtain the event from `filteredEventList`. Same implementation but filtering is done on the `filteredEventList` instead of the `eventToShowList`.
+    * Pros: Easier implementation, no need to create a new field - `eventToShowList` in `ModelManager`.
+    * Cons: Since `filteredEventList` is the event list that is displayed the user, filtering it will affect users view of the displayed list. Users cannot continue with where they left off, which depletes the user experience.
+
+**Aspect: How event information is shown:**
+* **Alternative 1 (current choice):** Shown in a pop-up window (`EventShowWindow`).
+    * Pros: User can refer to both the pop-up window and the main window at the same time, which makes the event planning process more efficient.
+    * Cons: Harder to implement as `EventShowWindow` must have access to the event information but `iVolunteer` uses a Facade to separate the component internals and users of the component.
+* **Alternative 2:** Shown in `EventListPanel`.
+  * Pros: Might be easier to implement as the `EventListPanel` will already have access to the event information as it has `filteredEventList` as one of its fields.
+  * Cons: Depletes the user experience as they will have to use the `elist` command, followed by the `eshow` command if they want to see the event information of another event.
 
 ### \[In progress\] Delete the event from a list of event
 
