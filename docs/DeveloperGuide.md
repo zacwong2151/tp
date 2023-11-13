@@ -324,10 +324,9 @@ EventShowWindow consists of ListView displaying the eventToShowList in Model, an
 
 In summary, when the app is initialized, EventShowWindow will be initialized with its contents being the list of all events obtained from the EventStorage. However, user will not see it as without receiving its command, EventShowWindow will not be shown.
 
-### Delete the event from a list of event
+### Delete the event from a list of events
 
-### Implementation 
-can just delete from the storage as it is faster, but due to consistency
+### Implementation
 
 When deleting an event, the event in the EventStorage will also be deleted. The new event list is then written into the 
 JSON file, `eventStorage.json`.
@@ -338,7 +337,7 @@ Step 1. The user launches the application and enters the command to delete an ev
 iVolunteer receives the input, it will parse the input and split it into command word and detail, which is the index. 
 The index will then be checked if it is valid by parsing it from String to an integer.
 
-Step 2. If the index is valid, a new EventDeleteCommand will be created and executed. During its execution, 
+Step 2. If the index is valid, a new `EventDeleteCommand` will be created and executed. During its execution, 
 the application will find for the event in `EventStorage` in the `ModelManager` and delete it. Then, the application 
 will go through the volunteers in `VolunteerStorage` in `ModelManager` as well to remove the volunteers that were 
 participating in the event.
@@ -357,6 +356,50 @@ file.
 * **Alternative 2:** Include prefix. 
     * Pros: Consistency is adhered.
     * Cons: More steps will be taken to implement and it is redundant since the index is the only field.
+
+### Editing the detail of an event
+
+### Implementation
+
+The mechanism to edit the detail of the event is handled by the `EditEventDescriptor` class. The details for the 
+fields to be updated are collected and assigned to the corresponding fields of `EditEventDescriptor` object. 
+When editing an event, the event in the `EventStorage` will also be edited. The new event list is then written into the
+JSON file, `eventStorage.json`.
+
+Given below is an example usage scenario and how the mechanism of the event edit behaves at each step.
+
+Step 1. The user launches the application and enters the command to edit an event. For example,
+`eedit 1 r/10 cleaner sd/1/1/2023 1100 ed/2/2/2023 2200 l/NUS dsc/Help clean out m/10 clothes b/50.00 vs/10`. When
+iVolunteer receives the input, it will parse the input and split it into command word and the update details which 
+includes the index. The index will then be checked if it is valid by parsing it from String to an integer.
+
+Step 2. If the index is valid, a new `EditEventDescriptor` object will be created. The fields of the 
+`EditEventDescriptor` object will be assigned by the details from user input after they are validated and then passed to 
+a `EventEditCommand` object. During the execution of `EventEditCommand`, the application will find for the event 
+in `EventStorage` in the `ModelManager` and replace it with a new `Event` with the details from `EditEventDescriptor`.
+If the field of the event is not updated, the previous detail will be used.
+
+Step 3. When the `EventEditCommand` finishes executing, the updated `EventStorage` is written into `eventStorage.json`
+file.
+
+#### Design considerations:
+
+**Aspect: How the event is updated:**
+
+* **Alternative 1 (current choice):** Replacing the event with a new event.
+    * Pros:
+        * Improves the overall structure and readability of the code.
+    * Cons:
+        * Results in more code.
+        * More memory usage as new object have to be created to store the update details.
+
+* **Alternative 2:** Update the event directly.
+    * Pros:
+        * Less code required.
+        * Less memory usage as objects do not have to be created to store the update details.
+    * Cons:
+        * The Event class will be cluttered with methods to set the fields which will violate the principle of
+            encapsulation.
 
 ### \[In progress\] Tracking amount of roles and materials
 
@@ -790,6 +833,33 @@ testers are expected to do more *exploratory* testing.
       Expected: Similar to previous.
 
 1. _{ more test cases …​ }_
+
+### eedit eaddm
+### Deleting an event
+1. Deleting an event.
+   1. Prerequisites: List all events using the `elist` command. Multiple events in the list.
+   
+   1. Test case: `edelete 1`
+      Expected: The first event in the displayed event list is deleted successfully. Detail is shown in the status message.
+       
+   1. Test case: `edelete`
+      Expected: No change to the event list panel. Invalid command format error is shown in the status message.<br>
+
+   1. Test case: `edele`
+      Expected: No change to the event list panel. Invalid command format error is shown in the status message.<br>
+
+### Editing an event
+1. Editing the detail of an event.
+    1. Prerequisites: List all events using the `elist` command. Multiple events in the list.
+
+    1. Test case: `eedit 1`
+       Expected: The first event in the displayed event list is deleted successfully. Detail is shown in the status message.
+
+    1. Test case: `edelete`
+       Expected: No change to the event list panel. Invalid command format error is shown in the status message.<br>
+
+    1. Test case: `edele`
+       Expected: No change to the event list panel. Invalid command format error is shown in the status message.<br>
 
 ### Saving data
 
