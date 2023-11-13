@@ -9,7 +9,6 @@ import seedu.address.model.event.Budget;
 import seedu.address.model.event.DateTime;
 import seedu.address.model.event.Description;
 import seedu.address.model.event.Event;
-import seedu.address.model.event.EventName;
 import seedu.address.model.event.Location;
 import seedu.address.model.event.Material;
 import seedu.address.model.event.Role;
@@ -35,7 +34,6 @@ public class EditEventDescriptorBuilder {
      */
     public EditEventDescriptorBuilder(Event event) {
         descriptor = new EditEventDescriptor();
-        descriptor.setEventName(event.getEventName());
         descriptor.setRoles(event.getRoles());
         descriptor.setStartDate(event.getStartDate());
         descriptor.setEndDate(event.getEndDate());
@@ -43,14 +41,6 @@ public class EditEventDescriptorBuilder {
         descriptor.setDescription(event.getDescription());
         descriptor.setMaterials(event.getMaterials());
         descriptor.setBudget(event.getBudget());
-    }
-
-    /**
-     * Sets the {@code EventName} of the {@code EditEventDescriptor} that we are building.
-     */
-    public EditEventDescriptorBuilder withEventName(String eventName) {
-        descriptor.setEventName(new EventName(eventName));
-        return this;
     }
 
     /**
