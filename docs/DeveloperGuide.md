@@ -295,7 +295,7 @@ Step 5. The user then decides to execute the command `vlist`. Commands that do n
 
 <puml src="diagrams/UndoRedoState4.puml" alt="UndoRedoState4" />
 
-Step 6. The user executes `vclear`, which calls `Model#commitToBothVersionedStorages()`. Since the `currentStatePointer` is not pointing at the latest volunteers and events state, all states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
+Step 6. The user executes `vdelete 1`, which calls `Model#commitToBothVersionedStorages()`. Since the `currentStatePointer` is not pointing at the latest volunteers and events state, all states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
 
 <puml src="diagrams/UndoRedoState5.puml" alt="UndoRedoState5" />
 
