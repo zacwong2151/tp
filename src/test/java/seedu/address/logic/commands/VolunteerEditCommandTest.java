@@ -5,9 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-//import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-//import static seedu.address.logic.commands.CommandTestUtil.VALID_SKILL_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showVolunteerAtIndex;
@@ -41,7 +39,10 @@ public class VolunteerEditCommandTest {
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
-        Volunteer editedVolunteer = new VolunteerBuilder().build();
+        // gets name from first index of model's filtered volunteer list
+        String firstIndexName = model.getFilteredVolunteerList().get(INDEX_FIRST.getZeroBased()).getName().fullName;
+
+        Volunteer editedVolunteer = new VolunteerBuilder().withName(firstIndexName).build();
         EditVolunteerDescriptor descriptor = new EditVolunteerDescriptorBuilder(editedVolunteer).build();
         VolunteerEditCommand volunteerEditCommand = new VolunteerEditCommand(INDEX_FIRST, descriptor);
 
@@ -74,9 +75,9 @@ public class VolunteerEditCommandTest {
         showVolunteerAtIndex(model, INDEX_FIRST);
 
         Volunteer volunteerInFilteredList = model.getFilteredVolunteerList().get(INDEX_FIRST.getZeroBased());
-        Volunteer editedVolunteer = new VolunteerBuilder(volunteerInFilteredList).withName(VALID_NAME_BOB).build();
+        Volunteer editedVolunteer = new VolunteerBuilder(volunteerInFilteredList).withEmail(VALID_EMAIL_BOB).build();
         VolunteerEditCommand volunteerEditCommand = new VolunteerEditCommand(INDEX_FIRST,
-                new EditVolunteerDescriptorBuilder().withName(VALID_NAME_BOB).build());
+                new EditVolunteerDescriptorBuilder().withEmail(VALID_EMAIL_BOB).build());
 
         String expectedMessage = String.format(VolunteerEditCommand.MESSAGE_EDIT_VOLUNTEER_SUCCESS,
                                                                     Messages.format(editedVolunteer));
@@ -89,31 +90,9 @@ public class VolunteerEditCommandTest {
     }
 
     @Test
-    public void execute_duplicateVolunteerUnfilteredList_failure() {
-        Volunteer firstVolunteer = model.getFilteredVolunteerList().get(INDEX_FIRST.getZeroBased());
-        EditVolunteerDescriptor descriptor = new EditVolunteerDescriptorBuilder(firstVolunteer).build();
-        VolunteerEditCommand volunteerEditCommand = new VolunteerEditCommand(INDEX_SECOND, descriptor);
-
-        assertCommandFailure(volunteerEditCommand, model, VolunteerEditCommand.MESSAGE_DUPLICATE_VOLUNTEER);
-    }
-
-    @Test
-    public void execute_duplicateVolunteerFilteredList_failure() {
-        showVolunteerAtIndex(model, INDEX_FIRST);
-
-        // edit volunteer in filtered list into a duplicate in volunteer storage
-        Volunteer volunteerInList = model.getVolunteerStorage().getVolunteerList()
-                                    .get(INDEX_SECOND.getZeroBased());
-        VolunteerEditCommand volunteerEditCommand = new VolunteerEditCommand(INDEX_FIRST,
-                new EditVolunteerDescriptorBuilder(volunteerInList).build());
-
-        assertCommandFailure(volunteerEditCommand, model, VolunteerEditCommand.MESSAGE_DUPLICATE_VOLUNTEER);
-    }
-
-    @Test
     public void execute_invalidVolunteerIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredVolunteerList().size() + 1);
-        EditVolunteerDescriptor descriptor = new EditVolunteerDescriptorBuilder().withName(VALID_NAME_BOB).build();
+        EditVolunteerDescriptor descriptor = new EditVolunteerDescriptorBuilder().withEmail(VALID_EMAIL_BOB).build();
         VolunteerEditCommand volunteerEditCommand = new VolunteerEditCommand(outOfBoundIndex, descriptor);
 
         assertCommandFailure(volunteerEditCommand, model, Messages.MESSAGE_INVALID_VOLUNTEER_DISPLAYED_INDEX);
@@ -131,7 +110,7 @@ public class VolunteerEditCommandTest {
         assertTrue(outOfBoundIndex.getZeroBased() < model.getVolunteerStorage().getVolunteerList().size());
 
         VolunteerEditCommand volunteerEditCommand = new VolunteerEditCommand(outOfBoundIndex,
-                new EditVolunteerDescriptorBuilder().withName(VALID_NAME_BOB).build());
+                new EditVolunteerDescriptorBuilder().withEmail(VALID_EMAIL_BOB).build());
 
         assertCommandFailure(volunteerEditCommand, model, Messages.MESSAGE_INVALID_VOLUNTEER_DISPLAYED_INDEX);
     }

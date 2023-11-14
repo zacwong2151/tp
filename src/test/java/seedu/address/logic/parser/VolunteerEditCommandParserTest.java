@@ -4,7 +4,6 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_SKILL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
@@ -36,7 +35,6 @@ import seedu.address.logic.commands.volunteercommands.VolunteerEditCommand.EditV
 import seedu.address.logic.parser.volunteercommandparsers.VolunteerEditCommandParser;
 import seedu.address.model.skill.Skill;
 import seedu.address.model.volunteer.Email;
-import seedu.address.model.volunteer.Name;
 import seedu.address.model.volunteer.Phone;
 import seedu.address.testutil.EditVolunteerDescriptorBuilder;
 
@@ -78,7 +76,6 @@ public class VolunteerEditCommandParserTest {
 
     @Test
     public void parse_invalidValue_failure() {
-        assertParseFailure(parser, "1" + INVALID_NAME_DESC, Name.MESSAGE_CONSTRAINTS); // invalid name
         assertParseFailure(parser, "1" + INVALID_PHONE_DESC, Phone.MESSAGE_CONSTRAINTS); // invalid phone
         assertParseFailure(parser, "1" + INVALID_EMAIL_DESC, Email.MESSAGE_CONSTRAINTS); // invalid email
         assertParseFailure(parser, "1" + INVALID_SKILL_DESC, Skill.MESSAGE_CONSTRAINTS); // invalid skill
@@ -96,19 +93,18 @@ public class VolunteerEditCommandParserTest {
                 Skill.MESSAGE_CONSTRAINTS);
 
         // multiple invalid values, but only the first invalid value is captured
-        assertParseFailure(parser, "1" + INVALID_NAME_DESC + INVALID_EMAIL_DESC + VALID_PHONE_AMY,
-                Name.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "1" + INVALID_EMAIL_DESC + INVALID_SKILL_DESC + VALID_PHONE_AMY,
+                Email.MESSAGE_CONSTRAINTS);
     }
 
     @Test
     public void parse_allFieldsSpecified_success() {
         Index targetIndex = INDEX_SECOND;
         String userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + SKILL_DESC_HUSBAND
-                + EMAIL_DESC_AMY + NAME_DESC_AMY + SKILL_DESC_FRIEND;
+                + EMAIL_DESC_AMY + SKILL_DESC_FRIEND;
 
-        EditVolunteerDescriptor descriptor = new EditVolunteerDescriptorBuilder().withName(VALID_NAME_AMY)
-                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY)
-                .withSkills(VALID_SKILL_HUSBAND, VALID_SKILL_FRIEND).build();
+        EditVolunteerDescriptor descriptor = new EditVolunteerDescriptorBuilder().withPhone(VALID_PHONE_BOB)
+                .withEmail(VALID_EMAIL_AMY).withSkills(VALID_SKILL_HUSBAND, VALID_SKILL_FRIEND).build();
         VolunteerEditCommand expectedCommand = new VolunteerEditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -128,17 +124,11 @@ public class VolunteerEditCommandParserTest {
 
     @Test
     public void parse_oneFieldSpecified_success() {
-        // name
-        Index targetIndex = INDEX_THIRD;
-        String userInput = targetIndex.getOneBased() + NAME_DESC_AMY;
-        EditVolunteerDescriptor descriptor = new EditVolunteerDescriptorBuilder().withName(VALID_NAME_AMY).build();
-        VolunteerEditCommand expectedCommand = new VolunteerEditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-
         // phone
-        userInput = targetIndex.getOneBased() + PHONE_DESC_AMY;
-        descriptor = new EditVolunteerDescriptorBuilder().withPhone(VALID_PHONE_AMY).build();
-        expectedCommand = new VolunteerEditCommand(targetIndex, descriptor);
+        Index targetIndex = INDEX_THIRD;
+        String userInput = targetIndex.getOneBased() + PHONE_DESC_AMY;
+        EditVolunteerDescriptor descriptor = new EditVolunteerDescriptorBuilder().withPhone(VALID_PHONE_AMY).build();
+        VolunteerEditCommand expectedCommand = new VolunteerEditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // email
