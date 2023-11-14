@@ -182,10 +182,9 @@ Examples:
 
 Edits an existing volunteer in the volunteer list.
 
-Format: `vedit VOLUNTEER_INDEX [n/NAME] [p/PHONE] [e/EMAIL] [s/SKILL]…​`
+Format: `vedit VOLUNTEER_INDEX [p/PHONE] [e/EMAIL] [s/SKILL]…​`
 
 Parameters:
-* n/ - Volunteer name
 * p/ - Volunteer phone number
 * e/ - Volunteer email
 * s/ - Volunteer skill
@@ -206,8 +205,8 @@ specifying any skills after it.
 Examples:
 * `vedit 1 p/91234567 e/johndoe@example.com`
   * Edits the phone number and email address of the 1st volunteer to be `91234567` and `johndoe@example.com` respectively.
-* `vedit 2 n/Betsy Crower s/`
-  * Edits the name of the 2nd volunteer to be `Betsy Crower` and clears all existing skills.
+* `vedit 2 p/92345678 s/`
+  * Edits the phone number of the 2nd volunteer to be `92345678` and clears all existing skills.
 
 
 ### Deleting a volunteer profile: `vdelete`
@@ -294,22 +293,28 @@ Format: `elist`
 
 Finds events whose name contain any of the given keywords.
 
-Format: `efind n/NAME…​`
+Format: `efind n/EVENT_NAME [n/MORE_EVENT_NAME]... ​`
 
-* At least one NAME keyword must be provided.
+Parameters:
+* n/ - Event name to be searched
+
+Restrictions:
+* At least one EVENT_NAME keyword must be provided.
 * The search is case-insensitive. e.g `n/fixING comPUTErs` will match `fixing computers`.
 * Allows partial matching of keywords e.g. `n/fix` will match `fixing computers`.
-* Events matching **at least one** NAME keyword will be returned (i.e. `OR` search).
+* Events matching **at least one** EVENT_NAME keyword will be returned (i.e. `OR` search).
 
 Examples:
 * `efind n/food` returns `food donaton` and `cooking food`
 * `efind n/litter n/teaching` returns `picking litter` and `teaching kids`<br>
 
-
 ![result for 'find picking litter and teaching kids event'](images/findEventsResult.png)
 
+<<<<<<< HEAD
 <div style="page-break-after: always;"></div>
 
+=======
+>>>>>>> 076277a4a82c707d22a3f5a25ff9be2d75570d13
 ### Reading an individual event: `eshow`
 Volunteer coordinators can read up more about an individual event, to familiarize themselves with its requirements while planning for it.
 
@@ -590,7 +595,6 @@ coming soon
 <div style="page-break-after: always;"></div>
 
 ## Command summary
-
 | Action                                        | Format, Examples                                                                                                                                                                                                                                                                                                                           |
 |-----------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Display help window**                       | `help`                                                                                                                                                                                                                                                                                                                                     |
@@ -610,4 +614,4 @@ coming soon
 | **Remove a volunteer from an event**          | `eremovev vid/VOLUNTEER_INDEX eid/EVENT_INDEX`<br> e.g., `eremovev vid/3 eid/4`                                                                                                                                                                                                                                                            |
 | **Exits iVolunteer**                          | `exit`                                                                                                                                                                                                                                                                                                                                     |
 
-<div style="page-break-before:always"></div> 
+<div style="page-break-before:always"></div>

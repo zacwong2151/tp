@@ -34,6 +34,7 @@ Given below are my contributions to the project.
     * Added documentation for the event add volunteer, event remove volunteer and event list volunteer features (`eaddv`
       , `eremovev`, `elistv`): [#52](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/52).
     * Added documentation for the event edit feature (`eedit`): [#203](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/203).
+    * Added more details for documentation of find event feature: [#251](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/251).
     
   * Developer Guide:
     * Added a list of user stories: [#65](https://github.com/AY2324S1-CS2103T-T14-4/tp/pull/65).

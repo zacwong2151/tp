@@ -3,7 +3,6 @@ package seedu.address.logic.parser.volunteercommandparsers;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SKILL;
 
@@ -35,7 +34,7 @@ public class VolunteerEditCommandParser implements Parser<VolunteerEditCommand> 
     public VolunteerEditCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_SKILL);
+                ArgumentTokenizer.tokenize(args, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_SKILL);
 
         Index index;
 
@@ -46,13 +45,10 @@ public class VolunteerEditCommandParser implements Parser<VolunteerEditCommand> 
                                                     VolunteerEditCommand.MESSAGE_USAGE), pe);
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PHONE, PREFIX_EMAIL);
 
         EditVolunteerDescriptor editVolunteerDescriptor = new EditVolunteerDescriptor();
 
-        if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-            editVolunteerDescriptor.setName(ParserUtil.parseVolunteerName(argMultimap.getValue(PREFIX_NAME).get()));
-        }
         if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
             editVolunteerDescriptor.setPhone(ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get()));
         }

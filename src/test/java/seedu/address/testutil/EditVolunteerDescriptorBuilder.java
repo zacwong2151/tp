@@ -7,7 +7,6 @@ import java.util.stream.Stream;
 import seedu.address.logic.commands.volunteercommands.VolunteerEditCommand.EditVolunteerDescriptor;
 import seedu.address.model.skill.Skill;
 import seedu.address.model.volunteer.Email;
-import seedu.address.model.volunteer.Name;
 import seedu.address.model.volunteer.Phone;
 import seedu.address.model.volunteer.Volunteer;
 
@@ -31,18 +30,9 @@ public class EditVolunteerDescriptorBuilder {
      */
     public EditVolunteerDescriptorBuilder(Volunteer volunteer) {
         descriptor = new EditVolunteerDescriptor();
-        descriptor.setName(volunteer.getName());
         descriptor.setPhone(volunteer.getPhone());
         descriptor.setEmail(volunteer.getEmail());
         descriptor.setSkills(volunteer.getSkills());
-    }
-
-    /**
-     * Sets the {@code Name} of the {@code EditVolunteerDescriptor} that we are building.
-     */
-    public EditVolunteerDescriptorBuilder withName(String name) {
-        descriptor.setName(new Name(name));
-        return this;
     }
 
     /**

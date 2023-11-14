@@ -3,7 +3,7 @@
     "eventName" : "fixing computers",
     "roles" : [ {
       "roleName" : "mechanic",
-      "currentQuantity" : "0",
+      "currentQuantity" : "1",
       "requiredQuantity" : "1"
     }, {
       "roleName" : "engineer",
@@ -20,7 +20,7 @@
       "requiredQuantity" : "50"
     } ],
     "budget" : "120.00",
-    "assignedVolunteers" : [ ],
+    "assignedVolunteers" : [ "Charlotte Oliveiro" ],
     "maxVolunteerSize" : "9223372036854775807"
   }, {
     "eventName" : "picking litter",
