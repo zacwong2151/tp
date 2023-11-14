@@ -286,17 +286,20 @@ Format: `elist`
 
 Finds events whose name contain any of the given keywords.
 
-Format: `efind n/NAME…​`
+Format: `efind n/EVENT_NAME [n/MORE_EVENT_NAME]... ​`
 
-* At least one NAME keyword must be provided.
+Parameters:
+* n/ - Event name to be searched
+
+Restrictions:
+* At least one EVENT_NAME keyword must be provided.
 * The search is case-insensitive. e.g `n/fixING comPUTErs` will match `fixing computers`.
 * Allows partial matching of keywords e.g. `n/fix` will match `fixing computers`.
-* Events matching **at least one** NAME keyword will be returned (i.e. `OR` search).
+* Events matching **at least one** EVENT_NAME keyword will be returned (i.e. `OR` search).
 
 Examples:
 * `efind n/food` returns `food donaton` and `cooking food`
 * `efind n/litter n/teaching` returns `picking litter` and `teaching kids`<br>
-
 
 ![result for 'find picking litter and teaching kids event'](images/findEventsResult.png)
 
