@@ -334,7 +334,7 @@ Restrictions:
 
 Examples:
 * `eshow 7`
-  * Creates a pop-up window containing all details of the event at index `7`.
+  * Shows a pop-up window containing all details of the event at index `7`.
 
 ### Deleting an event: `edelete`
 
