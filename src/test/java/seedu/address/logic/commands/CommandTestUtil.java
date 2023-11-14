@@ -130,10 +130,9 @@ public class CommandTestUtil {
     public static final EventEditCommand.EditEventDescriptor DESC_HELPOUT;
 
     static {
-        DESC_AMY = new EditVolunteerDescriptorBuilder().withName(VALID_NAME_AMY)
-                .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withSkills(VALID_SKILL_FRIEND).build();
-        DESC_BOB = new EditVolunteerDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
+        DESC_AMY = new EditVolunteerDescriptorBuilder().withPhone(VALID_PHONE_AMY)
+                .withEmail(VALID_EMAIL_AMY).withSkills(VALID_SKILL_FRIEND).build();
+        DESC_BOB = new EditVolunteerDescriptorBuilder().withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
                 .withSkills(VALID_SKILL_HUSBAND, VALID_SKILL_FRIEND).build();
     }
 

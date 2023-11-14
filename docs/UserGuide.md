@@ -170,10 +170,9 @@ Examples:
 
 Edits an existing volunteer in the volunteer list.
 
-Format: `vedit VOLUNTEER_INDEX [n/NAME] [p/PHONE] [e/EMAIL] [s/SKILL]…​`
+Format: `vedit VOLUNTEER_INDEX [p/PHONE] [e/EMAIL] [s/SKILL]…​`
 
 Parameters:
-* n/ - Volunteer name
 * p/ - Volunteer phone number
 * e/ - Volunteer email
 * s/ - Volunteer skill
@@ -184,7 +183,7 @@ Restrictions:
 * `VOLUNTEER_INDEX` **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing skills, the e**x**isting skills of the volunteer will be removed i.e adding of skills is not cumulative.
+* When editing skills, the existing skills of the volunteer will be removed i.e adding of skills is not cumulative.
 
 <box type="tip" seamless>
 
@@ -195,8 +194,8 @@ specifying any skills after it.
 Examples:
 * `vedit 1 p/91234567 e/johndoe@example.com`
   * Edits the phone number and email address of the 1st volunteer to be `91234567` and `johndoe@example.com` respectively.
-* `vedit 2 n/Betsy Crower s/`
-  * Edits the name of the 2nd volunteer to be `Betsy Crower` and clears all existing skills.
+* `vedit 2 p/92345678 s/`
+  * Edits the phone number of the 2nd volunteer to be `92345678` and clears all existing skills.
 
 
 ### Deleting a volunteer profile: `vdelete`
@@ -581,7 +580,7 @@ coming soon
 | **Add a quantity of materials to an event**   | `eaddm eid/EVENT_INDEX m/MATERIALS_AND_LOGISTICS_NEEDED`<br> e.g., `eaddm eid/1 m/10 potato`                                                                                                                                                                                                                                            |
 | **Create a new volunteer profile**            | `vcreate n/VOLUNTEER_NAME p/PHONE_NUMBER e/EMAIL [s/SKILLS]...`<br> e.g.,`vcreate n/John Lim p/81234567 e/john123@gmail.com s/Cooking`                                                                                                                                                                                                  |
 | **List all volunteer profiles**               | `vlist`                                                                                                                                                                                                                                                                                                                                 |
-| **Edit a volunteer profile**                  | `vedit VOLUNTEER_INDEX [n/NAME] [p/PHONE] [e/EMAIL] [s/SKILL]…​` <br> e.g., `vedit 1 p/91234567 e/johndoe@example.com`                                                                                                                                                                                                                   |
+| **Edit a volunteer profile**                  | `vedit VOLUNTEER_INDEX [p/PHONE] [e/EMAIL] [s/SKILL]…​` <br> e.g., `vedit 1 p/91234567 e/johndoe@example.com`                                                                                                                                                                                                                           |
 | **Delete a volunteer profile**                | `vdelete VOLUNTEER_INDEX` <br> e.g., `vdelete 4`                                                                                                                                                                                                                                                                                        |
 | **Add a volunteer to an event**               | `eaddv vid/VOLUNTEER_INDEX eid/EVENT_INDEX`<br> e.g., `eaddv vid/1 eid/3`                                                                                                                                                                                                                                                               |
 | **Check for volunteers assigned to an event** | `elistv EVENT_INDEX` <br> e.g. `elistv 8`                                                                                                                                                                                                                                                                                               |

@@ -2,7 +2,6 @@ package seedu.address.logic.commands.volunteercommands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SKILL;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_VOLUNTEERS;
@@ -40,7 +39,6 @@ public class VolunteerEditCommand extends Command {
             + "by the index number used in the displayed volunteer list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_SKILL + "SKILL]...\n"
@@ -100,14 +98,14 @@ public class VolunteerEditCommand extends Command {
                                                    EditVolunteerDescriptor editVolunteerDescriptor) {
         assert volunteerToEdit != null;
 
-        Name updatedName = editVolunteerDescriptor.getName().orElse(volunteerToEdit.getName());
+        Name name = volunteerToEdit.getName();
         Phone updatedPhone = editVolunteerDescriptor.getPhone().orElse(volunteerToEdit.getPhone());
         Email updatedEmail = editVolunteerDescriptor.getEmail().orElse(volunteerToEdit.getEmail());
         Set<Skill> updatedSkills = editVolunteerDescriptor.getSkills().orElse(volunteerToEdit.getSkills());
         Set<EventName> updatedAssignedEvents = editVolunteerDescriptor.getAssignedEvents()
                 .orElse(volunteerToEdit.getAssignedEvents());
 
-        return new Volunteer(updatedName, updatedPhone, updatedEmail, updatedSkills, updatedAssignedEvents);
+        return new Volunteer(name, updatedPhone, updatedEmail, updatedSkills, updatedAssignedEvents);
     }
 
     @Override
@@ -139,7 +137,6 @@ public class VolunteerEditCommand extends Command {
      * corresponding field value of the volunteer.
      */
     public static class EditVolunteerDescriptor {
-        private Name name;
         private Phone phone;
         private Email email;
         private Set<Skill> skills;
@@ -152,7 +149,6 @@ public class VolunteerEditCommand extends Command {
          * A defensive copy of {@code skills} is used internally.
          */
         public EditVolunteerDescriptor(EditVolunteerDescriptor toCopy) {
-            setName(toCopy.name);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setSkills(toCopy.skills);
@@ -163,15 +159,7 @@ public class VolunteerEditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, skills, assignedEvents);
-        }
-
-        public void setName(Name name) {
-            this.name = name;
-        }
-
-        public Optional<Name> getName() {
-            return Optional.ofNullable(name);
+            return CollectionUtil.isAnyNonNull(phone, email, skills, assignedEvents);
         }
 
         public void setPhone(Phone phone) {
@@ -237,8 +225,7 @@ public class VolunteerEditCommand extends Command {
             }
 
             EditVolunteerDescriptor otherEditVolunteerDescriptor = (EditVolunteerDescriptor) other;
-            return Objects.equals(name, otherEditVolunteerDescriptor.name)
-                    && Objects.equals(phone, otherEditVolunteerDescriptor.phone)
+            return Objects.equals(phone, otherEditVolunteerDescriptor.phone)
                     && Objects.equals(email, otherEditVolunteerDescriptor.email)
                     && Objects.equals(skills, otherEditVolunteerDescriptor.skills)
                     && Objects.equals(assignedEvents, otherEditVolunteerDescriptor.assignedEvents);
@@ -247,7 +234,6 @@ public class VolunteerEditCommand extends Command {
         @Override
         public String toString() {
             return new ToStringBuilder(this)
-                    .add("name", name)
                     .add("phone", phone)
                     .add("email", email)
                     .add("skills", skills)
