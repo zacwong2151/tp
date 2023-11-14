@@ -46,10 +46,10 @@ destroy EventDeleteCommandParser
 iVolunteerParser --> LogicManager : d
 deactivate iVolunteerParser
 
-LogicManager -> EventDeleteCommand : execute()
+LogicManager -> EventDeleteCommand : execute(model)
 activate EventDeleteCommand
 
-EventDeleteCommand -> Model : deleteEvent(1)
+EventDeleteCommand -> Model : deleteEvent(e)
 activate Model
 
 Model --> EventDeleteCommand

@@ -60,10 +60,10 @@ destroy EventEditCommandParser
 iVolunteerParser --> LogicManager : d
 deactivate iVolunteerParser
 
-LogicManager -> EventEditCommand : execute()
+LogicManager -> EventEditCommand : execute(model)
 activate EventEditCommand
 
-EventEditCommand -> Model : setEvent()
+EventEditCommand -> Model : setEvent(old e, new e)
 activate Model
 
 Model --> EventEditCommand

@@ -514,18 +514,18 @@ The following sequence diagram shows how the event show operation works:
   * Pros: Might be easier to implement as the `EventListPanel` will already have access to the event information as it has `filteredEventList` as one of its fields.
   * Cons: Depletes the user experience as they will have to use the `elist` command, followed by the `eshow` command if they want to see the event information of another event.
 
-### Delete the event from a list of events
+### Delete an event from a list of events
 
 ### Implementation
 
-When deleting an event, the event in the EventStorage will also be deleted. The new event list is then written into the 
+When deleting an event, the event in the `EventStorage` will also be deleted. The new event list is then written into the 
 JSON file, `eventStorage.json`.
 
 Given below is an example usage scenario and how the mechanism of the event delete behaves at each step.
 
 Step 1. The user launches the application and enters the command to delete an event. For example, `edelete 1`. When 
 iVolunteer receives the input, it will parse the input and split it into command word and detail, which is the index. 
-The index will then be checked if it is valid by parsing it from String to an integer.
+The index will then be checked if it is valid by parsing it from `String` to an integer.
 
 Step 2. If the index is valid, a new `EventDeleteCommand` will be created and executed. During its execution, 
 the application will find for the event in `EventStorage` in the `ModelManager` and delete it. Then, the application 
@@ -537,7 +537,7 @@ participating in the event.
 Step 3. When the `EventDeleteCommand` finishes executing, the updated `EventStorage` is written into `eventStorage.json` 
 file.
 
-The following the activity diagram for this feature.
+Here is the activity diagram for this feature:
 
 <puml src="diagrams/EventDeleteActivityDiagram.puml" alt="EventActivitySequenceDiagram" />
 
@@ -553,7 +553,7 @@ The following the activity diagram for this feature.
     * Pros: Consistency is adhered.
     * Cons: More steps will be taken to implement and it is redundant since the index is the only field.
 
-### Editing the detail of an event
+### Editing the details of an event
 
 ### Implementation
 
@@ -570,7 +570,7 @@ iVolunteer receives the input, it will parse the input and split it into command
 includes the index. The index will then be checked if it is valid by parsing it from String to an integer.
 
 Step 2. If the index is valid, a new `EditEventDescriptor` object will be created. The fields of the 
-`EditEventDescriptor` object will be assigned by the details from user input after they are validated and then passed to 
+`EditEventDescriptor` object will be filled with the details from user input after they are validated and then passed to 
 a `EventEditCommand` object. During the execution of `EventEditCommand`, the application will find for the event 
 in `EventStorage` in the `ModelManager` and replace it with a new `Event` with the details from `EditEventDescriptor`.
 If the field of the event is not updated, the previous detail will be used.
@@ -791,8 +791,6 @@ Meanwhile, the activity diagram below shows the general workflow when a `Volunte
 ### \[Proposed\] Data archiving
 
 _{Explain here how the data archiving feature will be implemented}_
-
---------------------------------------------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -1858,7 +1856,7 @@ Currently, the duplicate detection for roles and materials within the Event mode
 ### Improve uniqueness of the volunteers and events with the same name
 The current implementation of the iVolunteer can only accept volunteer and event with different name.
 However, this is not the best option as new volunteer and event with name existed in the storage must change in order to be
-added into iVolunteer. In order to have volunteer and event with the same name, we plan to implement unique id to
+added into iVolunteer. In order to have volunteer and event with the same name, we plan to implement unique ID to
 distinguish them in the coming version. 
 
 ### Improve error message for Create Event Feature
