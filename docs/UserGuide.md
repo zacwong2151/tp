@@ -12,8 +12,12 @@ iVolunteer is your dedicated application for volunteer coordination, designed wi
 
 **Graphical User Interface (GUI):** a form of user interface that allows users to interact with electronic devices through graphical icons and audio indicators such as primary notation.
 
+<div style="page-break-after: always;"></div>
+
 <!-- * Table of Contents -->
 <page-nav-print />
+
+<div style="page-break-after: always;"></div>
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -39,6 +43,8 @@ iVolunteer is your dedicated application for volunteer coordination, designed wi
 
    * `ecreate n/food donation r/10 chef r/20 packer sd/23/9/2023 1500 l/hougang dsc/help food distribution m/50 potatoes b/50.00`
      * Creates an event with name `food donation`, roles needed `10 chef` and `20 packer`, event date `23rd September 2023, 3pm`, location `hougang`, description `help food distribution`, materials needed `50 potatoes` and budget `$50`
+
+<div style="page-break-after: always;"></div>
 
    * `edelete 3`
      * Deletes the 3rd event in the current event list
@@ -84,6 +90,8 @@ iVolunteer is your dedicated application for volunteer coordination, designed wi
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
 
+<div style="page-break-after: always;"></div>
+
 ### Viewing help: `help`
 
 Shows a message explaining how to access the help page.
@@ -118,6 +126,8 @@ Restrictions:
   * A volunteer is considered duplicate if: his name already exists in the volunteer list.
   * Volunteers with the same phone number or email address are not considered as duplicates.
 
+<div style="page-break-after: always;"></div>
+
 Examples:
 * `vcreate n/John p/91234567 e/john123@gmail.com`
   * creates a volunteer named `John` with a phone number of `91234567` and an email address of `john123@gmail.com`, with no specific skills. The volunteer profile will be appended to the bottom of the volunteer list.
@@ -151,6 +161,8 @@ Restrictions:
 * Allows partial matching of keywords e.g. `n/Han` will match `Hans`.
 * Both the volunteer name and corresponding skills can be searched.
 * The order of the keywords does not matter. e.g. `s/chef n/Hans` and `n/Hans s/chef` are valid inputs.
+
+<div style="page-break-after: always;"></div>
 
 Examples:
 * `vfind n/David` (user searches for **one** name)
@@ -214,6 +226,8 @@ Examples:
 * `vlist`, followed by `vdelete 6` will remove the 6th volunteer displayed in the volunteer list.
 * `vfind n/Betsy` followed by `vdelete 1` deletes the 1st volunteer in the results of the `vfind` command.
 
+<div style="page-break-after: always;"></div>
+
 ### Creating an event: `ecreate`
 
 Volunteer coordinators can create new events.
@@ -274,6 +288,8 @@ Format: `elist`
 **Tip:** Events are sorted automatically in chronological order!
 </box>
 
+<div style="page-break-after: always;"></div>
+
 ### Locating events by name: `efind`
 
 Finds events whose name contain any of the given keywords.
@@ -292,6 +308,7 @@ Examples:
 
 ![result for 'find picking litter and teaching kids event'](images/findEventsResult.png)
 
+<div style="page-break-after: always;"></div>
 
 ### Reading an individual event: `eshow`
 Volunteer coordinators can read up more about an individual event, to familiarize themselves with its requirements while planning for it.
@@ -363,6 +380,8 @@ Restrictions:
 * If there is nothing follow by the material prefix in the input, the materials of the event will be overwritten and reset to empty.
 * The budget argument must be a number in 2 decimal places.
 
+<div style="page-break-after: always;"></div>
+
 **Tips:** 
 * At least 1 optional fields must be provided.
 * The assigned volunteers cannot be edited with eedit, to do so, refer to [eaddv](#adding-a-volunteer-into-an-event-eaddv) and [eremovev](#removing-a-volunteer-from-an-event-eremovev) for more detail information.
@@ -396,6 +415,8 @@ Examples:
 * `ecreate n/clean beach m/10 trash bags ...` (refer to [ecreate](#creating-an-event-ecreate) above for full command) creates an 
   event `clean beach` that requires `20 trash bags`. By performing `efind n/clean beach`, then `eaddm eid/1 m/10 trash bags`,
   the event `clean beach` will now contain `10 / 20 trash bags`.
+
+<div style="page-break-after: always;"></div>
 
 ### Adding a volunteer into an event: `eaddv`
 
@@ -433,6 +454,8 @@ Examples:
 * `elistv 1`
   * Lists the volunteers added to the event at index 1 of the displayed event list.
 
+<div style="page-break-after: always;"></div>
+
 ### Listing all events joined by a volunteer: `vliste`
 
 Shows a list of all events joined by a volunteer.
@@ -464,6 +487,8 @@ Restrictions:
 Examples:
 * `eremovev vid/1 eid/1`
   * Removes the volunteer at index 1 of the displayed volunteer list from the event at index 1 of the displayed event list.
+
+<div style="page-break-after: always;"></div>
 
 ### Undo a Command: `undo`
 
@@ -505,6 +530,8 @@ Format: `exit`
 
 iVolunteer data is automatically saved in the hard disk after any command is executed. There is no need to manually save your data.
 
+<div style="page-break-after: always;"></div>
+
 ### Editing the data file
 
 iVolunteer data is saved automatically as two JSON files, `[JAR file location]/data/volunteerStorage.json` (volunteer storage) and `[JAR file location]/data/eventStorage.json` (event storage and _event-volunteer interactions_). Advanced users are welcome to update data directly by editing both data files.
@@ -536,6 +563,9 @@ _Details coming soon ..._
 
 **Q**: How do I fill up the *role* information within the UI?<br><br>
 ![Adding role in UI](images/user-guide/add-to-roles.png)<br><br>
+
+<div style="page-break-after: always;"></div>
+
 **A**: To add a **volunteer** with a certain role, you can use the [`eaddv` command](#adding-a-volunteer-into-an-event-eaddv) as follows:
 1. Ensure that the volunteer's skill matches the role of the event you want to fill up (both role and skills are case-sensitive).
    * In the example image above, volunteers with skills `chef` or `cooking` can be added. If not, you can use the [`eedit` command](#edit-the-details-of-an-event-eedit) (e.g. `eedit VOLUNTEER_INDEX s/cooking s/other_skill`) to change the volunteer's skills to match the role.
@@ -557,6 +587,8 @@ coming soon
 
 --------------------------------------------------------------------------------------------------------------------
 
+<div style="page-break-after: always;"></div>
+
 ## Command summary
 
 | Action                                        | Format, Examples                                                                                                                                                                                                                                                                                                                           |
@@ -577,3 +609,5 @@ coming soon
 | **Check for events joined by a volunteer**    | `vliste VOLUNTEER_INDEX` <br> e.g. `vliste 3`                                                                                                                                                                                                                                                                                              |
 | **Remove a volunteer from an event**          | `eremovev vid/VOLUNTEER_INDEX eid/EVENT_INDEX`<br> e.g., `eremovev vid/3 eid/4`                                                                                                                                                                                                                                                            |
 | **Exits iVolunteer**                          | `exit`                                                                                                                                                                                                                                                                                                                                     |
+
+<div style="page-break-before:always"></div> 
