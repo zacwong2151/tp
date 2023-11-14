@@ -347,7 +347,7 @@ Examples:
 
 Volunteer coordinators can edit the details of the events.
 
-Format: `eedit EVENT_INDEX [r/NUMBER_OF_ROLES ROLES_NEEDED]... [sd/START_DATE_AND_TIME] [ed/END_DATE_AND_TIME] [l/LOCATION] [dsc/DESCRIPTION] [m/MATERIAL_WITH_QUANTITY]... [b/BUDGET] [vs/MAX_VOLUNTEER_COUNT]`
+Format: `eedit EVENT_INDEX [r/ROLE_WITH_QUANTITY]... [sd/START_DATE_AND_TIME] [ed/END_DATE_AND_TIME] [l/LOCATION] [dsc/DESCRIPTION] [m/MATERIAL_WITH_QUANTITY]... [b/BUDGET] [vs/MAX_VOLUNTEER_COUNT]`
 
 Parameters:
 * r/ - Roles needed for the event and its quantity
