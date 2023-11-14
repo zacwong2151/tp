@@ -1744,3 +1744,9 @@ The current implementation of the name format feature only supports alphanumeric
 
 ### Change `eaddm` command format to maintain consistency
 The current implementation of `eaddm` is as follows: `eaddm eid/EVENT_INDEX m/MATERIALS_AND_LOGISTICS_NEEDED`. However, this is inconsistent with other Event commands that only involve a single event, like `edelete` or `eshow`, where the index is directly stated instead of using the `eid/` parameter. This will be fixed eventually to improve usability for the app and prevent inconsistency in command formats for features.
+
+### Improve list panel display for Event Remove Volunteer Feature
+If the volunteer list panel is currently displaying the volunteers assigned to a particular event (used `elistv` command), performing an `eremovev` command to remove a volunteer from the event should result in the removal of this volunteer from the displayed list. <br>
+However, our implementation only updates this displayed list if the user executes the `elistv` command for the same event again. 
+The same occurrence also happens when the event list panel is currently displaying the events joined by a particular volunteer (used `vliste` command), and an `eremovev` command is executed to remove this volunteer from the event.
+We plan to correct this behaviour as it might cause confusion to our users.
