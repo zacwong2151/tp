@@ -514,24 +514,92 @@ The following sequence diagram shows how the event show operation works:
   * Pros: Might be easier to implement as the `EventListPanel` will already have access to the event information as it has `filteredEventList` as one of its fields.
   * Cons: Depletes the user experience as they will have to use the `elist` command, followed by the `eshow` command if they want to see the event information of another event.
 
-### Delete the event from a list of event
+### Delete an event from a list of events
 
 #### Implementation
 
-To facilitate the event delete command, the class EventDeleteCommand is created. The class extends from the interface
-Command. When the command is then parsed and executed.
+When deleting an event, the event in the `EventStorage` will also be deleted. The new event list is then written into the 
+JSON file, `eventStorage.json`.
 
 Given below is an example usage scenario and how the mechanism of the event delete behaves at each step.
 
-Step 1. When the user input the event delete command, it will be parsed by IVolunteerParser. Then the keyword of the command is noticed and EventDeleteCommandParser is called.
+Step 1. The user launches the application and enters the command to delete an event. For example, `edelete 1`. When 
+iVolunteer receives the input, it will parse the input and split it into command word and detail, which is the index. 
+The index will then be checked if it is valid by parsing it from `String` to an integer.
 
-<puml src="diagrams/DeleteSequenceDiagram.puml" alt="DeleteSequenceDiagram" />
+Step 2. If the index is valid, a new `EventDeleteCommand` will be created and executed. During its execution, 
+the application will find for the event in `EventStorage` in the `ModelManager` and delete it. Then, the application 
+will go through the volunteers in `VolunteerStorage` in `ModelManager` as well to remove the volunteers that were 
+participating in the event.
 
-Step 2. When the command is parsed, the index of the event in the event list is then determined by parsing from String to an integer.
+<puml src="diagrams/EventDeleteSequenceDiagram.puml" alt="EventDeleteSequenceDiagram" />
 
-Step 3. The command is then executed and with the index and the event is deleted from the filtered list.
+Step 3. When the `EventDeleteCommand` finishes executing, the updated `EventStorage` is written into `eventStorage.json` 
+file.
 
-Step 4. Then the storage will also be updated accordingly by the filtered list.
+Here is the activity diagram for this feature:
+
+<puml src="diagrams/EventDeleteActivityDiagram.puml" alt="EventActivitySequenceDiagram" />
+
+#### Design considerations:
+
+**Aspect: Prefix for the event id:**
+
+* **Alternative 1 (current choice):** Proceed without prefix.
+    * Pros: Easy to implement.
+    * Cons: Lack of consistency.
+
+* **Alternative 2:** Include prefix. 
+    * Pros: Consistency is adhered.
+    * Cons: More steps will be taken to implement and it is redundant since the index is the only field.
+
+### Editing the details of an event
+
+### Implementation
+
+The mechanism to edit the detail of the event is handled by the `EditEventDescriptor` class. The details for the 
+fields to be updated are collected and assigned to the corresponding fields of `EditEventDescriptor` object. 
+When editing an event, the event in the `EventStorage` will also be edited. The new event list is then written into the
+JSON file, `eventStorage.json`.
+
+Given below is an example usage scenario and how the mechanism of the event edit behaves at each step.
+
+Step 1. The user launches the application and enters the command to edit an event. For example,
+`eedit 1 r/10 cleaner sd/1/1/2023 1100 ed/2/2/2023 2200 l/NUS dsc/Help clean out m/10 clothes b/50.00 vs/10`. When
+iVolunteer receives the input, it will parse the input and split it into command word and the update details which 
+includes the index. The index will then be checked if it is valid by parsing it from String to an integer.
+
+Step 2. If the index is valid, a new `EditEventDescriptor` object will be created. The fields of the 
+`EditEventDescriptor` object will be filled with the details from user input after they are validated and then passed to 
+a `EventEditCommand` object. During the execution of `EventEditCommand`, the application will find for the event 
+in `EventStorage` in the `ModelManager` and replace it with a new `Event` with the details from `EditEventDescriptor`.
+If the field of the event is not updated, the previous detail will be used.
+
+<puml src="diagrams/EventEditSequenceDiagram.puml" alt="EventEditSequenceDiagram" />
+
+Step 3. When the `EventEditCommand` finishes executing, the updated `EventStorage` is written into `eventStorage.json`
+file.
+
+<puml src="diagrams/EventStorageClassDiagram.puml" alt="EventStorageClassDiagram" />
+
+#### Design considerations:
+
+**Aspect: How the event is updated:**
+
+* **Alternative 1 (current choice):** Replacing the event with a new event.
+    * Pros:
+        * Improves the overall structure and readability of the code.
+    * Cons:
+        * Results in more code.
+        * More memory usage as new object have to be created to store the update details.
+
+* **Alternative 2:** Update the event directly.
+    * Pros:
+        * Less code required.
+        * Less memory usage as objects do not have to be created to store the update details.
+    * Cons:
+        * The Event class will be cluttered with methods to set the fields which will violate the principle of
+            encapsulation.
 
 ### Tracking amount of roles and materials
 
@@ -723,7 +791,6 @@ Meanwhile, the activity diagram below shows the general workflow when a `Volunte
 ### \[Proposed\] Data archiving
 
 _{Explain here how the data archiving feature will be implemented}_
-
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -1718,11 +1785,8 @@ The following activity diagram summarizes what happens when a user attempts to c
 ### Specific error message for duplicate volunteers
 
 This fix is a follow up to the proposed change to change the definition of duplicate volunteers. Volunteer coordinators may find themselves inadvertently adding duplicate volunteers. With our current implementation, the error message that shows up is `This volunteer already exists in the volunteer list`.
-
 However, this error message is not descriptive enough. Users would not be able to identify whether the issue is caused by a duplicate email address or a duplicate phone number. Users are also unable to identify which existing user in the volunteer list is causing the error to occur.
-
 Thus, we plan to make the error message also mention the reason for the failure, e.g. `The volunteer could not be added because his phone number is held by another volunteer: VOLUNTEER_NAME`.
-
 The following image shows a sample UI of what the error message would look like when you attempt to add a volunteer who has the same phone number as `Alexis Yeoh`
 
 <img src="images/DG-duplicateVolunteerError.png" width="500px">
@@ -1732,6 +1796,12 @@ Currently, the duplicate detection for roles and materials within the Event mode
    - strengthen the duplicate detection such that any two roles or materials with the same name are counted as duplicates (e.g. `2 / 50 farmers` and `3 / 40 farmers` will now be considered duplicates)
    - produce an error message `There is more than 1 role/material with the same name: [ROLE/MATERIAL NAME]!` whenever there is a duplicate role/material such that volunteer coordinators are aware of these duplicates and fix the respective `ecreate` or `eedit` command.
    - **Example:** With these changes, the command `ecreate n/Learn farming r/30 farmers r/40 farmers r/100 participants sd/18/11/2023 1230 l/lim chu kang dsc/learn farming` will produce the error message `There is more than 1 role with the same name: farmers!` since `r/30 farmers` and `r/40 farmers` are duplicates.
+
+### Improve uniqueness of the volunteers and events with the same name
+The current implementation of the iVolunteer can only accept volunteer and event with different name.
+However, this is not the best option as new volunteer and event with name existed in the storage must change in order to be
+added into iVolunteer. In order to have volunteer and event with the same name, we plan to implement unique ID to
+distinguish them in the coming version. 
 
 ### Improve error message for Create Event Feature
 The current implementation of the Create Event Feature checks the input command and shows error messages for invalid parameters one at a time.<br>
@@ -1750,3 +1820,4 @@ If the volunteer list panel is currently displaying the volunteers assigned to a
 However, our implementation only updates this displayed list if the user executes the `elistv` command for the same event again. 
 The same occurrence also happens when the event list panel is currently displaying the events joined by a particular volunteer (used `vliste` command), and an `eremovev` command is executed to remove this volunteer from the event.
 We plan to correct this behaviour as it might cause confusion to our users.
+
