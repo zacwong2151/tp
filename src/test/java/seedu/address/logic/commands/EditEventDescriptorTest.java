@@ -8,7 +8,6 @@ import static seedu.address.logic.commands.CommandTestUtil.DESC_HELPOUT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_BUDGET_HELPOUT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_HELPOUT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_END_DATETIME_HELPOUT;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENTNAME_HELPOUT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_HELPOUT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_MATERIAL_HANDS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ROLE_BRAIN;
@@ -19,6 +18,9 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.commands.eventcommands.EventEditCommand.EditEventDescriptor;
 import seedu.address.testutil.EditEventDescriptorBuilder;
 
+/**
+ * Contains unit test for EditEventDescriptor class.
+ */
 public class EditEventDescriptorTest {
 
     @Test
@@ -39,14 +41,9 @@ public class EditEventDescriptorTest {
         // different values -> returns false
         assertFalse(DESC_CLEANUP.equals(DESC_HELPOUT));
 
-        // different name -> returns false
-        EditEventDescriptor editedCleanUp = new EditEventDescriptorBuilder(DESC_CLEANUP)
-                                                    .withEventName(VALID_EVENTNAME_HELPOUT).build();
-        assertFalse(DESC_CLEANUP.equals(editedCleanUp));
-
         // different start Date -> returns false
-        editedCleanUp = new EditEventDescriptorBuilder(DESC_CLEANUP).withStartDate(VALID_START_DATETIME_HELPOUT)
-                                                                    .build();
+        EditEventDescriptor editedCleanUp = new EditEventDescriptorBuilder(DESC_CLEANUP)
+                .withStartDate(VALID_START_DATETIME_HELPOUT).build();
         assertFalse(DESC_CLEANUP.equals(editedCleanUp));
 
         // different end date -> returns false
@@ -77,8 +74,7 @@ public class EditEventDescriptorTest {
     @Test
     public void toStringMethod() {
         EditEventDescriptor editEventDescriptor = new EditEventDescriptor();
-        String expected = EditEventDescriptor.class.getCanonicalName() + "{event name="
-                + editEventDescriptor.getEventName().orElse(null) + ", roles="
+        String expected = EditEventDescriptor.class.getCanonicalName() + "{roles="
                 + editEventDescriptor.getRoles().orElse(null) + ", start date="
                 + editEventDescriptor.getStartDate().orElse(null) + ", end date="
                 + editEventDescriptor.getEndDate().orElse(null) + ", location="

@@ -7,7 +7,6 @@ import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_DESC_CLEA
 import static seedu.address.logic.commands.CommandTestUtil.END_DATETIME_DESC_CLEANUP;
 import static seedu.address.logic.commands.CommandTestUtil.END_DATETIME_DESC_HELPOUT;
 import static seedu.address.logic.commands.CommandTestUtil.EVENTNAME_DESC_CLEANUP;
-import static seedu.address.logic.commands.CommandTestUtil.EVENTNAME_DESC_HELPOUT;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_BUDGET_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DESCRIPTION_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_END_DATETIME_DESC;
@@ -27,7 +26,6 @@ import static seedu.address.logic.commands.CommandTestUtil.START_DATETIME_DESC_H
 import static seedu.address.logic.commands.CommandTestUtil.VALID_BUDGET_CLEANUP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_CLEANUP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_END_DATETIME_CLEANUP;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENTNAME_CLEANUP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_CLEANUP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_HELPOUT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_MATERIAL_TRASHBAG;
@@ -37,7 +35,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_BUDGET;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MATERIAL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATETIME;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -56,7 +53,6 @@ import seedu.address.logic.parser.eventcommandparsers.EventEditCommandParser;
 import seedu.address.model.event.Budget;
 import seedu.address.model.event.DateTime;
 import seedu.address.model.event.Description;
-import seedu.address.model.event.EventName;
 import seedu.address.model.event.Location;
 import seedu.address.model.event.Material;
 import seedu.address.model.event.Role;
@@ -100,8 +96,6 @@ public class EventEditCommandParserTest {
 
     @Test
     public void parse_invalidValue_failure() {
-        // invalid event name
-        assertParseFailure(parser, "1" + INVALID_EVENTNAME_DESC, EventName.MESSAGE_CONSTRAINTS);
         // invalid role
         assertParseFailure(parser, "1" + INVALID_ROLE_DESC, Role.MESSAGE_CONSTRAINTS);
         // invalid start date
@@ -142,18 +136,18 @@ public class EventEditCommandParserTest {
                 Material.MESSAGE_CONSTRAINTS);
 
         // multiple invalid values, but only the first invalid value is captured
-        assertParseFailure(parser, "1" + INVALID_EVENTNAME_DESC
-                    + INVALID_START_DATETIME_DESC + LOCATION_DESC_CLEANUP, EventName.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "1" + INVALID_START_DATETIME_DESC + LOCATION_DESC_CLEANUP,
+                DateTime.MESSAGE_CONSTRAINTS);
     }
 
     @Test
     public void parse_allFieldsSpecified_success() {
         Index targetIndex = INDEX_SECOND;
-        String userInput = targetIndex.getOneBased() + EVENTNAME_DESC_CLEANUP + ROLE_DESC_CLEANER
+        String userInput = targetIndex.getOneBased() + ROLE_DESC_CLEANER
                             + START_DATETIME_DESC_CLEANUP + END_DATETIME_DESC_CLEANUP + LOCATION_DESC_CLEANUP
                             + DESCRIPTION_DESC_CLEANUP + MATERIAL_DESC_TRASHBAG + BUDGET_DESC_CLEANUP;
 
-        EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withEventName(VALID_EVENTNAME_CLEANUP)
+        EditEventDescriptor descriptor = new EditEventDescriptorBuilder()
                 .withStartDate(VALID_START_DATETIME_CLEANUP).withEndDate(VALID_END_DATETIME_CLEANUP)
                 .withRoles(VALID_ROLE_CLEANER).withLocation(VALID_LOCATION_CLEANUP)
                 .withMaterials(VALID_MATERIAL_TRASHBAG).withDescription(VALID_DESCRIPTION_CLEANUP)
@@ -177,18 +171,12 @@ public class EventEditCommandParserTest {
 
     @Test
     public void parse_oneFieldSpecified_success() {
-        // name
         Index targetIndex = INDEX_THIRD;
-        String userInput = targetIndex.getOneBased() + EVENTNAME_DESC_CLEANUP;
-        EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withEventName(VALID_EVENTNAME_CLEANUP)
-                                            .build();
-        EventEditCommand expectedCommand = new EventEditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
 
         // roles
-        userInput = targetIndex.getOneBased() + ROLE_DESC_CLEANER;
-        descriptor = new EditEventDescriptorBuilder().withRoles(VALID_ROLE_CLEANER).build();
-        expectedCommand = new EventEditCommand(targetIndex, descriptor);
+        String userInput = targetIndex.getOneBased() + ROLE_DESC_CLEANER;
+        EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withRoles(VALID_ROLE_CLEANER).build();
+        EventEditCommand expectedCommand = new EventEditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // start date
@@ -245,13 +233,12 @@ public class EventEditCommandParserTest {
         assertParseFailure(parser, userInput, Messages.getErrorMessageForDuplicatePrefixes(PREFIX_BUDGET));
 
         // multiple valid fields repeated
-        userInput = targetIndex.getOneBased() + START_DATETIME_DESC_CLEANUP + EVENTNAME_DESC_CLEANUP
-                + DESCRIPTION_DESC_CLEANUP + START_DATETIME_DESC_CLEANUP + EVENTNAME_DESC_CLEANUP
-                + DESCRIPTION_DESC_CLEANUP + EVENTNAME_DESC_HELPOUT + START_DATETIME_DESC_HELPOUT
+        userInput = targetIndex.getOneBased() + START_DATETIME_DESC_CLEANUP + DESCRIPTION_DESC_CLEANUP
+                + START_DATETIME_DESC_CLEANUP + DESCRIPTION_DESC_CLEANUP + START_DATETIME_DESC_HELPOUT
                 + END_DATETIME_DESC_HELPOUT;
 
         assertParseFailure(parser, userInput,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_START_DATETIME, PREFIX_NAME, PREFIX_DESCRIPTION));
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_START_DATETIME, PREFIX_DESCRIPTION));
 
         // multiple invalid values
         userInput = targetIndex.getOneBased() + INVALID_BUDGET_DESC + INVALID_LOCATION_DESC
