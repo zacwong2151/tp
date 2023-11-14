@@ -878,6 +878,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     Use case ends.
 
 **Extensions**
+
 * 1a. Invalid Command Word.
     * 1a1. System prompts user to provide a valid command.
   
@@ -900,14 +901,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   
 * 1e. Start date/time is after end date/time.
     * 1e1. System prompts user to ensure that start date/time is before end date/time.
-  
+
       Use case resumes from step 1.
   
 * 1f. Invalid Budget Argument
     * 1f1. System prompts user to use the correct budget format.
   
       Use case resumes from step 1.
-
 <br>
 
 **Use case UCE02: List all volunteering events**
@@ -923,13 +923,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1a. User did not input a valid command.
 
-    * 1a1. System prompts user to provide a valid command.
-    
+    * 1a1. System prompts the user to provide a valid command.
+
       Use case resumes from step 1.
 
 * 1b. There are no events to list.
 
-  Use case ends.
+    Use case ends.
 
 <br>
 
@@ -958,13 +958,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       Use case resumes from step 2.
 
 * 2c. User did not input a valid index after the command.
-
     * 2c1. System prompts user to input a valid index.
 
       Use case resumes from step 2.
 
 * 2d. User did not leave a single space between the command and the index.
-
     * 2d1. System prompts user to separate parameters with a single space.
 
       Use case resumes from step 2.
@@ -989,7 +987,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes from step 2.
   
-* 2b. Invalid event id.
+* 2b. Invalid event index.
 
     * 2b1. System prompts user to input a valid event index.
   
@@ -1029,6 +1027,158 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 <br>
 
+**Use case UCE06: Edit an event**
+
+**MSS**
+
+1.  User <u>lists all volunteering events (UCE02)</u>.
+2.  User requests to edit a specific event in the event list.
+3.  iVolunteer edits the event.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. Invalid Command Word.
+    * 2a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
+    * 2a2. User enters correct command.
+
+      Use case resumes from step 3.
+
+* 2b. Invalid event id.
+    * 2b1. iVolunteer requests for the correct command with valid event index.
+    * 2b2. User enters correct command.
+      Steps 2b1-2b2 are repeated until the data entered is correct.
+
+      Use case resumes at step 3.
+
+* 2c. Invalid format for roles and materials.
+    * 2c1. System prompts Volunteer Coordinator to use the correct the format for roles or materials or both.
+    * 2c2. User enters correct command.
+
+      Use case resumes from step 3.
+
+* 2d. Invalid Date and Time.
+    * 2d1. System prompts Volunteer Coordinator to use the correct date and time format.
+    * 2d2. User enters correct command.
+
+      Use case resumes from step 3.
+
+* 2e. Start date/time is after end date/time.
+    * 2e1. System prompts Volunteer Coordinator to ensure that start date/time is before end date/time.
+    * 2e2. User enters correct command.
+
+      Use case resumes from step 3.
+
+* 2f. Invalid Budget Argument
+    * 2f1. System prompts Volunteer Coordinator to use the correct budget format.
+    * 2f2. User enters correct command.
+
+      Use case resumes from step 3.
+
+**Use case UCEV01: Add a volunteer into an event**
+
+**MSS**
+
+1.  User <u>lists all volunteering events (UCE02)</u>.
+2.  User <u>lists all volunteers (UCV02)</u>.
+3.  User requests to add a specific volunteer in the volunteer list into a specific event in the event list.
+4.  iVolunteer adds the volunteer into the event.
+
+    Use case ends.
+
+**Extensions**
+
+* 3a. Invalid Command Word.
+    * 3a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
+    * 3a2. User enters correct command.
+      Use case resumes from step 4.
+
+* 3b. Invalid event index or volunteer index or both.
+    * 3b1. iVolunteer requests for the correct command with valid event index and valid volunteer index.
+    * 3b2. User enters correct command.
+      Steps 3b1-3b2 are repeated until the data entered is correct.
+
+      Use case resumes at step 4.
+
+**Use case UCEV02: List out all volunteers in an event**
+
+**MSS**
+
+1.  User <u>lists all volunteering events (UCE02)</u>.
+2.  User requests to view all volunteers added to an event.
+3.  iVolunteer displays all volunteers in the event.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. Invalid Command Word.
+    * 2a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
+    * 2a2. User enters correct command.
+      Use case resumes from step 3.
+
+* 2b. Invalid event index.
+    * 2b1. iVolunteer requests for the correct command with valid event index.
+    * 2b2. User enters correct command.
+      Steps 2b1-2b2 are repeated until the data entered is correct.
+  
+      Use case resumes at step 3.
+
+* 2c. There are no volunteer to list.
+
+  Use case ends.
+
+**Use case UCEV03: Remove a volunteer from an event**
+
+**MSS**
+
+1.  User <u>lists all volunteering events (UCE02)</u>.
+2.  User <u>lists all volunteers (UCV02)</u>.
+3.  User requests to remove a specific volunteer in the volunteer list from a specific event in the event list
+4.  iVolunteer removes the volunteer from the event.
+
+    Use case ends.
+
+**Extensions**
+
+* 3a. Invalid Command Word.
+    * 3a1. iVolunteer prompts Volunteer Coordinator to provide a valid command.
+    * 3a2. User enters correct command.
+
+      Use case resumes from step 4.
+
+* 3b. Invalid event index or volunteer index or both.
+    * 3b1. iVolunteer requests for the correct command with valid event index or volunteer index or both.
+    * 3b2. User enters correct command.
+      Steps 3b1-3b2 are repeated until the data entered is correct.
+
+      Use case resumes at step 4.
+
+**Use case UCE05: Add materials to an event**
+
+**MSS**
+
+1. User <u>creates an event (UCE01)</u> with a certain required quantity of material.
+2. User requests to add a certain quantity to one of the materials in the event.
+3. iVolunteer updates the current quantity of the material, and tracks whether the material's current quantity has already reached or exceeded its required quantity the event.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. Invalid event index.
+    * 2a1. iVolunteer requests for the correct command with valid event index.
+    Use case resumes from Step 2.
+
+* 2b. Specified material is not in the event.
+    * 2b1. iVolunteer alerts the user that the material is not currently in the event, and to re-enter the command again.
+    Use case resumes from Step 2.
+
+* 2c. Material quantity is invalid.
+    * 2c1. iVolunteer alerts the user that the material quantity is invalid and to re-enter the command again.
+    Use case resumes from Step 2.
+
 **Use case UCV01: Create a volunteer**
 
 **MSS**
@@ -1057,7 +1207,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 1c1. System prompts user to separate parameters with a single space.
 
       Use case resumes from step 1.
-  
+
 * 1d. Invalid email.
 
     * 1d1. System prompts user to use the correct email format.
@@ -1130,6 +1280,94 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes from step 2.
 
+**Use case UCEV01: Add volunteer to an event**
+
+**MSS**
+
+1. User <u>creates an event (UCE01)</u> with a certain required quantity of roles.
+2. User <u>creates a volunteer (UCV01)</u> with a certain skill.
+3. User requests to add the volunteer to the event.
+4. System adds the Volunteer to the Event's volunteer list.
+5. System adds the Event to the Volunteer's events joined list.
+6. If volunteer's skill is the same as the event's role, iVolunteer increments the current quantity of this specific role by 1, and tracks whether the roles' current quantity has already reached or exceeded its required quantity in the event.
+
+   Use case ends.
+
+**Extensions**
+
+* 3a. Invalid event index.
+    * 3a1. iVolunteer requests for the correct command with valid event index.
+      Use case resumes from Step 3.
+
+* 3b. Invalid volunteer index.
+    * 3b1. iVolunteer requests for the correct command with valid volunteer index.
+      Use case resumes from Step 3.
+
+* 4a. Volunteer is already in event.
+    * 4a1. iVolunteer alerts user that the volunteer is already in the event and cannot join again.
+      Use case ends.
+
+* 4b. Volunteer is already in another event that clashes in timing with this event.
+    * 4b1. iVolunteer alerts user that the volunteer is already in another clashing event and cannot join this event.
+      Use case ends.
+
+* 4c. Event has already reached capacity and cannot accommodate any other volunteer.
+    * 4c1. iVolunteer alerts user that the event is already full and the volunteer cannot join the event.
+      Use case ends.
+
+* 6a. None of the volunteer's skills match any of the event's roles.
+    * 6a1. The Event's roles are not incremented.
+      Use case ends.
+
+**Use case UCEV02: Remove volunteer from an event**
+
+**MSS**
+
+1. User <u>lists all volunteering events (UCE02)</u>.
+2. User <u>lists all volunteers (UCV02)</u>.
+3. User requests to remove a volunteer from the event.
+4. System removes the Volunteer from the Event's volunteer list.
+5. System removes the Event from the Volunteer's events joined list.
+6. If volunteer's skill is the same as the event's role, iVolunteer decrements the current quantity of this specific role by 1, and tracks whether the roles' current quantity no longer reached or exceeded its required quantity in the event.
+
+   Use case ends.
+
+**Extensions**
+
+* 3a. Invalid event index.
+    * 3a1. iVolunteer requests for the correct command with valid event index.
+      Use case resumes from Step 3.
+
+* 3b. Invalid volunteer index.
+    * 3b1. iVolunteer requests for the correct command with valid volunteer index.
+      Use case resumes from Step 3.
+
+* 4a. Volunteer is not already in event.
+    * 4a1. iVolunteer alerts user that the volunteer is not already in the event and cannot be removed.
+      Use case ends.
+
+* 6a. None of the volunteer to remove's skills match any of the event's roles.
+    * 6a1. The Event's roles are not decremented.
+      Use case ends.
+
+**Use case UCEV03: List all volunteers who join an event**
+
+**MSS**
+
+1. User <u>lists all volunteering events (UCE02)</u>.
+2. User requests to list all volunteers in a certain event.
+3. iVolunteer lists all volunteers who joined the event in the volunteer list.
+
+   Use case ends.
+
+**Extensions**
+* 2a. Invalid event index.
+    * 2a1. iVolunteer requests for the correct command with valid event index.
+      Use case resumes from Step 2.
+* 3a. There are no volunteers who joined the event.
+    * 3a1. The volunteer list displayed is empty.
+      Use case ends.
+
 **Use case UCEV04: List all events joined by a volunteer**
 
 **MSS**
@@ -1138,35 +1376,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2.  User requests to see all events joined by a specific volunteer in the volunteer list.
 3.  iVolunteer list out a summarized version of all volunteering events joined by the requested volunteer.
 
-    Use case ends.
+   Use case ends.
 
 **Extensions**
-
-* 1a. The volunteer list is empty.
-
-  Use case ends.
-
-* 1b. The input command is incorrect.
-
-    * 1b1. System prompts the user to provide a valid command.
-
-      Use case resumes from step 1.
-
-* 1c. There are no events joined by volunteer.
-
-  Use case ends.
-
-* 2a. User did not input a valid command.
-
-    * 2a1. System prompts user to provide a valid command.
-
-      Use case resumes from step 2.
-  
-* 2b. The given index is invalid.
-
-    * 2b1. iVolunteer shows an error message that there is no such volunteer in the given index.
-
-      Use case resumes from step 2.
+* 2a. Invalid volunteer index.
+    * 2a1. iVolunteer requests for the correct command with valid volunteer index.
+      Use case resumes from Step 2.
+* 3a. There are no events joined by the volunteer.
+    * 3a1. The event list displayed is empty.
+      Use case ends.
 
 ### Non-Functional Requirements
 
@@ -1468,7 +1686,91 @@ testers are expected to do more *exploratory* testing.
 
    1. Test case: `redo`<br>
       Expected: Nothing happens. `Unable to redo` shown in the status message.
- 
+
+### Tracking an event's roles and adding roles to an event
+
+1. Tracking event roles that match a volunteer's skills
+
+   1. Test case instructions in order: 
+      1. `ecreate n/Food packing r/1 chef r/1 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy m/100 packets b/100.00 vs/50`
+      2. `vcreate n/John Tan p/91234567 e/johnt@email.com s/packer`
+      3. `eaddv eid/X vid/Y` (where `X` is the index of the `Food packing` event and `Y` is the index of volunteer `John Tan`)<br>
+      Expected: `eaddv` command runs successfully with the message `New volunteer added to event.`. The `Food packing` event in the UI is updated with role `1 / 1 packer` that turns green.
+
+      4. `eremovev eid/X vid/Y`<br>
+      Expected: `eremovev` command runs successfully with the message `Volunteer removed from event.`. The `Food packing` event in the UI is updated with role `0 / 1 packer` that turns red.
+
+   2. Test case instructions in order:
+      1. `ecreate n/Food packing r/1 chef r/1 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy m/100 packets b/100.00 vs/50`
+      2. `vcreate n/John Tan p/91234567 e/johnt@email.com s/packer`
+      3. `eaddv eid/X vid/Y` (where `X` is the index of the `Food packing` event and `Y` is the index of volunteer `John Tan`)<br>
+      Expected: `eaddv` command runs successfully with the message `New volunteer added to event.`. However, the event roles are not updated in the UI since the volunteer's skills does not match the role.
+
+   3. Explore other cases and ensure that the skills of the volunteer matches the roles required for the event to add a volunteer to the event.
+
+### Tracking an event's materials and adding materials to an event
+
+1. Tracking event materials
+
+   1. Test case: `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy m/100 packets b/100.00 vs/50`, followed by 
+      `eaddm eid/X m/50 packets` (where `X` is the index of the `Food packing` event)<br>
+      Expected: `eaddm` command runs successfully with the message `Amount of material updated in event: ...`. The `Food packing` event in the UI is updated with material `50 / 100 packets`.
+
+   2. Test case: `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy m/100 packets b/100.00 vs/50`, followed by
+      `eaddm eid/X m/100 packets` (where `X` is the index of the `Food packing` event)<br>
+      Expected: `eaddm` command runs successfully with the message `Amount of material updated in event: ...`. The `Food packing` event in the UI is updated with material `100 / 100 packets` that turns green.
+
+   3. Test case: `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy m/100 packets b/100.00 vs/50`, followed by
+      `eaddm eid/X m/100 bananas` (where `X` is the index of the `Food packing` event)<br>
+      Expected: `eaddm` command fails with the error message `Material bananas is not found in the event`.
+
+   4. Test case: `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy m/100 packets b/100.00 vs/50`, followed by
+      `eaddm eid/X m/100` or `eaddm eid/X m/banana` etc. (where `X` is the index of the `Food packing` event)<br>
+      Expected: `eaddm` command fails with the error message `Invalid command format!` with instructions on how to use `eaddm` properly.
+
+### Setting the maximum volunteer capacity
+
+1. Setting maximum volunteer capacity
+
+   1. Prerequisites: 
+      - At least 2 volunteers in the displayed volunteer list
+
+   2. Test case instructions in order (take note of the `vs/` parameter at the end):
+      1. `ecreate n/Food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy m/100 packets b/100.00 vs/1`
+      2. `eaddv eid/X vid/1` (where `X` is the index of the `Food packing` event - e.g. `eaddv eid/1 vid/1`)
+      3. `eaddv eid/X vid/2` (where `X` is the index of the `Food packing` event - e.g. `eaddv eid/1 vid/2`)
+      4. `eedit X vs/0` (where `X` is the index of the `Food packing` event - e.g. `eaddv 1 vs/0`)      
+      5. `eshow X` (where `X` is the index of the `Food packing` event - e.g. `eshow 1`)
+      6. Close the `eshow` window either by using the `Esc` key or clicking the close button on the window.
+      7. `eaddv eid/X vid/2` (where `X` is the index of the `Food packing` event - e.g. `eaddv eid/1 vid/2`)<br><br>
+      Expected: 
+         - First `eaddv` command (2) runs successfully, and success message that `New volunteer added to event.` with total volunteer count in the event is displayed.
+         - Second `eaddv` command (3) does not run. Error message that `This event has already reached a maximum of 1 volunteer(s), and is unable to accept any more volunteers` is displayed as the status message.
+         - `eedit` command (4) runs successfully, and success message showing the edited event is displayed.<br>
+           <box type="info" seamless>
+              Since the vs/ parameter is set to 0 (special value), it removes the limit to the number of volunteers added to the event.
+           </box>
+         - `eshow` command (5) runs successfully. A window opens, with one field showing `Maximum number of volunteers in event: No limit`.
+         - Third `eaddv` command (7) runs successfully, and success message that `New volunteer added to event.` with total volunteer count in the event is displayed.
+
+   3. Test case instructions in order (take note of the *lack of* `vs/` parameter at the end):
+      1. `ecreate n/More food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy m/100 packets b/100.00`
+      2. `eaddv eid/X vid/1` (where `X` is the index of the `More food packing` event - e.g. `eaddv eid/2 vid/1`)
+      3. `eaddv eid/X vid/2` (where `X` is the index of the `More food packing` event - e.g. `eaddv eid/2 vid/2`)
+      4. `eshow X` (where `X` is the index of the `More food packing` event - e.g. `eshow 2`)
+      5. Close the `eshow` window either by using the `Esc` key or clicking the close button on the window.
+      6. `eedit X vs/1` (where `X` is the index of the `More food packing` event - e.g. `eedit 2 vs/1`)<br><br>
+      Expected:
+         - Both `eaddv` commands (2, 3) run successfully, and success message that `New volunteer added to event.` with total volunteer count in the event is displayed.
+         - `eshow` command (5) runs successfully. A window opens, with one field showing `Maximum number of volunteers in event: No limit`.
+         - `eedit` command (6) does not run successfully. Error message that `The maximum number of volunteers in an event should not be less than the number of volunteers currently in the event. To remove the cap on the number of volunteers, you can use vs/0` is displayed as the status message.
+
+   4. Test case: `ecreate n/Even more food packing r/10 chef r/10 packer sd/23/10/2023 1900 ed/23/10/2023 2200 l/hougang dsc/Packing food for the needy m/100 packets b/100.00 vs/50`, followed by
+      `eshow X` (where `X` is the index of the `Even more food packing` event - e.g. `eshow 3`)<br>
+      Expected: `eshow` command runs successfully. A window opens, with one field showing `Maximum number of volunteers in event: 50`.
+
+   5. You can explore further uses of the volunteer capacity and view the maximum volunteer capacity for any event using the `eshow` command. If `vs/0` is used or the `vs/` command is not specified, the maximum volunteer capacity is displayed as `No limit`.
+
 ### Saving data
 
 1. Dealing with missing/corrupted data files
@@ -1524,7 +1826,13 @@ distinguish them in the coming version.
 
 ### Improve error message for Create Event Feature
 The current implementation of the Create Event Feature checks the input command and shows error messages for invalid parameters one at a time.<br>
-However, this is not user-friendly as users can only edit the parameters one at a time, which can be very tedious for a command with so many parameters. For example, `ecreate n/Cle@n beach r/cleaner sd/23/10/2023 2500 l/punggol] dsc/clean the beach] m/trash bag b/50.0`, which has invalid inputs for each parameter, would require 7 tries to successfully execute.<br>
+However, this is not user-friendly as users can only edit the parameters one at a time, which can be very tedious for a command with so many parameters. For example, `ecreate n/Cle@n beach r/cleaner sd/23/10/2023 2500 l/ dsc/ m/trash bag b/-50.0`, which has invalid inputs for each parameter, would require 7 tries to successfully execute.<br>
 Hence, to reduce the number of invalid user inputs, we plan to improve our error messages such that they show all invalid inputs from the user, as well as their valid formats.<br>
 This way, users can correct their inputs all at once, reducing their frustration from entering many consecutive invalid commands.
+
+### Improve name format to support special characters
+The current implementation of the name format feature only supports alphanumeric characters and spaces like `Alexis Yeoh` or `Tan Ah Meng 8`. However, this is not realistic as there are other names out there that may include characters like `.`, `,` or `/`, such as names like `John Doe Jr.` or `Tan Ah Meng, John` etc. Hence, to allow for more flexibility in name formats, we will allow names to contain any valid character (except possibly `/` due to limitations in iVolunteer's command parsing causing, for example, `s/o` in names to create a skill named `o` instead).
+
+### Change `eaddm` command format to maintain consistency
+The current implementation of `eaddm` is as follows: `eaddm eid/EVENT_INDEX m/MATERIALS_AND_LOGISTICS_NEEDED`. However, this is inconsistent with other Event commands that only involve a single event, like `edelete` or `eshow`, where the index is directly stated instead of using the `eid/` parameter. This will be fixed eventually to improve usability for the app and prevent inconsistency in command formats for features.
 

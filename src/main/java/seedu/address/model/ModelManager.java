@@ -50,10 +50,9 @@ public class ModelManager implements Model {
         this.eventStorage = new EventStorage(eventStorage);
         this.volunteerStorage = new VolunteerStorage(volunteerStorage);
         this.userPrefs = new UserPrefs(userPrefs);
-        filteredEvents = new FilteredList<>(this.eventStorage.getEventList());
-        filteredVolunteers = new FilteredList<>(this.volunteerStorage.getVolunteerList());
-        eventToShowList = new FilteredList<>(this.eventStorage.getEventList());
-
+        this.filteredEvents = new FilteredList<>(this.eventStorage.getEventList());
+        this.filteredVolunteers = new FilteredList<>(this.volunteerStorage.getVolunteerList());
+        this.eventToShowList = new FilteredList<>(this.eventStorage.getEventList());
         this.versionedEventStorage = new VersionedEventStorage(eventStorage);
         this.versionedVolunteerStorage = new VersionedVolunteerStorage(volunteerStorage);
     }
@@ -333,6 +332,7 @@ public class ModelManager implements Model {
         requireNonNull(predicate);
         filteredVolunteers.setPredicate(predicate);
     }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
