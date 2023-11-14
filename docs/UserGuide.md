@@ -1,7 +1,7 @@
 ---
   layout: default.md
   title: "User Guide"
-  pageNav: 3
+  pageNav: 4
 ---
 
 # iVolunteer User Guide
@@ -84,7 +84,9 @@ iVolunteer is your dedicated application for volunteer coordination, designed wi
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
 
-### Viewing help: `help`
+### Help command
+
+#### Viewing help: `help`
 
 Shows a message explaining how to access the help page.
 
@@ -92,7 +94,9 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
-### Creating a new volunteer's profile: `vcreate`
+### Volunteer commands
+
+#### Creating a new volunteer's profile: `vcreate`
 
 Volunteer coordinators can create new volunteer profiles, and add the volunteer into the volunteer list.
 
@@ -124,13 +128,13 @@ Examples:
 * `vcreate n/Mary p/92345678 e/mary123@gmail.com s/Cooking s/Carrying heavy goods`
   * creates a volunteer named `Mary` with a phone number of `92345678` and an email address of `mary123@gmail.com`, with two skills: `Cooking` and `Carrying heavy goods`. The volunteer profile will be appended to the bottom of the volunteer list.
 
-### Listing all volunteers: `vlist`
+#### Listing all volunteers: `vlist`
 
 Shows a list of all volunteers in the volunteer list.
 
 Format: `vlist`
 
-### Locating volunteers by name and skill: `vfind`
+#### Locating volunteers by name and skill: `vfind`
 
 Finds volunteers whose name or skills contain any of the given keywords.
 
@@ -166,7 +170,7 @@ Examples:
 * `vfind n/charlotte s/mechanic` (user searches for **one** name and **one** skill)
   * returns `Charlotte Oliveiro`. (volunteers who have **both** NAME and SKILL keyword will be returned, i.e. `AND` search)
 
-### Editing a volunteer profile: `vedit`
+#### Editing a volunteer profile: `vedit`
 
 Edits an existing volunteer in the volunteer list.
 
@@ -199,7 +203,7 @@ Examples:
   * Edits the name of the 2nd volunteer to be `Betsy Crower` and clears all existing skills.
 
 
-### Deleting a volunteer profile: `vdelete`
+#### Deleting a volunteer profile: `vdelete`
 
 Volunteer coordinators can delete volunteers and remove them from the volunteer list if they no longer wish to volunteer anymore.
 
@@ -216,7 +220,9 @@ Examples:
 * `vlist`, followed by `vdelete 6` will remove the 6th volunteer displayed in the volunteer list.
 * `vfind n/Betsy` followed by `vdelete 1` deletes the 1st volunteer in the results of the `vfind` command.
 
-### Creating an event: `ecreate`
+### Event commands
+
+#### Creating an event: `ecreate`
 
 Volunteer coordinators can create new events.
 
@@ -264,7 +270,7 @@ Examples:
 * `ecreate n/clean beach r/10 cleaner sd/30/11/2023 1200 ed/30/11/2023 1800 l/east coast park dsc/help clean east coast park m/10 pairs of gloves m/10 trash bags b/50.00`
   * Creates an event with name `clean beach`, roles needed `10 cleaner`, event date from `30th November 2023, 12pm` to `30th November 2023, 6pm`, location `east coast park`, description `help clean east coast park`, materials needed `10 pairs of gloves` and `10 trash bags` and budget `$50.00`
 
-### Listing all events: `elist`
+#### Listing all events: `elist`
 Volunteer coordinators can see all the events they are organising.
 
 For each event, only the most important information will be shown: name, start date and time, end date and time, location, roles needed and materials needed.
@@ -276,7 +282,7 @@ Format: `elist`
 **Tip:** Events are sorted automatically in chronological order!
 </box>
 
-### Locating events by name: `efind`
+#### Locating events by name: `efind`
 
 Finds events whose name contain any of the given keywords.
 
@@ -295,7 +301,7 @@ Examples:
 ![result for 'find picking litter and teaching kids event'](images/findEventsResult.png)
 
 
-### Reading an individual event: `eshow`
+#### Reading an individual event: `eshow`
 Volunteer coordinators can read up more about an individual event, to familiarize themselves with its requirements while planning for it.
 
 Information shown: event name, start date and time, end date and time, location, roles needed, description, budget (if any), materials needed (if any), and maximum number of volunteers limit (if any).
@@ -321,7 +327,7 @@ Examples:
 * `eshow 7`
   * result in a pop-up window appearing, listing all details of the event at index `7`.
 
-### Deleting an event: `edelete`
+#### Deleting an event: `edelete`
 
 Deletes the event from the event list.
 
@@ -337,7 +343,7 @@ Examples:
 * `efind n/Beach cleaning` followed by `edelete 1` deletes the 1st event in the results of the `efind` command
 * `efind Beach cleaning` followed by `edelete 1` deletes the 1st event in the results of the `find` command (tentative feature)
 
-### Edit the details of an event: `eedit`
+#### Edit the details of an event: `eedit`
 
 Volunteer coordinators can edit the details of the events.
 
@@ -374,13 +380,7 @@ Examples:
 * `eedit 1 n/clean beach r/10 cleaner sd/30/11/2023 1200 l/east coast park dsc/help clean east coast park m/ `
     * Edits the event to name `clean beach`, roles needed `10 cleaner`, event date from `30th November 2023, 12pm`, location `east coast park`, description `help clean east coast park` and materials needed to empty.
 
-### Clearing all event entries: `eclear`
-
-Clears all entries from the event list.
-
-Format: `eclear`
-
-### Adding and tracking quantity of materials into an event: `eaddm`
+#### Adding and tracking quantity of materials into an event: `eaddm`
 
 Volunteer coordinators can track the current quantity of materials in an event and add materials into an event, in order to
 track the progress of the logistics gathered for the event.
@@ -401,7 +401,9 @@ Examples:
   event `clean beach` that requires `20 trash bags`. By performing `efind n/clean beach`, then `eaddm eid/1 m/10 trash bags`,
   the event `clean beach` will now contain `10 / 20 trash bags`.
 
-### Adding a volunteer into an event: `eaddv`
+### Event-volunteer commands
+
+#### Adding a volunteer into an event: `eaddv`
 
 Adds a volunteer to an event.
 
@@ -424,7 +426,7 @@ Examples:
 * `eaddv vid/1 eid/1`
   * adds the volunteer with index 1 to the event with index 1.
 
-### Listing all volunteers in an event: `elistv`
+#### Listing all volunteers in an event: `elistv`
 
 Shows a list of all volunteers in an event.
 
@@ -438,7 +440,7 @@ Examples:
 * `elistv 1`
   * lists the volunteers added to the event with index 1.
 
-### Listing all events joined by a volunteer: `vliste`
+#### Listing all events joined by a volunteer: `vliste`
 
 Shows a list of all events joined by a volunteer.
 
@@ -452,7 +454,7 @@ Examples:
 * `vliste 1`
     * lists events participated by the volunteer with index 1.
 
-### Removing a volunteer from an event: `eremovev`
+#### Removing a volunteer from an event: `eremovev`
 
 Removes a volunteer from an event.
 
@@ -471,7 +473,9 @@ Examples:
 * `eremovev vid/1 eid/1`
   * removes the volunteer with index 1 from the event with index 1.
 
-### Undo a Command: `undo`
+### Undo and redo commands
+
+#### Undo a Command: `undo`
 
 Undoes an undo-able command.
 
@@ -491,7 +495,7 @@ Restrictions:
   * eaddm
 * Only commands that changed the current history stack can be undone (iVolunteer does not remember commands that were executed in the previous run of the app).
 
-### Redo a Command: `redo`
+#### Redo a Command: `redo`
 
 Redoes the undo command. 
 
@@ -501,20 +505,21 @@ Restrictions:
 * Only can be executed after an undo command is executed.
 * This command can be thought of as an 'undo' command that can only undo a `undo` command.
 
+### Exit command  
 
-    
-
-### Exiting the program : `exit`
+#### Exiting the program : `exit`
 
 Exits the program.
 
 Format: `exit`
 
-### Saving the data
+### Handling data manually
+
+#### Saving the data
 
 iVolunteer data is automatically saved in the hard disk after any command is executed. There is no need to manually save your data.
 
-### Editing the data file
+#### Editing the data file
 
 iVolunteer data is saved automatically as two JSON files, `[JAR file location]/data/volunteerStorage.json` (volunteer storage) and `[JAR file location]/data/eventStorage.json` (event storage and _event-volunteer interactions_). Advanced users are welcome to update data directly by editing both data files.
 
@@ -524,7 +529,7 @@ iVolunteer data is saved automatically as two JSON files, `[JAR file location]/d
 If your changes to any data file makes its format invalid, iVolunteer will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.
 </box>
 
-### Archiving data files `[coming in v2.0]`
+#### Archiving data files `[coming in v2.0]`
 
 _Details coming soon ..._
 
